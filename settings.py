@@ -2,6 +2,7 @@
 
 
 settings = {
-    "jieba_dictionary":"/var/www/html/python/languageapi/dict.txt.big",
-    "jieba_userdictionary":"/var/www/html/python/languageapi/userdict.txt"
+    "jieba_dictionary":"/home/erik/backuplisp/dict.txt.big",
+    "jieba_user_dictionary":"userdict.txt",
+    "log":True
 } 

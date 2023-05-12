@@ -17,7 +17,7 @@ def add_to_jieba(word):
 
 def split_text(text):
     jieba.set_dictionary(settings.settings['jieba_dictionary'])
-    jieba.load_userdict(settings.settings['jieba_userdict'])
+    jieba.load_userdict(settings.settings['jieba_user_dictionary'])
     text_parts = pseg.cut(text)
     ret_parts = []
     for p in text_parts:

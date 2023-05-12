@@ -2,20 +2,17 @@ from textprocessing import split_text
 from textprocessing import convert_to_traditional
 import praw
 
+import dataobject
 from newspaper import Article
 import newspaper
 import requests
 from bs4 import BeautifulSoup
-
 
 #
 # mainly concerned with web crawling:
 # Getting news, getting index pages and so on
 # We are always returning the cws
 #
-#
-
-
 
 def getarticle(url):
     if url.find('news.rthk.hk') != -1:
@@ -26,15 +23,13 @@ def getarticle(url):
     article = Article(url)
     article.download()
     article.parse()
-    return [split_text(article.title),split_text(article.text)]
-
+    return dataobject.Article(article.title,article.text)
 
 def getRTHKArticle(url):
     article = Article(url)
     article.download()
     article.parse()
-    return [split_text(article.title),split_text(article.text)]
-
+    return dataobject.Article(article.title,article.text)
 
 def getRedditArticle(url):
     reddit = praw.Reddit(client_id='GFpFjVd8PUOEW0YoSBZhdA',
@@ -56,4 +51,37 @@ def getRedditArticle(url):
     for comment in all_comments:
         txt = txt + comment.body + "\n"
     txt = convert_to_traditional(txt)
-    return [split_text(post.title),split_text(txt)] 
+    return dataobject.Article(post.title,txt)
+
+
+def getreddithome():
+    reddit = praw.Reddit(client_id='GFpFjVd8PUOEW0YoSBZhdA',
+                     client_secret='Hhc5OlhlnKOtMKtZ0gB60IJVtpCflg',
+                     user_agent='myohmy 1.0')
+    chisub = reddit.subreddit("china_irl")
+    txt = ''
+    for p in chisub.hot(limit=100):
+        txt = txt + p.title + '\n'
+        txt = txt + ' process articleurl|https://www.reddit.com/'+p.permalink+' process \n'
+    txt = convert_to_traditional(txt)
+    return dataobject.Article('REDDIT TODAY',txt)
+
+def getrthkhome():
+    txt =''
+    url = 'https://news.rthk.hk/rthk/ch/latest-news.htm'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    for link in soup.find_all('a'):
+        if (link.get('href') != None and link.get('href').find('component/k2') != -1):
+            txt = txt + link.text + ' process articleurl|'+link.get('href')+' process \n'
+    return dataobject.Article('RTHK TODAY',txt)
+
+def getlibertyhome():
+    txt =''
+    url = 'https://www.ltn.com.tw/'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    for link in soup.find_all('a'):
+        if (link.get('href') != None and link.get('href').find('news.ltn') != -1):
+            txt = txt + link.text + ' process articleurl|'+link.get('href')+' process \n'
+    return dataobject.Article('LIBERTY TODAY',txt)

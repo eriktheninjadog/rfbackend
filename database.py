@@ -2,15 +2,24 @@
 # this is the database part of the backend
 # note that we will shield the layer above from any database
 # so we are no returning sqlAlchemy objects
-#
+# Simplification: We don't need books. We don't need
+# articles. We will only saved processed texts. A processed text
+# has a type.
+# it also can be a child (of another text)
+# have a title etc
+# this means we are... already done :-)
+import json
+import log
 
-from sqlalchemy import and_
+from dataobject import CWS
+from dataobject import DictionaryWord
+from dataobject import Activity
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import Column, Integer, MetaData, String, Table, Text, Float, text
 from sqlalchemy import inspect
-
 
 # setup the classes
 # I personally find this pretty ugly, so 
@@ -24,46 +33,23 @@ Base.prepare(autoload_with=engine)
 session = Session(engine)
 
 activity = Base.classes.activity
-book = Base.classes.book
-bookpage = Base.classes.bookpage
-article = Base.classes.article
 ai_response = Base.classes.ai_response
 cws_row = Base.classes.cws
 words = Base.classes.words
-insp = inspect(engine) 
 
-def get_all_books():
-    ret = []
-    records = session.query(book).all()
-    for record in records:
-        ret.append([record.id,record.title,record.numberofpages,record.comment])
-    return ret
-
-def get_book_page(abookid,apagenr):
-    page = session.query(bookpage).filter(bookpage.bookid == abookid,bookpage.pagenr==apagenr).first()
-    if page == None:
-        return None
-    else:
-        return [page.bookid,page.pagenr,page.pagetext]
-
-def add_book_page(abookid,apagenr,atext):
-    bookpage.insert().values(bookid = abookid,pagenr = apagenr, pagetext = atext)
-    session.commit()
 
 def get_activity(id):
     act = session.query(activity).filter(activity.id == id).first()
-    return [act.id,act.type,act.media,act.startTime,act.endTime]
+    return Activity(act.id,act.type,act.media,act.startTime,act.endTime)
 
-
-def add_activity(atype,amedia,astartTime,aendTime):
-    activity.insert().values(type=atype,media=amedia,startTime = astartTime,endTime = aendTime )
+def add_activity(activity):
+    activity.insert().values(type=activity.type,media=activity.media,startTime = activity.startTime,endTime = activity.endTime )
     session.commit()
 
-def add_or_update_word(chinese,jyutping, definition):    
+def add_or_update_word(chinese,jyutping, definition):
     if (find_word(chinese) == None):
         words.insert().values(chiword = chinese, canto = jyutping, exp = definition)
     else:
-
         found = session.query(words).filter(words.chiword == chinese).first()
         found.canto = jyutping
         found.exp = definition
@@ -74,34 +60,70 @@ def find_word(chinese):
     if found == None:
         return None
     else:
-        return [found.chiword,found.canto,found.exp]
+        return DictionaryWord(found.chiword,found.canto,found.exp)
+
+def cws_row_to_dataobject(row):
+    return CWS(row.id,row.created,row.orgtext, json.loads(row.cwstext),row.signature,row.metadata,row.title,row.source,row.type,row.parent)
+
+def cws_row_to_dataobject_no_text(row):
+    return CWS(row.id,row.created, None,None,row.signature,row.metadata,row.title,row.source,row.type,row.parent)
 
 def get_cws_by_id(id):
     found = session.query(cws_row).filter(cws_row.id == id).first()
     if found == None:
         return None
     else:
-        return [found.id,found.orgtext,found.cwstext,found.metadata,found.title,found.source]
-
+        return cws_row_to_dataobject(found)
+    
 def get_cws_by_signature(signature):
+    log.log("get_cws_by_signature("+signature+")")
     found = session.query(cws_row).filter(cws_row.signature == signature).first()
     if found == None:
+        log("get_cws_by_signature("+signature+") not found" )
         return None
     else:
-        return [found.id,found.orgtext,found.cwstext,found.metadata,found.title,found.source]
+        return cws_row_to_dataobject(found)
 
-def add_cws(aorgtext,acwstext,asignature,ametadata,atitle,asource):
-    cws_row.insert().values(
-        orgtext = aorgtext,
-        cwstext = acwstext,
-        signature = asignature,
-        metadata = ametadata,
-        title = atitle,
-        source = asource
+def rowstocwslist(rows):
+    ret = []
+    for row in rows:
+        ret.append( cws_row_to_dataobject_no_text(row) )
+    return ret
+
+def get_cws_list_by_type(type):
+    condition = (cws_row.type == type)
+    foundrows = session.query(cws_row).filter(condition)
+    return rowstocwslist(foundrows)
+    
+def add_cws(cwsobject):
+
+    c = cws_row(
+        orgtext = cwsobject.orgtext,
+        cwstext = json.dumps(cwsobject.cwstext),
+        signature = cwsobject.signature,
+        metadata = cwsobject.metadata,
+        title = cwsobject.title,
+        source = cwsobject.source,
+        type = cwsobject.type,
+        parent = cwsobject.parent
     )
+    session.add(c)
+    session.flush()
+    session.commit()
+    return c.id
+    
+
+def update_cws(cwsobject):
+    foundit = session.query(cws_row).filter(cws_row.id== cwsobject.id).first()
+    if foundit == None:
+        return None
+    foundit.orgtext = cwsobject.orgtext
+    foundit.cwstext = json.dumps(cwsobject.cwstext)
+    foundit.signature = cwsobject.signature
+    foundit.metadata = cwsobject.metadata
+    foundit.title = cwsobject.title
+    foundit.source = cwsobject.source
+    foundit.type = cwsobject.type
+    foundit.parent = cwsobject.parent
     session.commit()
 
-
-
-#print(get_all_books())
-#print(get_book_page(6,10))
