@@ -6,8 +6,13 @@ import jieba
 import jieba.posseg as pseg
 import settings 
 import opencc
+from snownlp import SnowNLP
+import re
+
 
 converter = opencc.OpenCC('s2t.json')
+
+
 
 # do we need to reload the dictionary?
 # can we check is a dictionary is loaded in jieba?
@@ -24,5 +29,25 @@ def split_text(text):
         ret_parts.append(p.word)
     return ret_parts
 
+def split_text_parts(text):
+    ret = []
+    s = SnowNLP(text)
+    for sent in s.sentences:
+        ret.append(sent)
+    return ret
+
+
+def zng(paragraph):
+    for sent in re.findall(u'[^!?。\.\!\?]+[!?。\.\!\?]?', paragraph, flags=re.U):
+        yield sent
+
+def split_text_sentences(text):
+    ret = []
+    for sent in zng(text):
+        ret.append(sent)
+    return ret
+
 def convert_to_traditional(text):
     return converter.convert(text)
+
+

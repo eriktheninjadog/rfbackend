@@ -79,7 +79,7 @@ def get_cws_by_signature(signature):
     log.log("get_cws_by_signature("+signature+")")
     found = session.query(cws_row).filter(cws_row.signature == signature).first()
     if found == None:
-        log("get_cws_by_signature("+signature+") not found" )
+        log.log("get_cws_by_signature("+signature+") not found" )
         return None
     else:
         return cws_row_to_dataobject(found)
@@ -111,7 +111,6 @@ def add_cws(cwsobject):
     session.flush()
     session.commit()
     return c.id
-    
 
 def update_cws(cwsobject):
     foundit = session.query(cws_row).filter(cws_row.id== cwsobject.id).first()
@@ -126,4 +125,3 @@ def update_cws(cwsobject):
     foundit.type = cwsobject.type
     foundit.parent = cwsobject.parent
     session.commit()
-
