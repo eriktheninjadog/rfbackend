@@ -14,6 +14,9 @@ import log
 from dataobject import CWS
 from dataobject import DictionaryWord
 from dataobject import Activity
+from dataobject import AIResponse
+
+
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -36,7 +39,7 @@ activity = Base.classes.activity
 ai_response = Base.classes.ai_response
 cws_row = Base.classes.cws
 words = Base.classes.words
-
+ai_reponse = Base.classes.ai_response
 
 def get_activity(id):
     act = session.query(activity).filter(activity.id == id).first()
@@ -96,7 +99,6 @@ def get_cws_list_by_type(type):
     return rowstocwslist(foundrows)
     
 def add_cws(cwsobject):
-
     c = cws_row(
         orgtext = cwsobject.orgtext,
         cwstext = json.dumps(cwsobject.cwstext),
@@ -125,3 +127,31 @@ def update_cws(cwsobject):
     foundit.type = cwsobject.type
     foundit.parent = cwsobject.parent
     session.commit()
+
+def add_ai_question(question,type,cwsid):
+    ap = ai_reponse(question=question,
+                    type = type,
+                    cwsid = cwsid
+                    )
+    session.add(c)
+    session.flush()
+    session.commit()
+    return ap.id
+
+def answer_ai_response(id,repsonsecwsid):
+    foundit = session.query(ai_reponse).filter( ai_reponse.id== id ).first()
+    if foundit == None:
+        return None
+    foundit.responsecwsid = repsonsecwsid
+    session.flush()
+    session.commit()
+    return id
+
+def get_unanswered_questions(type):
+    ret = []
+    foundrows = session.query(ai_reponse).filter( ai_reponse.type== type,ai_reponse.responsecwsid == None )
+    for r in foundrows:
+        rr = AIResponse(r.id,r.question,None,None,r.cwsid,r.type)
+        ret.append(rr)
+    return ret
+
