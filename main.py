@@ -1,12 +1,13 @@
 
 import textprocessing
 import articlecrawler
+import database
 
 from snownlp import SnowNLP
 
 import api
 
-print(str(api.get_article('https://news.rthk.hk/rthk/ch/component/k2/1700265-20230512.htm?spTabChangeable=0')))
+#print(str(api.get_article('https://news.rthk.hk/rthk/ch/component/k2/1700265-20230512.htm?spTabChangeable=0')))
 
 sample = """
 一、科學邊界
@@ -62,5 +63,26 @@ sample2 = """
 
 """
 
-for t in textprocessing.split_text_sentences(sample2):
-    print(t)
+
+parts = textprocessing.split_text_paragraphs(sample)
+for p in parts:
+    print(p)
+
+
+#parts = textprocessing.split_text_parts(sample2)
+#print( str( parts ) )
+#lucky = textprocessing.find_start_end_of_parts(sample2,parts)
+#print( str(  textprocessing.find_start_end_of_parts(sample2,parts) ) )
+
+#print(parts[3])
+#print(sample2[lucky[3][0]:lucky[3][1] ] )
+#id = database.add_ai_question("How did it go?",1,114,0,20)
+#print(str(id))
+#lst = database.get_unanswered_questions(1)
+#print(str(lst))
+#database.answer_ai_response(7369,440)
+
+#print( str( textprocessing.length_so_far(2,['er2','tito','black22mail','hiy','devil','joke'])))
+
+
+

@@ -12,8 +12,6 @@ import re
 
 converter = opencc.OpenCC('s2t.json')
 
-
-
 # do we need to reload the dictionary?
 # can we check is a dictionary is loaded in jieba?
 def add_to_jieba(word):
@@ -47,7 +45,32 @@ def split_text_sentences(text):
         ret.append(sent)
     return ret
 
+def split_text_paragraphs(text):
+    ret = []
+    for sent in text.split('\n'):
+        ret.append(sent)
+    return ret
+
+def length_so_far(idx,parts):
+    total = 0
+    if idx == -1:
+        return 0
+    for i in range(0,idx):
+        total+= len( parts[idx] )
+    return total
+
+
+def find_start_end_of_parts(text,parts):
+    ret = []
+    idx = 0
+    while idx < len(parts):
+        searchfor = parts[idx]
+        sofar = length_so_far(idx-1,parts)
+        whereisit = text.find(searchfor,sofar)
+        ret.append([whereisit,whereisit+len(parts[idx])])
+        idx+=1
+    return ret
+
 def convert_to_traditional(text):
     return converter.convert(text)
-
 

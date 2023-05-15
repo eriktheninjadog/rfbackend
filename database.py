@@ -128,12 +128,14 @@ def update_cws(cwsobject):
     foundit.parent = cwsobject.parent
     session.commit()
 
-def add_ai_question(question,type,cwsid):
+def add_ai_question(question,type,cwsid,start,end):
     ap = ai_reponse(question=question,
                     type = type,
-                    cwsid = cwsid
+                    cwsid = cwsid,
+                    start = start,
+                    end = end
                     )
-    session.add(c)
+    session.add(ap)
     session.flush()
     session.commit()
     return ap.id
@@ -154,4 +156,3 @@ def get_unanswered_questions(type):
         rr = AIResponse(r.id,r.question,None,None,r.cwsid,r.type)
         ret.append(rr)
     return ret
-

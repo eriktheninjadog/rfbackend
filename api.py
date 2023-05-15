@@ -48,3 +48,25 @@ def get_reddit_home():
 def get_reddit_home():
     art = articlecrawler.getreddithome()
     return throw_away_CWS_from_article(art)
+
+def create_api_question_on_cws(question,cwsid,segmentfunction,type):
+    stored_cws = database.get_cws_by_id(cwsid)
+    text_to_split = stored_cws.orgtext
+    parts = segmentfunction(text_to_split)
+    partsheadtails = textprocessing.find_start_end_of_parts(parts)
+    for i in range(len(parts)):
+        database.add_ai_question(question+":"+parts[i],type,cwsid,
+                                 partsheadtails[i][0],
+                                partsheadtails[i][0])
+
+
+def create_api_parts_questions(cwsid,question,type):
+    create_api_question_on_cws(question,cwsid,textprocessing.split_text_parts,type)
+
+def create_api_sentences_questions(cwsid,question,type):
+    create_api_question_on_cws(question,cwsid,textprocessing.split_text_sentences,type)
+
+def create_api_paragraphs_questions(cwsid,question,type):
+    create_api_question_on_cws(question,cwsid,textprocessing.split_text_paragraphs,type)
+
+#def add_ai_question(question,type,cwsid,start,end):
