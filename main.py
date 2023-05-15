@@ -63,10 +63,18 @@ sample2 = """
 
 """
 
+cws = api.process_chinese("test","test",sample,0,-1)
+print(str(cws.id))
+print(cws.orgtext[211])
+d = api.lookup_position(cws.id,211)
 
-parts = textprocessing.split_text_paragraphs(sample)
-for p in parts:
-    print(p)
+api.create_ai_sentences_questions(cws.id,"Explain the grammar of the following sentence",2)
+api.create_ai_parts_questions(cws.id,"Explain the meaning and grammar of the following text",3)
+api.create_ai_paragraphs_questions(cws.id,"Explain the meaning and structure of this paragraph",4)
+
+#parts = textprocessing.split_text_paragraphs(sample)
+#for p in parts:
+#    print(p)
 
 
 #parts = textprocessing.split_text_parts(sample2)
@@ -81,7 +89,6 @@ for p in parts:
 #lst = database.get_unanswered_questions(1)
 #print(str(lst))
 #database.answer_ai_response(7369,440)
-
 #print( str( textprocessing.length_so_far(2,['er2','tito','black22mail','hiy','devil','joke'])))
 
 

@@ -16,8 +16,6 @@ from dataobject import DictionaryWord
 from dataobject import Activity
 from dataobject import AIResponse
 
-
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.automap import automap_base
@@ -154,5 +152,13 @@ def get_unanswered_questions(type):
     foundrows = session.query(ai_reponse).filter( ai_reponse.type== type,ai_reponse.responsecwsid == None )
     for r in foundrows:
         rr = AIResponse(r.id,r.question,None,None,r.cwsid,r.type)
+        ret.append(rr)
+    return ret
+
+def get_responses(cwsid,position):
+    ret = []
+    foundrows = session.query(ai_reponse).filter( ai_reponse.cwsid== cwsid,ai_reponse.responsecwsid != None, ai_response.start <= position,ai_response.end >= position)
+    for r in foundrows:
+        rr = AIResponse(r.id,r.question,r.responsecwsid,r.metadata,r.cwsid,r.type,r.start,r.end)
         ret.append(rr)
     return ret

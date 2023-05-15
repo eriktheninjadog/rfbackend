@@ -8,6 +8,7 @@ import settings
 import opencc
 from snownlp import SnowNLP
 import re
+import log
 
 
 converter = opencc.OpenCC('s2t.json')
@@ -36,7 +37,7 @@ def split_text_parts(text):
 
 
 def zng(paragraph):
-    for sent in re.findall(u'[^!?。\.\!\?]+[!?。\.\!\?]?', paragraph, flags=re.U):
+    for sent in re.findall(u'[^「」!?。\.\!\?]+[」「!?。\.\!\?]?', paragraph, flags=re.U):
         yield sent
 
 def split_text_sentences(text):
@@ -55,8 +56,10 @@ def length_so_far(idx,parts):
     total = 0
     if idx == -1:
         return 0
+    if idx == 0:
+        return 0    
     for i in range(0,idx):
-        total+= len( parts[idx] )
+        total+= len( parts[i] )
     return total
 
 
@@ -65,8 +68,10 @@ def find_start_end_of_parts(text,parts):
     idx = 0
     while idx < len(parts):
         searchfor = parts[idx]
-        sofar = length_so_far(idx-1,parts)
+        sofar = length_so_far(idx,parts)
         whereisit = text.find(searchfor,sofar)
+        if  (whereisit == -1):
+            log.log("whereisit cannot be -1")
         ret.append([whereisit,whereisit+len(parts[idx])])
         idx+=1
     return ret
