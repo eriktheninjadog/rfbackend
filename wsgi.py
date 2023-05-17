@@ -4,7 +4,7 @@ from webapi import app
 
 application = app
 
-print("welcome to languageapi")
+print("welcome to rfbackend ")
 
 @app.after_request
 def after_request(response):
