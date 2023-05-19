@@ -4,6 +4,7 @@
 
 import jieba
 import jieba.posseg as pseg
+import zhconv
 import settings 
 import opencc
 from snownlp import SnowNLP
@@ -62,7 +63,6 @@ def length_so_far(idx,parts):
         total+= len( parts[i] )
     return total
 
-
 def find_start_end_of_parts(text,parts):
     ret = []
     idx = 0
@@ -76,6 +76,10 @@ def find_start_end_of_parts(text,parts):
         idx+=1
     return ret
 
-def convert_to_traditional(text):
-    return converter.convert(text)
+# this only converts if the text is in simplified
+def make_sure_traditional(text):
+    if zhconv.issimp(text):
+        return zhconv.convert(text,'zh-hk')
+    else:
+        return text
 
