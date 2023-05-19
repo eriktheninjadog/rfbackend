@@ -29,7 +29,7 @@ def web_add_text():
     body        = data.get(PARAMETER_TEXT_BODY)
     parentcwsid = data.get(PARAMETER_PARENT_CWSID)    
     source      = data.get(PARAMETER_TEXT_SOURCE)
-    cws         = api.process_chinese(title, source, body, type,parentcwsid):
+    cws         = api.process_chinese(title, source, body, type,parentcwsid)
     return jsonify({'result':cws})
 
     #
