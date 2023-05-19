@@ -101,7 +101,7 @@ def lookup_position(cwsid,position):
     #
     # so lets go for the cws
     #
-    ret = {}
+    ret = []
     cws = database.get_cws_by_id(cwsid)
     if (position > len(cws.orgtext)):
         return None
