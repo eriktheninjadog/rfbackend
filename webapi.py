@@ -40,3 +40,13 @@ def lookupposition():
     position = data.get(PARAMETER_POSITION)
     ret = api.lookup_position(cwsid,position)
     return jsonify({'result':ret})
+
+
+@app.route('/generatequestions',methods=['POST'])
+def generatequestions():
+    data = request.json
+    cwsid = data.get(PARAMETER_CWSID)
+    api.create_ai_paragraphs_questions(cwsid,"Explain the meaning and structure of this text:",4)
+    api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence:",5)
+    api.create_ai_sentences_questions(cwsid,"Explain the grammar of this text:",6)
+    return jsonify({'result':'success'})
