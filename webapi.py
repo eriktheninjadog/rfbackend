@@ -19,8 +19,9 @@ def version():
 @app.route('/addtext',methods=['POST'])
 def addtext():
     print("add text called")
-    log.log("/add_text called")
-    data = request.json()
+    log.log("/addtext called")
+    data = request.json
+    log.log("/addtext data gotten")
     title       = data.get(PARAMETER_TEXT_TITLE)
     type        = data.get(PARAMETER_TEXT_TYPE)    
     body        = data.get(PARAMETER_TEXT_BODY)

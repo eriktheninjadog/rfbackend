@@ -2,7 +2,7 @@
 
 
 settings = {
-    "jieba_dictionary":"/home/erik/backuplisp/dict.txt.big",
-    "jieba_user_dictionary":"userdict.txt",
+    "jieba_dictionary":"/var/www/html/api/rfbackend/dict.txt.big",
+"jieba_user_dictionary":"/var/www/html/api/rfbackend/userdict.txt",
     "log":True
 } 
