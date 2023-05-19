@@ -1,9 +1,16 @@
 from flask import Flask, jsonify, request, url_for
 
+import api
 
 
 app = Flask(__name__)
 
+PARAMETER_TEXT_BODY     = 'textbody'
+PARAMETER_TEXT_TITLE    = 'title'
+PARAMETER_TEXT_TYPE     = 'type'
+PARAMETER_TEXT_SOURCE   = 'source'
+PARAMETER_CWSID         = 'cwsid'
+PARAMETER_PARENT_CWSID  = 'parentcwsid'
 
 @app.route('/version', methods=['GET'])
 def version():
@@ -12,3 +19,17 @@ def version():
 @app.route('/version', methods=['POST'])
 def pversion():
     return jsonify({'version':'0.1'})
+
+
+@app.route('/add_text',method=['POST'])
+def web_add_text():
+    data = request.json
+    title       = data.get(PARAMETER_TEXT_TITLE)
+    type        = data.get(PARAMETER_TEXT_TYPE)    
+    body        = data.get(PARAMETER_TEXT_BODY)
+    parentcwsid = data.get(PARAMETER_PARENT_CWSID)    
+    source      = data.get(PARAMETER_TEXT_SOURCE)
+    cws         = api.process_chinese(title, source, body, type,parentcwsid):
+    return jsonify({'result':cws})
+
+    #
