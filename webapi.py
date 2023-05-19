@@ -12,16 +12,12 @@ PARAMETER_TEXT_SOURCE   = 'source'
 PARAMETER_CWSID         = 'cwsid'
 PARAMETER_PARENT_CWSID  = 'parentcwsid'
 
-@app.route('/version', methods=['GET'])
+@app.route('/version', methods=['GET','PUT'])
 def version():
     return jsonify({'version':'0.1'})
 
-@app.route('/version', methods=['POST'])
-def pversion():
-    return jsonify({'version':'0.1'})
-
-@app.route('/add_text',method=['POST'])
-def add_text():
+@app.route('/addtext',methods=['POST'])
+def addtext():
     print("add text called")
     log.log("/add_text called")
     data = request.json()
@@ -32,5 +28,3 @@ def add_text():
     source      = data.get(PARAMETER_TEXT_SOURCE)
     cws         = api.process_chinese(title, source, body, type,parentcwsid)
     return jsonify({'result':cws})
-
-    #
