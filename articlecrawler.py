@@ -1,5 +1,4 @@
 from textprocessing import split_text
-from textprocessing import convert_to_traditional
 import praw
 
 import dataobject
@@ -50,7 +49,6 @@ def getRedditArticle(url):
     all_comments = post.comments.list()
     for comment in all_comments:
         txt = txt + comment.body + "\n"
-    txt = convert_to_traditional(txt)
     return dataobject.Article(post.title,txt)
 
 
@@ -63,7 +61,6 @@ def getreddithome():
     for p in chisub.hot(limit=100):
         txt = txt + p.title + '\n'
         txt = txt + ' process articleurl|https://www.reddit.com/'+p.permalink+' process \n'
-    txt = convert_to_traditional(txt)
     return dataobject.Article('REDDIT TODAY',txt)
 
 def getrthkhome():
