@@ -23,6 +23,7 @@ def pversion():
 
 @app.route('/add_text',method=['POST'])
 def web_add_text():
+    print("add text called")
     log.log("/add_text called")
     data = request.json()
     title       = data.get(PARAMETER_TEXT_TITLE)
