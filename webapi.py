@@ -20,9 +20,8 @@ def version():
 def pversion():
     return jsonify({'version':'0.1'})
 
-
 @app.route('/add_text',method=['POST'])
-def web_add_text():
+def add_text():
     print("add text called")
     log.log("/add_text called")
     data = request.json()
