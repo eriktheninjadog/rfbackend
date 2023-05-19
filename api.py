@@ -123,5 +123,5 @@ def lookup_position(cwsid,position):
     else:
         log("Couldnt find word")
     hits = database.get_responses(cwsid,position)
-    print(hits)
-    None
+    ret['parts'] = hits
+    return ret
