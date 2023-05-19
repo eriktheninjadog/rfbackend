@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, url_for
 
 import api
-
+import log
 
 app = Flask(__name__)
 
@@ -23,7 +23,8 @@ def pversion():
 
 @app.route('/add_text',method=['POST'])
 def web_add_text():
-    data = request.json
+    log.log("/add_text called")
+    data = request.json()
     title       = data.get(PARAMETER_TEXT_TITLE)
     type        = data.get(PARAMETER_TEXT_TYPE)    
     body        = data.get(PARAMETER_TEXT_BODY)
