@@ -126,7 +126,8 @@ def lookup_position(cwsid,position):
         log.log("Looking up word " + word)
         cd = database.find_word(word)
         log.log("Found in dictionary: "+ str(cd))
-        wordtext = wordtext + '\n' + cd.chineseword + '\n' + cd.jyutping + '\n' + cd.definition + '\n'
+        if (cd != None):
+            wordtext = wordtext + '\n' + cd.chineseword + '\n' + cd.jyutping + '\n' + cd.definition + '\n'
     else:
         log("Couldnt find word")
     acwsret = process_chinese('lookup', 'lookup:' + str(position), wordtext, 1,cwsid)
