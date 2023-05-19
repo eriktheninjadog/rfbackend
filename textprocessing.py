@@ -78,8 +78,12 @@ def find_start_end_of_parts(text,parts):
 
 # this only converts if the text is in simplified
 def make_sure_traditional(text):
-    if zhconv.issimp(text):
-        return zhconv.convert(text,'zh-hk')
-    else:
-        return text
+    if text == None:
+        log.log('make_sure_traditional called with None')
+    return text
+    
+#    if zhconv.issimp(text):
+#        return zhconv.convert(text,'zh-hk')
+#    else:
+#        return text
 
