@@ -108,6 +108,13 @@ def lookup_position(cwsid,position):
     if (position < 0):
         return None
     
+    wordtext = ''
+    # I will look up the character first
+    achar = cws.orgtext[position]
+    cd = database.find_word(''+achar)
+    if cd != None:
+        wordtext = wordtext + cd.chineseword + '\n' + cd.jyutping + '\n' + cd.definition + '\n'
+
     # first we find the word
     partlimits =  textprocessing.find_start_end_of_parts(cws.orgtext,cws.cwstext)
     foundword = -1
@@ -119,9 +126,10 @@ def lookup_position(cwsid,position):
         log.log("Looking up word " + word)
         cd = database.find_word(word)
         log.log("Found in dictionary: "+ str(cd))
-        ret['dictionary'] = cd
+        wordtext = wordtext + '\n' + cd.chineseword + '\n' + cd.jyutping + '\n' + cd.definition + '\n'
     else:
         log("Couldnt find word")
+    acwsret = process_chinese('lookup', 'lookup:' + position, wordtext, 1,cwsid)
     hits = database.get_responses(cwsid,position)
-    ret['parts'] = hits
+    ret.append(acwsret)
     return ret
