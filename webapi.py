@@ -5,7 +5,7 @@ import api
 
 app = Flask(__name__)
 
-PARAMETER_TEXT_BODY     = 'textbody'
+PARAMETER_TEXT_BODY     = 'text'
 PARAMETER_TEXT_TITLE    = 'title'
 PARAMETER_TEXT_TYPE     = 'type'
 PARAMETER_TEXT_SOURCE   = 'source'
