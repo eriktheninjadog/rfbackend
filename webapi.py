@@ -52,6 +52,6 @@ def generatequestions():
     data = request.json
     cwsid = data.get(PARAMETER_CWSID)
     api.create_ai_paragraphs_questions(cwsid,"Explain the meaning and structure of this text",4,lambda x:len(x)>20)
-    api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>10)
+    api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>6)
     api.create_ai_sentences_questions(cwsid,"Explain the grammar of this text",6,lambda x:len(x)>6)
     return jsonify({'result':'success'})
