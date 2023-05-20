@@ -64,6 +64,7 @@ def is_valid_part(part):
 
 def create_api_question_on_cws(question,cwsid,segmentfunction,type,restriction):
     stored_cws = database.get_cws_by_id(cwsid)
+    print("len " + str(len(stored_cws.orgtext.strip())))
     if not restriction(stored_cws.orgtext.strip()):
         return
     text_to_split = stored_cws.orgtext
