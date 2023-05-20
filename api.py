@@ -64,14 +64,11 @@ def is_valid_part(part):
 
 def create_api_question_on_cws(question,cwsid,segmentfunction,type,restriction):
     stored_cws = database.get_cws_by_id(cwsid)
-    print("len " + str(len(stored_cws.orgtext.strip())))
-    if not restriction(stored_cws.orgtext.strip()):
-        return
     text_to_split = stored_cws.orgtext
     parts = segmentfunction(text_to_split)
     partsheadtails = textprocessing.find_start_end_of_parts(text_to_split,parts)
     for i in range(len(parts)):
-            if is_valid_part(parts[i]):
+            if is_valid_part(parts[i]) and not restriction(parts[i].strip()):
                 database.add_ai_question(question+":"+parts[i].strip(),type,cwsid,
                                 partsheadtails[i][0],
                                 partsheadtails[i][1])
