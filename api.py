@@ -62,8 +62,10 @@ def is_valid_part(part):
         return False 
     return True
 
-def create_api_question_on_cws(question,cwsid,segmentfunction,type):
+def create_api_question_on_cws(question,cwsid,segmentfunction,type,restriction):
     stored_cws = database.get_cws_by_id(cwsid)
+    if not restriction(stored_cws.orgtext):
+        return
     text_to_split = stored_cws.orgtext
     parts = segmentfunction(text_to_split)
     partsheadtails = textprocessing.find_start_end_of_parts(text_to_split,parts)
@@ -73,13 +75,13 @@ def create_api_question_on_cws(question,cwsid,segmentfunction,type):
                                 partsheadtails[i][0],
                                 partsheadtails[i][1])
 
-def create_ai_parts_questions(cwsid,question,type):
+def create_ai_parts_questions(cwsid,question,type,restriction):
     create_api_question_on_cws(question,cwsid,textprocessing.split_text_parts,type)
 
-def create_ai_sentences_questions(cwsid,question,type):
+def create_ai_sentences_questions(cwsid,question,type,restriction):
     create_api_question_on_cws(question,cwsid,textprocessing.split_text_sentences,type)
 
-def create_ai_paragraphs_questions(cwsid,question,type):
+def create_ai_paragraphs_questions(cwsid,question,type,restriction):
     create_api_question_on_cws(question,cwsid,textprocessing.split_text_paragraphs,type)
 
 def answer_ai_question(question_id,answer):
