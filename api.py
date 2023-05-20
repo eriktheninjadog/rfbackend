@@ -76,16 +76,16 @@ def create_api_question_on_cws(question,cwsid,segmentfunction,type,restriction):
                                 partsheadtails[i][1])
 
 def create_ai_parts_questions(cwsid,question,type,restriction):
-    create_api_question_on_cws(question,cwsid,textprocessing.split_text_parts,type)
+    create_api_question_on_cws(question,cwsid,textprocessing.split_text_parts,type,restriction)
 
 def create_ai_sentences_questions(cwsid,question,type,restriction):
-    create_api_question_on_cws(question,cwsid,textprocessing.split_text_sentences,type)
+    create_api_question_on_cws(question,cwsid,textprocessing.split_text_sentences,type,restriction)
 
 def create_ai_paragraphs_questions(cwsid,question,type,restriction):
-    create_api_question_on_cws(question,cwsid,textprocessing.split_text_paragraphs,type)
+    create_api_question_on_cws(question,cwsid,textprocessing.split_text_paragraphs,type,restriction)
 
 def answer_ai_question(question_id,answer):
-    cwsid = process_chinese("response", "response", answer, 3,-1)
+    cwsid = process_chinese("response", "response", answer, 100,-1)
     database.answer_ai_response(question_id,cwsid)
 
 #
