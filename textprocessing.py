@@ -14,6 +14,10 @@ import log
 
 converter = opencc.OpenCC('s2t.json')
 
+jieba.set_dictionary(settings.settings['jieba_dictionary'])
+jieba.load_userdict(settings.settings['jieba_user_dictionary'])
+
+
 # do we need to reload the dictionary?
 # can we check is a dictionary is loaded in jieba?
 def add_to_jieba(word):
@@ -21,8 +25,6 @@ def add_to_jieba(word):
         f.write(word + ' 1000 n\n')
 
 def split_text(text):
-    jieba.set_dictionary(settings.settings['jieba_dictionary'])
-    jieba.load_userdict(settings.settings['jieba_user_dictionary'])
     text_parts = pseg.cut(text)
     ret_parts = []
     for p in text_parts:
