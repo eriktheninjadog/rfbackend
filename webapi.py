@@ -12,7 +12,8 @@ PARAMETER_TEXT_SOURCE   = 'source'
 PARAMETER_CWSID         = 'cwsid'
 PARAMETER_PARENT_CWSID  = 'parentcwsid'
 PARAMETER_POSITION      = 'position'
-
+PARAMETER_AI_ANSWER     = 'aianswer'
+PARAMETER_QUESTION_ID   = 'questionid'
 
 
 
@@ -51,7 +52,13 @@ def unansweredquestions():
     return jsonify({'result':ret})
 
 
-
+@app.route('/answeraiquestion',methods=['POST'])
+def answeraiquestion():
+    data = request.json
+    aianswer = data.get(PARAMETER_AI_ANSWER)
+    questionid = data.get(PARAMETER_QUESTION_ID)    
+    api.answer_ai_question(questionid,aianswer)
+    return jsonify({'result':'ok'})
 
 @app.route('/generatequestions',methods=['POST'])
 def generatequestions():
