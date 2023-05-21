@@ -56,7 +56,9 @@ def unansweredquestions():
 def answeraiquestion():
     data = request.json
     aianswer = data.get(PARAMETER_AI_ANSWER)
-    questionid = data.get(PARAMETER_QUESTION_ID)    
+    questionid = data.get(PARAMETER_QUESTION_ID)   
+    print("aianswer:" + aianswer)
+    print("questionid:" + questionid)
     api.answer_ai_question(questionid,aianswer)
     return jsonify({'result':'ok'})
 

@@ -83,8 +83,8 @@ def create_ai_paragraphs_questions(cwsid,question,type,restriction):
     create_api_question_on_cws(question,cwsid,textprocessing.split_text_paragraphs,type,restriction)
 
 def answer_ai_question(question_id,answer):
-    cwsid = process_chinese("response", "response", answer, 100,-1)
-    database.answer_ai_response(question_id,cwsid)
+    cws = process_chinese("response", "response", answer, 100,-1)    
+    database.answer_ai_response(question_id,cws.id)
 
 #
 # The position is in the real text, not in CWS
