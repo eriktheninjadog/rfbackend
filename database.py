@@ -159,7 +159,7 @@ def get_responses(cwsid,position):
     ret = []
     foundrows = session.query(ai_reponse).filter( ai_reponse.cwsid== cwsid,ai_reponse.responsecwsid != None, ai_response.start <= position,ai_response.end >= position)
     for r in foundrows:
-        rr = AIResponse(r.id,r.question,r.responsecwsid,r.metadata,r.cwsid,r.type,r.start,r.end)
+        rr = AIResponse(r.id,r.question,r.responsecwsid,r.metadata,r.cwsid,r.start,r.end,r.type)
         ret.append(rr)
     return ret
 
