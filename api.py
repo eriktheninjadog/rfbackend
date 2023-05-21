@@ -134,3 +134,7 @@ def lookup_position(cwsid,position):
     hits = database.get_responses(cwsid,position)
     ret.append(acwsret)
     return ret
+
+
+def unanswered_questions():
+    return database.get_unanswered_questions()

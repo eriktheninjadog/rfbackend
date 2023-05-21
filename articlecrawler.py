@@ -82,3 +82,5 @@ def getlibertyhome():
         if (link.get('href') != None and link.get('href').find('news.ltn') != -1):
             txt = txt + link.text + ' process articleurl|'+link.get('href')+' process \n'
     return dataobject.Article('LIBERTY TODAY',txt)
+
+

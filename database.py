@@ -147,9 +147,9 @@ def answer_ai_response(id,repsonsecwsid):
     session.commit()
     return id
 
-def get_unanswered_questions(type):
+def get_unanswered_questions():
     ret = []
-    foundrows = session.query(ai_reponse).filter( ai_reponse.type== type,ai_reponse.responsecwsid == None )
+    foundrows = session.query(ai_reponse).filter( ai_reponse.responsecwsid == None )
     for r in foundrows:
         rr = AIResponse(r.id,r.question,None,None,r.cwsid,r.type)
         ret.append(rr)
@@ -162,3 +162,4 @@ def get_responses(cwsid,position):
         rr = AIResponse(r.id,r.question,r.responsecwsid,r.metadata,r.cwsid,r.type,r.start,r.end)
         ret.append(rr)
     return ret
+

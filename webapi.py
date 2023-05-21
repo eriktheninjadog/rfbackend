@@ -45,6 +45,12 @@ def lookupposition():
 
 
 
+@app.route('/unansweredquestions',methods=['POST'])
+def unansweredquestions():
+    ret = api.unanswered_questions()
+    return jsonify({'result':ret})
+
+
 
 
 @app.route('/generatequestions',methods=['POST'])
