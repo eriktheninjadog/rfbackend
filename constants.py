@@ -1,0 +1,17 @@
+PARAMETER_TEXT_BODY     = 'text'
+PARAMETER_TEXT_TITLE    = 'title'
+PARAMETER_TEXT_TYPE     = 'type'
+PARAMETER_TEXT_SOURCE   = 'source'
+PARAMETER_CWSID         = 'cwsid'
+PARAMETER_PARENT_CWSID  = 'parentcwsid'
+PARAMETER_POSITION      = 'position'
+PARAMETER_AI_ANSWER     = 'aianswer'
+PARAMETER_QUESTION_ID   = 'questionid'
+
+
+
+CWS_TYPE_IMPORT_TEXT        = 100
+CWS_TYPE_IMPORT_ARTICLE     = 110
+CWS_TYPE_THROWAWAY          = 120
+
+CWS_TYPE_AI_RESPONSE        = 200

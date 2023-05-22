@@ -3,7 +3,6 @@
 # web access lies above this
 # only dataobjects or simple ids are passed between these
 #
-
 from settings import settings
 from dataobject import CWS
 import textprocessing
@@ -12,6 +11,7 @@ import database
 import articlecrawler
 import json
 import log
+import constants
 
 # step 1. Input chinese.
 # This will create a cws and return it. it will set source and title
@@ -33,14 +33,13 @@ def process_chinese(title, source, text, type,parentid):
 def get_cws_text(id):
     return database.get_cws_by_id(id)
     
-
 def get_article(url):
     art = articlecrawler.getarticle(url)
-    return process_chinese(art.title,url,art.title+"\n"+art.body,2,-1)
+    return process_chinese(art.title,url,art.title+"\n"+art.body,constants.CWS_TYPE_IMPORT_ARTICLE,-1)
 
 def throw_away_CWS_from_article(art):
     splitted = textprocessing.split_text(art.title+"\n"+art.body)
-    return CWS(-1,None,None,splitted,None,"",art.title,"reddit",-1,-1)
+    return CWS(-1,None,None,splitted,None,"",art.title,"reddit",constants.CWS_TYPE_THROWAWAY,-1)
 
 # we do not save homes
 def get_rthk_home():
@@ -54,7 +53,6 @@ def get_reddit_home():
 def get_reddit_home():
     art = articlecrawler.getreddithome()
     return throw_away_CWS_from_article(art)
-
 
 def is_valid_part(part):
     ppart = part.strip()
@@ -83,7 +81,7 @@ def create_ai_paragraphs_questions(cwsid,question,type,restriction):
     create_api_question_on_cws(question,cwsid,textprocessing.split_text_paragraphs,type,restriction)
 
 def answer_ai_question(question_id,answer):
-    cws = process_chinese("response", "response", answer, 100,-1)    
+    cws = process_chinese("response", "response", answer, constants.CWS_TYPE_AI_RESPONSE,question_id)    
     database.answer_ai_response(question_id,cws.id)
 
 #
@@ -134,7 +132,6 @@ def lookup_position(cwsid,position):
     hits = database.get_responses(cwsid,position)
     ret.append(acwsret)
     return ret
-
 
 def unanswered_questions():
     return database.get_unanswered_questions()
