@@ -18,7 +18,7 @@ def addtext():
     data = request.json
     log.log("/addtext data gotten")
     title       = data.get(constants.PARAMETER_TEXT_TITLE)
-    type        = constants.WS_TYPE_IMPORT_TEXT_ 
+    type        = constants.CWS_TYPE_IMPORT_TEXT
     body        = data.get(constants.PARAMETER_TEXT_BODY)
     parentcwsid = data.get(constants.PARAMETER_PARENT_CWSID)    
     source      = data.get(constants.PARAMETER_TEXT_SOURCE)
