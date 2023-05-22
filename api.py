@@ -135,3 +135,6 @@ def lookup_position(cwsid,position):
 
 def unanswered_questions():
     return database.get_unanswered_questions()
+
+def get_imported_texts():
+    return database.get_cws_list_by_type(constants.CWS_TYPE_IMPORT_TEXT)

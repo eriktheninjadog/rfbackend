@@ -41,6 +41,10 @@ def unansweredquestions():
     ret = api.unanswered_questions()
     return jsonify({'result':ret})
 
+@app.route('/getimportedtexts',methods=['POST'])
+def getimportedtexts():
+    ret = api.get_imported_texts()
+    return jsonify({'result':ret})
 
 @app.route('/answeraiquestion',methods=['POST'])
 def answeraiquestion():
