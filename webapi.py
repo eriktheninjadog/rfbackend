@@ -46,6 +46,14 @@ def getimportedtexts():
     ret = api.get_imported_texts()
     return jsonify({'result':ret})
 
+@app.route('/getcws',methods=['POST'])
+def getcws():
+    data = request.json
+    cwsid = data.get(constants.PARAMETER_CWSID)
+    ret = api.get_cws_text(cwsid)
+    return jsonify({'result':ret})
+
+
 @app.route('/answeraiquestion',methods=['POST'])
 def answeraiquestion():
     data = request.json
