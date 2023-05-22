@@ -131,6 +131,8 @@ def lookup_position(cwsid,position):
     acwsret = process_chinese('lookup', 'lookup:' + str(position), wordtext, 1,cwsid)
     hits = database.get_responses(cwsid,position)
     ret.append(acwsret)
+    for h in hits:
+        ret.append(h)
     return ret
 
 def unanswered_questions():
