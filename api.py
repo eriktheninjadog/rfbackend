@@ -143,3 +143,6 @@ def unanswered_questions():
 
 def get_imported_texts():
     return database.get_cws_list_by_type(constants.CWS_TYPE_IMPORT_TEXT)
+
+def dictionary_looup(word):
+    return database.find_word(word)

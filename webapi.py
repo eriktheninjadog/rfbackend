@@ -72,3 +72,11 @@ def generatequestions():
     api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>6)
     api.create_ai_sentences_questions(cwsid,"Explain the grammar of this text",6,lambda x:len(x)>6)
     return jsonify({'result':'success'})
+
+
+@app.route('/dictionarylookup',methods=['POST'])
+def dictionarylookup():
+    data = request.json
+    word = data.get(constants.PARAMETER_SEARCH_WORD)
+    result = api.dictionary_looup(word)
+    return jsonify({'result':result})
