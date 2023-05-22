@@ -132,7 +132,8 @@ def lookup_position(cwsid,position):
     hits = database.get_responses(cwsid,position)
     ret.append(acwsret)
     for h in hits:
-        ret.append(h)
+        log.log(' here is the response object:'  str(h))
+        #responsecwsid = h[]
     return ret
 
 def unanswered_questions():
