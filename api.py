@@ -133,6 +133,8 @@ def lookup_position(cwsid,position):
     ret.append(acwsret)
     for h in hits:
         log.log(' here is the response object:' +  str(h))
+        storedcws = get_cws_text(h.responsecwsid)
+        ret.append(storedcws)
         #responsecwsid = h[]
     return ret
 
