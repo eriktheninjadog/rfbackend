@@ -44,8 +44,7 @@ ai_reponse = Base.classes.ai_response
 fragment = Table('textfragment', metadata_obj, autoload_with=engine)
 
 def add_fragment(afragment):
-    f = fragment.insert()
-    f.values(
+    f = fragment.insert().values(
         orgcwsid = afragment.orgcwsid,
         fragmentcwsid = afragment.fragmentcwsid,
         start = afragment.start,
