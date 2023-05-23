@@ -6,7 +6,6 @@ import constants
 
 app = Flask(__name__)
 
-
 @app.route('/version', methods=['GET','PUT'])
 def version():
     return jsonify({'version':'0.1'})
@@ -23,8 +22,8 @@ def addtext():
     parentcwsid = data.get(constants.PARAMETER_PARENT_CWSID)    
     source      = data.get(constants.PARAMETER_TEXT_SOURCE)
     cws         = api.process_chinese(title, source, body, type,parentcwsid)
+    api.create_and_store_all_fragments(cws[0])
     return jsonify({'result':cws})
-
 
 @app.route('/lookupposition',methods=['POST'])
 def lookupposition():
@@ -33,8 +32,6 @@ def lookupposition():
     position = data.get(constants.PARAMETER_POSITION)
     ret = api.lookup_position(cwsid,position)
     return jsonify({'result':ret})
-
-
 
 @app.route('/unansweredquestions',methods=['POST'])
 def unansweredquestions():
@@ -52,7 +49,6 @@ def getcws():
     cwsid = data.get(constants.PARAMETER_CWSID)
     ret = api.get_cws_text(cwsid)
     return jsonify({'result':ret})
-
 
 @app.route('/answeraiquestion',methods=['POST'])
 def answeraiquestion():
@@ -72,7 +68,6 @@ def generatequestions():
     api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>6)
     api.create_ai_sentences_questions(cwsid,"Explain the grammar of this text",6,lambda x:len(x)>6)
     return jsonify({'result':'success'})
-
 
 @app.route('/dictionarylookup',methods=['POST'])
 def dictionarylookup():

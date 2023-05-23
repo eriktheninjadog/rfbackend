@@ -15,6 +15,7 @@ from dataobject import CWS
 from dataobject import DictionaryWord
 from dataobject import Activity
 from dataobject import AIResponse
+from dataobject import Fragment
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -38,6 +39,20 @@ ai_response = Base.classes.ai_response
 cws_row = Base.classes.cws
 words = Base.classes.words
 ai_reponse = Base.classes.ai_response
+fragment = Base.classes.fragment
+
+def add_fragment(afragment):
+    f = fragment(
+        orgcwsid = afragment.orgcwsid,
+        fragmentcwsid = afragment.fragmentcwsid,
+        start = afragment.start,
+        end = afragment.end,
+        type = afragment.type        
+        )
+    session.add(f)
+    session.flush()
+    session.commit()
+    return None
 
 def get_activity(id):
     act = session.query(activity).filter(activity.id == id).first()

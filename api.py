@@ -5,6 +5,7 @@
 #
 from settings import settings
 from dataobject import CWS
+from dataobject import Fragment
 import textprocessing
 import textsignature
 import database
@@ -70,6 +71,28 @@ def create_api_question_on_cws(question,cwsid,segmentfunction,type,restriction):
                 database.add_ai_question(question+":"+parts[i].strip(),type,cwsid,
                                 partsheadtails[i][0],
                                 partsheadtails[i][1])
+
+
+def create_and_store_fragments(cwsid,segmentfunction,type):
+    stored_cws = database.get_cws_by_id(cwsid)
+    text_to_split = stored_cws.orgtext
+    parts = segmentfunction(text_to_split)
+    partsheadtails = textprocessing.find_start_end_of_parts(text_to_split,parts)
+    for i in range(len(parts)):
+        p = parts[i].strip()
+        if (len(p) > 2):
+            fragmentcwsid = process_chinese('', '', p, constants.CWS_TYPE_FRAGMENT,cwsid)
+            f = Fragment(cwsid,fragmentcwsid,partsheadtails[i][0],
+                                partsheadtails[i][1],
+                                type
+                                )
+            database.add_fragment(f)
+    None
+
+def create_and_store_all_fragments(cwsid):
+    create_and_store_fragments(cwsid,cwsid,textprocessing.split_text_parts,constants.FRAGMENT_TYPE_PART)
+    create_and_store_fragments(cwsid,cwsid,textprocessing.split_text_sentences,constants.FRAGMENT_TYPE_SENTENCE)
+    create_and_store_fragments(cwsid,cwsid,textprocessing.split_text_paragraphs,constants.FRAGMENT_TYPE_PARAGRAPH)
 
 def create_ai_parts_questions(cwsid,question,type,restriction):
     create_api_question_on_cws(question,cwsid,textprocessing.split_text_parts,type,restriction)
