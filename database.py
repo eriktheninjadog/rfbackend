@@ -41,7 +41,9 @@ ai_response = Base.classes.ai_response
 cws_row = Base.classes.cws
 words = Base.classes.words
 ai_reponse = Base.classes.ai_response
-fragment = Table('textfragment', metadata_obj, autoload_with=engine)
+#fragment = Table('textfragment', metadata_obj, autoload_with=engine)
+fragment = Base.classes.textfragment
+
 
 def add_fragment(afragment):
     try:
