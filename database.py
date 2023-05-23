@@ -41,6 +41,7 @@ words = Base.classes.words
 ai_reponse = Base.classes.ai_response
 fragment = Base.classes.fragment
 
+
 def add_fragment(afragment):
     f = fragment(
         orgcwsid = afragment.orgcwsid,
