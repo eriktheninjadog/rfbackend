@@ -82,7 +82,7 @@ def create_and_store_fragments(cwsid,segmentfunction,type):
         p = parts[i].strip()
         if (len(p) > 2):
             fragmentcwsid = process_chinese('', '', p, constants.CWS_TYPE_FRAGMENT,cwsid)
-            f = Fragment(cwsid,fragmentcwsid,partsheadtails[i][0],
+            f = Fragment(cwsid,fragmentcwsid[0],partsheadtails[i][0],
                                 partsheadtails[i][1],
                                 type
                                 )
