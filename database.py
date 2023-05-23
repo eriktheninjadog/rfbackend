@@ -46,19 +46,17 @@ fragment = Base.classes.textfragment
 
 
 def add_fragment(afragment):
-    try:
-        f = fragment.insert().values(
+    c = fragment(
             orgcwsid = afragment.orgcwsid,
-            fragmentcwsid = afragment.fragmentcwsid,
+            #fragmentcwsid = afragment.fragmentcwsid,
             start = afragment.start,
             end = afragment.end,
             type = afragment.type        
-            )
-        session.execute(f)
-        session.commit()
-    except: 
-        None
-    return None
+    )
+    session.add(c)
+    session.flush()
+    session.commit()
+    return c.id
 
 def get_activity(id):
     act = session.query(activity).filter(activity.id == id).first()
