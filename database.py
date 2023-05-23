@@ -26,7 +26,7 @@ from sqlalchemy import inspect
 # setup the classes
 # I personally find this pretty ugly, so 
 
-engine = create_engine('mysql+mysqlconnector://erik:ninjadogs@localhost/language')
+engine = create_engine('mysql+mysqlconnector://erik:ninjadogs@localhost:3306/language')
 connection = engine.connect()
 session = Session(engine)
 
