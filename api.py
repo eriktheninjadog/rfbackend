@@ -90,9 +90,9 @@ def create_and_store_fragments(cwsid,segmentfunction,type):
     None
 
 def create_and_store_all_fragments(cwsid):
-    create_and_store_fragments(cwsid,cwsid,textprocessing.split_text_parts,constants.FRAGMENT_TYPE_PART)
-    create_and_store_fragments(cwsid,cwsid,textprocessing.split_text_sentences,constants.FRAGMENT_TYPE_SENTENCE)
-    create_and_store_fragments(cwsid,cwsid,textprocessing.split_text_paragraphs,constants.FRAGMENT_TYPE_PARAGRAPH)
+    create_and_store_fragments(cwsid,textprocessing.split_text_parts,constants.FRAGMENT_TYPE_PART)
+    create_and_store_fragments(cwsid,textprocessing.split_text_sentences,constants.FRAGMENT_TYPE_SENTENCE)
+    create_and_store_fragments(cwsid,textprocessing.split_text_paragraphs,constants.FRAGMENT_TYPE_PARAGRAPH)
 
 def create_ai_parts_questions(cwsid,question,type,restriction):
     create_api_question_on_cws(question,cwsid,textprocessing.split_text_parts,type,restriction)
