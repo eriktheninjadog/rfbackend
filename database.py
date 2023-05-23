@@ -28,18 +28,21 @@ from sqlalchemy import inspect
 
 engine = create_engine('mysql+pymysql://erik:ninjadogs@localhost/language')
 connection = engine.connect()
-metadata = MetaData()
+session = Session(engine)
+
 Base = automap_base()
 Base.prepare(autoload_with=engine)
+metadata_obj = MetaData()
+metadata_obj.reflect(bind=engine)
 
-session = Session(engine)
 
 activity = Base.classes.activity
 ai_response = Base.classes.ai_response
 cws_row = Base.classes.cws
 words = Base.classes.words
 ai_reponse = Base.classes.ai_response
-fragment = Base.classes.fragment
+fragment = metadata_obj.tables['textfragment']
+
 
 
 def add_fragment(afragment):
