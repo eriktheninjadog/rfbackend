@@ -72,7 +72,7 @@ def create_api_question_on_cws(question,cwsid,segmentfunction,type,restriction):
                                 partsheadtails[i][0],
                                 partsheadtails[i][1])
 
-
+#add
 def create_and_store_fragments(cwsid,segmentfunction,type):
     stored_cws = database.get_cws_by_id(cwsid)
     text_to_split = stored_cws.orgtext
