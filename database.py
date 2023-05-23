@@ -56,7 +56,7 @@ def add_fragment(afragment):
     session.add(c)
     session.flush()
     session.commit()
-    return c.id
+    return None
 
 def get_activity(id):
     act = session.query(activity).filter(activity.id == id).first()
