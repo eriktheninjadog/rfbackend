@@ -44,15 +44,15 @@ ai_reponse = Base.classes.ai_response
 fragment = Table('textfragment', metadata_obj, autoload_with=engine)
 
 def add_fragment(afragment):
-    f = fragment(
+    f = fragment.insert()
+    f.values(
         orgcwsid = afragment.orgcwsid,
         fragmentcwsid = afragment.fragmentcwsid,
         start = afragment.start,
         end = afragment.end,
         type = afragment.type        
         )
-    session.add(f)
-    session.flush()
+    session.execute(f)
     session.commit()
     return None
 
