@@ -44,15 +44,18 @@ ai_reponse = Base.classes.ai_response
 fragment = Table('textfragment', metadata_obj, autoload_with=engine)
 
 def add_fragment(afragment):
-    f = fragment.insert().values(
-        orgcwsid = afragment.orgcwsid,
-        fragmentcwsid = afragment.fragmentcwsid,
-        start = afragment.start,
-        end = afragment.end,
-        type = afragment.type        
-        )
-    session.execute(f)
-    session.commit()
+    try:
+        f = fragment.insert().values(
+            orgcwsid = afragment.orgcwsid,
+            fragmentcwsid = afragment.fragmentcwsid,
+            start = afragment.start,
+            end = afragment.end,
+            type = afragment.type        
+            )
+        session.execute(f)
+        session.commit()
+    except: 
+        None
     return None
 
 def get_activity(id):
