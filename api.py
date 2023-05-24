@@ -172,6 +172,16 @@ def get_wordlist_from_cws(id):
     rawlist = cws.cwstext
     return list(set(rawlist))
 
+def get_complete_vocab_from_cws(id):
+    ret = []
+    wl = get_wordlist_from_cws(id)
+    for l in wl:
+        look = database.find_word(l)
+        if look != None:
+            ret.append(look)
+    return ret
+
+
 def unanswered_questions():
     return database.get_unanswered_questions()
 
