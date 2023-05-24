@@ -109,15 +109,11 @@ def add_or_update_word(chinese,jyutping, definition):
     session.commit()
 
 def find_word(chinese):
-    ret = get_cached("find_word"+urllib.parse.quote_plus(chinese)) 
-    if ret != None:
-        return ret
     found = session.query(words).filter(words.chiword == chinese).first()
     if found == None:
         return None
     else:
         ret = DictionaryWord(found.chiword,found.canto,found.exp)
-        put_cached("find_word"+urllib.parse.quote_plus(chinese),ret)
         return ret
 
 def cws_row_to_dataobject(row):
