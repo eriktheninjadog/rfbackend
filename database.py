@@ -125,17 +125,31 @@ def cws_row_to_dataobject(row):
 def cws_row_to_dataobject_no_text(row):
     return CWS(row.id,row.created, None,None,row.signature,row.metadata,row.title,row.source,row.type,row.parent)
 
+def get_connection():
+    mydb = mysql.connector.connect(                                                  
+        host="localhost",                                                            
+        user="erik",                                                                 
+        password="ninjadogs",                                                        
+        database='language'                                                          
+    )
+    return mydb
+                                                                                
+
 def get_cws_by_id(id):
-    ret = get_cws_from_cache(id)
-    if ret != None:
-        return ret
-    found = session.query(cws_row).filter(cws_row.id == id).first()
-    if found == None:
-        return None
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,created,orgtext,cwstext,signature,metadata,title,source,type,parent FROM cws WHERE id = " + str(id)
+    mycursor.execute(sql)                                                            
+    myresult = mycursor.fetchall() 
+    for (id,created,orgtext,cwstext,signature,metadata,title,source,type,parent) in myresult:
+        ret.append( CWS(id,created,orgtext,cwstext,signature,metadata,title,source,type,parent))
+    mycursor.close()
+    mydb.close()
+    if (len(ret)>0):
+        return ret[0]
     else:
-        ret = cws_row_to_dataobject(found)
-        store_cws_in_cache(id,ret)
-        return ret
+        return None
     
 def get_cws_by_signature(signature):
     log.log("get_cws_by_signature("+signature+")")
@@ -156,20 +170,7 @@ def rowstocwslist(rows):
     for row in rows:
         ret.append( cws_row_to_dataobject_no_text(row) )
     return ret
-
-
-
-def get_connection():
-    mydb = mysql.connector.connect(                                                  
-        host="localhost",                                                            
-        user="erik",                                                                 
-        password="ninjadogs",                                                        
-        database='language'                                                          
-    )
-    return mydb
                                                                                 
-                                                                                 
-
 def get_cws_list_by_type(type):
     ret = []
     mydb = get_connection()
