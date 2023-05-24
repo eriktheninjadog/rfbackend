@@ -11,6 +11,8 @@
 import json
 import log
 
+import mysql.connector
+
 from dataobject import CWS
 from dataobject import DictionaryWord
 from dataobject import Activity
@@ -155,10 +157,35 @@ def rowstocwslist(rows):
         ret.append( cws_row_to_dataobject_no_text(row) )
     return ret
 
+
+
+def get_connection():
+    mydb = mysql.connector.connect(                                                  
+        host="localhost",                                                            
+        user="erik",                                                                 
+        password="ninjadogs",                                                        
+        database='language'                                                          
+    )
+    return mydb
+                                                                                
+                                                                                 
+
 def get_cws_list_by_type(type):
-    condition = (cws_row.type == type)
-    foundrows = session.query(cws_row).filter(condition)
-    return rowstocwslist(foundrows)
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,title FROM cws WHERE type = " + str(type)
+    mycursor.execute(sql)                                                            
+    myresult = mycursor.fetchall() 
+    for (id,title) in myresult:
+        ret.append( CWS(id,None,None,None,None,None,title,None,type,-1))
+    mycursor.close()
+    mydb.close()
+    return ret
+        
+    #condittion = (cws_row.type == type)
+    #foundrows = session.query(cws_row).filter(condition)
+    #return rowstocwslist(foundrows)
     
 def add_cws(cwsobject):
     c = cws_row(
