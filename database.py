@@ -228,7 +228,7 @@ def add_ai_question(question,type,cwsid,start,end):
 def answer_ai_response(id,repsonsecwsid):
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "update ai_response set responsecwsid = " + repsonsecwsid + " WHERE cwsid = " + id
+    sql = "update ai_response set responsecwsid = " + str(repsonsecwsid) + " WHERE cwsid = " + str(id)
     mycursor.execute(sql)
     mycursor.close()
     mydb.close()
