@@ -111,7 +111,7 @@ def cws_row_to_dataobject_no_text(row):
     return CWS(row.id,row.created, None,None,row.signature,row.metadata,row.title,row.source,row.type,row.parent)
 
 def get_cws_by_id(id):
-    ret = get_cached("cws_object"+id) 
+    ret = get_cached("cws_object"+str(id)) 
     if ret != None:
         return ret
     found = session.query(cws_row).filter(cws_row.id == id).first()
@@ -119,7 +119,7 @@ def get_cws_by_id(id):
         return None
     else:
         ret = cws_row_to_dataobject(found)
-        put_cached("cws_object"+id,ret)
+        put_cached("cws_object"+str(id),ret)
         return ret
     
 def get_cws_by_signature(signature):
@@ -134,7 +134,7 @@ def get_cws_by_signature(signature):
         return None
     else:
         ret = cws_row_to_dataobject(found)
-        put_cached("cws_object"+id,ret)
+        put_cached("cws_object_sign"+signature,ret)
         return cws_row_to_dataobject(found)
 
 def rowstocwslist(rows):
