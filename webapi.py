@@ -22,7 +22,7 @@ def addtext():
     parentcwsid = data.get(constants.PARAMETER_PARENT_CWSID)    
     source      = data.get(constants.PARAMETER_TEXT_SOURCE)
     cws         = api.process_chinese(title, source, body, type,parentcwsid)
-    api.create_and_store_all_fragments(cws[0])
+    #api.create_and_store_all_fragments(cws[0])
     return jsonify({'result':cws})
 
 @app.route('/lookupposition',methods=['POST'])
