@@ -23,6 +23,9 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import Column, Integer, MetaData, String, Table, Text, Float, text
 from sqlalchemy import inspect
 
+
+from pymemcache.client import base
+
 # setup the classes
 # I personally find this pretty ugly, so 
 
@@ -35,6 +38,10 @@ Base.prepare(autoload_with=engine)
 metadata_obj = MetaData()
 metadata_obj.reflect(bind=engine)
 
+client = base.Client(('localhost', 11211))
+
+
+
 
 activity = Base.classes.activity
 ai_response = Base.classes.ai_response
@@ -44,6 +51,16 @@ ai_reponse = Base.classes.ai_response
 #fragment = Table('textfragment', metadata_obj, autoload_with=engine)
 fragment = Base.classes.textfragment
 
+
+def put_cached(key,pyobject):
+    str = json.dumps(pyobject)
+    client.set(key,str)
+
+def get_cached(key):
+    str = client.get(key)
+    if str == None:
+        return None
+    return json.loads(str)
 
 def add_fragment(afragment):
     c = fragment(
@@ -76,11 +93,16 @@ def add_or_update_word(chinese,jyutping, definition):
     session.commit()
 
 def find_word(chinese):
+    ret = get_cached("find_word"+chinese) 
+    if ret != None:
+        return ret
     found = session.query(words).filter(words.chiword == chinese).first()
     if found == None:
         return None
     else:
-        return DictionaryWord(found.chiword,found.canto,found.exp)
+        ret = DictionaryWord(found.chiword,found.canto,found.exp)
+        put_cached("find_word"+id,ret)
+        return ret
 
 def cws_row_to_dataobject(row):
     return CWS(row.id,row.created,row.orgtext, json.loads(row.cwstext),row.signature,row.metadata,row.title,row.source,row.type,row.parent)
@@ -89,19 +111,30 @@ def cws_row_to_dataobject_no_text(row):
     return CWS(row.id,row.created, None,None,row.signature,row.metadata,row.title,row.source,row.type,row.parent)
 
 def get_cws_by_id(id):
+    ret = get_cached("cws_object"+id) 
+    if ret != None:
+        return ret
     found = session.query(cws_row).filter(cws_row.id == id).first()
     if found == None:
         return None
     else:
-        return cws_row_to_dataobject(found)
+        ret = cws_row_to_dataobject(found)
+        put_cached("cws_object"+id,ret)
+        return ret
     
 def get_cws_by_signature(signature):
     log.log("get_cws_by_signature("+signature+")")
+
+    ret = get_cached("cws_object_sign"+signature) 
+    if ret != None:
+        return ret
     found = session.query(cws_row).filter(cws_row.signature == signature).first()
     if found == None:
         log.log("get_cws_by_signature("+signature+") not found" )
         return None
     else:
+        ret = cws_row_to_dataobject(found)
+        put_cached("cws_object"+id,ret)
         return cws_row_to_dataobject(found)
 
 def rowstocwslist(rows):
