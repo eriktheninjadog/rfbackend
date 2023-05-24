@@ -62,6 +62,17 @@ def get_cached(key):
         return None
     return json.loads(str)
 
+def store_cws_in_cache(key,cws):
+    put_cached('cachedcws'+str(key),json.dumps(cws))
+
+def get_cws_from_cache(key):
+    retArray = get_cached('cachedcws'+(str*key))
+    return CWS(retArray[0],retArray[1],retArray[2],
+               retArray[3],retArray[4],retArray[5],
+               retArray[6],retArray[7],retArray[8],
+               retArray[9])
+                                                            
+
 def add_fragment(afragment):
     c = fragment(
             orgcwsid = afragment.orgcwsid,
@@ -111,7 +122,7 @@ def cws_row_to_dataobject_no_text(row):
     return CWS(row.id,row.created, None,None,row.signature,row.metadata,row.title,row.source,row.type,row.parent)
 
 def get_cws_by_id(id):
-    ret = get_cached("cws_object"+str(id)) 
+    ret = get_cws_from_cache(id)
     if ret != None:
         return ret
     found = session.query(cws_row).filter(cws_row.id == id).first()
@@ -119,13 +130,12 @@ def get_cws_by_id(id):
         return None
     else:
         ret = cws_row_to_dataobject(found)
-        put_cached("cws_object"+str(id),ret)
+        store_cws_in_cache(id,ret)
         return ret
     
 def get_cws_by_signature(signature):
     log.log("get_cws_by_signature("+signature+")")
-
-    ret = get_cached("cws_object_sign"+signature) 
+    ret = get_cws_from_cache(signature)
     if ret != None:
         return ret
     found = session.query(cws_row).filter(cws_row.signature == signature).first()
@@ -134,8 +144,8 @@ def get_cws_by_signature(signature):
         return None
     else:
         ret = cws_row_to_dataobject(found)
-        put_cached("cws_object_sign"+signature,ret)
-        return cws_row_to_dataobject(found)
+        store_cws_in_cache(signature,ret)
+        return ret
 
 def rowstocwslist(rows):
     ret = []
