@@ -226,21 +226,26 @@ def add_ai_question(question,type,cwsid,start,end):
     return ap.id
 
 def answer_ai_response(id,repsonsecwsid):
-    foundit = session.query(ai_reponse).filter( ai_reponse.id== id ).first()
-    if foundit == None:
-        return None
-    foundit.responsecwsid = repsonsecwsid
-    session.flush()
-    session.commit()
-    return id
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "update ai_response set responsecwsid = " + repsonsecwsid + " WHERE cwsid = " + id
+    mycursor.execute(sql)
+    mycursor.close()
+    mydb.close()
+    
 
 def get_unanswered_questions():
     ret = []
-    foundrows = session.query(ai_reponse).filter( ai_reponse.responsecwsid == None )
-    for r in foundrows:
-        rr = AIResponse(r.id,r.question,None,None,r.cwsid,r.start,r.end,r.type)
-        ret.append(rr)  
-    return ret
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,question,responsecwsid,metadata,cwsid,start,end,type FROM ai_response WHERE responsecwsid is null"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall() 
+    for (id,question,responsecwsid,metadata,cwsid,type,start,end) in myresult:
+        ret.append( AIResponse(id,question,responsecwsid,metadata,cwsid,start,end,type))
+    mycursor.close()
+    mydb.close()
+    return ret 
 
 def get_responses(cwsid,position):
     ret = []
