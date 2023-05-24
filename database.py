@@ -29,7 +29,7 @@ from pymemcache.client import base
 # setup the classes
 # I personally find this pretty ugly, so 
 
-engine = create_engine('mysql://erik:ninjadogs@localhost/language')
+engine = create_engine('mysql://erik:ninjadogs@localhost/language',pool_recycle=60 * 5, pool_pre_ping=True)
 connection = engine.connect()
 session = Session(engine)
 
