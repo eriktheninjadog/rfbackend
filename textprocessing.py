@@ -73,7 +73,8 @@ def find_start_end_of_parts(text,parts):
         sofar = length_so_far(idx,parts)
         whereisit = text.find(searchfor,sofar)
         if  (whereisit == -1):
-            log.log("whereisit cannot be -1")
+            log.log("whereisit cannot be -1 " + searchfor)
+            return []
         ret.append([whereisit,whereisit+len(parts[idx])])
         idx+=1
     return ret
