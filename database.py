@@ -153,6 +153,7 @@ def get_cws_by_signature(signature):
     mydb = get_connection()
     mycursor = mydb.cursor()
     sql = "SELECT id,created,orgtext,cwstext,signature,metadata,title,source,type,parent FROM cws WHERE signature like '" + signature + "'"
+    mycursor.execute(sql)    
     myresult = mycursor.fetchall() 
     for (id,created,orgtext,cwstext,signature,metadata,title,source,type,parent) in myresult:
         ret.append( CWS(id,created,orgtext,cwstext,signature,metadata,title,source,type,parent))
