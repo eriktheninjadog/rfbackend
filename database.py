@@ -246,8 +246,8 @@ def get_responses(cwsid,position):
     ret = []
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "SELECT id,question,responsecwsid,metadata,cwsid,type,start,end FROM ai_response WHERE cwsid = " + str(cwsid) + " and start<= " + str(position) + ' and end>= ' + str(position)
-    mycursor.execute(sql)    
+    sql = "SELECT id,question,responsecwsid,metadata,cwsid,type,start,end FROM ai_response WHERE cwsid = " + str(cwsid) + " and start <= " + str(position) + ' and end>= ' + str(position)
+    mycursor.execute(sql)
     myresult = mycursor.fetchall() 
     for (id,question,responsecwsid,metadata,cwsid,type,start,end) in myresult:
         ret.append( AIResponse(id,question,responsecwsid,metadata,cwsid,start,end,type))
