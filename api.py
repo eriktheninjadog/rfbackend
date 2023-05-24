@@ -178,7 +178,7 @@ def get_complete_vocab_from_cws(id):
     for l in wl:
         look = database.find_word(l)
         if look != None:
-            ret.append(look)
+            ret.append([look.chineseword,look.jyutping,look.definition])
     return ret
 
 

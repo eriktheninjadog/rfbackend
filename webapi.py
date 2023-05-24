@@ -75,3 +75,10 @@ def dictionarylookup():
     word = data.get(constants.PARAMETER_SEARCH_WORD)
     result = api.dictionary_looup(word)
     return jsonify({'result':result})
+
+@app.route('/get_cws_vocabulary',methods=['POST'])
+def get_cws_vocabulary():
+    data = request.json
+    cwsid = data.get(constants.PARAMETER_CWSID)
+    result = api.get_complete_vocab_from_cws(cwsid)    
+    return jsonify({'result':result})
