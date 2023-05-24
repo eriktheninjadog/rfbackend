@@ -152,7 +152,7 @@ def lookup_position(cwsid,position):
         if (cd != None):
             wordtext = wordtext + '\n' + cd.chineseword + '\n' + cd.jyutping + '\n' + cd.definition + '\n'
     else:
-        log("Couldnt find word")
+        log.log("Couldnt find word")
     acwsret = process_chinese('lookup', 'lookup:' + str(position), wordtext, 1,cwsid)
     hits = database.get_responses(cwsid,position)
     ret.append(acwsret)
