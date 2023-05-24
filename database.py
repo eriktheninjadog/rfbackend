@@ -25,9 +25,10 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import Column, Integer, MetaData, String, Table, Text, Float, text
 from sqlalchemy import inspect
 
+import urllib.parse
+
 
 from pymemcache.client import base
-
 # setup the classes
 # I personally find this pretty ugly, so 
 
@@ -108,7 +109,7 @@ def add_or_update_word(chinese,jyutping, definition):
     session.commit()
 
 def find_word(chinese):
-    ret = get_cached("find_word"+chinese) 
+    ret = get_cached("find_word"+urllib.parse.quote_plus(chinese)) 
     if ret != None:
         return ret
     found = session.query(words).filter(words.chiword == chinese).first()
@@ -116,7 +117,7 @@ def find_word(chinese):
         return None
     else:
         ret = DictionaryWord(found.chiword,found.canto,found.exp)
-        put_cached("find_word"+id,ret)
+        put_cached("find_word"+urllib.parse.quote_plus(chinese),ret)
         return ret
 
 def cws_row_to_dataobject(row):
@@ -152,18 +153,19 @@ def get_cws_by_id(id):
         return None
     
 def get_cws_by_signature(signature):
-    log.log("get_cws_by_signature("+signature+")")
-    ret = get_cws_from_cache(signature)
-    if ret != None:
-        return ret
-    found = session.query(cws_row).filter(cws_row.signature == signature).first()
-    if found == None:
-        log.log("get_cws_by_signature("+signature+") not found" )
-        return None
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,created,orgtext,cwstext,signature,metadata,title,source,type,parent FROM cws WHERE signature like '" + signature + "'"
+    myresult = mycursor.fetchall() 
+    for (id,created,orgtext,cwstext,signature,metadata,title,source,type,parent) in myresult:
+        ret.append( CWS(id,created,orgtext,cwstext,signature,metadata,title,source,type,parent))
+    mycursor.close()
+    mydb.close()
+    if (len(ret)>0):
+        return ret[0]
     else:
-        ret = cws_row_to_dataobject(found)
-        store_cws_in_cache(signature,ret)
-        return ret
+        return None
 
 def rowstocwslist(rows):
     ret = []
@@ -254,4 +256,3 @@ def get_responses(cwsid,position):
         rr = AIResponse(r.id,r.question,r.responsecwsid,r.metadata,r.cwsid,r.start,r.end,r.type)
         ret.append(rr)
     return ret
-
