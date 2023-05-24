@@ -66,7 +66,7 @@ def store_cws_in_cache(key,cws):
     put_cached('cachedcws'+str(key),json.dumps(cws))
 
 def get_cws_from_cache(key):
-    retArray = get_cached('cachedcws'+(str*key))
+    retArray = get_cached('cachedcws'+str(key))
     return CWS(retArray[0],retArray[1],retArray[2],
                retArray[3],retArray[4],retArray[5],
                retArray[6],retArray[7],retArray[8],
