@@ -182,10 +182,6 @@ def get_cws_list_by_type(type):
     mycursor.close()
     mydb.close()
     return ret
-        
-    #condittion = (cws_row.type == type)
-    #foundrows = session.query(cws_row).filter(condition)
-    #return rowstocwslist(foundrows)
     
 def add_cws(cwsobject):
     c = cws_row(
@@ -243,13 +239,18 @@ def get_unanswered_questions():
     foundrows = session.query(ai_reponse).filter( ai_reponse.responsecwsid == None )
     for r in foundrows:
         rr = AIResponse(r.id,r.question,None,None,r.cwsid,r.start,r.end,r.type)
-        ret.append(rr)
+        ret.append(r)  
     return ret
 
 def get_responses(cwsid,position):
     ret = []
-    foundrows = session.query(ai_reponse).filter( ai_reponse.cwsid== cwsid,ai_reponse.responsecwsid != None, ai_response.start <= position,ai_response.end >= position)
-    for r in foundrows:
-        rr = AIResponse(r.id,r.question,r.responsecwsid,r.metadata,r.cwsid,r.start,r.end,r.type)
-        ret.append(rr)
-    return ret
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,question,responsecwsid,metadata,cwsid,type,start,end FROM ai_response WHERE signature cwsid = " + cwsid + " and start<= " + str(position) + ' and end>= ' + str(position)
+    mycursor.execute(sql)    
+    myresult = mycursor.fetchall() 
+    for (id,question,responsecwsid,metadata,cwsid,type,start,end) in myresult:
+        ret.append( AIResponse(id,question,responsecwsid,metadata,cwsid,start,end,type))
+    mycursor.close()
+    mydb.close()
+    return ret 
