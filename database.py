@@ -140,7 +140,7 @@ def get_cws_by_id(id):
     mycursor.execute(sql)                                                            
     myresult = mycursor.fetchall() 
     for (id,created,orgtext,cwstext,signature,metadata,title,source,type,parent) in myresult:
-        ret.append( CWS(id,created,orgtext,cwstext,signature,metadata,title,source,type,parent))
+        ret.append( CWS(id,created,orgtext,json.loads(cwstext),signature,metadata,title,source,type,parent))
     mycursor.close()
     mydb.close()
     if (len(ret)>0):
@@ -156,7 +156,7 @@ def get_cws_by_signature(signature):
     mycursor.execute(sql)    
     myresult = mycursor.fetchall() 
     for (id,created,orgtext,cwstext,signature,metadata,title,source,type,parent) in myresult:
-        ret.append( CWS(id,created,orgtext,cwstext,signature,metadata,title,source,type,parent))
+        ret.append( CWS(id,created,orgtext, json.loads(cwstext),signature,metadata,title,source,type,parent))
     mycursor.close()
     mydb.close()
     if (len(ret)>0):
