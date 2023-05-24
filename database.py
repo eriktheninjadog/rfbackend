@@ -239,7 +239,7 @@ def get_unanswered_questions():
     foundrows = session.query(ai_reponse).filter( ai_reponse.responsecwsid == None )
     for r in foundrows:
         rr = AIResponse(r.id,r.question,None,None,r.cwsid,r.start,r.end,r.type)
-        ret.append(r)  
+        ret.append(rr)  
     return ret
 
 def get_responses(cwsid,position):
