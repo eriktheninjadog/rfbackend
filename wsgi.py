@@ -1,6 +1,7 @@
 import json
 
 from webapi import app
+import database
 
 application = app
 
