@@ -3,6 +3,7 @@
 # web access lies above this
 # only dataobjects or simple ids are passed between these
 #
+
 from settings import settings
 from dataobject import CWS
 from dataobject import Fragment
@@ -13,6 +14,43 @@ import articlecrawler
 import json
 import log
 import constants
+import requests
+
+def doopenapirequest(txt):
+    url = "https://api.writesonic.com/v2/business/content/chatsonic?engine=premium"
+    payload = {
+        "enable_google_results": "true",
+        "enable_memory": False,
+        "input_text": txt
+    }
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "X-API-KEY": "2912a2d7-15a6-483a-9d43-5c66e34aa273"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    data = response.json()
+    print(response.json())
+    return  data['message']
+
+
+#
+def direct_ai_question(cwsid,question,fragment,type):
+    cws = database.get_cws_by_id(cwsid)
+    # now get the starting and end point of a fragment
+    start = cws.orgtext.find(fragment)
+    if start == -1:
+        log.log("fragment not in original text")
+        return None
+    end = start + len(fragment)
+    # ok lets go 
+    response = doopenapirequest(question + ":" + fragment)
+    # and the full response
+    totalresponse = question + ":" + fragment + "\n" + response
+    responsecws = process_chinese(question,"",totalresponse,type)
+    database.add_ai_question(question,type,cwsid,start,end)
+    database.answer_ai_response(cwsid,responsecws.id)
+    return responsecws
 
 # step 1. Input chinese.
 # This will create a cws and return it. it will set source and title
