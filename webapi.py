@@ -119,7 +119,7 @@ def direct_ai_simplify():
 
 
 @app.route('/update_dictionary',methods=['POST'])
-def direct_ai_simplify():
+def update_dictionary():
     data = request.json
     term = data.get(constants.PARAMETER_TERM)
     jyutping = data.get(constants.PARAMETER_JYUTPING)
