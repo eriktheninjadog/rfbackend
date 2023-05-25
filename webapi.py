@@ -84,7 +84,7 @@ def get_cws_vocabulary():
     return jsonify({'result':result})
 
 @app.route('/direct_ai_analyze',methods=['POST'])
-def direct_ai_analyze(cwsid,fragment):
+def direct_ai_analyze():
     print('/direct_ai_analyze')
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
@@ -93,7 +93,7 @@ def direct_ai_analyze(cwsid,fragment):
     return jsonify({'result':ret})
 
 @app.route('/direct_ai_analyze_grammar',methods=['POST'])
-def direct_ai_analyze_grammar(cwsid,fragment):
+def direct_ai_analyze_grammar():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
     fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
@@ -101,7 +101,7 @@ def direct_ai_analyze_grammar(cwsid,fragment):
     return jsonify({'result':ret})
 
 @app.route('/direct_ai_summarize',methods=['POST'])
-def direct_ai_summarize(cwsid,fragment):
+def direct_ai_summarize():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
     fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
@@ -109,7 +109,7 @@ def direct_ai_summarize(cwsid,fragment):
     return jsonify({'result':ret})
 
 @app.route('/direct_ai_simplify',methods=['POST'])
-def direct_ai_simplify(cwsid,fragment):
+def direct_ai_simplify():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
     fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
