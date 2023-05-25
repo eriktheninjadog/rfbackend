@@ -230,10 +230,10 @@ def answer_ai_response(id,repsonsecwsid):
     mycursor = mydb.cursor()
     sql = "update ai_response set responsecwsid = " + str(repsonsecwsid) + " WHERE cwsid = " + str(id)
     mycursor.execute(sql)
+    mydb.commit()
     mycursor.close()
     mydb.close()
     
-
 def get_unanswered_questions():
     ret = []
     mydb = get_connection()
