@@ -113,5 +113,5 @@ def direct_ai_simplify():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
     fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
-    ret = api.direct_ai_question(cwsid,"Use traditional chinese to simplify this text:",fragment,constants.CWS_TYPE_DIRECT_AI_SIMPLIFY)
+    ret = api.direct_ai_question(cwsid,"Rewrite this text in traditional chinese using simple words and sentences:",fragment,constants.CWS_TYPE_DIRECT_AI_SIMPLIFY)
     return jsonify({'result':ret})
