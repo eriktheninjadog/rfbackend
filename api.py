@@ -47,7 +47,7 @@ def direct_ai_question(cwsid,question,fragment,type):
     response = doopenapirequest(question + ":" + fragment)
     # and the full response
     totalresponse = question + ":" + fragment + "\n" + response
-    responsecws = process_chinese(question,"",totalresponse,type)
+    responsecws = process_chinese(question,"",totalresponse,type,cwsid)
     database.add_ai_question(question,type,cwsid,start,end)
     database.answer_ai_response(cwsid,responsecws.id)
     return responsecws
