@@ -9,6 +9,9 @@ PARAMETER_AI_ANSWER     = 'aianswer'
 PARAMETER_QUESTION_ID   = 'questionid'
 PARAMETER_SEARCH_WORD   = 'word'
 PARAMETER_TEXT_FRAGMENT = 'fragment'
+PARAMETER_JYUTPING      = 'jyutping'
+PARAMETER_TERM          = 'term'
+PARAMETER_DEFINITION    = 'definition'
 
 
 

@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, url_for
 import api
 import log
 import constants
+import database
 
 app = Flask(__name__)
 
@@ -115,3 +116,13 @@ def direct_ai_simplify():
     fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
     ret = api.direct_ai_question(cwsid,"Rewrite this text in traditional chinese using simple words and sentences:",fragment,constants.CWS_TYPE_DIRECT_AI_SIMPLIFY)
     return jsonify({'result':ret})
+
+
+@app.route('/update_dictionary',methods=['POST'])
+def direct_ai_simplify():
+    data = request.json
+    term = data.get(constants.PARAMETER_TERM)
+    jyutping = data.get(constants.PARAMETER_JYUTPING)
+    definition = data.get(constants.PARAMETER_DEFINITION)
+    database.update_dictionary(term,jyutping,definition)
+    return jsonify({'result':'ok'})

@@ -131,6 +131,18 @@ def get_connection():
     )
     return mydb
                                                                                 
+def update_dictionary(chineseword,jyutping,definition):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "delete from words where chiword like '" + chineseword+ "'"
+    mycursor.execute(sql)
+    sql = 'INSERT INTO words (chiword, canto, exp) VALUES (%s, %s, %s)'
+    val = (chineseword,jyutping,definition)
+    mycursor.execute(sql,val)
+    mycursor.close()
+    mydb.close()
+    
+
 
 def get_cws_by_id(id):
     ret = []
