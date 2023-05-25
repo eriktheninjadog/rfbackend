@@ -8,6 +8,7 @@ PARAMETER_POSITION      = 'position'
 PARAMETER_AI_ANSWER     = 'aianswer'
 PARAMETER_QUESTION_ID   = 'questionid'
 PARAMETER_SEARCH_WORD   = 'word'
+PARAMETER_TEXT_FRAGMENT = 'fragment'
 
 
 

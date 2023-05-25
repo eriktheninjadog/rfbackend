@@ -83,18 +83,35 @@ def get_cws_vocabulary():
     result = api.get_complete_vocab_from_cws(cwsid)    
     return jsonify({'result':result})
 
+@app.route('/direct_ai_analyze',methods=['POST'])
 def direct_ai_analyze(cwsid,fragment):
+    print('/direct_ai_analyze')
+    data = request.json
+    cwsid = data.get(constants.PARAMETER_CWSID)
+    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
     ret = api.direct_ai_question(cwsid,"Analyze this text:",fragment,constants.CWS_TYPE_DIRECT_AI_ANALYZE)
     return jsonify({'result':ret})
 
+@app.route('/direct_ai_analyze_grammar',methods=['POST'])
 def direct_ai_analyze_grammar(cwsid,fragment):
+    data = request.json
+    cwsid = data.get(constants.PARAMETER_CWSID)
+    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
     ret = api.direct_ai_question(cwsid,"Analyze the grammar of this text:",fragment,constants.CWS_TYPE_DIRECT_AI_ANALYZE_GRAMMAR)
     return jsonify({'result':ret})
 
+@app.route('/direct_ai_summarize',methods=['POST'])
 def direct_ai_summarize(cwsid,fragment):
+    data = request.json
+    cwsid = data.get(constants.PARAMETER_CWSID)
+    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
     ret = api.direct_ai_question(cwsid,"Summarize this text using traditional chinese:",fragment,constants.CWS_TYPE_DIRECT_AI_SUMMARIZE)
     return jsonify({'result':ret})
 
+@app.route('/direct_ai_simplify',methods=['POST'])
 def direct_ai_simplify(cwsid,fragment):
+    data = request.json
+    cwsid = data.get(constants.PARAMETER_CWSID)
+    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
     ret = api.direct_ai_question(cwsid,"Use traditional chinese to simplify this text:",fragment,constants.CWS_TYPE_DIRECT_AI_SIMPLIFY)
     return jsonify({'result':ret})
