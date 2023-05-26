@@ -12,6 +12,8 @@ PARAMETER_TEXT_FRAGMENT = 'fragment'
 PARAMETER_JYUTPING      = 'jyutping'
 PARAMETER_TERM          = 'term'
 PARAMETER_DEFINITION    = 'definition'
+PARAMETER_POINT1        = 'p1'
+PARAMETER_POINT2        = 'p2'
 
 
 
