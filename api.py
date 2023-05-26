@@ -45,7 +45,7 @@ def direct_ai_question(cwsid,question,p1,p2,type):
         end = p1
     # ok lets go 
     log.log('From here ' + cws.orgtext)
-    log.log('Points ' + str(p1) + ' ' + str(p2))
+    log.log('Points ' + start + ' ' + end)
     
     fragment = cws.orgtext[p1:p2]
     log.log('Fragment ' + fragment)
