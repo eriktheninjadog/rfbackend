@@ -139,6 +139,7 @@ def update_dictionary(chineseword,jyutping,definition):
     sql = 'INSERT INTO words (chiword, canto, exp) VALUES (%s, %s, %s)'
     val = (chineseword,jyutping,definition)
     mycursor.execute(sql,val)
+    mydb.commit()
     mycursor.close()
     mydb.close()
     
