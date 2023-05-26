@@ -35,15 +35,16 @@ def doopenapirequest(txt):
 
 
 #
-def direct_ai_question(cwsid,question,fragment,type):
+def direct_ai_question(cwsid,question,p1,p2,type):
     cws = database.get_cws_by_id(cwsid)
     # now get the starting and end point of a fragment
-    start = cws.orgtext.find(fragment)
-    if start == -1:
-        log.log("fragment not in original text")
-        return None
-    end = start + len(fragment)
+    start = p1
+    end = p2
+    if (p2 < p1):
+        start = p2
+        end = p1
     # ok lets go 
+    fragment = cws.orgtext[p1:p2]
     response = doopenapirequest(question + ":" + fragment)
     # and the full response
     totalresponse = question + ":" + fragment + "\n" + response

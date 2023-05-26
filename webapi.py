@@ -89,32 +89,36 @@ def direct_ai_analyze():
     print('/direct_ai_analyze')
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
-    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
-    ret = api.direct_ai_question(cwsid,"Analyze this text:",fragment,constants.CWS_TYPE_DIRECT_AI_ANALYZE)
+    p1 = data.get(constants.PARAMETER_POINT1)
+    p2 = data.get(constants.PARAMETER_POINT2)    
+    ret = api.direct_ai_question(cwsid,"Analyze this text:",p1,p2,constants.CWS_TYPE_DIRECT_AI_ANALYZE)
     return jsonify({'result':ret})
 
 @app.route('/direct_ai_analyze_grammar',methods=['POST'])
 def direct_ai_analyze_grammar():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
-    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
-    ret = api.direct_ai_question(cwsid,"Analyze the grammar of this text:",fragment,constants.CWS_TYPE_DIRECT_AI_ANALYZE_GRAMMAR)
+    p1 = data.get(constants.PARAMETER_POINT1)
+    p2 = data.get(constants.PARAMETER_POINT2)
+    ret = api.direct_ai_question(cwsid,"Analyze the grammar of this text:",p1,p2,constants.CWS_TYPE_DIRECT_AI_ANALYZE_GRAMMAR)
     return jsonify({'result':ret})
 
 @app.route('/direct_ai_summarize',methods=['POST'])
 def direct_ai_summarize():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
-    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
-    ret = api.direct_ai_question(cwsid,"Summarize this text using traditional chinese:",fragment,constants.CWS_TYPE_DIRECT_AI_SUMMARIZE)
+    p1 = data.get(constants.PARAMETER_POINT1)
+    p2 = data.get(constants.PARAMETER_POINT2)
+    ret = api.direct_ai_question(cwsid,"Summarize this text using traditional chinese:",p1,p2,constants.CWS_TYPE_DIRECT_AI_SUMMARIZE)
     return jsonify({'result':ret})
 
 @app.route('/direct_ai_simplify',methods=['POST'])
 def direct_ai_simplify():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
-    fragment = data.get(constants.PARAMETER_TEXT_FRAGMENT)
-    ret = api.direct_ai_question(cwsid,"Rewrite this text in traditional chinese using simple words and sentences:",fragment,constants.CWS_TYPE_DIRECT_AI_SIMPLIFY)
+    p1 = data.get(constants.PARAMETER_POINT1)
+    p2 = data.get(constants.PARAMETER_POINT2)
+    ret = api.direct_ai_question(cwsid,"Rewrite this text in traditional chinese using simple words and sentences:",p1,p2,constants.CWS_TYPE_DIRECT_AI_SIMPLIFY)
     return jsonify({'result':ret})
 
 
