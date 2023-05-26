@@ -45,9 +45,9 @@ def direct_ai_question(cwsid,question,p1,p2,type):
         end = p1
     # ok lets go 
     log.log('From here ' + cws.orgtext)
-    log.log('Points ' + start + ' ' + end)
+    log.log('Points ' + str(start) + ' ' + str(end))
     
-    fragment = cws.orgtext[p1:p2]
+    fragment = cws.orgtext[start:end]
     log.log('Fragment ' + fragment)
 
     response = doopenapirequest(question + ":" + fragment)
