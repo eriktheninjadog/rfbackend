@@ -203,7 +203,6 @@ def lookup_position(cwsid,position):
         #responsecwsid = h[]
     return ret
 
-
 def get_wordlist_from_cws(id):
     cws = database.get_cws_by_id(id)
     if cws == None:
@@ -219,7 +218,6 @@ def get_complete_vocab_from_cws(id):
         if look != None:
             ret.append([look.chineseword,look.jyutping,look.definition])
     return ret
-
 
 def unanswered_questions():
     return database.get_unanswered_questions()
