@@ -44,7 +44,12 @@ def direct_ai_question(cwsid,question,p1,p2,type):
         start = p2
         end = p1
     # ok lets go 
+    log.log('From here ' + cws.orgtext)
+    log.log('Points ' + str(p1) + ' ' + str(p2))
+    
     fragment = cws.orgtext[p1:p2]
+    log.log('Fragment ' + fragment)
+
     response = doopenapirequest(question + ":" + fragment)
     # and the full response
     totalresponse = question + ":" + fragment + "\n" + response
