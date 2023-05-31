@@ -80,7 +80,7 @@ def dictionarylookup():
     return jsonify({'result':result})
 
 @app.route('/reactorlookup',methods=['GET'])
-def dictionarylookup():
+def reactorlookup():
     term = request.args.get('q')
     result = api.dictionary_looup(term)
     return str(result)
