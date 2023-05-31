@@ -5,6 +5,8 @@ import log
 import constants
 import database
 
+import random
+
 app = Flask(__name__)
 
 @app.route('/version', methods=['GET','PUT'])
@@ -130,3 +132,14 @@ def update_dictionary():
     definition = data.get(constants.PARAMETER_DEFINITION)
     database.update_dictionary(term,jyutping,definition)
     return jsonify({'result':'ok'})
+
+@app.route('/get_random_ai_question',methods=['GET'])
+def get_random_ai_question():
+    ret = api.unanswered_questions()
+    answer = random.choice(ret)    
+    return str(answer)
+
+@app.route('/post_random_ai_response',methods=['POST'])
+def post_random_ai_response():
+    return "OK"
+
