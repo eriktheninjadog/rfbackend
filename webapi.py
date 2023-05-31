@@ -76,7 +76,7 @@ def generatequestions():
 def dictionarylookup():
     data = request.json
     word = data.get(constants.PARAMETER_SEARCH_WORD)
-    result = api.dictionary_looup()
+    result = api.dictionary_looup(word)
     return jsonify({'result':result})
 
 @app.route('/reactorlookup',methods=['GET'])
