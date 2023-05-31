@@ -137,7 +137,7 @@ def update_dictionary():
 def get_random_ai_question():
     ret = api.unanswered_questions()
     answer = random.choice(ret)    
-    return str(answer)
+    return str(answer.question)
 
 @app.route('/post_random_ai_response',methods=['POST'])
 def post_random_ai_response():
