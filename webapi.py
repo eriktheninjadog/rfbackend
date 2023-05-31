@@ -139,13 +139,17 @@ def get_random_ai_question():
     answer = random.choice(ret)    
     return str(answer.question)
 
+
+
+
+
 @app.route('/post_random_ai_response',methods=['POST'])
 def post_random_ai_response():
     question = request.form.get('question')
-    response = request.form.get('response')
+    airesponse = request.form.get('airesponse')
     log.log ("post_random_ai_response " + question)
-    log.log ("post_random_ai_response got response " + response) 
-    responsecws = api.process_chinese("","",response,-1,-1) 
+    log.log ("post_random_ai_response got response " + airesponse) 
+    responsecws = api.process_chinese("","",airesponse,-1,-1) 
     log.log ("found responsecws for question " + str(responsecws))
     ret = api.unanswered_questions()
     for r in ret:
@@ -153,4 +157,4 @@ def post_random_ai_response():
             log.log("found a question" + str(r.id))
             database.answer_ai_response(r.id,responsecws.id)    
     return "OK"
-
+    
