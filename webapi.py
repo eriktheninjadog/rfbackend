@@ -76,8 +76,16 @@ def generatequestions():
 def dictionarylookup():
     data = request.json
     word = data.get(constants.PARAMETER_SEARCH_WORD)
-    result = api.dictionary_looup(word)
+    result = api.dictionary_looup()
     return jsonify({'result':result})
+
+@app.route('/reactorlookup',methods=['GET'])
+def dictionarylookup():
+    term = request.args.get('q')
+    result = api.dictionary_looup(term)
+    return str(result)
+
+
 
 @app.route('/get_cws_vocabulary',methods=['POST'])
 def get_cws_vocabulary():
@@ -140,9 +148,6 @@ def get_random_ai_question():
     return str(answer.question)
 
 
-
-
-
 @app.route('/post_random_ai_response',methods=['POST'])
 def post_random_ai_response():
     question = request.form.get('question')
@@ -157,4 +162,3 @@ def post_random_ai_response():
             log.log("found a question" + str(r.id))
             database.answer_ai_response(r.id,responsecws.id)    
     return "OK"
-    

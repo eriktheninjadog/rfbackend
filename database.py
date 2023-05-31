@@ -136,8 +136,11 @@ def update_dictionary(chineseword,jyutping,definition):
     mycursor = mydb.cursor()
     sql = "delete from words where chiword like '" + chineseword+ "'"
     mycursor.execute(sql)
+    mydb.commit()
     sql = 'INSERT INTO words (chiword, canto, exp) VALUES (%s, %s, %s)'
+    log.log(sql)    
     val = (chineseword,jyutping,definition)
+    log.log(str(val))
     mycursor.execute(sql,val)
     mydb.commit()
     mycursor.close()
