@@ -232,3 +232,4 @@ def get_imported_texts():
 def dictionary_looup(word):
     return database.find_word(word)
 
+
