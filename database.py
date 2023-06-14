@@ -28,6 +28,13 @@ from sqlalchemy import inspect
 import urllib.parse
 
 
+cachedir = '/tmp/'
+
+from joblib import Memory
+memory = Memory(cachedir, verbose=0)
+
+
+
 from pymemcache.client import base
 # setup the classes
 # I personally find this pretty ugly, so 
@@ -42,9 +49,6 @@ metadata_obj = MetaData()
 metadata_obj.reflect(bind=engine)
 
 client = base.Client(('localhost', 11211))
-
-
-
 
 activity = Base.classes.activity
 ai_response = Base.classes.ai_response
@@ -146,8 +150,6 @@ def update_dictionary(chineseword,jyutping,definition):
     mycursor.close()
     mydb.close()
     
-
-
 def get_cws_by_id(id):
     ret = []
     mydb = get_connection()

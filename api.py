@@ -3,7 +3,6 @@
 # web access lies above this
 # only dataobjects or simple ids are passed between these
 #
-
 from settings import settings
 from dataobject import CWS
 from dataobject import Fragment
@@ -15,6 +14,12 @@ import json
 import log
 import constants
 import requests
+
+
+cachedir = '/tmp/'
+
+from joblib import Memory
+memory = Memory(cachedir, verbose=0)
 
 def doopenapirequest(txt):
     url = "https://api.writesonic.com/v2/business/content/chatsonic?engine=premium"
@@ -71,7 +76,8 @@ def process_chinese(title, source, text, type,parentid):
         cws = CWS(-1,None,text,cwstext,signature,"",title,source,type,parentid)
         id = database.add_cws(cws)
         return database.get_cws_by_id(id)
-    
+
+@memory.cache   
 def get_cws_text(id):
     return database.get_cws_by_id(id)
     
@@ -157,7 +163,10 @@ def answer_ai_question(question_id,answer):
 #       cwsid same as cwsid, responsecwsid is not null
 #   ]
 # }
+#
 # 
+
+@memory.cache 
 def lookup_position(cwsid,position):
     log.log("lookup_position("+str(cwsid)+","+ str(position)+")")
     #
@@ -205,6 +214,7 @@ def lookup_position(cwsid,position):
         #responsecwsid = h[]
     return ret
 
+@memory.cache 
 def get_wordlist_from_cws(id):
     cws = database.get_cws_by_id(id)
     if cws == None:
@@ -212,6 +222,7 @@ def get_wordlist_from_cws(id):
     rawlist = cws.cwstext
     return list(set(rawlist))
 
+@memory.cache 
 def get_complete_vocab_from_cws(id):
     ret = []
     wl = get_wordlist_from_cws(id)
@@ -226,10 +237,12 @@ def get_complete_vocab_from_cws(id):
 def unanswered_questions():
     return database.get_unanswered_questions()
 
+@memory.cache
 def get_imported_texts():
     return database.get_cws_list_by_type(constants.CWS_TYPE_IMPORT_TEXT)
 
-def dictionary_looup(word):
+@memory.cache
+def dictionary_lookup(word):
     return database.find_word(word)
 
 

@@ -4,6 +4,8 @@ import api
 import log
 import constants
 import database
+import os
+import os.path
 
 import random
 
@@ -76,16 +78,14 @@ def generatequestions():
 def dictionarylookup():
     data = request.json
     word = data.get(constants.PARAMETER_SEARCH_WORD)
-    result = api.dictionary_looup(word)
+    result = api.dictionary_lookup(word)
     return jsonify({'result':result})
 
 @app.route('/reactorlookup',methods=['GET'])
 def reactorlookup():
     term = request.args.get('q')
-    result = api.dictionary_looup(term)
+    result = api.dictionary_lookup(term)
     return str(result)
-
-
 
 @app.route('/get_cws_vocabulary',methods=['POST'])
 def get_cws_vocabulary():
@@ -131,7 +131,6 @@ def direct_ai_simplify():
     ret = api.direct_ai_question(cwsid,"Rewrite this text in traditional chinese using simple words and sentences:",p1,p2,constants.CWS_TYPE_DIRECT_AI_SIMPLIFY)
     return jsonify({'result':ret})
 
-
 @app.route('/update_dictionary',methods=['POST'])
 def update_dictionary():
     data = request.json
@@ -147,7 +146,6 @@ def get_random_ai_question():
     answer = random.choice(ret)    
     return str(answer.question)
 
-
 @app.route('/post_random_ai_response',methods=['POST'])
 def post_random_ai_response():
     question = request.form.get('question')
@@ -162,3 +160,21 @@ def post_random_ai_response():
             log.log("found a question" + str(r.id))
             database.answer_ai_response(r.id,responsecws.id)    
     return "OK"
+
+
+@app.route("/translatechinese",methods=["POST"])
+def translatechinese():
+    os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
+    print("Translate To English")
+    translate = boto3.client(service_name='translate', region_name='ap-southeas\
+t-1', use_ssl=True)
+    finaltext = ""
+    chinese_text = request.json['text']
+    chinese_text = chinese_text.replace('\n','_')
+    bits = wrap(chinese_text,9000)
+    for bit in bits:
+        english_text = bit
+        result = translate.translate_text(Text=chinese_text,
+            SourceLanguageCode="zh-TW", TargetLanguageCode="en")
+        finaltext = finaltext + result.get('TranslatedText')
+    return jsonify({'result':finaltext})
