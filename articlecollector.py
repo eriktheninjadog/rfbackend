@@ -12,3 +12,6 @@ def getanarticle():
         if len(article.text) > 200:
             print(article.title)
             exit(-1)
+
+
+getanarticle()
