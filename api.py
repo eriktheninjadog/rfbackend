@@ -1,8 +1,3 @@
-#
-# this is the main api.
-# web access lies above this
-# only dataobjects or simple ids are passed between these
-#
 from settings import settings
 from dataobject import CWS
 from dataobject import Fragment

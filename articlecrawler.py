@@ -51,7 +51,6 @@ def getRedditArticle(url):
         txt = txt + comment.body + "\n"
     return dataobject.Article(post.title,txt)
 
-
 def getreddithome():
     reddit = praw.Reddit(client_id='GFpFjVd8PUOEW0YoSBZhdA',
                      client_secret='Hhc5OlhlnKOtMKtZ0gB60IJVtpCflg',
@@ -72,6 +71,19 @@ def getrthkhome():
         if (link.get('href') != None and link.get('href').find('component/k2') != -1):
             txt = txt + link.text + ' process articleurl|'+link.get('href')+' process \n'
     return dataobject.Article('RTHK TODAY',txt)
+
+def getrthkarticles():
+    all = []
+    txt =''
+    url = 'https://news.rthk.hk/rthk/ch/latest-news.htm'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    for link in soup.find_all('a'):
+        if (link.get('href') != None and link.get('href').find('component/k2') != -1):
+            all.append( link.get('href'))
+    return all
+
+
 
 def getlibertyhome():
     txt =''
