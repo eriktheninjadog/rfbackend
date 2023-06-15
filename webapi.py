@@ -62,7 +62,7 @@ def getcws():
 
 @app.route('/answeraiquestion',methods=['POST'])
 def answeraiquestion():
-    data = request.json
+    data = request.json    
     aianswer = data.get(constants.PARAMETER_AI_ANSWER)
     questionid = data.get(constants.PARAMETER_QUESTION_ID)   
     print("aianswer:" + aianswer)
@@ -75,8 +75,9 @@ def generatequestions():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
     api.create_ai_paragraphs_questions(cwsid,"Explain the meaning of this text",4,lambda x:len(x)>20)
-    api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>6)
-    api.create_ai_sentences_questions(cwsid,"Explain the grammar of this text",6,lambda x:len(x)>6)
+    api.create_ai_paragraphs_questions(cwsid,"Ask a few questions to make sure the reader understood this paragraph",8,lambda x:len(x)>30)
+    #api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>6)
+    #api.create_ai_parts_questions(cwsid,"Explain this text fragment",7,lambda x:len(x)>4)
     return jsonify({'result':'success'})
 
 @app.route('/dictionarylookup',methods=['POST'])
@@ -163,7 +164,7 @@ def post_random_ai_response():
     for r in ret:
         if r.question == question:
             log.log("found a question" + str(r.id))
-            database.answer_ai_response(r.id,responsecws.id)    
+            database.answer_ai_response(r.id,responsecws.id)
     return "OK"
 
 
