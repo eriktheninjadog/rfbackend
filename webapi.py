@@ -70,14 +70,17 @@ def answeraiquestion():
     api.answer_ai_question(questionid,aianswer)
     return jsonify({'result':'ok'})
 
+
+
 @app.route('/generatequestions',methods=['POST'])
 def generatequestions():
     data = request.json
     cwsid = data.get(constants.PARAMETER_CWSID)
     api.create_ai_paragraphs_questions(cwsid,"Explain the meaning of this text",4,lambda x:len(x)>20)
-    api.create_ai_paragraphs_questions(cwsid,"Ask a few questions to make sure the reader understood this paragraph",8,lambda x:len(x)>30)
-    #api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>6)
-    #api.create_ai_parts_questions(cwsid,"Explain this text fragment",7,lambda x:len(x)>4)
+    #api.create_ai_paragraphs_questions(cwsid,"Ask a few questions to make sure the reader understood this paragraph",8,lambda x:len(x)>30)
+    api.create_ai_paragraphs_questions(cwsid,"Ask a few questions and answers (write answers in chinese) to make sure the reader understood this paragraph",8,lambda x:len(x)>30)
+    api.create_ai_sentences_questions(cwsid,"Explain the grammar of this sentence",5,lambda x:len(x)>6)
+    api.create_ai_parts_questions(cwsid,"Breakdown this text into its parts",7,lambda x:len(x)>4)
     return jsonify({'result':'success'})
 
 @app.route('/dictionarylookup',methods=['POST'])
