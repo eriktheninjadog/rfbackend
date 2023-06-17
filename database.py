@@ -278,3 +278,18 @@ def get_responses(cwsid,position):
     mycursor.close()
     mydb.close()
     return ret 
+
+
+def get_ai_response_of_type(type):
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,question,responsecwsid,metadata,cwsid,start,end,type FROM ai_response WHERE type = " + str(type)    
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall() 
+    for (id,question,responsecwsid,metadata,cwsid,type,start,end) in myresult:
+        ret.append( AIResponse(id,question,responsecwsid,metadata,cwsid,start,end,type))
+    mycursor.close()
+    mydb.close()
+    return ret
+

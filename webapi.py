@@ -185,3 +185,8 @@ t-1', use_ssl=True)
             SourceLanguageCode="zh-TW", TargetLanguageCode="en")
         finaltext = finaltext + result.get('TranslatedText')
     return jsonify({'result':finaltext})
+
+@app.route("/get_a_problem_text",methods=["POST"])
+def get_a_problem_text():
+    result = api.get_random_verify()
+    return jsonify({'result':result})

@@ -1,6 +1,8 @@
 from settings import settings
 from dataobject import CWS
 from dataobject import Fragment
+
+import random
 import textprocessing
 import textsignature
 import database
@@ -242,3 +244,11 @@ def dictionary_lookup(word):
 
 def create_verify_challenge(text):
     database.add_ai_question("Create questions and provide the answers in chinese to check that the reader understands this text:"+text.strip(),1000,-1,0,0)
+
+
+
+def get_random_verify():
+    examples = database.get_ai_response_of_type(1000)
+    pickedelement = random.choice(examples)
+    cws = database.get_cws_by_id(pickedelement.responsecwsid)
+    return [pickedelement,cws]
