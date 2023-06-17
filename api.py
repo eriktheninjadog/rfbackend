@@ -253,4 +253,4 @@ def get_random_verify():
     examples = database.get_ai_response_of_type(1000)
     pickedelement = random.choice(examples)
     cws = database.get_cws_by_id(pickedelement.responsecwsid)
-    return [pickedelement,cws]
+    return cws
