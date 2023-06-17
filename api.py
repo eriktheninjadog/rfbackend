@@ -240,4 +240,5 @@ def get_imported_texts():
 def dictionary_lookup(word):
     return database.find_word(word)
 
-
+def create_verify_challenge(text):
+    database.add_ai_question("Create questions and provide the answers in chinese to check that the reader understands this text:"+text.strip(),1000,-1,0,0)

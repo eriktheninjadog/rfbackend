@@ -9,9 +9,8 @@ def getanarticle():
         article = Article(i)
         article.download()
         article.parse()
-        if len(article.text) > 200:
+        if len(article.text) > 300:
             print(article.title)
-            exit(-1)
-
-
+            api.create_verify_challenge(article.text)
+            
 getanarticle()
