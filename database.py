@@ -280,6 +280,19 @@ def get_responses(cwsid,position):
     return ret 
 
 
+def has_question(fulltext):
+    ret = False
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id FROM ai_response WHERE question like '" + fulltext+ "'"    
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall() 
+    for (id) in myresult:
+        ret = True
+    mycursor.close()
+    mydb.close()    
+    return ret
+
 def get_ai_response_of_type(type):
     ret = []
     mydb = get_connection()
