@@ -70,8 +70,6 @@ def answeraiquestion():
     api.answer_ai_question(questionid,aianswer)
     return jsonify({'result':'ok'})
 
-
-
 @app.route('/generatequestions',methods=['POST'])
 def generatequestions():
     data = request.json
