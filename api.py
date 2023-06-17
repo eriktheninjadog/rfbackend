@@ -246,9 +246,6 @@ def dictionary_lookup(word):
 def create_verify_challenge(text):
     database.add_ai_question("Create a numbered list of questions to check that the reader understands this text:"+text.strip(),1000,-1,0,0) 
 
-
-
-
 def get_random_verify():
     examples = database.get_ai_response_of_type(1000)
     pickedelement = random.choice(examples)
