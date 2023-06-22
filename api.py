@@ -234,7 +234,6 @@ def get_complete_vocab_from_cws(id):
 def unanswered_questions():
     return database.get_unanswered_questions()
 
-@memory.cache
 def get_imported_texts():
     return database.get_cws_list_by_type(constants.CWS_TYPE_IMPORT_TEXT)
 
