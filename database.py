@@ -311,7 +311,7 @@ def get_ai_response_of_type(type):
 def update_pleco(pleco):
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "delete from words where pleco like '" + pleco+ "'"
+    sql = "delete from pleco where pleco like '" + pleco+ "'"
     mycursor.execute(sql)
     mydb.commit()
     sql = 'INSERT INTO pleco (pleco) VALUES (%s)'
