@@ -314,10 +314,10 @@ def update_pleco(pleco):
     sql = "delete from pleco where pleco like '" + pleco+ "'"
     mycursor.execute(sql)
     mydb.commit()
-    sql = 'INSERT INTO pleco (pleco) VALUES (%s)'
+    sql = "INSERT INTO pleco (pleco) VALUES ('"+ pleco +"')"
     log.log(sql)    
     val = (pleco)
-    mycursor.execute(sql,val)
+    mycursor.execute(sql)
     mydb.commit()
     mycursor.close()
     mydb.close()
