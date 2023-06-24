@@ -190,3 +190,12 @@ t-1', use_ssl=True)
 def get_a_problem_text():
     result = api.get_random_verify()
     return jsonify({'result':result})
+
+
+
+
+@app.route('/post_random_pleco',methods=['POST'])
+def post_random_pleco():
+    question = request.form.get('pleco')
+    database.update_pleco(question)
+    return "OK"
