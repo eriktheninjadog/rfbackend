@@ -280,6 +280,33 @@ def get_responses(cwsid,position):
     return ret 
 
 
+def get_responses_of_type(type):
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,question,responsecwsid,metadata,cwsid,type,start,end FROM ai_response WHERE type = " + type
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall() 
+    for (id,question,responsecwsid,metadata,cwsid,type,start,end) in myresult:
+        ret.append( AIResponse(id,question,responsecwsid,metadata,cwsid,start,end,type))
+    mycursor.close()
+    mydb.close()
+    return ret 
+
+
+def delete_responses_of_type(type):
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "delete FROM ai_response WHERE type = " + type
+    mycursor.execute(sql)
+    mycursor.close()
+    mydb.close()
+    return ret 
+
+
+
+
 def has_question(fulltext):
     ret = False
     mydb = get_connection()

@@ -261,3 +261,12 @@ def get_random_verify():
 
 def get_cws_of_type(type):
     database.get_cws_list_by_type(type)
+
+def get_responsecws_of_responsetype(type):
+    ret = []
+    l = database.get_responses_of_type(type)
+    for r in l:
+        if r.responsecwsid != None:
+            acws = database.get_cws_by_id(r.responsecwsid)
+            ret.append(acws)
+    return ret 

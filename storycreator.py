@@ -30,8 +30,10 @@ def create_history_text():
 #    create_sales_text()
 #    create_history_text()
 
-l = api.get_cws_of_type(constants.RESPONSE_TYPE_GENERATE_TEXT)
+
+# its more complicated than this!
+
+l = api.get_responsecws_of_responsetype(constants.RESPONSE_TYPE_GENERATE_TEXT)
 for c in l:
     txt = c.orgtext
     api.create_verify_challenge(txt)
-    
