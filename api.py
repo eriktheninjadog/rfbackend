@@ -244,11 +244,16 @@ def dictionary_lookup(word):
 #changed to numbered
 def create_verify_challenge(text):
     fulltext = "Create a numbered list of questions to check that the reader understands this text:"+text.strip()
-    if database.has_question(fulltext) == False: 
-        database.add_ai_question(fulltext,1000,-1,0,0) 
+    if database.has_question(fulltext) == False:
+        database.add_ai_question(fulltext,constants.RESPONSE_TYPE_CHECK_QUESTION,-1,0,0)
+
+#changed to numbered
+def create_generative_text(fulltext):
+     if database.has_question(fulltext) == False:
+        database.add_ai_question(fulltext,constants.RESPONSE_TYPE_GENERATE_TEXT,-1,0,0)
 
 def get_random_verify():
-    examples = database.get_ai_response_of_type(1000)
+    examples = database.get_ai_response_of_type(constants.RESPONSE_TYPE_CHECK_QUESTION)
     pickedelement = random.choice(examples)
     cws = database.get_cws_by_id(pickedelement.responsecwsid)
     return cws

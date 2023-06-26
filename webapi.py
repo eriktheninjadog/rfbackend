@@ -199,3 +199,10 @@ def post_random_pleco():
     question = request.form.get('pleco')
     database.update_pleco(question)
     return "OK"
+
+@app.route('/generate_text',methods=['POST'])
+def generate_text():
+    text = request.json['text']
+    api.create_generative_text(text)
+    return "OK"
+
