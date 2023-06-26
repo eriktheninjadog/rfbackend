@@ -284,7 +284,7 @@ def get_responses_of_type(type):
     ret = []
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "SELECT id,question,responsecwsid,metadata,cwsid,type,start,end FROM ai_response WHERE type = " + type
+    sql = "SELECT id,question,responsecwsid,metadata,cwsid,type,start,end FROM ai_response WHERE type = " + str(type)
     mycursor.execute(sql)
     myresult = mycursor.fetchall() 
     for (id,question,responsecwsid,metadata,cwsid,type,start,end) in myresult:
@@ -298,7 +298,7 @@ def delete_responses_of_type(type):
     ret = []
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "delete FROM ai_response WHERE type = " + type
+    sql = "delete FROM ai_response WHERE type = " + str(type)
     mycursor.execute(sql)
     mycursor.close()
     mydb.close()
