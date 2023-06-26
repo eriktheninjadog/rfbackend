@@ -257,3 +257,7 @@ def get_random_verify():
     pickedelement = random.choice(examples)
     cws = database.get_cws_by_id(pickedelement.responsecwsid)
     return cws
+
+
+def get_cws_of_type(type):
+    database.get_cws_list_by_type(type)

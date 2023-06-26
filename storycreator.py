@@ -1,5 +1,6 @@
 from wonderwords import RandomWord
 import api
+import constants
 
 r = RandomWord()
 
@@ -24,7 +25,13 @@ def create_history_text():
     result = "Write a brief history of "  + w1 + " using traditional chinese"
     api.create_generative_text(result)
 
-for i in range(100):
-    create_story()
-    create_sales_text()
-    create_history_text()
+#for i in range(100):
+#    create_story()
+#    create_sales_text()
+#    create_history_text()
+
+l = api.get_cws_of_type(constants.RESPONSE_TYPE_GENERATE_TEXT)
+for c in l:
+    txt = c.orgtext
+    api.create_verify_challenge(txt)
+    
