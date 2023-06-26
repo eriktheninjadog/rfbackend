@@ -311,7 +311,7 @@ def has_question(fulltext):
     ret = False
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "SELECT id FROM ai_response WHERE question like '" + fulltext+ "'"    
+    sql = "SELECT id FROM ai_response WHERE question like '" + fulltext.replace("'","''") + "'"    
     mycursor.execute(sql)
     myresult = mycursor.fetchall() 
     for (id) in myresult:
