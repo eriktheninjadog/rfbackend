@@ -31,7 +31,7 @@ unique_links = list(link_set)
 
 for link in unique_links:
     print(link)
-    article = Article(link)
+    article = Article('https://www.reuters.com/'+link)
     article.download()
     article.parse()
     print(article.title)
