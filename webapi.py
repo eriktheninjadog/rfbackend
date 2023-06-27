@@ -159,7 +159,8 @@ def post_random_ai_response():
     airesponse = request.form.get('airesponse')
     log.log ("post_random_ai_response " + question)
     log.log ("post_random_ai_response got response " + airesponse) 
-    responsecws = api.process_chinese("","",airesponse,-1,-1) 
+    completeresponsetext = question + "\n\n" + airesponse  
+    responsecws = api.process_chinese("","",completeresponsetext,-1,-1)     
     log.log ("found responsecws for question " + str(responsecws))
     ret = api.unanswered_questions()
     for r in ret:
