@@ -39,7 +39,7 @@ for link in unique_links:
     print("Translate To English")
     translate = boto3.client(service_name='translate', region_name='ap-southeas\
 t-1', use_ssl=True)
-    result = translate.translate_text(Text=totaltext,
+    result = translate.translate_text(Text=darticle,
     SourceLanguageCode="en" , TargetLanguageCode="zh-TW")
     translated = result.get('TranslatedText')
     print(translated)
