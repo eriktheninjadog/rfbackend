@@ -3,8 +3,10 @@ import articlecrawler
 from newspaper import Article
 import requests
 from bs4 import BeautifulSoup
+import constants
 import os
 import boto3
+import time
 
 
 
@@ -44,6 +46,6 @@ t-1', use_ssl=True)
     translated = result.get('TranslatedText')
     print(translated)
     totaltext = totaltext + translated
-print(translated)
-    
+    time.sleep(60)
+api.process_chinese("Daily News", "news",totaltext , constants.CWS_TYPE_IMPORT_TEXT  ,-1)
 
