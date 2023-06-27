@@ -33,15 +33,16 @@ for link in unique_links:
     article = Article('https://www.reuters.com/'+link)
     article.download()
     article.parse()
-    totaltext = totaltext + article.title +'\n'
-    totaltext = totaltext + article.text +'\n------------------\n\n'
-os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
-print("Translate To English")
-translate = boto3.client(service_name='translate', region_name='ap-southeas\
+    darticle = article.title +'\n'
+    darticle = darticle + article.text +'\n------------------\n\n'
+    os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
+    print("Translate To English")
+    translate = boto3.client(service_name='translate', region_name='ap-southeas\
 t-1', use_ssl=True)
-result = translate.translate_text(Text=totaltext,
-SourceLanguageCode="en" , TargetLanguageCode="zh-TW")
-translated = result.get('TranslatedText')
+    result = translate.translate_text(Text=totaltext,
+    SourceLanguageCode="en" , TargetLanguageCode="zh-TW")
+    translated = result.get('TranslatedText')
+    totaltext = totaltext + translated
 print(translated)
     
 
