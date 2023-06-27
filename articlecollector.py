@@ -3,6 +3,8 @@ import articlecrawler
 from newspaper import Article
 import requests
 from bs4 import BeautifulSoup
+import os
+import boto3
 
 
 
@@ -19,21 +21,27 @@ def getanarticle():
 
 #def getworldnews():
 #getanarticle()
-response = requests.get('https://www.reuters.com/news/archive/worldNews')
-# parse the HTML content using BeautifulSoup
-soup = BeautifulSoup(response.content, 'html.parser')
-# find all the links on the main page
-links = soup.find_all('a')
-# print the href attribute of each link
 
+response = requests.get('https://www.reuters.com/news/archive/worldNews')
+soup = BeautifulSoup(response.content, 'html.parser')
+links = soup.find_all('a')
 link_set = set([link.get('href') for link in links if "/article/" in link.get('href')])
 unique_links = list(link_set)
-
+totaltext = ''
 for link in unique_links:
     print(link)
     article = Article('https://www.reuters.com/'+link)
     article.download()
     article.parse()
-    print(article.title)
+    totaltext = totaltext + article.title +'\n'
+    totaltext = totaltext + article.text +'\n------------------\n\n'
+os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
+print("Translate To English")
+translate = boto3.client(service_name='translate', region_name='ap-southeas\
+t-1', use_ssl=True)
+result = translate.translate_text(Text=totaltext,
+SourceLanguageCode="en" , TargetLanguageCode="zh-TW")
+translated = result.get('TranslatedText')
+print(translated)
     
 
