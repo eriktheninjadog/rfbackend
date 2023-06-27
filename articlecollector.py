@@ -26,6 +26,7 @@ soup = BeautifulSoup(response.content, 'html.parser')
 links = soup.find_all('a')
 # print the href attribute of each link
 for link in links:
-    print(link.get('href'))
+    if "/article/" in link.get('href'):
+        print(link.get('href'))
 
 
