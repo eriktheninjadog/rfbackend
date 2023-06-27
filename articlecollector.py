@@ -42,6 +42,7 @@ t-1', use_ssl=True)
     result = translate.translate_text(Text=totaltext,
     SourceLanguageCode="en" , TargetLanguageCode="zh-TW")
     translated = result.get('TranslatedText')
+    print(translated)
     totaltext = totaltext + translated
 print(translated)
     
