@@ -30,6 +30,7 @@ link_set = set([link.get('href') for link in links if "/article/" in link.get('h
 unique_links = list(link_set)
 
 for link in unique_links:
+    print(link)
     article = Article(link)
     article.download()
     article.parse()
