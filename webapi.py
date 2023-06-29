@@ -184,10 +184,10 @@ def explain_paragraph():
     start = thecws.orgtext.find(paragraph)
     if start == -1:
         return "OK"
-    database.add_ai_question("Explain the meaning, structure and grammar of this text:"+paragraph.strip(),type,cwsid,
+    database.add_ai_question("Explain the meaning, structure and grammar of this text:"+paragraph.strip(),66,cwsid,
                                 start,
                                 len(paragraph))
-    database.add_ai_question("Write a few questions to check that the reader has understood this text:"+paragraph.strip(),type,cwsid,
+    database.add_ai_question("Write a few questions to check that the reader has understood this text:"+paragraph.strip(),constants.RESPONSE_TYPE_CHECK_QUESTION,cwsid,
                                 start,
                                 len(paragraph))
 
