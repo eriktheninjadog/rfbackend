@@ -175,6 +175,7 @@ def explain_paragraph():
     cwsid     = request.json['cwsid']
     if (len(paragraph) < 5):
         return "OK"
+    log.log("/explain_paragraph CWSID: " + str(cwsid))
     # we want to find the start and end of the text
     thecws = database.get_cws_by_id(cwsid)
     start = thecws.orgtext.find(paragraph)
