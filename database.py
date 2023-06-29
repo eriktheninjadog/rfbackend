@@ -155,7 +155,8 @@ def get_cws_by_id(id):
     mydb = get_connection()
     mycursor = mydb.cursor()
     sql = "SELECT id,created,orgtext,cwstext,signature,metadata,title,source,type,parent FROM cws WHERE id = " + str(id)
-    mycursor.execute(sql)                                                            
+    mycursor.execute(sql)
+    print(sql)                                                            
     myresult = mycursor.fetchall() 
     for (id,created,orgtext,cwstext,signature,metadata,title,source,type,parent) in myresult:
         ret.append( CWS(id,created,orgtext,json.loads(cwstext),signature,metadata,title,source,type,parent))
