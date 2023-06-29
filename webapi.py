@@ -190,6 +190,7 @@ def explain_paragraph():
     database.add_ai_question("Write a few questions to check that the reader has understood this text:"+paragraph.strip(),constants.RESPONSE_TYPE_CHECK_QUESTION,cwsid,
                                 start,
                                 len(paragraph))
+    return "OK"
 
 
 @app.route("/translatechinese",methods=["POST"])
