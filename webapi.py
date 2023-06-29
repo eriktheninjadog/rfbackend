@@ -169,6 +169,24 @@ def post_random_ai_response():
             database.answer_ai_response(r.id,responsecws.id)
     return "OK"
 
+@app.route('/explain_paragraph',methods=['POST'])
+def explain_paragraph():
+    paragraph = request.json['text']
+    cwsid     = request.json['cwsid']
+    if (len(paragraph) < 5):
+        return "OK"
+    # we want to find the start and end of the text
+    thecws = database.get_cws_by_id(cwsid)
+    start = thecws.orgtext.find(paragraph)
+    if start == -1:
+        return "OK"
+    database.add_ai_question("Explain the meaning, structure and grammar of this text:"+paragraph.strip(),type,cwsid,
+                                start,
+                                len(paragraph))
+    database.add_ai_question("Write a few questions to check that the reader has understood this text:"+paragraph.strip(),type,cwsid,
+                                start,
+                                len(paragraph))
+
 
 @app.route("/translatechinese",methods=["POST"])
 def translatechinese():
@@ -191,8 +209,6 @@ t-1', use_ssl=True)
 def get_a_problem_text():
     result = api.get_random_verify()
     return jsonify({'result':result})
-
-
 
 
 @app.route('/post_random_pleco',methods=['POST'])
