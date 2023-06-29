@@ -178,6 +178,9 @@ def explain_paragraph():
     log.log("/explain_paragraph CWSID: " + str(cwsid))
     # we want to find the start and end of the text
     thecws = database.get_cws_by_id(cwsid)
+    if thecws == None:
+        return "Couldn't find CWS " + str(cwsid)
+
     start = thecws.orgtext.find(paragraph)
     if start == -1:
         return "OK"
