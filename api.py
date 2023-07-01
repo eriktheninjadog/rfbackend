@@ -270,3 +270,6 @@ def get_responsecws_of_responsetype(type):
             acws = database.get_cws_by_id(r.responsecwsid)
             ret.append(acws)
     return ret 
+
+def deletecwsbyid(cwsid):
+    database.delete_cws_by_id(cwsid)

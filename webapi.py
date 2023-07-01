@@ -228,3 +228,8 @@ def generate_text():
     api.create_generative_text(text)
     return "OK"
 
+@app.route('/deletecws',methods=['POST'])
+def deletecws():
+    cwsid = request.json['cwsid']
+    api.deletecwsbyid(cwsid)
+    

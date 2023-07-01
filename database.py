@@ -253,6 +253,18 @@ def answer_ai_response(id,repsonsecwsid):
     mydb.commit()
     mycursor.close()
     mydb.close()
+
+
+def delete_cws_by_id(cwsid):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "delete from cws where id = " + str(cwsid)
+    mycursor.execute(sql)
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
+
+
     
 def get_unanswered_questions():
     ret = []
