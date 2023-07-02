@@ -179,10 +179,12 @@ def explain_paragraph():
     # we want to find the start and end of the text
     thecws = database.get_cws_by_id(cwsid)
     if thecws == None:
+        log.log("Couldn't find CWS " + str(cwsid))        
         return "Couldn't find CWS " + str(cwsid)
-
+    
     start = thecws.orgtext.find(paragraph)
     if start == -1:
+        log.log("Couldn't find paragrap" + str(cwsid) + paragraph)                
         return "OK"
     database.add_ai_question("Explain the meaning, structure and grammar of this text:"+paragraph.strip(),66,cwsid,
                                 start,
