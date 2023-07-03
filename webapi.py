@@ -33,6 +33,7 @@ def addtext():
     parentcwsid = data.get(constants.PARAMETER_PARENT_CWSID)    
     source      = data.get(constants.PARAMETER_TEXT_SOURCE)
     isReliable, textBytesFound, details = cld2.detect(body) 
+    print(str(details))
     if details[0][1] == "en":
         os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
         print("Translate To English")
