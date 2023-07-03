@@ -42,10 +42,10 @@ t-1', use_ssl=True)
         finaltext = ""
         bits = wrap(body,9000)
         for bit in bits:
-            english_text = bit
+            english_text = bit.replace("\n","_")
             result = translate.translate_text(Text=english_text,
             SourceLanguageCode="en", TargetLanguageCode="zh-TW")
-            finaltext = finaltext + result.get('TranslatedText')
+            finaltext = finaltext + result.get('TranslatedText').replace("_","\n")
         body = finaltext
         print("Translation " + body)        
     cws  = api.process_chinese(title, source, body, type,parentcwsid)
