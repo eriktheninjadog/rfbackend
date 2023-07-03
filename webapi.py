@@ -8,6 +8,7 @@ import os
 import os.path
 
 import boto3
+from textblob import TextBlob
 
 
 from textwrap import wrap
@@ -31,6 +32,20 @@ def addtext():
     body        = data.get(constants.PARAMETER_TEXT_BODY)
     parentcwsid = data.get(constants.PARAMETER_PARENT_CWSID)    
     source      = data.get(constants.PARAMETER_TEXT_SOURCE)
+    lang = TextBlob(body)
+    if lang.detect_language() == "en":
+        os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
+        print("Translate To English")
+        translate = boto3.client(service_name='translate', region_name='ap-southeas\
+t-1', use_ssl=True)
+        finaltext = ""
+        bits = wrap(source,9000)
+        for bit in bits:
+            english_text = bit
+            result = translate.translate_text(Text=english_text,
+            SourceLanguageCode="zh-TW", TargetLanguageCode="en")
+            finaltext = finaltext + result.get('TranslatedText')
+        source = finaltext
     cws         = api.process_chinese(title, source, body, type,parentcwsid)
     #api.create_and_store_all_fragments(cws[0])
     return jsonify({'result':cws})
