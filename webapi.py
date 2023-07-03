@@ -44,10 +44,10 @@ t-1', use_ssl=True)
         for bit in bits:
             english_text = bit
             result = translate.translate_text(Text=english_text,
-            SourceLanguageCode="zh-TW", TargetLanguageCode="en")
+            SourceLanguageCode="en", TargetLanguageCode="zh-TW")
             finaltext = finaltext + result.get('TranslatedText')
         source = finaltext
-    cws         = api.process_chinese(title, source, body, type,parentcwsid)
+    cws  = api.process_chinese(title, source, body, type,parentcwsid)
     #api.create_and_store_all_fragments(cws[0])
     return jsonify({'result':cws})
 
