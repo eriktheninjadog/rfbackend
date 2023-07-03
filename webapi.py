@@ -36,7 +36,7 @@ def addtext():
     print(str(details))
     if details[0][1] == "en":
         os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
-        print("Translate To English")
+        print("Translate To chinese")
         translate = boto3.client(service_name='translate', region_name='ap-southeas\
 t-1', use_ssl=True)
         finaltext = ""
@@ -47,6 +47,7 @@ t-1', use_ssl=True)
             SourceLanguageCode="en", TargetLanguageCode="zh-TW")
             finaltext = finaltext + result.get('TranslatedText')
         body = finaltext
+        print("Translation " + body)        
     cws  = api.process_chinese(title, source, body, type,parentcwsid)
     #api.create_and_store_all_fragments(cws[0])
     return jsonify({'result':cws})
