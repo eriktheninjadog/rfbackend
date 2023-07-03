@@ -40,7 +40,7 @@ def addtext():
         translate = boto3.client(service_name='translate', region_name='ap-southeas\
 t-1', use_ssl=True)
         finaltext = ""
-        bits = wrap(source,9000)
+        bits = wrap(body,9000)
         for bit in bits:
             english_text = bit
             result = translate.translate_text(Text=english_text,
