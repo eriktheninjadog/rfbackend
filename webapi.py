@@ -261,4 +261,4 @@ def direct_ai_question():
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
     print(thetext)
-    return thetext
+    return jsonify({'result':thetext})
