@@ -251,4 +251,14 @@ def generate_text():
 def deletecws():
     cwsid = request.json['cwsid']
     api.deletecwsbyid(cwsid)
-    
+
+@app.route('/direct_ai_question',methods=['POST'])
+def direct_ai_question():
+    cwsid       = request.json['cwsid']
+    question    = request.json['question']    
+    start       = request.json['start']
+    end         = request.json['end']
+    thecws = api.get_cws_text( cwsid )
+    thetext = thecws.orgtext[start:end]
+    print(thetext)
+    return thetext
