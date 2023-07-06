@@ -263,5 +263,5 @@ def direct_ai_question():
     thetext = thecws.orgtext[start:end]
     thequestion = question + " : " + thetext
     answer = aisocketapi.ask_ai(thequestion)
-    cws = api.process_chinese("","ai",answer,500,cwsid)
+    cws = api.process_chinese("","ai",thetext+"\n"+answer,500,cwsid)
     return jsonify({'result':cws})
