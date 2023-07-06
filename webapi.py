@@ -14,6 +14,7 @@ import pycld2 as cld2
 from textwrap import wrap
 
 import random
+import aisocketapi
 
 app = Flask(__name__)
 
@@ -260,5 +261,6 @@ def direct_ai_question():
     end         = request.json['end']
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
-    print(thetext)
-    return jsonify({'result':thetext})
+    thequestion = question + " : " + thetext;
+    answer = aisocketapi.ask_ai(thequestion)
+    return jsonify({'result':answer})
