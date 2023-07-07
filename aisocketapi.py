@@ -2,7 +2,12 @@ import socket
 import ssl
 import json
 
+from threading import Thread, Lock
+
+lock = Lock()
+
 def ask_ai(question):
+    lock.acquire()
     path = "/chat?stream=true"
     hostname = 'api.writingmate.ai'
     context = ssl.create_default_context()
@@ -68,6 +73,7 @@ def ask_ai(question):
             finally:
                 # Close the socket connection
                 ssock.close()
+            lock.release()
             return total
     
 
