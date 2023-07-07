@@ -244,6 +244,20 @@ def add_ai_question(question,type,cwsid,start,end):
     session.commit()
     return ap.id
 
+def add_answered_ai_question(question,type,cwsid,start,end,responsecwsid):
+    ap = ai_reponse(question=question,
+                    type = type,
+                    cwsid = cwsid,
+                    start = start,
+                    end = end,
+                    responsecwsid = responsecwsid
+                    )
+    session.add(ap)
+    session.flush()
+    session.commit()
+    return ap.id
+
+
 def answer_ai_response(id,repsonsecwsid):
     mydb = get_connection()
     mycursor = mydb.cursor()
