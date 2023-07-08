@@ -163,7 +163,6 @@ def answer_ai_question(question_id,answer):
 #
 # 
 
-@memory.cache 
 def lookup_position(cwsid,position):
     log.log("lookup_position("+str(cwsid)+","+ str(position)+")")
     #
