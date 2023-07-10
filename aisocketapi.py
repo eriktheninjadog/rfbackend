@@ -6,6 +6,8 @@ from threading import Thread, Lock
 
 lock = Lock()
 
+#{"alg":"HS256"}{"https://hasura.io/jwt/claims":{"x-hasura-plan":"pro_yearly","x-hasura-premium":"true","x-hasura-allowed-roles":["me","user"],"x-hasura-default-role":"user","x-hasura-user-id":"3d97c4a0-11fb-496c-8a6d-8083d1d522d9","x-hasura-user-is-anonymous":"false"},"sub":"3d97c4a0-11fb-496c-8a6d-8083d1d522d9","iat":1688720138,"exp":1688806538,"iss":"hasura-auth"}
+#{"alg":"HS256"}{"https://hasura.io/jwt/claims":{"x-hasura-premium":"false","x-hasura-allowed-roles":["me","user"],"x-hasura-default-role":"user","x-hasura-user-id":"3d97c4a0-11fb-496c-8a6d-8083d1d522d9","x-hasura-user-is-anonymous":"false"},"sub":"3d97c4a0-11fb-496c-8a6d-8083d1d522d9","iat":1688631295,"exp":1688717695,"iss":"hasura-auth"}
 def ask_ai(question):
     lock.acquire()
     path = "/chat?stream=true"
@@ -17,7 +19,7 @@ def ask_ai(question):
     #auth="Bearer   "
     #auth= "Bearer eyJhbGciOiJIUzI1NiJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXByZW1pdW0iOiJmYWxzZSIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsibWUiLCJ1c2VyIl0sIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS11c2VyLWlkIjoiM2Q5N2M0YTAtMTFmYi00OTZjLThhNmQtODA4M2QxZDUyMmQ5IiwieC1oYXN1cmEtdXNlci1pcy1hbm9ueW1vdXMiOiJmYWxzZSJ9LCJzdWIiOiIzZDk3YzRhMC0xMWZiLTQ5NmMtOGE2ZC04MDgzZDFkNTIyZDkiLCJpYXQiOjE2ODg2MjI0ODEsImV4cCI6MTY4ODcwODg4MSwiaXNzIjoiaGFzdXJhLWF1dGgifQ.bWFjOoCkbBtRYWvuoYyfSdK9lqemiaVzZXCLSowUUSI"
     #auth="Bearer eyJhbGciOiJIUzI1NiJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXBsYW4iOiJwcm9feWVhcmx5IiwieC1oYXN1cmEtcHJlbWl1bSI6InRydWUiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbIm1lIiwidXNlciJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtdXNlci1pZCI6IjNkOTdjNGEwLTExZmItNDk2Yy04YTZkLTgwODNkMWQ1MjJkOSIsIngtaGFzdXJhLXVzZXItaXMtYW5vbnltb3VzIjoiZmFsc2UifSwic3ViIjoiM2Q5N2M0YTAtMTFmYi00OTZjLThhNmQtODA4M2QxZDUyMmQ5IiwiaWF0IjoxNjg4NzIwMTM4LCJleHAiOjE2ODg4MDY1MzgsImlzcyI6Imhhc3VyYS1hdXRoIn0.blnm6MGUmTWtH68biEq_vUjRTzCjgqjMQNMBdjQLs9c"
-    auth="Bearer eyJhbGciOiJIUzI1NiJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXBsYW4iOiJwcm9feWVhcmx5IiwieC1oYXN1cmEtcHJlbWl1bSI6InRydWUiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbIm1lIiwidXNlciJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtdXNlci1pZCI6IjNkOTdjNGEwLTExZmItNDk2Yy04YTZkLTgwODNkMWQ1MjJkOSIsIngtaGFzdXJhLXVzZXItaXMtYW5vbnltb3VzIjoiZmFsc2UifSwic3ViIjoiM2Q5N2M0YTAtMTFmYi00OTZjLThhNmQtODA4M2QxZDUyMmQ5IiwiaWF0IjoxNjg4ODI3NDQyLCJleHAiOjE2ODg5MTM4NDIsImlzcyI6Imhhc3VyYS1hdXRoIn0.kh3tkLB1kS4L3nQOEnfyRTVja-Gr-ms7OqhJuv-TUfo"
+    auth="Bearer eyJhbGciOiJIUzI1NiJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXBsYW4iOiJwcm9feWVhcmx5IiwieC1oYXN1cmEtcHJlbWl1bSI6InRydWUiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbIm1lIiwidXNlciJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtdXNlci1pZCI6IjNkOTdjNGEwLTExZmItNDk2Yy04YTZkLTgwODNkMWQ1MjJkOSIsIngtaGFzdXJhLXVzZXItaXMtYW5vbnltb3VzIjoiZmFsc2UifSwic3ViIjoiM2Q5N2M0YTAtMTFmYi00OTZjLThhNmQtODA4M2QxZDUyMmQ5IiwiaWF0IjoxNjg4OTExMzkwLCJleHAiOjE2ODg5OTc3OTAsImlzcyI6Imhhc3VyYS1hdXRoIn0.aNF_DUTYmp3woFhP_qnsJ_I7NM7dR6lPHOBR5wdnjaQ"
     context = ssl.create_default_context()
         #body = '{"prompt":"Human: tell me a story\\n"}'
     body = json.dumps(abody)
