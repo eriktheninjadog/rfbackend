@@ -7,7 +7,7 @@ from threading import Thread, Lock
 lock = Lock()
 
 def ask_ai(question):
-    with open('/tmp/auth_part.txt') as f:
+    with open('/tmp/auth/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
     lock.acquire()

@@ -272,8 +272,8 @@ def direct_ai_question():
 def set_ai_auth():
     args = request.args
     auth_part = args.get('auth_part')
-    with open('/tmp/auth_part.txt', 'w') as f:
+    with open('/tmp/auth/auth_part.txt', 'w') as f:
         f.write(auth_part)
-        print("written auth_part")
+        print("written auth_part" + auth_part)
     return jsonify({'result':'ok'})
     
