@@ -7,7 +7,7 @@ import constants
 import os
 import boto3
 import time
-
+import aisocketapi
 
 
 def getanarticle():
@@ -34,9 +34,10 @@ for link in unique_links:
     print(link)
     article = Article('https://www.reuters.com/'+link)
     article.download()
-    article.parse()
+    article.parse() 
     darticle = article.title +'\n'
-    darticle = darticle + article.text +'\n------------------\n\n'
+    sumtext = aisocketapi.ask_ai("Summarize this text into 100 words or less:\n" + article.text )
+    darticle = darticle + sumtext +'\n------------------\n\n'
     os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
     print("Translate To English")
     translate = boto3.client(service_name='translate', region_name='ap-southeas\
