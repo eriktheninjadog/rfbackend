@@ -274,5 +274,6 @@ def set_ai_auth():
     auth_part = args.get('auth_part')
     with open('/tmp/auth_part.txt', 'w') as f:
         f.write(auth_part)
+        print("written auth_part")
     return jsonify({'result':'ok'})
     
