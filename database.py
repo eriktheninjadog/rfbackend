@@ -120,7 +120,7 @@ def find_word(chineseword):
     myresult = mycursor.fetchall() 
     ret = []
     for (chiword,canto,exp) in myresult:
-        ret.append(DictionaryWord(chiword,canto,exp))
+        ret.append( DictionaryWord(chiword,canto,exp) )
     mycursor.close()
     mydb.close()
     if len(ret) == 0:
