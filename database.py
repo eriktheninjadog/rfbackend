@@ -112,13 +112,21 @@ def add_or_update_word(chinese,jyutping, definition):
         found.exp = definition
     session.commit()
 
-def find_word(chinese):
-    found = session.query(words).filter(words.chiword == chinese).first()
-    if found == None:
+def find_word(chineseword):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "select chiword,canto,exp from words where chiword like '" + chineseword+ "'"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall() 
+    ret = []
+    for (chiword,canto,exp) in myresult:
+        ret.append(DictionaryWord(chiword,canto,exp))
+    mycursor.close()
+    mydb.close()
+    if len(ret) == 0:
         return None
     else:
-        ret = DictionaryWord(found.chiword,found.canto,found.exp)
-        return ret
+        return ret[0]
 
 def cws_row_to_dataobject(row):
     return CWS(row.id,row.created,row.orgtext, json.loads(row.cwstext),row.signature,row.metadata,row.title,row.source,row.type,row.parent)
