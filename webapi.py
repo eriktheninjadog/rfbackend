@@ -276,4 +276,19 @@ def set_ai_auth():
         f.write(auth_part)
         print("written auth_part" + auth_part)
     return jsonify({'result':'ok'})
-    
+
+@app.route('/set_stored_value',methods=['POST'])
+def set_ai_auth():
+    value       = request.json['value']
+    storage     = request.json['storage']  
+    key         = request.json['key']  
+    api.write_value_to_dictionary_file(storage,key,value)
+    return jsonify({'result':'ok'})
+
+@app.route('/get_stored_value',methods=['POST'])
+def set_ai_auth():
+    storage     = request.json['storage']  
+    key         = request.json['key']  
+    value       = api.read_value_from_dictionary_file(storage,key)
+    return jsonify({'result':value})
+

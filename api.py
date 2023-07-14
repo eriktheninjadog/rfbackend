@@ -272,3 +272,38 @@ def get_responsecws_of_responsetype(type):
 
 def deletecwsbyid(cwsid):
     database.delete_cws_by_id(cwsid)
+
+
+def read_dictionary_from_file(filename):
+    # Open the file in read mode
+    adictionary = {}
+    try:
+        with open(os.getcwd()+'/'+filename+".json", "r") as json_file:
+        # Load the JSON data from the file and parse it into a dictionary
+            adictionary = json.load(json_file)
+    except:
+        print("something went wrong in read_dictionary_from_file" )
+    finally:
+        print("we are done")    
+    return adictionary
+
+def write_dictionary_to_file(filename,dictionary):
+    try:
+        with open(os.getcwd()+'/'+filename+".json", "w") as json_file:
+            json.dump(dictionary,json_file)
+    except:
+        print("write_dictionary_to_file" )
+    finally:
+        print("we are done")
+
+def write_value_to_dictionary_file(filename, key,value):
+    dict = read_dictionary_from_file(filename)
+    dict[key] = value
+    write_dictionary_to_file(filename,dict)
+    
+def read_value_from_dictionary_file(filename, key):
+    dict = read_dictionary_from_file(filename)
+    if key in dict:
+        return dict[key]
+    else:
+        return None
