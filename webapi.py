@@ -267,7 +267,6 @@ def direct_ai_question():
     database.add_answered_ai_question(thequestion,500,cwsid,start,end,cws.id)
     return jsonify({'result':cws})
 
-
 @app.route('/set_ai_auth',methods=['GET'])
 def set_ai_auth():
     args = request.args
