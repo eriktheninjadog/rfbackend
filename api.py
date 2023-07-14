@@ -278,7 +278,7 @@ def read_dictionary_from_file(filename):
     # Open the file in read mode
     adictionary = {}
     try:
-        with open(os.getcwd()+'/'+filename+".json", "r") as json_file:
+        with open('/var/www/html/api/rfbackend/storage/'+filename+".json", "r") as json_file:
         # Load the JSON data from the file and parse it into a dictionary
             adictionary = json.load(json_file)
     except:
@@ -289,7 +289,7 @@ def read_dictionary_from_file(filename):
 
 def write_dictionary_to_file(filename,dictionary):
     try:
-        with open(os.getcwd()+'/'+filename+".json", "w") as json_file:
+        with open('/var/www/html/api/rfbackend/storage/'+filename+".json", "w") as json_file:
             json.dump(dictionary,json_file)
     except:
         print("write_dictionary_to_file" )
