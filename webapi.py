@@ -287,7 +287,7 @@ def set_stored_value():
 @app.route('/get_stored_value',methods=['POST'])
 def get_stored_value():
     storage     = request.json['storage']  
-    key         = request.json['key']  
+    key         = request.json['key']
     value       = api.read_value_from_dictionary_file(storage,key)
     return jsonify({'result':value})
 
