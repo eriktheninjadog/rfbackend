@@ -64,7 +64,7 @@ def ask_ai(question):
                         print(strpackage)
                         startidx = strpackage.find("data: ")
                         startidx += len("data: ")
-                        endidx = strpackage.find("}\n")+2
+                        endidx = strpackage.    find("}\n")+2
                         #print(strpackage[startidx:endidx])
                         jp = json.loads(strpackage[startidx:endidx])
                         if ("choices" in jp):
