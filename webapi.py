@@ -264,8 +264,8 @@ def direct_ai_question():
     thetext = thecws.orgtext[start:end]
     thequestion = question + " : " + thetext
     answer = aisocketapi.ask_ai(thequestion)
-    #answer = zhconv.convert(answer,'zh-hk')
-    cws = api.process_chinese("","ai",thetext+"\n"+answer,500,cwsid)
+    answer = zhconv.convert(answer,'zh-hk')
+    cws = api.process_chinese("","ai",thetext+"\n------\n"+answer,500,cwsid)
     database.add_answered_ai_question(thequestion,500,cwsid,start,end,cws.id)
     return jsonify({'result':cws})
 
