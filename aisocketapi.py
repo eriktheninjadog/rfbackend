@@ -27,7 +27,7 @@ def ask_ai(question):
         #body = '{"prompt":"Human: tell me a story\\n"}'
     body = json.dumps(abody)
     with context.wrap_socket(sock, server_hostname=hostname) as ssock:
-            #print(ssock.version())
+            print(ssock.version())
             ssock.connect((hostname, 443))
             #print(ssock)
             request = f"POST {path} HTTP/1.1\r\n" \
@@ -54,7 +54,7 @@ def ask_ai(question):
                     if not chunk:
                         break
                     response += chunk
-                    #print(chunk.decode())
+                    print(chunk.decode())
                     #print("got package")
 
                     if (chunk.decode().find("data: [DONE]")!=-1):
