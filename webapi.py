@@ -16,6 +16,7 @@ from textwrap import wrap
 
 import random
 import aisocketapi
+import batchprocessing
 
 app = Flask(__name__)
 
@@ -253,6 +254,12 @@ def generate_text():
 def deletecws():
     cwsid = request.json['cwsid']
     api.deletecwsbyid(cwsid)
+
+@app.route('/simplifycws',methods=['POST'])
+def simplifycws():
+    cwsid = request.json['cwsid']
+    batchprocessing.simplify_cws(cwsid)
+    return "OK"
 
 @app.route('/direct_ai_question',methods=['POST'])
 def direct_ai_question():
