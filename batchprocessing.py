@@ -26,6 +26,7 @@ def splitfunction(txt):
         if (pos - lastpos) > maxlen:
             while (txt[pos] != '。' and pos < len(txt)):
                 pos += 1
+            pos += 1
             print("adding a split " + str(pos))
             ret.append(txt[lastpos:pos])
             lastpos = pos
