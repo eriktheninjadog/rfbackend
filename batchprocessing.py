@@ -16,7 +16,7 @@ def batchprocess_text(all_of_it,splitfunction,processfunction):
     return total
 
 def splitfunction(txt):
-    maxlen = 512
+    maxlen = 60
     ret = []
     pos = 0
     lastpos = 0
