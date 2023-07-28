@@ -300,3 +300,9 @@ def get_stored_value():
     value       = api.read_value_from_dictionary_file(storage,key)
     return jsonify({'result':value})
 
+
+@app.route('/ai_simplify_cws',methods=['POST'])
+def ai_simplify_cws(id):
+    cwsid = request.json['cwsid']
+    simpcws = batchprocessing.simplify_cws(cwsid)
+    return jsonify({'result':simpcws})

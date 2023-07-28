@@ -33,4 +33,5 @@ def simplify_cws(id):
     thecws = api.get_cws_text(id)
     orgtext = thecws.orgtext
     simpletext = batchprocess_text(orgtext,splitfunction,simplifyfunction)
-    api.process_chinese(thecws.title + ' simplified ','ai',simpletext,constants.CWS_TYPE_IMPORT_TEXT,id)
+    newcws = api.process_chinese(thecws.title + ' simplified ','ai',simpletext,constants.CWS_TYPE_IMPORT_TEXT,id) 
+    return newcws
