@@ -302,7 +302,7 @@ def get_stored_value():
 
 
 @app.route('/ai_simplify_cws',methods=['POST'])
-def ai_simplify_cws(id):
+def ai_simplify_cws():
     cwsid = request.json['cwsid']
     simpcws = batchprocessing.simplify_cws(cwsid)
     return jsonify({'result':simpcws})
