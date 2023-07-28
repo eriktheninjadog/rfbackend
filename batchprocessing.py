@@ -20,6 +20,7 @@ def splitfunction(txt):
     ret = []
     pos = 0
     lastpos = 0
+    print(splitfunction)
     while pos < len(txt):
         pos += 1
         if (pos - lastpos) > maxlen:
@@ -28,6 +29,7 @@ def splitfunction(txt):
             print("adding a split " + str(pos))
             ret.append(txt[lastpos:pos])
             lastpos = pos
+    ret.append(txt[lastpos:pos])
     print("number of splits " + str(len(ret))) 
     return ret
 
