@@ -61,12 +61,17 @@ def ask_ai(question):
                         keepgoing = False
                     else:
                         strpackage = chunk.decode()
-                        print(strpackage)
+                        #print(strpackage)
                         startidx = strpackage.find("data: ")
                         startidx += len("data: ")
                         endidx = strpackage.    find("}\n")+2
                         #print(strpackage[startidx:endidx])
-                        jp = json.loads(strpackage[startidx:endidx])
+                        try:
+                            jp = json.loads(strpackage[startidx:endidx])
+                        except:
+                            print("Error in parsing package " + strpackage[startidx:endidx])
+                            jp = {}
+
                         if ("choices" in jp):
                             if (len(jp["choices"])> 0):
                                 if ("delta" in jp["choices"][0]):
