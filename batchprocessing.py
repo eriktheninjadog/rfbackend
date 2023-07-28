@@ -10,6 +10,7 @@ def batchprocess_text(all_of_it,splitfunction,processfunction):
     for i in splitparts:
         print("batchprocess_text processing one part")
         newt = processfunction(i)
+        print("batchprocess_text processing one part processed !")        
         total = total + newt
     return total
 
