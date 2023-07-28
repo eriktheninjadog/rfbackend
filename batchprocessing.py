@@ -6,6 +6,7 @@ import constants
 def batchprocess_text(all_of_it,splitfunction,processfunction):
     # Open a file: file
     total = ''
+    print(" batchprocess text - length of text: " + str(len(all_of_it)))
     splitparts = splitfunction(all_of_it)
     for i in splitparts:
         print("batchprocess_text processing one part")
@@ -26,6 +27,7 @@ def splitfunction(txt):
                 pos += 1
             ret.append(txt[lastpos:pos])
             lastpos = pos
+    print("number of splits " + str(len(ret))) 
     return ret
 
 def simplifyfunction(txt):
