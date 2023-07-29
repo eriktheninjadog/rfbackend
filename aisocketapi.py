@@ -54,7 +54,7 @@ def ask_ai(question):
                     if not chunk:
                         break
                     response += chunk
-                    print(chunk.decode())
+                    #print(chunk.decode())
                     #print("got package")
 
                     if (chunk.decode().find("data: [DONE]")!=-1):
