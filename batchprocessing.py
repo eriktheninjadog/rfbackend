@@ -39,7 +39,7 @@ def splitfunction(txt):
     return ret
 
 def simplifyfunction(txt):
-    return aisocketapi.ask_ai('Rewrite this in chinese using only simple words:' + txt)
+    return aisocketapi.ask_ai('Rewrite this in chinese using only simple words and short sentences:' + txt)
 
 def simplify_cws(id):
     thecws = api.get_cws_text(id)
