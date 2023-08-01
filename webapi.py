@@ -306,3 +306,11 @@ def ai_simplify_cws():
     cwsid = request.json['cwsid']
     simpcws = batchprocessing.simplify_cws(cwsid)
     return jsonify({'result':simpcws})
+
+@app.route('/ai_summarize_random',methods=['POST'])
+def ai_summarize_random():
+    txt = aisocketapi.ask_ai("Pull a random wikipedia page and summarize it's content using traditional chinese in less than 400 words. Follow it with  5 multiple choice questions to test the readers understanding.")
+    cws  = api.process_chinese(random, "", txt, constants.CWS_TYPE_IMPORT_TEXT,-1)
+    return jsonify({'result':cws})
+
+
