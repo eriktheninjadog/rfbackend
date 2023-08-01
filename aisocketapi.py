@@ -24,7 +24,7 @@ def ask_ai(question):
     #auth="Bearer eyJhbGciOiJIUzI1NiJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXBsYW4iOiJwcm9feWVhcmx5IiwieC1oYXN1cmEtcHJlbWl1bSI6InRydWUiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbIm1lIiwidXNlciJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtdXNlci1pZCI6IjNkOTdjNGEwLTExZmItNDk2Yy04YTZkLTgwODNkMWQ1MjJkOSIsIngtaGFzdXJhLXVzZXItaXMtYW5vbnltb3VzIjoiZmFsc2UifSwic3ViIjoiM2Q5N2M0YTAtMTFmYi00OTZjLThhNmQtODA4M2QxZDUyMmQ5IiwiaWF0IjoxNjg4OTc3NjQ0LCJleHAiOjE2ODkwNjQwNDQsImlzcyI6Imhhc3VyYS1hdXRoIn0.GkKMYB1ZFzq87DZcNqcxrjKsgA5sGMKKD8QyZAphAbM"
     auth="Bearer " + auth_part
     context = ssl.create_default_context()
-        #body = '{"prompt":"Human: tell me a story\\n"}'
+    #body = '{"prompt":"Human: tell me a story\\n"}'
     body = json.dumps(abody)
     with context.wrap_socket(sock, server_hostname=hostname) as ssock:
             print(ssock.version())
