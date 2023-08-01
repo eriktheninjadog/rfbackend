@@ -61,7 +61,7 @@ def ask_ai(question):
                         keepgoing = False
                     else:
                         strpackage = chunk.decode()
-                        #print(strpackage)
+                        print(strpackage)
                         startidx = strpackage.find("data: ")
                         startidx += len("data: ")
                         endidx = strpackage.    find("}\n")+2
