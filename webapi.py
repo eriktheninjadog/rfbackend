@@ -309,7 +309,7 @@ def ai_simplify_cws():
 
 @app.route('/ai_summarize_random',methods=['POST'])
 def ai_summarize_random():
-    txt = aisocketapi.ask_ai("Pull a random wikipedia page and summarize it's content using traditional chinese in less than 400 words. Follow it with  5 multiple choice questions to test the readers understanding.")
+    txt = aisocketapi.ask_ai("Generate an article of 500 words in traditional Chinese on a random topic. Follow it with  5 multiple choice questions to test the readers understanding.")
     cws  = api.process_chinese(random, "", txt, constants.CWS_TYPE_IMPORT_TEXT,-1)
     return jsonify({'result':cws})
 
