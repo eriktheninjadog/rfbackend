@@ -4,13 +4,15 @@ import json
 
 from threading import Thread, Lock
 
-lock = Lock()
+#lock = Lock()
+#lock.acquire()
+#lock.release()
+
 
 def ask_ai(question):
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
-    lock.acquire()
     path = "/chat?stream=true"
     hostname = 'api.writingmate.ai'
     context = ssl.create_default_context()
@@ -85,7 +87,6 @@ def ask_ai(question):
             finally:
                 # Close the socket connection
                 ssock.close()
-            lock.release()
             return total
     
 
