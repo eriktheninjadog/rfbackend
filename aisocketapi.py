@@ -13,7 +13,7 @@ def ask_ai(question):
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
-    path = "/chat?stream=true"
+    path = "/chat?stream=true&model=gpt-4"
     hostname = 'api.writingmate.ai'
     context = ssl.create_default_context()
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -90,5 +90,4 @@ def ask_ai(question):
             return total
     
 
-#answer = ask_ai("Explain the grammar and structure of this text: 團隊表示，上蓋可於半小時內開合，令主場館可以全天候開放，不受惡劣天氣影響，組件於來港前亦已進行大量測試。隔音效能亦於來港前測試，確保即使舉行大型音樂活動，亦不會對附近居民造成嘈音問題。")
-#print(answer)
+answer = ask_ai("Explain the grammar and structure of this text: 團隊表示，上蓋可於半小時內開合，令主場館可以全天候開放，不受惡劣天氣影響，組件於來港前亦已進行大量測試。隔音效能亦於來港前測試，確保即使舉行大型音樂活動，亦不會對附近居民造成嘈音問題。")
