@@ -319,4 +319,4 @@ def get_word_list_from_cws(id):
     text = ''
     for c in sorted(words.items(),key = lambda x:x[1],reverse=True):
         text = text + c[0] + '  ' + str(c[1]) + '\n'
-    return process_chinese(words,'wordcount',text, constants.CWS_TYPE_IMPORT_TEXT)
+    return process_chinese(words,'wordcount',text, constants.CWS_TYPE_IMPORT_TEXT,id)
