@@ -313,6 +313,10 @@ def ai_summarize_random():
     cws  = api.process_chinese(random, "", txt, constants.CWS_TYPE_IMPORT_TEXT,-1)
     return jsonify({'result':cws})
 
-
-
+@app.route('/get_word_list',methods=['POST'])
+def get_word_list():
+    cwsid = request.json['cwsid']
+    cwsret = api.get_word_list_from_cws(cwsid)
+    return jsonify({'result':cwsret})
+   
 #add something

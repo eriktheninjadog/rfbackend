@@ -307,3 +307,16 @@ def read_value_from_dictionary_file(filename, key):
         return dict[key]
     else:
         return None
+
+def get_word_list_from_cws(id):
+    thecws = get_cws_text(id)
+    words = {}
+    for word in thecws.cwstext:
+        if word not in words.keys():
+            words[word] = 1
+        else:
+            words[word] = words[word] + 1
+    text = ''
+    for c in sorted(words.items(),keys=lambda x:x[1],reverse=True):
+        text = text + c[0] + '  ' + c[1] + '\n'
+    return process_chinese(words,'wordcount',text, constants.CWS_TYPE_IMPORT_TEXT)
