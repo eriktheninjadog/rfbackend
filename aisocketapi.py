@@ -90,5 +90,5 @@ def ask_ai(question):
             return total
     
 
-answer = ask_ai("Explain the grammar and structure of this text: 團隊表示，上蓋可於半小時內開合，令主場館可以全天候開放，不受惡劣天氣影響，組件於來港前亦已進行大量測試。隔音效能亦於來港前測試，確保即使舉行大型音樂活動，亦不會對附近居民造成嘈音問題。")
-print(answer)
+#answer = ask_ai("Explain the grammar and structure of this text: 團隊表示，上蓋可於半小時內開合，令主場館可以全天候開放，不受惡劣天氣影響，組件於來港前亦已進行大量測試。隔音效能亦於來港前測試，確保即使舉行大型音樂活動，亦不會對附近居民造成嘈音問題。")
+#print(answer)
