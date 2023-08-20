@@ -35,10 +35,8 @@ def splitfunction(txt):
     return ret
 
 def ai_function_factory(ai_string):
-    def ai_f(txt):
-        return aisocketapi.ask_ai(ai_string + txt)
-    return ai_f
-
+    return lambda txt:aisocketapi.ask_ai(ai_string + txt)
+    
 def simplifyfunction(txt):
     return aisocketapi.ask_ai('Rewrite this in chinese using only simple words and short sentences using active voice:' + txt)
 
