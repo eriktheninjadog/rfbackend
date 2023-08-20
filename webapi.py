@@ -307,6 +307,15 @@ def ai_simplify_cws():
     simpcws = batchprocessing.simplify_cws(cwsid)
     return jsonify({'result':simpcws})
 
+
+@app.route('/apply_ai',methods=['POST'])
+def apply_ai():
+    cwsid = request.json['cwsid']
+    aitext = request.json['aitext']
+    simpcws = batchprocessing.apply_ai_to_cws(cwsid,aitext)
+    return jsonify({'result':simpcws})
+    
+
 @app.route('/ai_summarize_random',methods=['POST'])
 def ai_summarize_random():
     txt = aisocketapi.ask_ai("Generate an article of 500 words in traditional Chinese on a random topic. Follow it with  5 multiple choice questions to test the readers understanding.")
