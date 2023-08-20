@@ -1,4 +1,3 @@
-
 import aisocketapi
 import api
 import constants
@@ -35,12 +34,10 @@ def splitfunction(txt):
     print("number of splits " + str(len(ret))) 
     return ret
 
-
 def ai_function_factory(ai_string):
     def ai_f(txt):
         return aisocketapi.ask_ai(ai_string + txt)
     return ai_f
-
 
 def simplifyfunction(txt):
     return aisocketapi.ask_ai('Rewrite this in chinese using only simple words and short sentences using active voice:' + txt)
@@ -59,5 +56,3 @@ def apply_ai_to_cws(id,aitext):
     simpletext = batchprocess_text(orgtext,splitfunction,ai_function_factory( aitext))
     newcws = api.process_chinese( thecws.title + ' ai ' + aitext,simpletext,constants.CWS_TYPE_IMPORT_TEXT,id) 
     return newcws
-
-
