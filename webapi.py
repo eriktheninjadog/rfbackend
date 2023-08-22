@@ -328,4 +328,11 @@ def get_word_list():
     cwsret = api.get_word_list_from_cws(cwsid)
     return jsonify({'result':cwsret})
    
+@app.route('/add_look_up',methods=['POST'])
+def add_look_up():
+    cwsid = request.json['cwsid']
+    term = request.json['term']
+    database.add_look_up(term,cwsid)
+    return jsonify({'result':'ok'})
+
 #add something

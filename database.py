@@ -142,6 +142,18 @@ def get_connection():
         database='language'                                                          
     )
     return mydb
+
+def add_look_up(term,cwsid):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = 'INSERT INTO lookuphistory (cwsid, term) VALUES (%s, %s)'
+    val = (cwsid,term)
+    mycursor.execute(sql,val)
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
+    
+    
                                                                                 
 def update_dictionary(chineseword,jyutping,definition):
     mydb = get_connection()
