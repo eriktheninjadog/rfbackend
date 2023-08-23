@@ -161,7 +161,7 @@ def lookup_history(cwsid):
     mycursor.execute(sql)
     myresult = mycursor.fetchall() 
     for term in myresult:
-        ret.append(term)
+        ret.append(term[0])
     mycursor.close()
     mydb.close()
     return ret
