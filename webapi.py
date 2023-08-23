@@ -338,7 +338,7 @@ def add_look_up():
 @app.route('/get_look_up_history',methods=['POST'])
 def get_look_up_history():
     cwsid = request.json['cwsid']
-    lookups = database.look_up_history(cwsid)
+    lookups = database.lookup_history(cwsid)
     return jsonify({'result':lookups})
 
 #add something
