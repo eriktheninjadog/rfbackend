@@ -335,4 +335,10 @@ def add_look_up():
     database.add_look_up(term,cwsid)
     return jsonify({'result':'ok'})
 
+@app.route('/get_look_up_history',methods=['POST'])
+def get_look_up_history():
+    cwsid = request.json['cwsid']
+    lookups = database.look_up_history(cwsid)
+    return jsonify({'result':lookups})
+
 #add something

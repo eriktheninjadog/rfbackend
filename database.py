@@ -153,6 +153,18 @@ def add_look_up(term,cwsid):
     mycursor.close()
     mydb.close()
     
+def lookup_history(cwsid):
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = 'select distinct term from lookuphistory where cwsid = ' + cwsid
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall() 
+    for term in myresult:
+        ret.append(term)
+    mycursor.close()
+    mydb.close()
+    return ret
     
                                                                                 
 def update_dictionary(chineseword,jyutping,definition):
