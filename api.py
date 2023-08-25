@@ -65,8 +65,9 @@ def process_chinese(title, source, text, type,parentid):
     # Try to find a cws
     text = textprocessing.make_sure_traditional(text)
     signature = textsignature.generate_signature(text)
-    found = database.get_cws_by_signature(signature)
+    found = database.get_cws_by_signature(signature)    
     if found != None:
+        log.log("found the text")
         return found
     else:
         cwstext = textprocessing.split_text(text)
