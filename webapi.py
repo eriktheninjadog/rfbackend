@@ -35,6 +35,7 @@ def addtext():
     body        = data.get(constants.PARAMETER_TEXT_BODY)
     parentcwsid = data.get(constants.PARAMETER_PARENT_CWSID)    
     source      = data.get(constants.PARAMETER_TEXT_SOURCE)
+    log.log(" cld2.detect(body) called ")
     isReliable, textBytesFound, details = cld2.detect(body) 
     print(str(details))
     if details[0][1] == "en":
@@ -52,6 +53,7 @@ t-1', use_ssl=True)
         body = finaltext
         print("Translation " + body)        
     cws  = api.process_chinese(title, source, body, type,parentcwsid)
+    log.log(" add text - text processed " )
     #api.create_and_store_all_fragments(cws[0])
     return jsonify({'result':cws})
 
