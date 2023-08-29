@@ -157,7 +157,10 @@ def lookup_history(cwsid):
     ret = []
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = 'select term from lookuphistory where cwsid = ' + str(cwsid)
+    if (cwsid != -1):
+        sql = 'select term from lookuphistory where cwsid = ' + str(cwsid)
+    else:
+        sql = 'select distinct term from lookuphistory'
     mycursor.execute(sql)
     myresult = mycursor.fetchall() 
     for term in myresult:
