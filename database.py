@@ -249,12 +249,9 @@ def add_cws(cwsobject):
         parent = cwsobject.parent
     )
 
-    aengine = create_engine('mysql://erik:ninjadogs@localhost/language',pool_recycle=60 * 5, pool_pre_ping=True)
-    asession = Session(aengine)
-    asession.add(c)
-    asession.flush()
-    asession.commit()
-    asession.close()
+    session.add(c)
+    session.flush()
+    session.commit()
     return c.id
 
 def update_cws(cwsobject):
