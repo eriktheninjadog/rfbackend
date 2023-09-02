@@ -35,7 +35,7 @@ def get_word_class(text):
     text_parts = pseg.cut(text)
     ret_parts = {}
     for p in text_parts:
-        ret_parts[p.word] = p.pos
+        ret_parts[p.word] = p
     return ret_parts
 
 def split_text_parts(text):
