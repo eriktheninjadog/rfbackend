@@ -344,7 +344,7 @@ def get_look_up_history():
     lookups = database.lookup_history(cwsid)
     return jsonify({'result':lookups})
 
-@app.route('/   ',methods=['POST'])
+@app.route('/get_classification',methods=['POST'])
 def get_classification():
     cwsid = request.json['cwsid']
     cws = api.get_cws_text( cwsid )    
