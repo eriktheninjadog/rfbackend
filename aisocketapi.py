@@ -52,7 +52,7 @@ def ask_ai(question):
                 ssock.sendall(request.encode())
                 total = ""
                 while keepgoing:
-                    chunk = ssock.recv(4096)
+                    chunk = ssock.recv(4096*2)
                     if not chunk:
                         break
                     response += chunk
