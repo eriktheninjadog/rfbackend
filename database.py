@@ -238,6 +238,7 @@ def get_cws_list_by_type(type):
     return ret
     
 def add_cws(cwsobject):
+    
     c = cws_row(
         orgtext = cwsobject.orgtext,
         cwstext = json.dumps(cwsobject.cwstext),

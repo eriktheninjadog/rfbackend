@@ -17,6 +17,7 @@ from textwrap import wrap
 import random
 import aisocketapi
 import batchprocessing
+import textprocessing
 
 app = Flask(__name__)
 
@@ -343,4 +344,11 @@ def get_look_up_history():
     lookups = database.lookup_history(cwsid)
     return jsonify({'result':lookups})
 
+@app.route('/get_classification',methods=['POST'])
+def get_classification():
+    cwsid = request.json['cwsid']
+    cws = api.get_cws_text( cwsid )    
+    classdict = textprocessing.get_word_class(cws.orgtext)
+    return jsonify({'result':classdict})
+    
 #add something

@@ -31,13 +31,19 @@ def split_text(text):
         ret_parts.append(p.word)
     return ret_parts
 
+def get_word_class(text):
+    text_parts = pseg.cut(text)
+    ret_parts = {}
+    for p in text_parts:
+        ret_parts[p.word] = p.pos
+    return ret_parts
+
 def split_text_parts(text):
     ret = []
     s = SnowNLP(text)
     for sent in s.sentences:
         ret.append(sent)
     return ret
-
 
 def zng(paragraph):
     for sent in re.findall(u'[^「」!?。\.\!\?]+[」「!?。\.\!\?]?', paragraph, flags=re.U):
