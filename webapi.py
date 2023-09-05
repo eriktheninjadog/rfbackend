@@ -279,6 +279,19 @@ def direct_ai_question():
     database.add_answered_ai_question(thequestion,500,cwsid,start,end,cws.id)
     return jsonify({'result':cws})
 
+
+@app.route('/direct_ai_questions',methods=['POST'])
+def direct_ai_question():
+    cwsid       = request.json['cwsid']
+    questions    = request.json['questions']
+    start       = request.json['start']
+    end         = request.json['end']
+    thecws = api.get_cws_text( cwsid )
+    thetext = thecws.orgtext[start:end]
+    simpcws = batchprocessing.multiple_ai_to_text(thetext,questions)
+    return jsonify({'result':simpcws})
+
+
 @app.route('/set_ai_auth',methods=['GET'])
 def set_ai_auth():
     args = request.args
@@ -317,15 +330,6 @@ def apply_ai():
     aitext = request.json['aitext']
     simpcws = batchprocessing.apply_ai_to_cws(cwsid,aitext)
     return jsonify({'result':simpcws})
-
-
-@app.route('/apply_ais',methods=['POST'])
-def apply_ais():
-    cwsid = request.json['cwsid']
-    aitext = request.json['aitext']
-    simpcws = batchprocessing.multiple_ai_to_text(cwsid,aitext)
-    return jsonify({'result':simpcws})
-
 
 @app.route('/ai_summarize_random',methods=['POST'])
 def ai_summarize_random():
