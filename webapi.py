@@ -317,7 +317,15 @@ def apply_ai():
     aitext = request.json['aitext']
     simpcws = batchprocessing.apply_ai_to_cws(cwsid,aitext)
     return jsonify({'result':simpcws})
-    
+
+
+@app.route('/apply_ais',methods=['POST'])
+def apply_ais():
+    cwsid = request.json['cwsid']
+    aitext = request.json['aitext']
+    simpcws = batchprocessing.multiple_ai_to_text(cwsid,aitext)
+    return jsonify({'result':simpcws})
+
 
 @app.route('/ai_summarize_random',methods=['POST'])
 def ai_summarize_random():

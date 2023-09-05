@@ -55,3 +55,12 @@ def apply_ai_to_cws(id,aitext):
     newcws = api.process_chinese( thecws.title + ' ai ' + aitext,'ai',simpletext,constants.CWS_TYPE_IMPORT_TEXT,id) 
     return newcws
 
+def multiple_ai_to_text(text,ais):
+    finaltext = ''
+    finaltext = finaltext + text
+    finaltext = finaltext + "---------\n\n"
+    for q in ais:
+        ret = aisocketapi.ask_ai(q + ':' + text)
+        finaltext = finaltext + "---------\n\n" + ret
+    newcws = api.process_chinese( "indepth",'ai',finaltext,constants.CWS_TYPE_IMPORT_TEXT,id) 
+    return newcws
