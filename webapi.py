@@ -281,7 +281,7 @@ def direct_ai_question():
 
 
 @app.route('/direct_ai_questions',methods=['POST'])
-def direct_ai_question():
+def direct_ai_questions():
     cwsid       = request.json['cwsid']
     questions    = request.json['questions']
     start       = request.json['start']
