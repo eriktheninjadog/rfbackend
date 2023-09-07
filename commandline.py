@@ -19,6 +19,7 @@ def asplitfunction(txt):
             if (txt[pos] == '。'):
                 pos += 1
             ret.append(txt[lastpos:pos])
+            print("added " + str(pos))
             lastpos = pos
     ret.append(txt[lastpos:pos])
     print("number of splits " + str(len(ret))) 
