@@ -15,7 +15,7 @@ def batchprocess_text(all_of_it,splitfunction,processfunction):
     return total
 
 def splitfunction(txt):
-    maxlen = 2048
+    maxlen = 1024
     ret = []
     pos = 0
     lastpos = 0
@@ -62,6 +62,6 @@ def multiple_ai_to_text(text,ais):
     for q in ais:
         ret = aisocketapi.ask_ai(q + ':' + text)
         finaltext = finaltext + "*****\n" + q
-        finaltext = finaltext + "---------\n\n" + ret       
+        finaltext = finaltext + "---------\n\n" + ret   
     newcws = api.process_chinese( "indepth",'ai',finaltext,constants.CWS_TYPE_IMPORT_TEXT,-1) 
     return newcws

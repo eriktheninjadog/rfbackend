@@ -24,8 +24,6 @@ def asplitfunction(txt):
     print("number of splits " + str(len(ret))) 
     return ret
 
-
-
 def split_file_into_chunks(filename):
     text_file = open(filename, "r",encoding="utf-8")
     #read whole file to a string
@@ -41,9 +39,7 @@ def import_file(bookname,filename):
     for c in chunks:
         cws = api.process_chinese(bookname + str(counter),"import",c,constants.CWS_TYPE_IMPORT_TEXT,-1)
         print(str(cws.id))
-        exit(-1)
-        batchprocessing.apply_ai_to_cws(cws.id,"Rewrite this using chinese using short sentences, words that a child old would understand and put a _ before all personal names:"
-        )
+        batchprocessing.apply_ai_to_cws(cws.id,"Rewrite this using chinese using short sentences, words that a child old would understand and put a _ before all personal names:")
         counter += 1
 
 #
