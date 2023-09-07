@@ -35,6 +35,7 @@ def split_file_into_chunks(filename):
     return chunks
 
 def import_file(bookname,filename):
+    print("import file called " + bookname)
     chunks = split_file_into_chunks(filename)
     counter = 0
     for c in chunks:
