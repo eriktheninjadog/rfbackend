@@ -3,6 +3,8 @@ import requests
 import urllib.parse
 import json
 import aisocketapi
+import os
+import os.path
 
 totaldict = {}
 failed = []
@@ -16,10 +18,12 @@ freq = ['的','是','不','我','一','有','大','在','人','了','中','到',
 
 
 for c in freq:
-    ask = "break down the character '"+c+"' into its components, give an example of use and make a one line story to remember it"
-    ret = aisocketapi.ask_ai(ask)
-    fp = open('/var/www/html/api/rfbackend/' + c + '.chardesc','w',encoding='UTF-8')
-    fp.write(ret)
-    fp.close()
+    filename = '/var/www/html/api/rfbackend/' + c + '.chardesc' 
+    if os.path.exists(filename) == False:
+        ask = "break down the character '"+c+"' into its components, give an example of use and make a one line story to remember it"
+        ret = aisocketapi.ask_ai(ask)
+        fp = open(filename,'w',encoding='UTF-8')
+        fp.write(ret)
+        fp.close()
  
 
