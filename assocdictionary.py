@@ -39,7 +39,7 @@ for c in freq:
         text = fp.read()
         api.process_chinese(''+c,"ai",text,constants.CWS_TYPE_DETAILED_CHAR_INFO,-1)
         count+= 1
-        if (count > 2000):
+        if (count > 20000):
             exit(-1)
 """
     if database.find_word(c) == None:
