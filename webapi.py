@@ -362,5 +362,13 @@ def get_classification():
     cws = api.get_cws_text( cwsid )    
     classdict = textprocessing.get_word_class(cws.orgtext)
     return jsonify({'result':classdict})
+
+
+@app.route('/get_character_cws',methods=['POST'])
+def get_classification():
+    title = request.json['title']
+    cws = database.get_cws_by_title_and_type(title,800)  
+    return jsonify({'result':cws})
+
     
 #add something

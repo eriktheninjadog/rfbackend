@@ -80,7 +80,6 @@ def get_cws_from_cache(key):
                retArray[3],retArray[4],retArray[5],
                retArray[6],retArray[7],retArray[8],
                retArray[9])
-                                                            
 
 def add_fragment(afragment):
     c = fragment(
@@ -190,6 +189,24 @@ def get_cws_by_id(id):
     mydb = get_connection()
     mycursor = mydb.cursor()
     sql = "SELECT id,created,orgtext,cwstext,signature,metadata,title,source,type,parent FROM cws WHERE id = " + str(id)
+    mycursor.execute(sql)
+    print(sql)                                                            
+    myresult = mycursor.fetchall() 
+    for (id,created,orgtext,cwstext,signature,metadata,title,source,type,parent) in myresult:
+        ret.append( CWS(id,created,orgtext,json.loads(cwstext),signature,metadata,title,source,type,parent))
+    mycursor.close()
+    mydb.close()
+    if (len(ret)>0):
+        return ret[0]
+    else:
+        return None
+    
+
+def get_cws_by_title_and_type(title,type):
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,created,orgtext,cwstext,signature,metadata,title,source,type,parent FROM cws WHERE type = " + str(type) +" and title like '" +  title + "'"
     mycursor.execute(sql)
     print(sql)                                                            
     myresult = mycursor.fetchall() 
