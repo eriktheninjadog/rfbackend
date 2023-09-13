@@ -34,7 +34,7 @@ for c in freq:
 
 for c in freq:
     filename = '/var/www/html/api/rfbackend/' + c + '.chardesc' 
-    if os.path.exists(filename) == False:
+    if os.path.exists(filename) == True:
         fp = open(filename,"r",encoding='UTF-8')
         text = fp.read()
         api.process_chinese(''+c,"ai",text,constants.CWS_TYPE_DETAILED_CHAR_INFO,-1)
