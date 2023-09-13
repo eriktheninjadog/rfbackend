@@ -5,6 +5,7 @@ import json
 import aisocketapi
 import os
 import os.path
+import database
 
 totaldict = {}
 failed = []
@@ -16,7 +17,7 @@ freq = ['的','是','不','我','一','有','大','在','人','了','中','到',
 
 
 
-
+"""
 for c in freq:
     filename = '/var/www/html/api/rfbackend/' + c + '.chardesc' 
     if os.path.exists(filename) == False:
@@ -25,5 +26,9 @@ for c in freq:
         fp = open(filename,'w',encoding='UTF-8')
         fp.write(ret)
         fp.close()
- 
+"""
 
+for c in freq:
+    if database.find_word(c) == None:
+        print(c)
+    
