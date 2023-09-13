@@ -6,6 +6,8 @@ import aisocketapi
 import os
 import os.path
 import database
+import api
+import constants
 
 totaldict = {}
 failed = []
@@ -27,8 +29,10 @@ for c in freq:
         fp.write(ret)
         fp.close()
 """
-
+dd = ''
 for c in freq:
     if database.find_word(c) == None:
-        print(c)
-    
+        dd = dd + ' ' + c
+        if (len (dd) > 500):
+            api.process_chinese('imported char','process',dd, constants.CWS_TYPE_IMPORT_TEXT,-1)
+            dd = ''
