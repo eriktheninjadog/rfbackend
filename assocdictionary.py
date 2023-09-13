@@ -31,13 +31,16 @@ for c in freq:
 """
 
 
-
+count = 0
 for c in freq:
     filename = '/var/www/html/api/rfbackend/' + c + '.chardesc' 
     if os.path.exists(filename) == True:
         fp = open(filename,"r",encoding='UTF-8')
         text = fp.read()
         api.process_chinese(''+c,"ai",text,constants.CWS_TYPE_DETAILED_CHAR_INFO,-1)
+        count+= 1
+        if (count > 2000):
+            exit(-1)
 """
     if database.find_word(c) == None:
         dd = dd + ' ' + c
