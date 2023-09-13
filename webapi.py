@@ -365,7 +365,7 @@ def get_classification():
 
 
 @app.route('/get_character_cws',methods=['POST'])
-def get_classification():
+def get_character_cws():
     title = request.json['title']
     cws = database.get_cws_by_title_and_type(title,800)  
     return jsonify({'result':cws})
