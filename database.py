@@ -219,6 +219,15 @@ def get_cws_by_title_and_type(title,type):
     else:
         return None
     
+def update_cws_text(id,text,cwstext,signature):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "UPDATE cws set orgtext = %s, cwstext = %s , signature = %s where id = " + str(id)
+    val = (text, cwstext,signature)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    None
+    
 def get_cws_by_signature(signature):
     ret = []
     mydb = get_connection()

@@ -371,4 +371,12 @@ def get_character_cws():
     return jsonify({'result':cws})
 
     
+
+@app.route('/updatecws',methods=['POST'])
+def updatecws():
+    cwsid   = request.json['cwsid']
+    text    = request.json['text']
+    api.update_cws(cwsid,text)
+    return jsonify({'result':'ok'})
+
 #add something

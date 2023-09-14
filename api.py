@@ -74,6 +74,17 @@ def process_chinese(title, source, text, type,parentid):
         cws = CWS(-1,None,text,cwstext,signature,"",title,source,type,parentid)
         id = database.add_cws(cws)
         return database.get_cws_by_id(id)
+    
+
+def update_cws(id,text):
+    # 
+    # Try to find a cws
+    text = textprocessing.make_sure_traditional(text)
+    signature = textsignature.generate_signature(text)
+    cwstext = textprocessing.split_text(text)
+    database.update_cws_text(id,text,cwstext,signature)
+    return database.get_cws_by_id(id)
+
 
 @memory.cache   
 def get_cws_text(id):
