@@ -223,7 +223,7 @@ def update_cws_text(id,text,cwstext,signature):
     mydb = get_connection()
     mycursor = mydb.cursor()
     sql = "UPDATE cws set orgtext = %s, cwstext = %s , signature = %s where id = " + str(id)
-    val = (text, cwstext,signature)
+    val = (text, json.dumps(cwstext),signature)
     mycursor.execute(sql, val)
     mydb.commit()
     None
