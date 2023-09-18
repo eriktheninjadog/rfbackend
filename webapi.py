@@ -392,6 +392,7 @@ def getmemorystory():
         soup = BeautifulSoup(page.content, "html.parser")
         results = soup.find_all(id="chmn")
         jsonify({'result':results[1].text})
-    except:
+    except Exception as e :
+        print(str(e))
         return jsonify({'result':None})
 #add something
