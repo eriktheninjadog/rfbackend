@@ -1,13 +1,16 @@
 # assoc dictionary
-import requests
 import urllib.parse
 import json
 import aisocketapi
 import os
 import os.path
-import database
-import api
+#import database
+#import api
 import constants
+import time
+
+import requests
+from bs4 import BeautifulSoup
 
 totaldict = {}
 failed = []
@@ -31,8 +34,24 @@ for c in freq:
 """
 
 
-count = 0
-for c in freq:
-    ask = "break down the traditional character '"+c+"' into its traditional parts, give an example of it use and make a one line story to remember it"
-    ret = aisocketapi.ask_ai(ask)
-    api.process_chinese(''+c,"ai",ret,constants.CWS_TYPE_DETAILED_CHAR_INFO,-1)
+#count = 0
+#for c in freq:
+#    ask = "break down the traditional character '"+c+"' into its traditional parts, give an example of it use and make a one line story to remember it"
+#    ret = aisocketapi.ask_ai(ask)
+#    api.process_chinese(''+c,"ai",ret,constants.CWS_TYPE_DETAILED_CHAR_INFO,-1)
+
+cnt = 0
+for c in freq:    
+    filename = '' + c + '.memtxt' 
+    cnt += 1
+    print(str(cnt))
+    if os.path.exists(filename) == False:
+        try:
+            page = requests.get("https://rtega.be/chmn/index.php?c=" + urllib.parse.quote_plus(c) +"&Submit=")
+            soup = BeautifulSoup(page.content, "html.parser")
+            results = soup.find_all(id="chmn")
+            fp = open(filename,'w',encoding='UTF-8')
+            fp.write(results[1].text)
+            fp.close()
+        except:
+            None

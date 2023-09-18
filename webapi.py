@@ -18,6 +18,10 @@ import random
 import aisocketapi
 import batchprocessing
 import textprocessing
+import requests
+from bs4 import BeautifulSoup
+import urllib.parse
+
 
 app = Flask(__name__)
 
@@ -370,7 +374,7 @@ def get_character_cws():
     cws = database.get_cws_by_title_and_type(title,800)  
     return jsonify({'result':cws})
 
-    
+
 
 @app.route('/updatecws',methods=['POST'])
 def updatecws():
@@ -379,4 +383,14 @@ def updatecws():
     api.update_cws(cwsid,text)
     return jsonify({'result':'ok'})
 
+
+@app.route('/getmemorystory',methods=['POST'])
+def getmemorystory():
+    try:
+        page = requests.get("https://rtega.be/chmn/index.php?c=" + urllib.parse.quote_plus(c) +"&Submit=")
+        soup = BeautifulSoup(page.content, "html.parser")
+        results = soup.find_all(id="chmn")
+        jsonify({'result':results[1].text})
+    except:
+        return jsonify({'result':None})
 #add something
