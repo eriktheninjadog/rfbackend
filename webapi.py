@@ -388,6 +388,7 @@ def updatecws():
 def getmemorystory():
     try:
         character = request.json['character']
+        print(str(character))
         page = requests.get("https://rtega.be/chmn/index.php?c=" + urllib.parse.quote_plus(character) +"&Submit=")
         soup = BeautifulSoup(page.content, "html.parser")
         results = soup.find_all(id="chmn")
