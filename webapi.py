@@ -392,6 +392,7 @@ def getmemorystory():
         page = requests.get("https://rtega.be/chmn/index.php?c=" + urllib.parse.quote_plus(character) +"&Submit=")
         soup = BeautifulSoup(page.content, "html.parser")
         results = soup.find_all(id="chmn")
+        print(results[1].text)
         jsonify({'result':results[1].text})
     except Exception as e :
         print(str(e))
