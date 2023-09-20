@@ -45,7 +45,7 @@ def import_file(bookname,filename,minstart,maxstart):
         if (counter >= minstart):
             cws = api.process_chinese(bookname + str(counter),"import",c,constants.CWS_TYPE_IMPORT_TEXT,-1)
             print(str(cws.id))
-            batchprocessing.apply_ai_to_cws(cws.id,"Rewrite this using chinese using short sentences, words that a child old would understand and put a _ before all personal names:")
+            batchprocessing.apply_ai_to_cws(cws.id,"Rewrite this using chinese using short sentences, words that an 8 year old child would understand and put a _ before all personal names:")
         counter += 1
 #
 #
