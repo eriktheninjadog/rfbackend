@@ -68,5 +68,5 @@ print("tofile - filename pre-fix textline\n")
 if (sys.argv[1] == "trad"):
     import_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
 if (sys.argv[1] == "tofile"):
-    import_file(sys.argv[2],sys.argv[3],sys.argv[4])
+    to_file(sys.argv[2],sys.argv[3],sys.argv[4])
 
