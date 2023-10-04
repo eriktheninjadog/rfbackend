@@ -55,6 +55,10 @@ def apply_ai_to_cws(id,aitext):
     newcws = api.process_chinese( thecws.title + ' ai ' + aitext,'ai',simpletext,constants.CWS_TYPE_IMPORT_TEXT,id) 
     return newcws
 
+def apply_ai_to_text(orgtext,aitext):
+    simpletext = batchprocess_text(orgtext,splitfunction,ai_function_factory( aitext))
+    return simpletext
+
 def multiple_ai_to_text(text,ais):
     finaltext = ''
     finaltext = finaltext + text
