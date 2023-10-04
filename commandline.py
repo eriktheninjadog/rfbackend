@@ -1,9 +1,10 @@
 # used to process files in command mode
-import database
 import api
 import constants
 import sys
 import batchprocessing
+import aisocketapi
+
 
 def asplitfunction(txt):
     maxlen = 10240
@@ -50,5 +51,22 @@ def import_file(bookname,filename,minstart,maxstart):
 #
 #
 #
-print("command: bookname filename minrow maxrow")
-import_file(sys.argv[1],sys.argv[2],int(sys.argv[3]),int(sys.argv[4]))
+
+def to_file(filename,prefix,question):
+    print("to text called")
+    chunks = split_file_into_chunks(filename)
+    outfile = open( prefix+'_' + filename,"w",encoding="utf-8")
+    for c in chunks:
+        ret = aisocketapi.ask_ai(question + ":" + c)
+        outfile.write(ret)
+        outfile.flush()
+    outfile.close()
+
+print("command: whatdoto\n")
+print("whattodo:\n trad - bookname, filename,minstart,maxstart\n")
+print("tofile - filename pre-fix textline\n")
+if (sys.argv[1] == "trad"):
+    import_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
+if (sys.argv[1] == "tofile"):
+    import_file(sys.argv[2],sys.argv[3],sys.argv[4])
+

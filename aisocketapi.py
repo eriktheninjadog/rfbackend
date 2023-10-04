@@ -4,10 +4,6 @@ import json
 
 from threading import Thread, Lock
 
-#lock = Lock()
-#lock.acquire()
-#lock.release()
-
 
 def ask_ai(question):
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
@@ -79,14 +75,8 @@ def ask_ai(question):
                                 if ("delta" in jp["choices"][0]):
                                     if ("content" in jp["choices"][0]["delta"]):                                    
                                         total = total + str(jp["choices"][0]["delta"]["content"])
-                    # Process the response
-                #print(response.decode())
-                #text_file = open("sampleresponse.txt", "w")
-                #n = text_file.write(total)
-                #text_file.close()
             finally:
-                # Close the socket connection
-                ssock.close()
+                ssock.      close()
             return total
     
 
