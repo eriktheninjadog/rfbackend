@@ -80,5 +80,59 @@ def ask_ai(question):
             return total
     
 
-#answer = ask_ai("Explain the grammar and structure of this text: 團隊表示，上蓋可於半小時內開合，令主場館可以全天候開放，不受惡劣天氣影響，組件於來港前亦已進行大量測試。隔音效能亦於來港前測試，確保即使舉行大型音樂活動，亦不會對附近居民造成嘈音問題。")
-#print(answer)
+def write_ai_to_file(question,filename):
+    path = "https://api.secretary.chat/chatmessages/streaming"
+    hostname = 'api.secretary.chat'
+    context = ssl.create_default_context()
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    abody = {"message" : question}
+    f = open(filename,'wb')
+    context = ssl.create_default_context()
+    body = json.dumps(abody)
+    with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+            ssock.connect((hostname, 443))
+            request = f"POST {path} HTTP/1.1\r\n" \
+                    f"Host: {hostname} \r\n" \
+                    f"Accept: text/event-stream \r\n" \
+                    f"Connection: Keep-Alive \r\n" \
+                    f"Content-Type: application/json; charset=UTF-8 \r\n" \
+                    f"X-USER-UUID: 713285aa-a985-4b84-a473-d5bdee9b75ef \r\n" \
+                    f"X-USER-VERSION:10309\r\n" \
+                    f"Content-Type: application/json \r\n" \
+                    f"Sec-Fetch-Mode: cors \r\n" \
+                    f"Sec-Fetch-Site: cross-site \r\n" \
+                    f"User-Agent: Dalvik/2.1.0 (Linux; U; Android 11; Redmi Note 8 Pro Build/RP1A.200720.011)\r\n" \
+                    f"Content-Length: {len(body)}\r\n\r\n" \
+                    f"{body}"
+            print(request)
+            response = b""
+            keepgoing = True
+            state = 1
+            try:
+                ssock.sendall(request.encode())
+                total = ""
+                while keepgoing:
+                    chunk = ssock.recv(4096*2)
+                    f.write(chunk)
+                    f.flush()
+                    if not chunk:
+                        break                    
+            finally:
+                ssock.close()
+
+def parse_ai_file(filename):
+    f = open(filename,'r',encoding='utf-8')
+    lines = f.readlines()
+    f.close()
+    idx = 0
+    while (idx < len(lines)):
+        idx+=1
+    return None
+
+def ask_ai_again(question):
+    write_ai_to_file(question,"doctor.txt")
+    parse_ai_file("doctor.txt")
+    return None    
+
+answer = ask_ai_again("write each noun in this text to a new line:機管局表示，截至目前為止，機場航班運作大致維持正常，部分航班可能受影響。旅客應留意最新的航班情況，有需要時向航空公司查詢。\n另外，於風暴信號生效期間，前往機場的公共交通只維持有限度服務，旅客請預留充足時間前往機場。 地震在當地星期六早上11時左右發生，震央距離西部城市赫拉特約40公里，靠近伊朗邊境，美國地質勘探局錄得強度為6.3級，之後發生至少三次強烈餘震。")
+print(answer)

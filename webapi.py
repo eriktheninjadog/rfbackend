@@ -398,3 +398,27 @@ def getmemorystory():
         print(str(e))
         return jsonify({'result':None})
 #add something
+
+@app.route('/publishfile',methods=['POST'])
+def publishfile():
+    try:
+        content = request.json['content']
+        filename = request.json['filename']
+        f = open('/var/www/html/'+filename,"w",encoding='utf-8')
+        f.write(content)
+        f.close()
+        return jsonify({'result':'ok'})    
+    except Exception as e :
+        print(str(e))
+        return jsonify({'result':None})
+
+
+@app.route('/removefile',methods=['POST'])
+def removefile():
+    try:
+        filename = request.json['filename']
+        os.remove('/var/www/html/'+filename)
+        return jsonify({'result':'ok'})    
+    except Exception as e :
+        print(str(e))
+        return jsonify({'result':None})

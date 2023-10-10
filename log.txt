@@ -1,0 +1,12 @@
+HTTP/1.1 200 
+Date: Mon, 09 Oct 2023 03:24:25 GMT
+Content-Type: text/event-stream
+Transfer-Encoding: chunked
+Connection: keep-alive
+
+11
+data:
+
+data:機
+
+

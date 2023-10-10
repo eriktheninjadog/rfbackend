@@ -1,0 +1,283 @@
+HTTP/1.1 200 
+Date: Sun, 08 Oct 2023 06:12:11 GMT
+Content-Type: text/event-stream
+Transfer-Encoding: chunked
+Connection: keep-alive
+
+11
+data:
+
+data:The
+
+
+f
+data: airport
+
+
+a
+data: is
+
+
+f
+data: running
+
+
+e
+data: mostly
+
+
+a
+data: on
+
+
+10
+data: schedule
+
+
+8
+data:,
+
+
+5
+data:
+6
+ but
+
+
+c
+data: some
+
+
+f
+data: flights
+
+
+d
+data: might
+
+
+a
+data: be
+
+
+10
+data: affected
+
+
+8
+data:.
+
+
+e
+data: Travel
+
+
+a
+data:ers
+
+
+8
+data:,
+
+
+e
+data: please
+
+
+c
+data: keep
+
+
+a
+data: an
+
+
+b
+data: eye
+
+
+5
+data:
+5
+ on
+
+
+9
+data: the
+2
+
+
+
+e
+data: latest
+
+
+5
+data:
+9
+ flight
+
+
+d
+data: updates
+2
+
+
+
+b
+data: and
+
+
+b
+data: ask
+
+
+b
+data: the
+
+
+f
+data: airline
+
+
+b
+data: for
+
+
+c
+data: help
+
+
+a
+data: if
+
+
+b
+data: you
+
+
+c
+data: need
+
+
+a
+data: it
+
+
+9
+data:.
+
+
+
+b
+data:Also
+
+
+8
+data:,
+
+
+e
+data: during
+
+
+9
+data: a
+
+
+d
+data: storm
+
+
+5
+data:
+3
+,
+
+
+e
+data: public
+
+
+16
+data: transportation
+
+
+a
+data: to
+
+
+b
+data: the
+
+
+f
+data: airport
+
+
+d
+data: might
+
+
+a
+data: be
+
+
+f
+data: limited
+
+
+8
+data:.
+
+
+a
+data: So
+
+
+8
+data:,
+
+
+18
+data: make
+
+data: sure
+
+
+b
+data: you
+
+
+1b
+data: leave
+
+data: plenty
+
+
+a
+data: of
+
+
+c
+data: time
+
+
+a
+data: to
+
+
+b
+data: get
+
+
+d
+data: there
+
+
+8
+data:.
+
+
+0
+
