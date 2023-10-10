@@ -404,7 +404,7 @@ def publishfile():
     try:
         content = request.json['content']
         filename = request.json['filename']
-        f = open('/var/www/html/'+filename,"w",encoding='utf-8')
+        f = open('/var/www/html/scene/'+filename,"w",encoding='utf-8')
         f.write(content)
         f.close()
         return jsonify({'result':'ok'})    
@@ -416,7 +416,7 @@ def publishfile():
 def removefile():
     try:
         filename = request.json['filename']
-        os.remove('/var/www/html/'+filename)
+        os.remove('/var/www/html/scene/'+filename)
         return jsonify({'result':'ok'})    
     except Exception as e :
         print(str(e))
