@@ -412,7 +412,6 @@ def publishfile():
         print(str(e))
         return jsonify({'result':None})
 
-
 @app.route('/removefile',methods=['POST'])
 def removefile():
     try:
