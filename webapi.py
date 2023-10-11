@@ -434,5 +434,3 @@ def poebot1():
     except Exception as e :
         print(str(e))
         return jsonify({'result':None})
-
-
