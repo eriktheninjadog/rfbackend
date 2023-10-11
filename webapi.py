@@ -443,13 +443,13 @@ def poebot1():
                 count = 0
                 while count < 3:
                     if count == 0:
-                        yield 'event: meta\ndata: {"content_type": "text/markdown", "linkify": true}\n'
+                        yield 'event: meta\ndata: {"content_type": "text/markdown", "linkify": true}\n\n'
                     if count == 1:
-                        yield 'event: text\ndata: {"text": "I am here"}\n'
+                        yield 'event: text\ndata: {"text": "I am here"}\n\n'
                     if count == 2:
-                        yield 'event: done\ndata: {}\n'
+                        yield 'event: done\ndata: {}\n\n'
                     if count == 3:
-                        yield 'event: done\ndata: {}\n'
+                        yield 'event: done\ndata: {}\n\n'
                     count += 1
                     time.sleep(1)
                 
