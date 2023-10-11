@@ -438,7 +438,10 @@ def poebot1():
         if type == "query":
             print("we got a query")
             print(str(request.json["query"]))
-            query = request.json["query"]                            
+            query = request.json["query"]
+            usermessage = ""
+            if (len(query)>0):
+                usermessage = query[-1]['content']
             def generate_events():
                 count = 0
                 while count < 4:
@@ -446,14 +449,13 @@ def poebot1():
                         yield 'event: meta\ndata: {"content_type": "text/markdown", "linkify": true}\n\n'
                     if count == 1:
                         yield 'event: text\ndata: {"text": "I am here"}\n\n'
-                        time.sleep(10)    
+                        time.sleep(1)    
                     if count == 2:
-                        yield 'event: text\ndata: {"text": "\nI am here again!!!"}\n\n'
+                        yield 'event: text\ndata: {"text": "\n\nI am here again!!!\n\n'+usermessage+'"}\n\n'
                     if count == 3:
                         yield 'event: done\ndata: {}\n\n'
                     count += 1
-                    time.sleep(1)
-                
+                    time.sleep(1)                
             return Response(generate_events(), mimetype='text/event-stream')
         return jsonify({'result':'ok'})    
     except Exception as e :
