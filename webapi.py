@@ -434,7 +434,7 @@ def poebot1():
         print("type " + type )
         if type == "report_error":
             print("ERROR")
-            print(str(request))
+            print(str(request.json))
         if type == "query":
             print("we got a query")
             print(str(request.json["query"]))
