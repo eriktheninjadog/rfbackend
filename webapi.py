@@ -435,7 +435,7 @@ def poebot1():
         if type == "query":
             print("we got a query")
             print(str(request.json["query"]))
-            query = request.json("query")
+            query = request.json["query"]                            
             def generate_events():
                 count = 0
                 while count == 0:
