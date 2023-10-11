@@ -421,3 +421,18 @@ def removefile():
     except Exception as e :
         print(str(e))
         return jsonify({'result':None})
+
+
+@app.route('/poebot1',methods=['POST'])
+def poebot1():
+    try:
+        version = request.json['version']
+        type = request.json['type']
+        print("version " + version)
+        print("type " + type )
+        return jsonify({'result':'ok'})    
+    except Exception as e :
+        print(str(e))
+        return jsonify({'result':None})
+
+
