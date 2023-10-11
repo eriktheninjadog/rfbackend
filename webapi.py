@@ -452,7 +452,7 @@ def poebot1():
                         yield 'event: text\ndata: {"text": "I am here"}\n\n'
                         time.sleep(1)    
                     if count == 2:
-                        yield 'event: text\ndata: {"text": "\n\nI am here again!!!\n\n'+usermessage+'"}\n\n'
+                        yield 'event: text\ndata: {"text": "\n\nI am here again!!!'+usermessage+'"}\n\n'
                     if count == 3:
                         yield 'event: done\ndata: {}\n\n'
                     count += 1
