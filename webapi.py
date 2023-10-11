@@ -439,7 +439,7 @@ def poebot1():
             def generate_events():
                 count = 0
                 while count == 0:
-                    yield 'event:text'
+                    yield 'event:text\ntext:hi there!!!'
                     count += 1
                     time.sleep(1)
             return Response(generate_events(), mimetype='text/event-stream')
