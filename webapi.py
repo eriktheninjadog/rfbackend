@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, request, url_for
+import time
+from flask import Flask, Response, jsonify, request, url_for
 
 import api
 import log
@@ -430,6 +431,17 @@ def poebot1():
         type = request.json['type']
         print("version " + version)
         print("type " + type )
+        if type == "query":
+            print("we got a query")
+            print(str(request.json["query"]))
+            query = request.json("query")
+            def generate_events():
+                count = 0
+                while count < 5:
+                    yield 'event:text'
+                    yield 'text: Hello World!\n\n'
+                    time.sleep(1)
+            return Response(generate_events(), mimetype='text/event-stream')
         return jsonify({'result':'ok'})    
     except Exception as e :
         print(str(e))
