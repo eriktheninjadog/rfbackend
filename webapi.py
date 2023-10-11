@@ -437,9 +437,9 @@ def poebot1():
             query = request.json("query")
             def generate_events():
                 count = 0
-                while count < 5:
+                while count == 0:
                     yield 'event:text'
-                    yield 'text: Hello World!\n\n'
+                    count += 1
                     time.sleep(1)
             return Response(generate_events(), mimetype='text/event-stream')
         return jsonify({'result':'ok'})    
