@@ -449,8 +449,8 @@ def poebot1():
                     if count == 0:
                         yield 'event: meta\ndata: {"content_type": "text/markdown", "linkify": true}\n\n'
                     if count == 1:
-                        yield 'event: text\ndata: {"text": "I am here"}\n\n'
-                        time.sleep(1)    
+                        yield 'event: text\ndata: {"text": "I am here\\n\\n"}\n\n'
+                        time.sleep(1)
                     if count == 2:
                         yield 'event: text\ndata: {"text": "I am here again!!!'+usermessage+'"}\n\n'
                     if count == 3:
