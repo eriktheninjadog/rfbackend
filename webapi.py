@@ -1,4 +1,5 @@
 import time
+import traceback
 from flask import Flask, Response, jsonify, request, url_for
 
 import api
@@ -444,5 +445,6 @@ def poebot1():
             return Response(generate_events(), mimetype='text/event-stream')
         return jsonify({'result':'ok'})    
     except Exception as e :
+        traceback.print_exc() 
         print(str(e))
         return jsonify({'result':None})
