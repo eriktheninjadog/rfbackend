@@ -441,13 +441,14 @@ def poebot1():
             query = request.json["query"]                            
             def generate_events():
                 count = 0
-                while count < 3:
+                while count < 4:
                     if count == 0:
                         yield 'event: meta\ndata: {"content_type": "text/markdown", "linkify": true}\n\n'
                     if count == 1:
                         yield 'event: text\ndata: {"text": "I am here"}\n\n'
+                        time.sleep(10)    
                     if count == 2:
-                        yield 'event: done\ndata: {}\n\n'
+                        yield 'event: text\ndata: {"text": "I am here again!!!"}\n\n'
                     if count == 3:
                         yield 'event: done\ndata: {}\n\n'
                     count += 1
