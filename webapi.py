@@ -441,10 +441,14 @@ def poebot1():
             query = request.json["query"]                            
             def generate_events():
                 count = 0
-                while count == 0:
-                    yield 'event:text\ntext:hi there!!!'
+                while count < 3:
+                    if count < 2:
+                        yield 'event:text\ntext:hi there!!!\n'
+                    else:
+                        yield 'event:done\n'
                     count += 1
                     time.sleep(1)
+                
             return Response(generate_events(), mimetype='text/event-stream')
         return jsonify({'result':'ok'})    
     except Exception as e :
