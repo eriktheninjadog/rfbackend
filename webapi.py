@@ -442,6 +442,7 @@ def poebot1():
             usermessage = ""
             if (len(query)>0):
                 usermessage = query[-1]['content']
+                print(usermessage)
             def generate_events():
                 count = 0
                 while count < 4:
