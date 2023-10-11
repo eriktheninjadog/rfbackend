@@ -432,6 +432,9 @@ def poebot1():
         type = request.json['type']
         print("version " + version)
         print("type " + type )
+        if type == "report_error":
+            print("ERROR")
+            print(str(request))
         if type == "query":
             print("we got a query")
             print(str(request.json["query"]))
