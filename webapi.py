@@ -1,3 +1,4 @@
+import subprocess
 import time
 import traceback
 from flask import Flask, Response, jsonify, request, url_for
@@ -26,7 +27,6 @@ import textprocessing
 import requests
 from bs4 import BeautifulSoup
 import urllib.parse
-import poe
 
 
 app = Flask(__name__)
@@ -425,6 +425,18 @@ def removefile():
         print(str(e))
         return jsonify({'result':None})
 
+
+def call_poe(method, text):
+    f = open("/tmp/poestuff.txt")
+    f.write(text)
+    f.close()
+    subprocess.run("python poe.py " +method + " " + "/tmp/poestuff.txt")
+    f = open("/tmp/poestuff.txt.res")
+    result = f.read()
+    f.close()
+    return result
+    
+
 @app.route('/grammartest',methods=['POST'])
 def grammartest():
     cwsid       = request.json['cwsid']
@@ -432,7 +444,7 @@ def grammartest():
     end         = request.json['end']
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
-    result = asyncio.run( poe.ask_poe_grammar_test(thetext) )
+    result = call_poe("grammar",thetext)
     cws = api.process_chinese("","ai",result,500,-1)
     return jsonify({'result':cws})
     
