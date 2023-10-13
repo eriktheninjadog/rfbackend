@@ -4,9 +4,6 @@ import json
 
 from threading import Thread, Lock
 
-from fastapi_poe.types import ProtocolMessage
-from fastapi_poe.client import get_bot_response
-import fastapi_poe
 
 
 def ask_ai(question):
@@ -137,18 +134,6 @@ def ask_ai_again(question):
     write_ai_to_file(question,"doctor.txt")
     parse_ai_file("doctor.txt")
     return None    
-
-
-
-
-async def hithere():
-    message = ProtocolMessage(role="user", content="Hello world")
-        
-    async for partial in get_bot_response(messages=[message], bot_name="GPT-3.5-Turbo", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
-        print(partial)
-
-
-hithere()
 
 #answer = ask_ai_again("write each noun in this text to a new line:機管局表示，截至目前為止，機場航班運作大致維持正常，部分航班可能受影響。旅客應留意最新的航班情況，有需要時向航空公司查詢。\n另外，於風暴信號生效期間，前往機場的公共交通只維持有限度服務，旅客請預留充足時間前往機場。 地震在當地星期六早上11時左右發生，震央距離西部城市赫拉特約40公里，靠近伊朗邊境，美國地質勘探局錄得強度為6.3級，之後發生至少三次強烈餘震。")
 #print(answer)
