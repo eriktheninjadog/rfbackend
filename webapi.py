@@ -9,6 +9,9 @@ import database
 import os
 import os.path
 
+import asyncio
+
+
 import boto3
 import pycld2 as cld2
 
@@ -429,7 +432,7 @@ def grammartest():
     end         = request.json['end']
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
-    result = poe.ask_poe_grammar_test(thetext)
+    result = asyncio.run( poe.ask_poe_grammar_test(thetext) )
     cws = api.process_chinese("","ai",result,500,-1)
     return jsonify({'result':cws})
     
