@@ -23,6 +23,7 @@ import textprocessing
 import requests
 from bs4 import BeautifulSoup
 import urllib.parse
+import poe
 
 
 app = Flask(__name__)
@@ -369,14 +370,11 @@ def get_classification():
     classdict = textprocessing.get_word_class(cws.orgtext)
     return jsonify({'result':classdict})
 
-
 @app.route('/get_character_cws',methods=['POST'])
 def get_character_cws():
     title = request.json['title']
     cws = database.get_cws_by_title_and_type(title,800)  
     return jsonify({'result':cws})
-
-
 
 @app.route('/updatecws',methods=['POST'])
 def updatecws():
@@ -424,7 +422,13 @@ def removefile():
         print(str(e))
         return jsonify({'result':None})
 
-
+@app.route('/grammartest',methods=['POST'])
+def grammartest():
+    text = request.json['text']
+    result = poe.ask_poe_grammar_test(text)
+    cws = api.process_chinese("","ai",result,500,-1)
+    return jsonify({'result':cws})
+    
 @app.route('/poebot1',methods=['POST'])
 def poebot1():
     try:
@@ -463,3 +467,9 @@ def poebot1():
         traceback.print_exc() 
         print(str(e))
         return jsonify({'result':None})
+    
+
+
+
+
+
