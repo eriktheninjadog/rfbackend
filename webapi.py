@@ -432,7 +432,7 @@ def call_poe(method, text):
     f = open(fname,"w",encoding='utf-8')
     f.write(text)
     f.close()
-    subprocess.run("python /var/www/html/api/rfbackend/poe.py " +method + " " + fname)
+    subprocess.run("/usr/bin/python /var/www/html/api/rfbackend/poe.py " +method + " " + fname)
     f = open(fname + ".res","r",encoding='utf-8')
     result = f.read()
     f.close()
