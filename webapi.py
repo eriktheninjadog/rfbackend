@@ -427,11 +427,12 @@ def removefile():
 
 
 def call_poe(method, text):
-    f = open("/tmp/poestuff.txt")
+    fname = "/var/www/html/api/rfbackend/storage/poestuff.txt"
+    f = open(fname,"w")
     f.write(text)
     f.close()
     subprocess.run("python poe.py " +method + " " + "/tmp/poestuff.txt")
-    f = open("/tmp/poestuff.txt.res")
+    f = open(fname + ".res","r")
     result = f.read()
     f.close()
     return result
