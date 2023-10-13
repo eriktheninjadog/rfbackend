@@ -424,8 +424,12 @@ def removefile():
 
 @app.route('/grammartest',methods=['POST'])
 def grammartest():
-    text = request.json['text']
-    result = poe.ask_poe_grammar_test(text)
+    cwsid       = request.json['cwsid']
+    start       = request.json['start']
+    end         = request.json['end']
+    thecws = api.get_cws_text( cwsid )
+    thetext = thecws.orgtext[start:end]
+    result = poe.ask_poe_grammar_test(thetext)
     cws = api.process_chinese("","ai",result,500,-1)
     return jsonify({'result':cws})
     
