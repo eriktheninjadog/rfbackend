@@ -424,19 +424,19 @@ def removefile():
     except Exception as e :
         print(str(e))
         return jsonify({'result':None})
+    
 
-
+    
 def call_poe(method, text):
     fname = "/var/www/html/api/rfbackend/storage/poestuff.txt"
     f = open(fname,"w",encoding='utf-8')
     f.write(text)
     f.close()
-    subprocess.run("python poe.py " +method + " " + "/tmp/poestuff.txt")
+    subprocess.run("python /var/www/html/api/rfbackend/poe.py " +method + " " + fname)
     f = open(fname + ".res","r",encoding='utf-8')
     result = f.read()
     f.close()
     return result
-    
 
 @app.route('/grammartest',methods=['POST'])
 def grammartest():

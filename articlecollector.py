@@ -23,6 +23,7 @@ def getanarticle():
 
 #def getworldnews():
 #getanarticle()
+#ddd
 
 response = requests.get('https://www.reuters.com/news/archive/worldNews')
 soup = BeautifulSoup(response.content, 'html.parser')
