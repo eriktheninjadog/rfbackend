@@ -27,7 +27,7 @@ import textprocessing
 import requests
 from bs4 import BeautifulSoup
 import urllib.parse
-
+import newscrawler
 
 app = Flask(__name__)
 
@@ -448,6 +448,14 @@ def grammartest():
     result = call_poe("grammar",thetext)
     cws = api.process_chinese("","ai",result,500,-1)
     return jsonify({'result':cws})
+
+
+@app.route('/news',methods=['POST'])
+def news():
+    thenews  = newscrawler.gethknews()
+    cws = api.process_chinese("news","ai",thenews,500,-1)
+    return jsonify({'result':cws})
+
     
 @app.route('/poebot1',methods=['POST'])
 def poebot1():
