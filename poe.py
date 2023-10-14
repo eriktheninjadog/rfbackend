@@ -533,6 +533,15 @@ async def get_final_response(
         raise BotError(f"Bot {bot_name} sent no response")
     return "".join(chunks)
 
+
+async def ask_poe_explain(text):
+    total = ""
+    message = ProtocolMessage(role="user", content="Split this text into sentences and explain the meaning, grammar and difficult words of each sentence:" + text )
+    async for partial in get_bot_response(messages=[message], bot_name="GPT-4", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+        print( partial.text, sep="")
+        total += partial.text    
+    return total
+
 async def ask_poe_grammar_test(text):
     total = ""
     message = ProtocolMessage(role="user", content=" Give me a list of grammar patterns in this text. Split the name of the pattern and the example with '|':" + text )
@@ -549,6 +558,8 @@ async def ask_poe_grammar_test(text):
         if len(i.split('|')) == 2:
             output += i + "\n"
     return output
+
+
 
 
 async def testit():
@@ -580,7 +591,7 @@ filename = sys.argv[2]
 f = open(filename,"r")
 text = f.read()
 f.close()
-guest = asyncio.run(ask_poe_grammar_test(text))
+guest = asyncio.run(ask_poe_explain(text))
 print(guest)
 f = open(filename+".res","w")
 f.write(guest)
