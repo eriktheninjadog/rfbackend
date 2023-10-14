@@ -537,7 +537,7 @@ async def get_final_response(
 async def ask_poe_explain(text):
     total = ""
     message = ProtocolMessage(role="user", content="Split this text into sentences and explain the meaning, grammar and difficult words of each sentence:" + text )
-    async for partial in get_bot_response(messages=[message], bot_name="GPT-4", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+    async for partial in get_bot_response(messages=[message], bot_name="Assistant", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
         print( partial.text, sep="")
         total += partial.text    
     return total
