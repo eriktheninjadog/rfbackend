@@ -99,9 +99,10 @@ def ask_ai(question):
                 wholenineyards = wholenineyards.replace("data:","\n")
                 for i in wholenineyards.split("\n"):
                     if (len(i.strip()) > 0):
-                        print("###" + i)                    
+                        #print("###" + i)
                         pop = json.loads(i)
-                        print(pop['choices'][0]['delta']['content'])
+                        if ( 'content' in pop['choices'][0]['delta'].keys() ):
+                            print(pop['choices'][0]['delta']['content'])
             return total
     
 
