@@ -46,6 +46,7 @@ def ask_ai(question):
             #print(request)
             response = b""
             keepgoing = True
+            firstgotten = False
             try:
                 ssock.sendall(request.encode())
                 total = ""
@@ -56,13 +57,22 @@ def ask_ai(question):
                     if not chunk:
                         break
                     response += chunk
-                    #print(chunk.decode())
-                    #print("got package")
-                    """
+                    if not firstgotten:
+                        firstgotten = True
+                    else:
+                        #everything start with the length in hex followed by line and data:
+                        #is the data encoded, is it binary?
+                        athing = chunk.decode()
+                        length = int(athing.split("\n")[0],16)
+                        print(str(length))
+                        #print("got package")
+
+
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
                     else:
                         strpackage = chunk.decode()
+                        """
                         print('package ' + strpackage)
                         startidx = strpackage.find("data: ")
                         startidx += len("data: ")
