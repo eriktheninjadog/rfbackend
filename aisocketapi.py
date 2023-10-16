@@ -97,8 +97,9 @@ def ask_ai(question):
                 ssock.close()
                 wholenineyards = wholenineyards.replace("data: [DONE]","")
                 wholenineyards = wholenineyards.replace("data:","\n")
-                print(wholenineyards)
-
+                for i in wholenineyards.split("\n"):
+                    pop = json.loads(i)
+                    print(pop['choices'][0]['delta']['content'])
             return total
     
 
