@@ -47,6 +47,7 @@ def ask_ai(question):
             response = b""
             keepgoing = True
             firstgotten = False
+            wholenineyards = ""
             try:
                 ssock.sendall(request.encode())
                 total = ""
@@ -66,9 +67,9 @@ def ask_ai(question):
                         length = int(athing.split("\n")[0],16)
                         print(str(length))
                         start = athing.find("\n")
-                        print(chunk[start+1:length+2].decode())
+                        #print(chunk[start+1:length+2].decode())
                         #print("got package")
-
+                        wholenineyards += chunk[start+1:length+2].decode()
 
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
@@ -94,6 +95,10 @@ def ask_ai(question):
                     """
             finally:
                 ssock.close()
+                wholenineyards = wholenineyards.replace("data: [DONE]","")
+                wholenineyards = wholenineyards.replace("data:","")
+                print(wholenineyards)
+
             return total
     
 
