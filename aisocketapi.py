@@ -69,7 +69,7 @@ def ask_ai(question):
                         start = athing.find("\n")
                         #print(chunk[start+1:length+2].decode())
                         #print("got package")
-                        wholenineyards += chunk[start+1:length+2].decode()
+                        wholenineyards += chunk[start+1:length+2].decode().strip()
 
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
