@@ -60,6 +60,10 @@ def ask_ai(question):
                     response += chunk
                     if not firstgotten:
                         firstgotten = True
+                        athing = chunk.decode()
+                        parts = athing.split("\n\r\n\r")
+                        print(str(parts))
+                        
                     else:
                         #everything start with the length in hex followed by line and data:
                         #is the data encoded, is it binary?
