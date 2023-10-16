@@ -57,7 +57,7 @@ def to_file(filename,prefix,question):
     chunks = split_file_into_chunks(filename)
     outfile = open( prefix+'_' + filename,"w",encoding="utf-8")
     for c in chunks:
-        ret = batchprocessing.apply_ai_to_text(c,question,30) 
+        ret = batchprocessing.apply_ai_to_text(c,question,256) 
         outfile.write(ret)
         outfile.flush()
     outfile.close()
