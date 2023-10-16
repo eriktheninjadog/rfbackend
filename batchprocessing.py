@@ -15,6 +15,7 @@ def batchprocess_text(all_of_it,splitfunction,processfunction,maxlen=1024):
     return total
 
 def splitfunction(txt,maxlen):
+    print("Max len " + str(maxlen))
     maxlen = maxlen
     ret = []
     pos = 0
