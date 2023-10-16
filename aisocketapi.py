@@ -62,17 +62,22 @@ def ask_ai(question):
                         firstgotten = True
                         athing = chunk.decode()
                         parts = athing.split("\r\n\r\n")
-                        print(str(parts))                        
+                        if (len(parts)>1 and len(parts[1])>20):
+                            athing = parts[1]
+                            length = int(athing.split("\r\n")[0],16)
+                            start = athing.find("\r\n")
+                            wholenineyards += chunk[start+2:length].decode()
+                            print(chunk[start+2:length].decode())
                     else:
                         #everything start with the length in hex followed by line and data:
                         #is the data encoded, is it binary?
                         athing = chunk.decode()
                         length = int(athing.split("\n")[0],16)
                         print(str(length))
-                        start = athing.find("\n")
+                        start = athing.find("\r\n")
                         #print(chunk[start+1:length+2].decode())
                         #print("got package")
-                        wholenineyards += chunk[start+1:length+2].decode().strip()
+                        wholenineyards += chunk[start+2:length].decode().strip()
 
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
