@@ -66,7 +66,7 @@ def ask_ai(question):
                         length = int(athing.split("\n")[0],16)
                         print(str(length))
                         start = athing.find("\n")
-                        print(chunk[start+2:length].decode())
+                        print(chunk[start+1:length+2].decode())
                         #print("got package")
 
 
