@@ -12,6 +12,7 @@ def ask_ai(question):
     auth_part = lines[0]
     path = "/chat?stream=true&model=gpt-4"
     hostname = 'api.writingmate.ai'
+    flog = open('/var/www/html/api/rfbackend/aisocket.log','wb')
     context = ssl.create_default_context()
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     abody = {}
@@ -50,6 +51,8 @@ def ask_ai(question):
                 total = ""
                 while keepgoing:
                     chunk = ssock.recv(4096*2)
+                    flog.write(chunk)
+                    flog.flush()
                     if not chunk:
                         break
                     response += chunk
@@ -77,7 +80,7 @@ def ask_ai(question):
                                     if ("content" in jp["choices"][0]["delta"]):                                    
                                         total = total + str(jp["choices"][0]["delta"]["content"])
             finally:
-                ssock.      close()
+                ssock.close()
             return total
     
 
