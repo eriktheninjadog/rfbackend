@@ -2,11 +2,11 @@ import aisocketapi
 import api
 import constants
 
-def batchprocess_text(all_of_it,splitfunction,processfunction):
+def batchprocess_text(all_of_it,splitfunction,processfunction,maxlen=1024):
     # Open a file: file
     total = ''
     print(" batchprocess text - length of text: " + str(len(all_of_it)))
-    splitparts = splitfunction(all_of_it)
+    splitparts = splitfunction(all_of_it,maxlen)
     for i in splitparts:
         print("batchprocess_text processing one part")
         newt = processfunction(i)
@@ -14,8 +14,8 @@ def batchprocess_text(all_of_it,splitfunction,processfunction):
         total = total + newt
     return total
 
-def splitfunction(txt):
-    maxlen = 1024
+def splitfunction(txt,maxlen):
+    maxlen = maxlen
     ret = []
     pos = 0
     lastpos = 0
@@ -55,8 +55,8 @@ def apply_ai_to_cws(id,aitext):
     newcws = api.process_chinese( thecws.title + ' ai ' + aitext,'ai',simpletext,constants.CWS_TYPE_IMPORT_TEXT,id) 
     return newcws
 
-def apply_ai_to_text(orgtext,aitext):
-    simpletext = batchprocess_text(orgtext,splitfunction,ai_function_factory( aitext))
+def apply_ai_to_text(orgtext,aitext,amaxlen=1024):
+    simpletext = batchprocess_text(orgtext,splitfunction,ai_function_factory( aitext),maxlen=amaxlen)
     return simpletext
 
 def multiple_ai_to_text(text,ais):
