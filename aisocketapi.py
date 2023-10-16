@@ -96,7 +96,7 @@ def ask_ai(question):
             finally:
                 ssock.close()
                 wholenineyards = wholenineyards.replace("data: [DONE]","")
-                wholenineyards = wholenineyards.replace("data:","")
+                wholenineyards = wholenineyards.replace("data:","\n")
                 print(wholenineyards)
 
             return total
