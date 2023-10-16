@@ -68,7 +68,7 @@ def ask_ai(question):
                             length = int(athing.split("\r\n")[0],16)
                             start = athing.find("\r\n")
                             wholenineyards += chunk[chunkstart+6+start:chunkstart+start+6+length].decode()
-                            print(wholenineyards)
+                            #print(wholenineyards)
                     else:
                         #everything start with the length in hex followed by line and data:
                         #is the data encoded, is it binary?
@@ -170,5 +170,5 @@ def ask_ai_again(question):
     parse_ai_file("doctor.txt")
     return None       
 
-answer = ask_ai("translate into Swedish:機管局表示，截至目前為止，機場航班運作大致維持正常，部分航班可能受影響。旅客應留意最新的航班情況，有需要時向航空公司查詢。\n另外，於風暴信號生效期間，前往機場的公共交通只維持有限度服務，旅客請預留充足時間前往機場。")
-print(answer)
+#answer = ask_ai("translate into Swedish:機管局表示，截至目前為止，機場航班運作大致維持正常，部分航班可能受影響。旅客應留意最新的航班情況，有需要時向航空公司查詢。\n另外，於風暴信號生效期間，前往機場的公共交通只維持有限度服務，旅客請預留充足時間前往機場。")
+#print(answer)
