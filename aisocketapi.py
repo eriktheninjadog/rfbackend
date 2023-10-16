@@ -111,9 +111,12 @@ def ask_ai(question):
                 for i in wholenineyards.split("\n"):
                     if (len(i.strip()) > 0):
                         #print("###" + i)
-                        pop = json.loads(i)
-                        if ( 'content' in pop['choices'][0]['delta'].keys() ):
-                            total += pop['choices'][0]['delta']['content']
+                        try:
+                            pop = json.loads(i)
+                            if ( 'content' in pop['choices'][0]['delta'].keys() ):
+                                total += pop['choices'][0]['delta']['content']
+                        except:
+                            print("Could not json -->" + i + "<--")
             return total
     
 
