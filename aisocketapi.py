@@ -69,7 +69,7 @@ def ask_ai(question):
                             length = int(athing.split("\r\n")[0],16)
                             start = athing.find("\r\n")
                             wholenineyards += chunk[chunkstart+6+start:chunkstart+start+6+length].decode()
-                            #print(wholenineyards)
+                            print(wholenineyards)
                     else:
                         #everything start with the length in hex followed by line and data:
                         #is the data encoded, is it binary?
@@ -79,6 +79,7 @@ def ask_ai(question):
                         start = athing.find("\r\n")
                         #print(chunk[start+1:length+2].decode())
                         #print("got package")
+                        print(chunk[start+2:start+2+length].decode().strip())
                         wholenineyards += chunk[start+2:start+2+length].decode().strip()
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
