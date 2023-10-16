@@ -102,7 +102,7 @@ def ask_ai(question):
                         #print("###" + i)
                         pop = json.loads(i)
                         if ( 'content' in pop['choices'][0]['delta'].keys() ):
-                            print(pop['choices'][0]['delta']['content'])
+                            print(pop['choices'][0]['delta']['content'],sep="")
             return total
     
 
