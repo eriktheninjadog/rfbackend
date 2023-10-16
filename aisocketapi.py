@@ -59,6 +59,7 @@ def ask_ai(question):
                         break
                     response += chunk
                     if not firstgotten:
+                        print("first chunk")
                         firstgotten = True
                         athing = chunk.decode()
                         parts = athing.split("\r\n\r\n")
@@ -79,7 +80,6 @@ def ask_ai(question):
                         #print(chunk[start+1:length+2].decode())
                         #print("got package")
                         wholenineyards += chunk[start+2:start+2+length].decode().strip()
-
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
                     else:
