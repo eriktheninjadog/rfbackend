@@ -68,7 +68,7 @@ def ask_ai(question):
                             length = int(athing.split("\r\n")[0],16)
                             start = athing.find("\r\n")
                             wholenineyards += chunk[chunkstart+start+2:length].decode()
-                            print(chunk[start+2:length].decode())
+                            print(wholenineyards)
                     else:
                         #everything start with the length in hex followed by line and data:
                         #is the data encoded, is it binary?
