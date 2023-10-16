@@ -58,7 +58,7 @@ def ask_ai(question):
                     response += chunk
                     #print(chunk.decode())
                     #print("got package")
-
+                    """
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
                     else:
@@ -79,6 +79,7 @@ def ask_ai(question):
                                 if ("delta" in jp["choices"][0]):
                                     if ("content" in jp["choices"][0]["delta"]):                                    
                                         total = total + str(jp["choices"][0]["delta"]["content"])
+                    """
             finally:
                 ssock.close()
             return total
