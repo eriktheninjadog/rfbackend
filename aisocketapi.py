@@ -63,10 +63,11 @@ def ask_ai(question):
                         athing = chunk.decode()
                         parts = athing.split("\r\n\r\n")
                         if (len(parts)>1 and len(parts[1])>20):
+                            chunkstart = athing.find("\r\n\r\n")
                             athing = parts[1]
                             length = int(athing.split("\r\n")[0],16)
                             start = athing.find("\r\n")
-                            wholenineyards += chunk[start+2:length].decode()
+                            wholenineyards += chunk[chunkstart+start+2:length].decode()
                             print(chunk[start+2:length].decode())
                     else:
                         #everything start with the length in hex followed by line and data:
