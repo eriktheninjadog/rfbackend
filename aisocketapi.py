@@ -68,13 +68,16 @@ def ask_ai(question):
                         #everything start with the length in hex followed by line and data:
                         #is the data encoded, is it binary?
                         athing = chunk.decode()
-                        length = int(athing.split("\n")[0],16)
-                        print(str(length))
-                        start = athing.find("\r\n")
+                        try:
+                            length = int(athing.split("\n")[0],16)
+                            print(str(length))
+                            start = athing.find("\r\n")
                         #print(chunk[start+1:length+2].decode())
                         #print("got package")
-                        print(chunk[start+2:start+2+length].decode().strip())
-                        wholenineyards += chunk[start+2:start+2+length].decode().strip()
+                            print(chunk[start+2:start+2+length].decode().strip())
+                            wholenineyards += chunk[start+2:start+2+length].decode().strip()
+                        except:
+                            print("Something went wrong trying to parse int -->" + athing + "<--")
                     if (chunk.decode().find("data: [DONE]")!=-1):
                         keepgoing = False
                     else:
