@@ -102,6 +102,7 @@ def ask_ai(question):
                     """
             except Exception as e:
                 print(str(e))
+                exit(-1)
             finally:
                 ssock.close()
                 total = ""
