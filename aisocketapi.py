@@ -12,7 +12,7 @@ def ask_ai(question):
     auth_part = lines[0]
     path = "/chat?stream=true&model=gpt-4"
     hostname = 'api.writingmate.ai'
-    flog = open('/var/www/html/api/rfbackend/aisocket-'+str(int(time.time())+'.log','wb'))
+    flog = open('/var/www/html/api/rfbackend/aisocket-'+str(int(time.time()))+'.log','wb')
     context = ssl.create_default_context()
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     abody = {}
