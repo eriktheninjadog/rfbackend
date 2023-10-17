@@ -100,6 +100,8 @@ def ask_ai(question):
                                     if ("content" in jp["choices"][0]["delta"]):                                    
                                         total = total + str(jp["choices"][0]["delta"]["content"])
                     """
+            except Exception as e:
+                print(str(e))
             finally:
                 ssock.close()
                 total = ""
