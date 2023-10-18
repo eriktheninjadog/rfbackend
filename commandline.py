@@ -57,16 +57,22 @@ def to_file(filename,prefix,question):
     chunks = split_file_into_chunks(filename)
     outfile = open( prefix+'_' + filename,"w",encoding="utf-8")
     for c in chunks:
-        ret = batchprocessing.apply_ai_to_text(c,question,128) 
+        ret = batchprocessing.apply_ai_to_text(c,question,256) 
+        if (ret == None):
+            ret = batchprocessing.apply_ai_to_text(c,question,256)
         outfile.write(ret)
         outfile.flush()
     outfile.close()
 
-print("command: whatdoto\n")
-print("whattodo:\n trad - bookname, filename,minstart,maxstart\n")
-print("tofile - filename pre-fix textline\n")
-if (sys.argv[1] == "trad"):
-    import_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
-if (sys.argv[1] == "tofile"):
-    to_file(sys.argv[2],sys.argv[3],sys.argv[4])
+
+if __name__ == "__main__":
+    print("command: whatdoto\n")
+    print("whattodo:\n trad - bookname, filename,minstart,maxstart\n")
+    print("tofile - filename pre-fix textline\n")
+    #to_file("stephenking1.txt","expjyut","You are a language teacher. Split this text into sentences. Provide each sentence, followed by a translation, followed by a explanation of the grammar structure of the sentence, followed by a list of the most important words with meaning and jyutping. Thank you ")
+
+    if (sys.argv[1] == "trad"):
+        import_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
+    if (sys.argv[1] == "tofile"):
+        to_file(sys.argv[2],sys.argv[3],sys.argv[4])
 

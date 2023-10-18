@@ -25,7 +25,7 @@ def splitfunction(txt,maxlen):
     while pos < txtlen:
         pos += 1
         if (pos - lastpos) > maxlen:
-            while (txt[pos] != '。' and pos < txtlen):
+            while (txt[pos] != '。' and txt[pos] != '\n' and pos < txtlen):
                 pos += 1
             if (txt[pos] == '。'):
                 pos += 1
