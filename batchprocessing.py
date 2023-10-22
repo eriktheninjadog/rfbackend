@@ -7,11 +7,13 @@ def batchprocess_text(all_of_it,splitfunction,processfunction,maxlen=1024):
     total = ''
     print(" batchprocess text - length of text: " + str(len(all_of_it)))
     splitparts = splitfunction(all_of_it,maxlen)
+    cnt = 0
     for i in splitparts:
         print("batchprocess_text processing one part")
         newt = processfunction(i)
-        print("batchprocess_text processing one part processed !")        
+        print("batchprocess_text processing one part processed ! " + str(cnt) + " / " + str(len(splitparts)))
         total = total + newt
+        cnt +=1
     return total
 
 def splitfunction(txt,maxlen):

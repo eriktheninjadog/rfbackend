@@ -1,0 +1,2 @@
+ebook-convert $1 $1.epub
+echo "message body here" | mailx -s "Subject Here" -a $1.epub erik.tamm_MYKINDLE@kindle.com

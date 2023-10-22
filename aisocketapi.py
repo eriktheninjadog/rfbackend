@@ -3,10 +3,23 @@ import ssl
 import json
 from threading import Thread, Lock
 import time
+import hashlib
+import os
 
 
 
 def ask_ai(question):
+
+
+
+    result = hashlib.md5(question.encode('utf-8'))
+    cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
+    if os.path.exists(cachefilename):
+        f = open(cachefilename,'r')
+        result = f.read()
+        f.close()
+        return result
+
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
@@ -77,7 +90,7 @@ def ask_ai(question):
                             start = athing.find("\r\n")
                         #print(chunk[start+1:length+2].decode())
                         #print("got package")
-                            print(chunk[start+2:start+2+length].decode().strip())
+                            #print(chunk[start+2:start+2+length].decode().strip())
                             wholenineyards += chunk[start+2:start+2+length].decode().strip()
                         except:
                             print("Something went wrong trying to parse int -->" + athing + "<--")
@@ -123,6 +136,9 @@ def ask_ai(question):
                                 total += pop['choices'][0]['delta']['content']
                         except:
                             print("Could not json -->" + i + "<--")
+                f = open(cachefilename,'w')
+                f.write(total)
+                f.close()
                 return total
 
 def write_ai_to_file(question,filename):
