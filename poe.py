@@ -552,6 +552,16 @@ async def ask_poe_test_vocabulary(text):
     return total
 
 
+async def ask_poe_test_understanding(text):
+    total = ""
+    message = ProtocolMessage(role="user", content="Create a test with 10 questions to check my understanding of this text" + text )
+    async for partial in get_bot_response(messages=[message], bot_name="Assistant", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+        print( partial.text, sep="")
+        total += partial.text    
+    return total
+
+
+
 async def ask_poe_grammar_test(text):
     total = ""
     message = ProtocolMessage(role="user", content=" Give me a list of grammar patterns in this text. Split the name of the pattern and the example with '|':" + text )
@@ -614,6 +624,10 @@ if sys.argv[1] == "grammar":
 if sys.argv[1] == "testvocabulary":
     guest = asyncio.run(ask_poe_test_vocabulary(text))
     print(guest)
+if sys.argv[1] == "testunderstanding":
+    guest = asyncio.run(ask_poe_test_understanding(text))
+    print(guest)
+
 f = open(filename+".res","w")
 f.write(guest)
 f.close()

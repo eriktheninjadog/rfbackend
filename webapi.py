@@ -460,6 +460,16 @@ def testvocabulary():
     cws = api.process_chinese("","ai",result,500,-1)
     return jsonify({'result':cws})
 
+@app.route('/testunderstanding',methods=['POST'])
+def testunderstanding():
+    cwsid       = request.json['cwsid']
+    start       = request.json['start']
+    end         = request.json['end']
+    thecws = api.get_cws_text( cwsid )
+    thetext = thecws.orgtext[start:end]
+    result = call_poe("testunderstanding",thetext)
+    cws = api.process_chinese("","ai",result,500,-1)
+    return jsonify({'result':cws})
 
 
 @app.route('/news',methods=['POST'])
