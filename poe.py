@@ -601,6 +601,7 @@ filename = sys.argv[2]
 f = open(filename,"r")
 text = f.read()
 f.close()
+guest = ''
 if sys.argv[1] == "explain":
     guest = asyncio.run(ask_poe_explain(text))
     print(guest)
