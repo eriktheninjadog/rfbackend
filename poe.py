@@ -557,7 +557,16 @@ async def ask_poe_test_understanding(text):
     message = ProtocolMessage(role="user", content="Create a test with 10 questions to check my understanding of this text" + text )
     async for partial in get_bot_response(messages=[message], bot_name="Assistant", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
         print( partial.text, sep="")
+        total += partial.text
+    message = ProtocolMessage(role="user", content="Create a test with statements that are true or false based upon the text" + text )
+    async for partial in get_bot_response(messages=[message], bot_name="Assistant", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+        print( partial.text, sep="")
         total += partial.text    
+    message = ProtocolMessage(role="user", content="What are the main ideas in the text provided. Reply in traditional Chinese. Text:" + text )
+    async for partial in get_bot_response(messages=[message], bot_name="Assistant", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+        print( partial.text, sep="")
+        total += partial.text    
+
     return total
 
 
