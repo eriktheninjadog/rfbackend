@@ -608,7 +608,7 @@ f.write(str(sys.argv))
 f.close()
 
 guest = ''
-if sys.argv[1] == "explain":
+if sys.argv[1] == "grammar":
     guest = asyncio.run(ask_poe_explain(text))
     print(guest)
 if sys.argv[1] == "testvocabulary":
