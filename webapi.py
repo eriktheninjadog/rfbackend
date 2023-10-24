@@ -267,12 +267,15 @@ def generate_text():
 def deletecws():
     cwsid = request.json['cwsid']
     api.deletecwsbyid(cwsid)
+    return "OK"
 
 @app.route('/changecwsstatus',methods=['POST'])
 def changecwsstatus():
     cwsid = request.json['cwsid']
     status = request.json['status']
     api.changecwsstatusbyid(cwsid,status)
+    return "OK"
+
 
 
 @app.route('/simplifycws',methods=['POST'])
