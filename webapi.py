@@ -271,8 +271,8 @@ def deletecws():
 @app.route('/changecwsstatus',methods=['POST'])
 def changecwsstatus():
     cwsid = request.json['cwsid']
-    cwsid = request.json['status']
-    api.changecwsstatusbyid(cwsid)
+    status = request.json['status']
+    api.changecwsstatusbyid(cwsid,status)
 
 
 @app.route('/simplifycws',methods=['POST'])
