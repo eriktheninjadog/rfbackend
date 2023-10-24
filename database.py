@@ -286,6 +286,7 @@ def update_cws_status(cwsid,status):
     mydb.commit()                                                            
     mycursor.close()
     mydb.close()
+    return cwsid
     
 
     
