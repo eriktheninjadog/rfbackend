@@ -281,7 +281,7 @@ def get_cws_list_by_status(status):
 def update_cws_status(cwsid,status):
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "UPDATE CWS set status = "+str(status)+" WHERE id = " + str(cwsid)
+    sql = "UPDATE cws set status = "+str(status)+" WHERE id = " + str(cwsid)
     mycursor.execute(sql)
     mydb.commit()                                                            
     mycursor.close()
