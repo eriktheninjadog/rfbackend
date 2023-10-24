@@ -247,7 +247,7 @@ def unanswered_questions():
     return database.get_unanswered_questions()
 
 def get_imported_texts():
-    return database.get_cws_list_by_type(constants.CWS_TYPE_IMPORT_TEXT)
+    return database.get_cws_list_by_status(constants.CWS_STATUS_VISIBLE)
 
 def dictionary_lookup(word):
     return database.find_word(word)
@@ -284,6 +284,9 @@ def get_responsecws_of_responsetype(type):
 
 def deletecwsbyid(cwsid):
     database.delete_cws_by_id(cwsid)
+
+def changecwsstatusbyid(cwsid,status):
+    database.update_cws_status(cwsid,status)
 
 
 def read_dictionary_from_file(filename):

@@ -268,6 +268,13 @@ def deletecws():
     cwsid = request.json['cwsid']
     api.deletecwsbyid(cwsid)
 
+@app.route('/changecwsstatus',methods=['POST'])
+def changecwsstatus():
+    cwsid = request.json['cwsid']
+    cwsid = request.json['status']
+    api.changecwsstatusbyid(cwsid)
+
+
 @app.route('/simplifycws',methods=['POST'])
 def simplifycws():
     cwsid = request.json['cwsid']

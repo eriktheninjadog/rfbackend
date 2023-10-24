@@ -262,6 +262,32 @@ def get_cws_list_by_type(type):
     mycursor.close()
     mydb.close()
     return ret
+
+def get_cws_list_by_status(status):
+    ret = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "SELECT id,title FROM cws WHERE status = " + str(status)
+    mycursor.execute(sql)                                                            
+    myresult = mycursor.fetchall() 
+    for (id,title) in myresult:
+        ret.append( CWS(id,None,None,None,None,None,title,None,type,-1))
+    mycursor.close()
+    mydb.close()
+    return ret
+
+
+
+def update_cws_status(cwsid,status):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "UPDATE CWS set status = "+str(status)+" WHERE id = " + str(cwsid)
+    mycursor.execute(sql)
+    mydb.commit()                                                            
+    mycursor.close()
+    mydb.close()
+    
+
     
 def add_cws(cwsobject):
     
