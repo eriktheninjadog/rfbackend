@@ -271,7 +271,7 @@ def get_cws_list_by_status(status):
     mycursor.execute(sql)                                                            
     myresult = mycursor.fetchall() 
     for (id,title) in myresult:
-        ret.append( CWS(id,None,None,None,None,None,title,None,type,-1))
+        ret.append( CWS(id,None,None,None,None,None,title,None,None,-1))
     mycursor.close()
     mydb.close()
     return ret
