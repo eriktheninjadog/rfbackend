@@ -461,7 +461,7 @@ def call_poe_free(bot, text):
 
 
 @app.route('/poefree',methods=['POST'])
-def grammartest():
+def poefree():
     cwsid       = request.json['cwsid']
     text       = request.json['text']
     bot         = request.json['bot']
