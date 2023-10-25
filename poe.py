@@ -482,10 +482,12 @@ def get_bot_response(
     if stop_sequences is not None:
         additional_params["stop_sequences"] = stop_sequences
 
+#replacing the conversation_id to see if we can keep a conversation going
+#orgvalue ""
     query = QueryRequest(
         query=messages,
         user_id="",
-        conversation_id="",
+        conversation_id="c_12345678901234567890123456789032",
         message_id="",
         version=PROTOCOL_VERSION,
         type="query",
@@ -548,6 +550,7 @@ async def ask_poe_test_vocabulary(text):
     message = ProtocolMessage(role="user", content="Create a test to check if I know the vocabulary of this text:" + text )
     async for partial in get_bot_response(messages=[message], bot_name="Assistant", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
         print( partial.text, sep="")
+        partial.
         total += partial.text    
     return total
 
