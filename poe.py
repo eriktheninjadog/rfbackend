@@ -550,7 +550,6 @@ async def ask_poe_test_vocabulary(text):
     message = ProtocolMessage(role="user", content="Create a test to check if I know the vocabulary of this text:" + text )
     async for partial in get_bot_response(messages=[message], bot_name="Assistant", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
         print( partial.text, sep="")
-        partial.
         total += partial.text    
     return total
 
