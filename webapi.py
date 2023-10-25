@@ -448,6 +448,28 @@ def call_poe(method, text):
     f.close()
     return result
 
+def call_poe_free(bot, text):
+    fname = "/var/www/html/api/rfbackend/storage/poestuff.txt"
+    f = open(fname,"w",encoding='utf-8')
+    f.write(text)
+    f.close()
+    subprocess.run("/usr/bin/python /var/www/html/api/rfbackend/poe.py free " + fname + " " + bot,shell=True)
+    f = open(fname + ".res","r",encoding='utf-8')
+    result = f.read()
+    f.close()
+    return result
+
+
+@app.route('/poefree',methods=['POST'])
+def grammartest():
+    cwsid       = request.json['cwsid']
+    text       = request.json['text']
+    bot         = request.json['bot']
+    result = call_poe_free(text,bot)
+    result = text + "\n\n" + text
+    cws = api.process_chinese("poefree","ai",result,500,cwsid)
+    return jsonify({'result':cws})
+
 @app.route('/grammartest',methods=['POST'])
 def grammartest():
     cwsid       = request.json['cwsid']
@@ -456,7 +478,7 @@ def grammartest():
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
     result = call_poe("grammar",thetext)
-    cws = api.process_chinese("","ai",result,500,-1)
+    cws = api.process_chinese("grammartest","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
 @app.route('/testvocabulary',methods=['POST'])
@@ -467,7 +489,7 @@ def testvocabulary():
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
     result = call_poe("testvocabulary",thetext)
-    cws = api.process_chinese("","ai",result,500,-1)
+    cws = api.process_chinese("testvocabulary","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
 @app.route('/testunderstanding',methods=['POST'])
@@ -478,7 +500,7 @@ def testunderstanding():
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
     result = call_poe("testunderstanding",thetext)
-    cws = api.process_chinese("","ai",result,500,-1)
+    cws = api.process_chinese("testunderstanding","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
 

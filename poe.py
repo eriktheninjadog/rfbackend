@@ -591,6 +591,24 @@ async def ask_poe_grammar_test(text):
 
 
 
+async def ask_poe_free(question,bot_name):
+    total = ""
+    message = ProtocolMessage(role="user", content= question )
+    async for partial in get_bot_response(messages=[message], bot_name=bot_name, api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+        print( partial.text, sep="")
+        total += partial.text
+    rules = total.split("\n")
+    output = text + "\n"
+    for i in rules:
+        if len(i.split('|')) == 2:
+            output += i.split('|')[0] + "\n"
+    output += "\n\n\n"
+    for i in rules:
+        if len(i.split('|')) == 2:
+            output += i + "\n"
+    return output
+
+
 async def testit():
     await test() 
 
@@ -627,6 +645,11 @@ f.write(str(sys.argv))
 f.close()
 
 guest = ''
+
+if sys.argv[1] == "free":
+    guest = asyncio.run(ask_poe_free(text,sys.argv[3]))
+    print(guest)
+
 if sys.argv[1] == "grammar":
     guest = asyncio.run(ask_poe_explain(text))
     print(guest)
