@@ -591,10 +591,10 @@ async def ask_poe_grammar_test(text):
 
 
 
-async def ask_poe_free(question,bot_name):
+async def ask_poe_free(question,bname):
     total = ""
     message = ProtocolMessage(role="user", content= question )
-    async for partial in get_bot_response(messages=[message], bot_name=bot_name, api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+    async for partial in get_bot_response(messages=[message], bot_name=bname, api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
         print( partial.text, sep="")
         total += partial.text
     rules = total.split("\n")
