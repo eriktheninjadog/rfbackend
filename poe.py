@@ -589,25 +589,14 @@ async def ask_poe_grammar_test(text):
     return output
 
 
-
-
 async def ask_poe_free(question,bname):
     total = ""
+    "/var/www/html/api/rfbackend/storage/ask_poe_free.result"
     message = ProtocolMessage(role="user", content= question )
     async for partial in get_bot_response(messages=[message], bot_name=bname, api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
         print( partial.text, sep="")
         total += partial.text
-    rules = total.split("\n")
-    output = text + "\n"
-    for i in rules:
-        if len(i.split('|')) == 2:
-            output += i.split('|')[0] + "\n"
-    output += "\n\n\n"
-    for i in rules:
-        if len(i.split('|')) == 2:
-            output += i + "\n"
-    return output
-
+    return total
 
 async def testit():
     await test() 
