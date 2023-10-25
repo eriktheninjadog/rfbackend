@@ -487,7 +487,7 @@ def get_bot_response(
     query = QueryRequest(
         query=messages,
         user_id="",
-        conversation_id="c_12345678901234567890123456789032",
+        conversation_id="",
         message_id="",
         version=PROTOCOL_VERSION,
         type="query",
