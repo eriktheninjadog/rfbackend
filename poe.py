@@ -51,7 +51,7 @@ class QueryRequest(BaseRequest):
 
     query: List[ProtocolMessage]
     user_id: Identifier
-    conversation_id: Identifier
+    conversation_id: Identifier = ""
     message_id: Identifier
     metadata: Identifier = ""
     api_key: str = "<missing>"
@@ -636,6 +636,9 @@ f.write(str(sys.argv))
 f.close()
 
 guest = ''
+
+if sys.argv[1] == "test":
+    guest = asyncio.run(ask_poe_free("What are some common banking terms in Chinese?","TeachingChinese"))
 
 if sys.argv[1] == "free":
     guest = asyncio.run(ask_poe_free(text,sys.argv[3]))
