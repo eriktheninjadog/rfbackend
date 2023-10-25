@@ -466,7 +466,7 @@ def poefree():
     text       = request.json['text']
     bot         = request.json['bot']
     result = call_poe_free(bot,text)
-    result = text + "\n\n" + text
+    result = result + "\n\n" + text
     cws = api.process_chinese("poefree","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
