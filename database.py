@@ -267,7 +267,7 @@ def get_cws_list_by_status(status):
     ret = []
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "SELECT id,title FROM cws WHERE status = " + str(status)
+    sql = "SELECT id,title FROM cws WHERE status = " + str(status) + " ORDER BY id DESC"
     mycursor.execute(sql)                                                            
     myresult = mycursor.fetchall() 
     for (id,title) in myresult:
