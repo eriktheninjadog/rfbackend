@@ -436,36 +436,14 @@ def removefile():
         return jsonify({'result':None})
     
 
-    
-def call_poe(method, text):
-    fname = "/var/www/html/api/rfbackend/storage/poestuff.txt"
-    f = open(fname,"w",encoding='utf-8')
-    f.write(text)
-    f.close()
-    subprocess.run("/usr/bin/python /var/www/html/api/rfbackend/poe.py " +method + " " + fname,shell=True)
-    f = open(fname + ".res","r",encoding='utf-8')
-    result = f.read()
-    f.close()
-    return result
-
-def call_poe_free(bot, text):
-    fname = "/var/www/html/api/rfbackend/storage/poestuff.txt"
-    f = open(fname,"w",encoding='utf-8')
-    f.write(text)
-    f.close()
-    subprocess.run("/usr/bin/python /var/www/html/api/rfbackend/poe.py free " + fname + " " + bot,shell=True)
-    f = open(fname + ".res","r",encoding='utf-8')
-    result = f.read()
-    f.close()
-    return result
-
+import poe
 
 @app.route('/poefree',methods=['POST'])
 def poefree():
     cwsid       = request.json['cwsid']
     text       = request.json['text']
     bot         = request.json['bot']
-    result = call_poe_free(bot,text)
+    result =  poe.ask_poe_ai_sync(text,bot)
     result = text + "\n\n" + result
     cws = api.process_chinese("poefree","ai",result,500,cwsid)
     return jsonify({'result':cws})
@@ -477,7 +455,7 @@ def grammartest():
     end         = request.json['end']
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
-    result = call_poe("grammar",thetext)
+    result = poe.ask_poe_ai_sync("Split this text into sentences and explain the grammar of each:" + thetext)
     cws = api.process_chinese("grammartest","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
@@ -488,7 +466,7 @@ def testvocabulary():
     end         = request.json['end']
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
-    result = call_poe("testvocabulary",thetext)
+    result = poe.ask_poe_ai_sync("Make a vocabulary test based upon this text:" + thetext)
     cws = api.process_chinese("testvocabulary","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
@@ -499,7 +477,7 @@ def testunderstanding():
     end         = request.json['end']
     thecws = api.get_cws_text( cwsid )
     thetext = thecws.orgtext[start:end]
-    result = call_poe("testunderstanding",thetext)
+    result = poe.ask_poe_ai_sync("Make a list of question to check my understanding of this text:" + thetext)
     cws = api.process_chinese("testunderstanding","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
