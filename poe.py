@@ -38,6 +38,14 @@ def create_query(question):
     query['content'] = question
     return query
 
+def is_socket_closed(sock):
+    try:
+        # Check if the socket's fileno is -1 (closed socket)
+        return sock.fileno() == -1
+    except socket.error as e:
+        # An exception is raised when attempting to access a closed socket
+        return True
+
 past_queries = []
 lastquerytime = time.time()
 
@@ -79,6 +87,7 @@ def ask_poe_ai_sync(question,bot):
         poesocket = None
         past_queries = []
 
+
     bodyasdict = json.loads(body)
     past_queries.append(create_query(question))
     bodyasdict['query'] = past_queries
@@ -86,6 +95,9 @@ def ask_poe_ai_sync(question,bot):
 #   "{'version': '1.0', 'type': 'query', 'query': [{'role': 'user', 'content': 'What is 6 + 4?', 'content_type': 'text/markdown', 'timestamp': 0, 'message_id': '', 'feedback': [], 'attachments': []}], 'user_id': '', 'conversation_id': '', 'message_id': '', 'metadata': '', 'api_key': '<missing>', 'access_key': '<missing>', 'temperature': 0.7, 'skip_system_prompt': False, 'logit_bias': {}, 'stop_sequences': []}"    
     if poesocket == None:
         poesocket = create_and_connect_poe_socket()
+    if is_socket_closed(poesocket):
+        poesocket = create_and_connect_poe_socket()
+
     ssock = poesocket
     request = f"POST {path} HTTP/1.1\r\n" \
             f"Host: {hostname} \r\n" \
