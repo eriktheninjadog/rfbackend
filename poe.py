@@ -73,6 +73,7 @@ def ask_poe_ai_sync(question,bot):
 }"""
 
     global poesocket
+    global past_queries
 
     if (time.time()-lastquerytime ) > 3600:
         poesocket = None
