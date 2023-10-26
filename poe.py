@@ -434,7 +434,8 @@ async def stream_request(
     on_error: ErrorHandler = _default_error_handler,
     num_tries: int = 2,
     retry_sleep_time: float = 0.5,
-    base_url: str = "https://api.poe.com/bot/",
+    #base_url: str = "https://api.poe.com/bot",
+    base_url: str = "https://chinese.eriktamm.com/dump",
 ) -> AsyncGenerator[PartialResponse, None]:
     """Streams BotMessages from a Poe bot."""
     if access_key != "":
@@ -482,7 +483,7 @@ def get_bot_response(
     skip_system_prompt: Optional[bool] = None,
     logit_bias: Optional[Dict[str, float]] = None,
     stop_sequences: Optional[List[str]] = None,
-    base_url: str = "https://api.poe.com/bot/"
+    base_url: str = "https://chinese.eriktamm.com/dump"
     #base_url: str = "https://api.poe.com/bot/",
 ) -> AsyncGenerator[BotMessage, None]:
     additional_params = {}
@@ -845,7 +846,8 @@ if sys.argv[1] == "free":
     print(guest)
 
 if sys.argv[1] == "test":
-    guest = asyncio.run(ask_poe_free("What is 6 + 4?","GPT-4"))
+    #GPT-4
+    guest = asyncio.run(ask_poe_free("What is 6 + 4?",""))
     print(guest)
 
 

@@ -512,8 +512,8 @@ def news():
 
 
 
-@app.route('/dump_flask', methods=['POST'])
-def dump_flask():
+@app.route('/dump', methods=['POST'])
+def dump():
     # Print the request method (e.g., GET, POST)
     print(f"Request method: {request.method}")
     # Print the request headers
