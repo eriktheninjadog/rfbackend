@@ -154,9 +154,6 @@ def ask_poe_ai_sync(question,bot):
     finally:            
             #ssock.close()
             total = ""
-            f = open("/var/www/html/api/rfbackend/storage/wholenineyards.txt","w")
-            f.write(wholenineyards)
-            f.close()
             wholenineyards = wholenineyards.replace("event: text\r\n","")
             wholenineyards = wholenineyards.replace("data: [DONE]","")
             wholenineyards = wholenineyards.replace("data:","\n")
