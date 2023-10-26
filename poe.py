@@ -1,12 +1,22 @@
 
 
 
+import hashlib
+import os
+import ssl
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Literal, TypeAlias
 
 import sys
+import zmq
+import socket
+import subprocess
+
+from httpx_sse import aconnect_sse
+from httpx_sse import connect_sse
+
 
 Identifier: TypeAlias = str
 FeedbackType: TypeAlias = Literal["like", "dislike"]
@@ -262,6 +272,9 @@ class _BotContext:
         message_id = request.message_id
         event_count = 0
         error_reported = False
+        print(str(self.headers))
+        print(str(request.dict()))
+        
         async with httpx_sse.aconnect_sse(
             self.session,
             "POST",
@@ -469,7 +482,8 @@ def get_bot_response(
     skip_system_prompt: Optional[bool] = None,
     logit_bias: Optional[Dict[str, float]] = None,
     stop_sequences: Optional[List[str]] = None,
-    base_url: str = "https://api.poe.com/bot/",
+    base_url: str = "https://api.poe.com/bot/"
+    #base_url: str = "https://api.poe.com/bot/",
 ) -> AsyncGenerator[BotMessage, None]:
     additional_params = {}
     # This is so that we don't have to redefine the default values for these params.
@@ -603,6 +617,181 @@ async def ask_poe_free(question,bname):
 async def testit():
     await test() 
 
+import time
+
+
+def ask_poe_ai_sync(question):
+    result = hashlib.md5(question.encode('utf-8'))
+    cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
+    if os.path.exists(cachefilename):
+        f = open(cachefilename,'r')
+        result = f.read()
+        f.close()
+        return result
+
+    with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
+        lines = f.readlines()
+    auth_part = "BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"    
+    path = "/bot/GPT-4"
+    hostname = 'api.poe.com'
+    flog = open('/var/www/html/api/rfbackend/aisocket-'+str(int(time.time()))+'.log','wb')
+    context = ssl.create_default_context()
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    abody = {}
+    abody["prompt"] = "Human: " + question + "\n"
+    auth="Bearer " + auth_part
+    context = ssl.create_default_context()
+    body = json.dumps(abody)
+    body = "{'version': '1.0', 'type': 'query', 'query': [{'role': 'user', 'content': 'What is 6 + 4?', 'content_type': 'text/markdown', 'timestamp': 0, 'message_id': '', 'feedback': [], 'attachments': []}], 'user_id': '', 'conversation_id': '', 'message_id': '', 'metadata': '', 'api_key': '<missing>', 'access_key': '<missing>', 'temperature': 0.7, 'skip_system_prompt': False, 'logit_bias': {}, 'stop_sequences': []}"
+    with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+            print(ssock.version())
+            ssock.connect((hostname, 443))
+            #print(ssock)
+            request = f"POST {path} HTTP/1.1\r\n" \
+                    f"Host: {hostname} \r\n" \
+                    f"Authorization: {auth} \r\n" \
+                    f"Content-Type: application/json \r\n" \
+                    f"Content-Length: {len(body)}\r\n\r\n" \
+                    f"{body}"
+            #print(request)
+            response = b""
+            keepgoing = True
+            firstgotten = False
+            wholenineyards = ""
+            try:
+                ssock.sendall(request.encode())
+                total = ""
+                while keepgoing:
+                    chunk = ssock.recv(4096*2)
+                    flog.write(chunk)
+                    flog.flush()
+                    if not chunk:
+                        break
+                    response += chunk
+                    print(chunk.decode())
+                    if not firstgotten:
+                        print("first chunk")
+                        firstgotten = True
+                        athing = chunk.decode()
+                        parts = athing.split("\r\n\r\n")
+                        if (len(parts)>1 and len(parts[1])>20):
+                            chunkstart = athing.find("\r\n\r\n")
+                            athing = parts[1]
+                            length = int(athing.split("\r\n")[0],16)
+                            start = athing.find("\r\n")
+                            wholenineyards += chunk[chunkstart+6+start:chunkstart+start+6+length].decode()
+                            print(wholenineyards)
+                    else:
+                        #everything start with the length in hex followed by line and data:
+                        #is the data encoded, is it binary?
+                        athing = chunk.decode()
+                        try:
+                            length = int(athing.split("\n")[0],16)
+                            if (length == 0):
+                               keepgoing = False
+                               return None 
+                            print(str(length))
+                            start = athing.find("\r\n")
+                        #print(chunk[start+1:length+2].decode())
+                        #print("got package")
+                            #print(chunk[start+2:start+2+length].decode().strip())
+                            wholenineyards += chunk[start+2:start+2+length].decode().strip()
+                        except:
+                            print("Something went wrong trying to parse int -->" + athing + "<--")
+                    if (chunk.decode().find("data: [DONE]")!=-1):
+                        keepgoing = False
+                    else:
+                        strpackage = chunk.decode()
+                        """
+                        print('package ' + strpackage)
+                        startidx = strpackage.find("data: ")
+                        startidx += len("data: ")
+                        endidx = strpackage.    find("}\n")+2
+                        #print(strpackage[startidx:endidx])
+                        try:
+                            jp = json.loads(strpackage[startidx:endidx])
+                        except:
+                            print("Error in parsing package " + strpackage[startidx:endidx])
+                            jp = {}
+
+                        if ("choices" in jp):
+                            if (len(jp["choices"])> 0):
+                                if ("delta" in jp["choices"][0]):
+                                    if ("content" in jp["choices"][0]["delta"]):                                    
+                                        total = total + str(jp["choices"][0]["delta"]["content"])
+                    """
+            except Exception as e:
+                print(str(e))
+                exit(-1)
+            finally:
+                ssock.close()
+                total = ""
+                f = open("/var/www/html/api/rfbackend/storage/wholenineyards.txt","w")
+                f.write(wholenineyards)
+                f.close()
+                wholenineyards = wholenineyards.replace("data: [DONE]","")
+                wholenineyards = wholenineyards.replace("data:","\n")
+                for i in wholenineyards.split("\n"):
+                    if (len(i.strip()) > 0):
+                        #print("###" + i)
+                        try:
+                            pop = json.loads(i)
+                            if ( 'content' in pop['choices'][0]['delta'].keys() ):
+                                total += pop['choices'][0]['delta']['content']
+                        except:
+                            print("Could not json -->" + i + "<--")
+                f = open(cachefilename,'w')
+                f.write(total)
+                f.close()
+                return total
+
+def callpoeserver(text,bot):
+    count = 3
+    while count > 0:
+        try:
+            sendthis = {"text":text,"bot":bot}
+            sendthisstring = json.dumps(sendthis)
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # Connect to the server
+            server_address = ('localhost', 5555)
+            sock.connect(server_address)
+
+            # Send a request to the server
+            request = sendthisstring.encode()
+            sock.sendall(request)
+            # Receive the response from the server
+            response = sock.recv(10240)
+            print('Response from server:', response)
+            # Close the connection
+            sock.close()
+            repdict = json.loads(response.decode())
+            return repdict["result"]
+        except:
+            total = ""
+            "/var/www/html/api/rfbackend/storage/ask_poe_free.result"
+            subprocess.Popen(['python',__file__,'server',total])
+            time.sleep(2)
+            
+            #subprocess.run("/usr/bin/python /"+__file__+" server " + total + " " + bot,shell=True)
+
+            
+
+def poeserver():
+    context = zmq.Context()
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://*:5555")
+    while True:
+        message = socket.recv()
+        utfmessage = message.decode() 
+        # Print the received message
+        print(f"Received message: {utfmessage}")
+        # Send a response back to the client
+        messageasdict = json.loads(utfmessage)
+        bot = messageasdict['bot']
+        text = messageasdict['text']
+        result = asyncio.run(ask_poe_free(text,bot))
+        json.dumps({"result":result})
+        socket.send(result)
 
 async def test():
     message = ProtocolMessage(role="user", content=""" Give me a list of grammar patterns in this text. Split the name of the pattern and the example with '|':
@@ -625,6 +814,19 @@ async def testit():
     await test() 
 
 
+
+#poeserver()
+#callpoeserver("tag","along")
+
+#if sys.argv[1] == "server":
+#    poeserver()
+#    exit(0)
+
+#ask_poe_ai_sync("222")
+
+
+
+
 filename = sys.argv[2]
 f = open(filename,"r")
 text = f.read()
@@ -637,12 +839,15 @@ f.close()
 
 guest = ''
 
-if sys.argv[1] == "test":
-    guest = asyncio.run(ask_poe_free("What are some common banking terms in Chinese?","TeachingChinese"))
 
 if sys.argv[1] == "free":
     guest = asyncio.run(ask_poe_free(text,sys.argv[3]))
     print(guest)
+
+if sys.argv[1] == "test":
+    guest = asyncio.run(ask_poe_free("What is 6 + 4?","GPT-4"))
+    print(guest)
+
 
 if sys.argv[1] == "grammar":
     guest = asyncio.run(ask_poe_explain(text))

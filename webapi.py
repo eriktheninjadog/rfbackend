@@ -510,7 +510,28 @@ def news():
     cws = api.process_chinese("news","ai",thenews,500,-1)
     return jsonify({'result':cws})
 
-    
+
+
+@app.route('/dump_flask', methods=['POST'])
+def dump_flask():
+    # Print the request method (e.g., GET, POST)
+    print(f"Request method: {request.method}")
+    # Print the request headers
+    print("Request headers:")
+    for key, value in request.headers.items():
+        print(f"{key}: {value}")
+    # Print the request body
+    print("Request body:")
+    print(request.get_data(as_text=True))
+
+    # Print the request arguments (for GET requests)
+    print("Request arguments:")
+    for key, value in request.args.items():
+        print(f"{key}: {value}")
+
+    return "Request processed"
+
+
 @app.route('/poebot1',methods=['POST'])
 def poebot1():
     try:
