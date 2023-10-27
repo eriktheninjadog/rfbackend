@@ -86,8 +86,10 @@ def ask_poe_ai_sync(question,bot):
     if (time.time()-lastquerytime ) > 3600:
         poesocket = None
         past_queries = []
-
-
+    
+    if (time.time()-lastquerytime ) > 240:
+        poesocket = None
+    
     bodyasdict = json.loads(body)
     past_queries.append(create_query(question))
     bodyasdict['query'] = past_queries
@@ -162,7 +164,7 @@ def ask_poe_ai_sync(question,bot):
                 strpackage = chunk.decode()
     except Exception as e:
             print(str(e))
-            exit(-1)
+            poesocket = None
     finally:            
             #ssock.close()
             total = ""
