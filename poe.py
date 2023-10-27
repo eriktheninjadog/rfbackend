@@ -99,6 +99,8 @@ def ask_poe_ai_sync(question,bot):
         poesocket = create_and_connect_poe_socket()
     if is_socket_closed(poesocket):
         poesocket = create_and_connect_poe_socket()
+    if poesocket.closed:
+        poesocket = create_and_connect_poe_socket()
 
     ssock = poesocket
     request = f"POST {path} HTTP/1.1\r\n" \
