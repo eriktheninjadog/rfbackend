@@ -112,6 +112,7 @@ def ask_poe_ai_sync(question,bot):
     past_queries.append(create_query(question))
     bodyasdict['query'] = past_queries
     body = json.dumps(bodyasdict)
+    print(body)
 #   "{'version': '1.0', 'type': 'query', 'query': [{'role': 'user', 'content': 'What is 6 + 4?', 'content_type': 'text/markdown', 'timestamp': 0, 'message_id': '', 'feedback': [], 'attachments': []}], 'user_id': '', 'conversation_id': '', 'message_id': '', 'metadata': '', 'api_key': '<missing>', 'access_key': '<missing>', 'temperature': 0.7, 'skip_system_prompt': False, 'logit_bias': {}, 'stop_sequences': []}"    
     if poesocket == None:
         poesocket = create_and_connect_poe_socket()
