@@ -28,7 +28,7 @@ def create_and_connect_poe_socket():
 
 def create_query(question):
     query = json.loads("""{
-      "role": "bot",
+      "role": "user",
       "content": "What is 6 + 4?",
       "content_type": "text/markdown",
       "timestamp": 0,
@@ -77,7 +77,7 @@ def ask_poe_ai_sync(question,bot):
   "type": "query",
   "query": [
     {
-      "role": "bot",
+      "role": "user",
       "content": "What is 6 + 4?",
       "content_type": "text/markdown",
       "timestamp": 0,
