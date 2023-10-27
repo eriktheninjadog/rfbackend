@@ -1,3 +1,4 @@
+import select
 import ssl
 import sys
 import socket
@@ -37,6 +38,23 @@ def create_query(question):
     }""")
     query['content'] = question
     return query
+
+
+def is_ssl_socket_open(ssl_socket):
+    try:
+        # Use the select function to check for readability
+        read_ready, _, _ = select.select([ssl_socket], [], [], 0)
+
+        # If the socket is in the read_ready list, it is still open
+        if ssl_socket in read_ready:
+            return True
+
+        # If the socket is not in the read_ready list, it is closed
+        return False
+
+    except ssl.SSLError:
+        # An SSL error occurred, indicating that the socket is closed
+        return False
 
 def is_socket_closed(sock):
     try:
@@ -97,11 +115,9 @@ def ask_poe_ai_sync(question,bot):
 #   "{'version': '1.0', 'type': 'query', 'query': [{'role': 'user', 'content': 'What is 6 + 4?', 'content_type': 'text/markdown', 'timestamp': 0, 'message_id': '', 'feedback': [], 'attachments': []}], 'user_id': '', 'conversation_id': '', 'message_id': '', 'metadata': '', 'api_key': '<missing>', 'access_key': '<missing>', 'temperature': 0.7, 'skip_system_prompt': False, 'logit_bias': {}, 'stop_sequences': []}"    
     if poesocket == None:
         poesocket = create_and_connect_poe_socket()
-    if is_socket_closed(poesocket):
+    if is_ssl_socket_open(poesocket) == False:
         poesocket = create_and_connect_poe_socket()
-    if poesocket.closed:
-        poesocket = create_and_connect_poe_socket()
-
+ 
     ssock = poesocket
     request = f"POST {path} HTTP/1.1\r\n" \
             f"Host: {hostname} \r\n" \
