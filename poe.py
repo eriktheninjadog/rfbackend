@@ -67,7 +67,7 @@ def is_socket_closed(sock):
 past_queries = []
 lastquerytime = time.time()
 
-def ask_poe_ai_sync(question,bot):
+def ask_poe_ai_sync(question,bot,clear = False):
 
     path = "/bot/"+bot
     hostname = 'api.poe.com'
@@ -100,6 +100,9 @@ def ask_poe_ai_sync(question,bot):
 
     global poesocket
     global past_queries
+
+    if clear:
+        past_queries = []
 
     if (time.time()-lastquerytime ) > 3600:
         poesocket = None

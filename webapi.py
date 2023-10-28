@@ -441,9 +441,11 @@ import poe
 @app.route('/poefree',methods=['POST'])
 def poefree():
     cwsid       = request.json['cwsid']
-    text       = request.json['text']
+    text        = request.json['text']
     bot         = request.json['bot']
-    result =  poe.ask_poe_ai_sync(text,bot)
+    clear       = request.json['clear']
+    
+    result =  poe.ask_poe_ai_sync(text,bot,clear)
     result = text + "\n\n" + result
     cws = api.process_chinese("poefree","ai",result,500,cwsid)
     return jsonify({'result':cws})
