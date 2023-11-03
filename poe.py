@@ -13,11 +13,11 @@ from typing import Any, AsyncGenerator, Callable, Dict, List, Optional, cast
 
 import httpx
 import httpx_sse
+import requests
 
 
 import time
 poesocket = None
-
 
 def create_and_connect_poe_socket():
     context = ssl.create_default_context()    
@@ -66,6 +66,45 @@ def is_socket_closed(sock):
 
 past_queries = []
 lastquerytime = time.time()
+
+
+def poe2(question,bot):
+    body = """{
+  "version": "1.0",
+  "type": "query",
+  "query": [
+    {
+      "role": "user",
+      "content": "What is 6 + 4?",
+      "content_type": "text/markdown",
+      "timestamp": 0,
+      "message_id": "",
+      "feedback": [],
+      "attachments": []
+    }
+  ],
+  "user_id": "",
+  "conversation_id": "",
+  "message_id": "",
+  "metadata": "",
+  "api_key": "<missing>",
+  "access_key": "<missing>",
+  "temperature": 0.7,
+  "skip_system_prompt": false,
+  "logit_bias": {},
+  "stop_sequences": []
+}"""
+
+    path = "/bot/"+bot
+    hostname = 'api.poe.com'
+    bodyasdict = json.loads(body)
+    past_queries.append(create_query(question))
+    bodyasdict['query'] = past_queries
+    body = json.dumps(bodyasdict)
+    headers = {}
+    headers['Authorization'] = 'Bearer BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk'
+    resp = requests.post('https://'+hostname+path,data=body,headers=headers)
+    print(resp)
 
 def ask_poe_ai_sync(question,bot,clear = False):
 
@@ -147,8 +186,10 @@ def ask_poe_ai_sync(question,bot,clear = False):
             chunk = ssock.recv(4096*2)
             flog.write(chunk)
             flog.flush()
-            if not chunk:
-                break
+            #if not chunk:
+            #    break
+            if (len(chunk) == 0):
+                time.sleep(5)
             response += chunk
             print(chunk.decode())
             if not firstgotten:
@@ -167,6 +208,7 @@ def ask_poe_ai_sync(question,bot,clear = False):
                 #everything start with the length in hex followed by line and data:
                 #is the data encoded, is it binary?
                 athing = chunk.decode()
+
                 try:
                     length = int(athing.split("\n")[0],16)
                     if (length == 0):
@@ -203,3 +245,16 @@ def ask_poe_ai_sync(question,bot,clear = False):
                     except:
                         print("Could not json -->" + i + "<--")
             return total
+
+#poe2("What is 4 + 5","Assistant")
+#ask_poe_ai_sync("What is 4 + 5","ChatGPT")
+
+
+
+async def testpoe():
+    message = ProtocolMessage(role="user", content="Hello world")
+    async for partial in get_final_response(messages=[message], bot_name="GPT-3.5-Turbo", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
+        print(partial)
+
+
+asyncio.run(testpoe())
