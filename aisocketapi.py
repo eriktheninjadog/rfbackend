@@ -119,7 +119,7 @@ def ask_ai(question):
             finally:
                 ssock.close()
                 total = ""
-                f = open("/var/www/html/api/rfbackend/storage/wholenineyards.txt","w")
+                f = open("/var/www/html/api/rfbackend/storage/wholenineyards.txt","w",encoding='utf-8')
                 f.write(wholenineyards)
                 f.close()
                 wholenineyards = wholenineyards.replace("data: [DONE]","")
