@@ -250,11 +250,3 @@ def ask_poe_ai_sync(question,bot,clear = False):
 #ask_poe_ai_sync("What is 4 + 5","ChatGPT")
 
 
-
-async def testpoe():
-    message = ProtocolMessage(role="user", content="Hello world")
-    async for partial in get_final_response(messages=[message], bot_name="GPT-3.5-Turbo", api_key="BWWP0zUenxCRm_SAY_LgQKfuJmR2gyMI4lIzm91suNk"): 
-        print(partial)
-
-
-asyncio.run(testpoe())
