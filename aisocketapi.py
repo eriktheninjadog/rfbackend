@@ -29,6 +29,9 @@ def ask_ai(question):
     #    result = f.read()
     #    f.close()
     #    return result
+    if (question.find('aaaa') != -1):
+        clearhistory()
+        question = question.replace('aaaa','')
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
