@@ -21,8 +21,6 @@ def clearhistory():
     global storybasket
     storybasket = ""
 
-
-
 def ask_ai(question):
     result = hashlib.md5(question.encode('utf-8'))
     cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
