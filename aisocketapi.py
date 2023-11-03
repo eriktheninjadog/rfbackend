@@ -27,7 +27,7 @@ def ask_ai(question):
     result = hashlib.md5(question.encode('utf-8'))
     cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
     if os.path.exists(cachefilename):
-        f = open(cachefilename,'r')
+        f = open(cachefilename,'r','utf-8')
         result = f.read()
         f.close()
         return result
