@@ -45,7 +45,6 @@ def ask_ai(question):
     with context.wrap_socket(sock, server_hostname=hostname) as ssock:
             print(ssock.version())
             ssock.connect((hostname, 443))
-            #print(ssock)
             request = f"POST {path} HTTP/1.1\r\n" \
                     f"Host: {hostname} \r\n" \
                     f"Authorization: {auth} \r\n" \
@@ -59,7 +58,6 @@ def ask_ai(question):
                     f"User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36\r\n" \
                     f"Content-Length: {len(body)}\r\n\r\n" \
                     f"{body}"
-            #print(request)
             response = b""
             keepgoing = True
             firstgotten = False
@@ -69,8 +67,6 @@ def ask_ai(question):
                 total = ""
                 while keepgoing:
                     chunk = ssock.recv(4096*2)
-                    #flog.write(chunk)
-                    #flog.flush()
                     if not chunk:
                         break
                     response += chunk
@@ -97,8 +93,8 @@ def ask_ai(question):
                                return None 
                             print(str(length))
                             start = athing.find("\r\n")
-                        #print(chunk[start+1:length+2].decode())
-                        #print("got package")
+                            #print(chunk[start+1:length+2].decode())
+                            #print("got package")
                             #print(chunk[start+2:start+2+length].decode().strip())
                             wholenineyards += chunk[start+2:start+2+length].decode().strip()
                         except:
