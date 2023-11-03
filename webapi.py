@@ -447,7 +447,7 @@ def poefree():
     
     #result =  poe.ask_poe_ai_sync(text,bot,clear)
     #result = text + "\n\n" + result
-    result = aisocketapi.ask_ai(text)
+    result = aisocketapi.ask_ai(text,bot,clear)
     result = text + "\n\n" + result
 
     cws = api.process_chinese("poefree","ai",result,500,cwsid)

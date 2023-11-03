@@ -21,7 +21,7 @@ def clearhistory():
     global storybasket
     storybasket = ""
 
-def ask_ai(question):
+def ask_ai(question,model='gpt-4',clear=False):
     #result = hashlib.md5(question.encode('utf-8'))
     #cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
     #if os.path.exists(cachefilename):
@@ -29,13 +29,12 @@ def ask_ai(question):
     #    result = f.read()
     #    f.close()
     #    return result
-    if (question.find('aaaa') != -1):
+    if (clear):
         clearhistory()
-        question = question.replace('aaaa','')
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
-    path = "/chat?stream=true&model=gpt-3.5"
+    path = "/chat?stream=true&model="+model
     hostname = 'api.writingmate.ai'
     #flog = open('/var/www/html/api/rfbackend/aisocket-'+str(int(time.time()))+'.log','wb')
     context = ssl.create_default_context()
