@@ -133,7 +133,7 @@ def ask_ai(question):
                                 total += pop['choices'][0]['delta']['content']
                         except:
                             print("Could not json -->" + i + "<--")
-                f = open(cachefilename,'w')
+                f = open(cachefilename,'w',encoding='utf-8')
                 f.write(total)
                 f.close()
                 return total
