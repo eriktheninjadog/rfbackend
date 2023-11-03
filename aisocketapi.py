@@ -22,7 +22,7 @@ def clearhistory():
     storybasket = ""
 
 def ask_ai(question):
-    result = hashlib.md5(question.encode('utf-8'))
+    #result = hashlib.md5(question.encode('utf-8'))
     #cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
     #if os.path.exists(cachefilename):
     #    f = open(cachefilename,'r','utf-8')
