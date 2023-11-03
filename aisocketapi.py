@@ -35,7 +35,7 @@ def ask_ai(question):
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
-    path = "/chat?stream=true&model=gpt-4"
+    path = "/chat?stream=true&model=gpt-3.5"
     hostname = 'api.writingmate.ai'
     #flog = open('/var/www/html/api/rfbackend/aisocket-'+str(int(time.time()))+'.log','wb')
     context = ssl.create_default_context()
