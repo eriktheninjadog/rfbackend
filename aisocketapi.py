@@ -7,6 +7,18 @@ import hashlib
 import os
 
 
+storybasket = ""
+
+def history(question,bodytext):
+    storybasket = storybasket + "\n\n" + "Human:" + question + "\n\n" + "AI:"+bodytext +"\n\n"
+
+def gethistory():
+    return storybasket
+
+def clearhistory():
+    storybasket = ""
+
+
 
 def ask_ai(question):
     result = hashlib.md5(question.encode('utf-8'))
@@ -26,7 +38,7 @@ def ask_ai(question):
     context = ssl.create_default_context()
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     abody = {}
-    abody["prompt"] = "Human: " + question + "\n"
+    abody["prompt"] = gethistory() + "Human: " + question + "\n"
     auth="Bearer " + auth_part
     context = ssl.create_default_context()
     body = json.dumps(abody)
@@ -136,6 +148,7 @@ def ask_ai(question):
                 f = open(cachefilename,'w',encoding='utf-8')
                 f.write(total)
                 f.close()
+                history(question,total)
                 return total
 
 def write_ai_to_file(question,filename):
