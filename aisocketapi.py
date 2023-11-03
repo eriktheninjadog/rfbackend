@@ -10,12 +10,15 @@ import os
 storybasket = ""
 
 def history(question,bodytext):
+    global storybasket
     storybasket = storybasket + "\n\n" + "Human:" + question + "\n\n" + "AI:"+bodytext +"\n\n"
 
 def gethistory():
+    global storybasket
     return storybasket
 
 def clearhistory():
+    global storybasket
     storybasket = ""
 
 
