@@ -23,19 +23,18 @@ def clearhistory():
 
 def ask_ai(question):
     result = hashlib.md5(question.encode('utf-8'))
-    cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
-    if os.path.exists(cachefilename):
-        f = open(cachefilename,'r','utf-8')
-        result = f.read()
-        f.close()
-        return result
-
+    #cachefilename = '/var/www/html/api/rfbackend/storage/aisocketcache'+result.hexdigest()
+    #if os.path.exists(cachefilename):
+    #    f = open(cachefilename,'r','utf-8')
+    #    result = f.read()
+    #    f.close()
+    #    return result
     with open('/var/www/html/api/rfbackend/auth_part.txt') as f:
         lines = f.readlines()
     auth_part = lines[0]
     path = "/chat?stream=true&model=gpt-4"
     hostname = 'api.writingmate.ai'
-    flog = open('/var/www/html/api/rfbackend/aisocket-'+str(int(time.time()))+'.log','wb')
+    #flog = open('/var/www/html/api/rfbackend/aisocket-'+str(int(time.time()))+'.log','wb')
     context = ssl.create_default_context()
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     abody = {}
@@ -70,8 +69,8 @@ def ask_ai(question):
                 total = ""
                 while keepgoing:
                     chunk = ssock.recv(4096*2)
-                    flog.write(chunk)
-                    flog.flush()
+                    #flog.write(chunk)
+                    #flog.flush()
                     if not chunk:
                         break
                     response += chunk
@@ -146,9 +145,9 @@ def ask_ai(question):
                                 total += pop['choices'][0]['delta']['content']
                         except:
                             print("Could not json -->" + i + "<--")
-                f = open(cachefilename,'w',encoding='utf-8')
-                f.write(total)
-                f.close()
+                #f = open(cachefilename,'w',encoding='utf-8')
+                #f.write(total)
+                #f.close()
                 history(question,total)
                 return total
 
