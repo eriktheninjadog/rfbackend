@@ -1,7 +1,10 @@
 import json
 
 import graphene
-from graphql import GraphQLField
+from graphene import relay
+import flask_graphql
+
+
 
 from webapi import app
 import database
@@ -26,7 +29,7 @@ schema = graphene.Schema(query=Query)
 
 app.add_url_rule(
     'graphql',
-    view_func=GraphQLField.as_view('graphql', schema=schema, graphiql=True)
+    view_func=flask_graphql.GraphQLField.as_view('graphql', schema=schema, graphiql=True)
     )
 
 
