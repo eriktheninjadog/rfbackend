@@ -24,11 +24,11 @@ class Query(graphene.ObjectType):
 
 schema = graphene.Schema(query=Query)
 
-
-
-if __name__ == "__main__":
-    app.add_url_rule(
+app.add_url_rule(
     'graphql',
     view_func=GraphQLField.as_view('graphql', schema=schema, graphiql=True)
     )
+
+
+if __name__ == "__main__":
     app.run()
