@@ -26,7 +26,7 @@ class Query(graphene.ObjectType):
 schema = graphene.Schema(query=Query)
 
 app.add_url_rule(
-    'graphql',
+    '/graphql',
     view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True)
     )
 
