@@ -19,7 +19,6 @@ def after_request(response):
 
 class Query(graphene.ObjectType):
     hello = graphene.String()
-
     def resolve_hello(self, info):
         return "Hello, world!"
 
