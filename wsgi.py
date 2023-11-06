@@ -28,7 +28,7 @@ schema = graphene.Schema(query=Query)
 
 if __name__ == "__main__":
     app.add_url_rule(
-    '/graphql',
+    '/api/graphql',
     view_func=GraphQLField.as_view('graphql', schema=schema, graphiql=True)
     )
     app.run()
