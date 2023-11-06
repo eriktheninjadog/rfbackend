@@ -1,5 +1,8 @@
 import json
 
+import graphene
+from graphql import GraphQLField
+
 from webapi import app
 import database
 
@@ -14,5 +17,19 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
   return response
 
+class Query(graphene.ObjectType):
+    hello = graphene.String()
+
+    def resolve_hello(self, info):
+        return "Hello, world!"
+
+schema = graphene.Schema(query=Query)
+
+
+
 if __name__ == "__main__":
+    app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLField.as_view('graphql', schema=schema, graphiql=True)
+    )
     app.run()
