@@ -88,5 +88,5 @@ if __name__ == "__main__":
     if (sys.argv[1] == "tofile"):
         to_file(sys.argv[2],sys.argv[3],sys.argv[4])
     if (sys.argv[1] == "raw"):
-        import_raw_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
+        import_file_raw(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
         
