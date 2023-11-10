@@ -247,6 +247,6 @@ def ask_poe_ai_sync(question,bot,clear = False):
             return total
 
 #poe2("What is 4 + 5","Assistant")
-#ask_poe_ai_sync("What is 4 + 5","ChatGPT")
+ask_poe_ai_sync("What is 4 + 5","ChatGPT")
 
 

@@ -52,6 +52,20 @@ def import_file(bookname,filename,minstart,maxstart):
 #
 #
 
+
+def import_file_raw(bookname,filename,minstart,maxstart):
+    print("import file called " + bookname)
+    chunks = split_file_into_chunks(filename)
+    counter = 0
+    for c in chunks:
+        print(str(counter))
+        if (counter > maxstart):
+            exit(-1)
+        if (counter >= minstart):
+            cws = api.process_chinese(bookname + str(counter),"import",c,constants.CWS_TYPE_IMPORT_TEXT,-1)
+        counter += 1
+
+
 def to_file(filename,prefix,question):
     print("to text called")
     chunks = split_file_into_chunks(filename)
@@ -73,5 +87,6 @@ if __name__ == "__main__":
         import_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
     if (sys.argv[1] == "tofile"):
         to_file(sys.argv[2],sys.argv[3],sys.argv[4])
-
+    if (sys.argv[1] == "raw"):
+        import_raw_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
         

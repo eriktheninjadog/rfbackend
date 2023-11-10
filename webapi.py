@@ -435,7 +435,6 @@ def removefile():
         print(str(e))
         return jsonify({'result':None})
     
-
 import poe
 
 @app.route('/poefree',methods=['POST'])
@@ -486,14 +485,11 @@ def testunderstanding():
     cws = api.process_chinese("testunderstanding","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
-
 @app.route('/news',methods=['POST'])
 def news():
     thenews  = newscrawler.gethknews()
     cws = api.process_chinese("news","ai",thenews,500,-1)
     return jsonify({'result':cws})
-
-
 
 @app.route('/dump', methods=['POST'])
 def dump():
