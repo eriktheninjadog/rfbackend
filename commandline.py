@@ -82,7 +82,7 @@ if __name__ == "__main__":
     print("command: whatdoto\n")
     print("whattodo:\n trad - bookname, filename,minstart,maxstart\n")
     print("tofile - filename pre-fix textline\n")
-    to_file("greatchinahistory.txt","expjyut","You are a language teacher. Split this text into sentences. Provide each sentence, followed by a translation, followed by a explanation of the grammar structure of the sentence, followed by a list of the most important words with meaning and jyutping. Thank you ")
+    #to_file("greatchinahistory.txt","expjyut","You are a language teacher. Split this text into sentences. Provide each sentence, followed by a translation, followed by a explanation of the grammar structure of the sentence, followed by a list of the most important words with meaning and jyutping. Thank you ")
     if (sys.argv[1] == "trad"):
         import_file(sys.argv[2],sys.argv[3],int(sys.argv[4]),int(sys.argv[5]))
     if (sys.argv[1] == "tofile"):
