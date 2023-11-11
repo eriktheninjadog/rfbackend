@@ -4,7 +4,9 @@ import struct
 
 
 #for testing purposes we will use assitant at all times
-def ask_ai(question):
+def ask_ai(question,clear):
+    if clear:
+         send_message_to_server("127.0.0.1","robot","Assistant")
     msg = send_message_to_server("127.0.0.1","ask",question) 
     print(str(msg))
     return msg['data']

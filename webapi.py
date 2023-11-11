@@ -438,6 +438,7 @@ def removefile():
 import poe
 import poeclient
 
+
 @app.route('/poefree',methods=['POST'])
 def poefree():
     cwsid       = request.json['cwsid']
@@ -448,7 +449,7 @@ def poefree():
     #result =  poe.ask_poe_ai_sync(text,bot,clear)
     #result = text + "\n\n" + result
     #result = aisocketapi.ask_ai(text,bot,clear)
-    result = poeclient.ask_ai(text)
+    result = poeclient.ask_ai(text,clear)
     result = text + "\n\n" + result
 
     cws = api.process_chinese("poefree","ai",result,500,cwsid)
