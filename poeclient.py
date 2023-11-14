@@ -11,6 +11,11 @@ def ask_ai(question,clear):
     print(str(msg))
     return msg['data']
 
+
+def change_bot(bot):
+    msg = send_message_to_server("127.0.0.1","robot",bot)
+    return msg['data']
+
 def send_message_to_server(ipnumber,command,data):
     message_to_send = json.dumps({"command":command,"data":data})
     SERVER_IP = ipnumber
