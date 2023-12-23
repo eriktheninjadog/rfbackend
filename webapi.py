@@ -479,6 +479,8 @@ def cleanandtranslate():
     poeclient.change_bot('Claude-instant-100k')
     time.sleep(10)
     bettertext = remove_repeating_sentences(text)
+    bettertext =  bettertext.replace("\n"," ")
+    bettertext =  bettertext.replace("\r"," ")
     log.log("Better text recieved" + bettertext)
     cleantext = poeclient.ask_ai('Clean up this text: ' + bettertext,False)
     log.log("Clean text recieved" + cleantext)
