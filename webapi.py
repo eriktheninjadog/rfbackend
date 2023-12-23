@@ -459,6 +459,37 @@ def poefree():
     cws = api.process_chinese("poefree","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
+
+
+def remove_repeating_sentences(text):
+    sentences = text.split('. ')  # Split text into sentences
+    unique_sentences = []
+
+    for sentence in sentences:
+        if sentence not in unique_sentences:
+            unique_sentences.append(sentence)
+
+    return '. '.join(unique_sentences)
+
+@app.route('/cleanandtranslate',methods=['POST'])
+def cleanandtranslate():
+    log.log("cleanandtranslate")
+    text = request.json['text']
+    #first lets clen this up
+    poeclient.change_bot('Claude-instant-100k')
+    time.sleep(10)
+    bettertext = remove_repeating_sentences(text)
+    log.log("Better text recieved" + bettertext)
+    cleantext = poeclient.ask_ai('Clean up this text: ' + bettertext,True)
+    log.log("Clean text recieved" + cleantext)
+    poeclient.change_bot('GPT-4')
+    time.sleep(10)        
+    chinesecleantext = poeclient.ask_ai('Translate this text to Traditional Chinese ' + cleantext,True)
+    log.log("Chinese Clean text recieved" + chinesecleantext)
+    cws = api.process_chinese("messytranslate","ai",chinesecleantext,500,-1)
+    return jsonify({'result':'ok'})
+    
+    
 @app.route('/grammartest',methods=['POST'])
 def grammartest():
     cwsid       = request.json['cwsid']
