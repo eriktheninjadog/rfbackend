@@ -459,8 +459,6 @@ def poefree():
     cws = api.process_chinese("poefree","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
-
-
 def remove_repeating_sentences(text):
     sentences = text.split('. ')  # Split text into sentences
     unique_sentences = []

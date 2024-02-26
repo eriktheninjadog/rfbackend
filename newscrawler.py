@@ -11,7 +11,7 @@ def gethknews():
     response = requests.get(url)
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.content, 'html.parser')
-
+    
     # Find all <a> tags with class="article-link"
     links = soup.select('a')
 
