@@ -349,6 +349,10 @@ def get_word_list_from_cws(id):
             words[word] = words[word] + 1
     text = ''
     text = text + str(len(words.keys())) + '\n'
+    id = 0
     for c in sorted(words.items(),key = lambda x:x[1],reverse=True):
         text = text + c[0] + '  ' + str(c[1]) + '\n'
+        id = id + 1
+        if (id % 100) == 0:
+            text = text + id  + '\n'
     return process_chinese('words','wordcount',text, constants.CWS_TYPE_IMPORT_TEXT,id)
