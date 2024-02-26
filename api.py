@@ -354,5 +354,5 @@ def get_word_list_from_cws(id):
         text = text + c[0] + '  ' + str(c[1]) + '\n'
         id = id + 1
         if (id % 100) == 0:
-            text = text + id  + '\n'
+            text = text + str(id)  + '\n'
     return process_chinese('words','wordcount',text, constants.CWS_TYPE_IMPORT_TEXT,id)
