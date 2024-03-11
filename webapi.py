@@ -461,7 +461,7 @@ def poefree():
 
 
 @app.route('/poeexamples',methods=['POST'])
-def poefree():    
+def poeexamples():    
     global robot
     level = request.json['level']
     number = request.json['number']
