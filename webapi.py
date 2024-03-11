@@ -471,7 +471,7 @@ def poeexamples():
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
-    text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level"
+    text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level. Write Cantonese on one line and the english translation on the next"
     aresult = poeclient.ask_ai(text,True)
     
     sentences = aresult.split("\n\n")
