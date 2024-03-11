@@ -340,18 +340,23 @@ def _get_word_list_from_cws(id):
 def get_word_list_from_cws(id):
     thecws = get_cws_text(id)
     words = {}
+    totalcount = 0
+    amountcount = 0
     for word in thecws.cwstext:
         if word not in words.keys():  
             cd = database.find_word(word)
             if cd != None:
                 words[word] = 1
+                totalcount += 1
         else:
+            totalcount += 1
             words[word] = words[word] + 1
     text = ''
     text = text + str(len(words.keys())) + '\n'
     id = 0
     for c in sorted(words.items(),key = lambda x:x[1],reverse=True):
-        text = text + c[0] + '  ' + str(c[1]) + '\n'
+        amountcount += c[1]       
+        text = text + c[0] + '  ' + str(c[1]) + ' ' + str(amountcount/totalcount) + '\n'
         id = id + 1
         if (id % 100) == 0:
             text = text + str(id)  + '\n'
