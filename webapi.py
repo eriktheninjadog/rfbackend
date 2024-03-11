@@ -12,6 +12,7 @@ import os.path
 
 import asyncio
 
+import json
 
 import boto3
 import pycld2 as cld2
@@ -473,6 +474,7 @@ def poeexamples():
         time.sleep(12)
     text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
+    aresult = json.loads(result)
     """
     sentences = aresult.split("\n\n")
     
@@ -484,7 +486,7 @@ def poeexamples():
         english_part = parts[-1].strip().strip("(").strip(")")
         result.append((chinese_part, english_part))
     """
-    return jsonify({'result':result})
+    return jsonify({'result':aresult})
 
 
 def remove_repeating_sentences(text):
