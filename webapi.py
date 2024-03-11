@@ -459,6 +459,23 @@ def poefree():
     cws = api.process_chinese("poefree","ai",result,500,cwsid)
     return jsonify({'result':cws})
 
+
+@app.route('/poeexamples',methods=['POST'])
+def poefree():    
+    global robot
+    level = request.json['level']
+    number = request.json['number']
+    language = request.json['language']
+    bot = "Claude-3-Opus"
+    if not bot == robot:
+        poeclient.change_bot(bot)
+        robot = bot
+        time.sleep(12)
+    text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level"
+    result = poeclient.ask_ai(text,True)
+    return jsonify({'result':result})
+
+
 def remove_repeating_sentences(text):
     sentences = text.split('. ')  # Split text into sentences
     unique_sentences = []
