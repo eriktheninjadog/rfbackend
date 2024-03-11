@@ -472,7 +472,18 @@ def poeexamples():
         robot = bot
         time.sleep(12)
     text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level"
-    result = poeclient.ask_ai(text,True)
+    aresult = poeclient.ask_ai(text,True)
+    
+    sentences = aresult.split("\n\n")
+    
+    result = []
+
+    for sentence in sentences:
+        parts = sentence.split("\n")
+        chinese_part = parts[0].strip()
+        english_part = parts[-1].strip().strip("(").strip(")")
+        result.append((chinese_part, english_part))
+    
     return jsonify({'result':result})
 
 
