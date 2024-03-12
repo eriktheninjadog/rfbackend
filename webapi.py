@@ -498,7 +498,7 @@ def poeexamples():
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
-    text = "Give me " + str(number) + " C1 level sentences in " + language +" together with English translation. Make the format json."
+    text = "Give me " + str(number) + " difficult sentences in " + language +" together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
     log.log("Result from poe" + result)
     aresult = extract_json(result)
