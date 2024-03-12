@@ -504,6 +504,7 @@ def poeexamples():
     result = poeclient.ask_ai(text,True)
     log.log("Result from poe" + result)
     aresult = extract_json(result)
+    print(" aresult " + str(aresult))
     #now we will split this
     result = []
     for item in aresult:
