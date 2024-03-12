@@ -507,7 +507,7 @@ def poeexamples():
     print(" aresult " + str(aresult))
     #now we will split this
     result = []
-    for item in aresult:
+    for item in aresult['sentences']:
         chinese = item['cantonese']
         tok = textprocessing.split_text(chinese)
         result.append( {"chinese":tok,"english":item['english']} )
