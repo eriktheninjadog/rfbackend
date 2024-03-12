@@ -500,8 +500,10 @@ def poeexamples():
         time.sleep(12)
     text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
+    log.log("Result from poe" + result)
     result = extract_json(result)
-    aresult = json.loads(result)    
+    log.log("Result after result" + result)    
+    aresult = json.loads(result)
     poeresult = aresult['sentences']
     #now we will split this
     result = []
