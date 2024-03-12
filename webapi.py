@@ -474,7 +474,14 @@ def poeexamples():
         time.sleep(12)
     text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
-    aresult = json.loads(result)
+    aresult = json.loads(result)    
+    poeresult = aresult['sentences']
+    #now we will split this
+    result = []
+    for item in poeresult:
+        chinese = item['chinese']
+        tok = textprocessing.split_text(chinese)
+        result.append( {"chinese":tok,"english":item['english']} )
     """
     sentences = aresult.split("\n\n")
     
@@ -486,7 +493,7 @@ def poeexamples():
         english_part = parts[-1].strip().strip("(").strip(")")
         result.append((chinese_part, english_part))
     """
-    return jsonify({'result':aresult})
+    return jsonify({'result':result})
 
 
 def remove_repeating_sentences(text):
