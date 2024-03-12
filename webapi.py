@@ -461,6 +461,31 @@ def poefree():
     return jsonify({'result':cws})
 
 
+
+def extract_json(text):
+    # Regular expression pattern to match JSON
+    json_pattern = r'{.*}'
+    
+    # Find all occurrences of the JSON pattern in the text
+    json_matches = re.findall(json_pattern, text, re.DOTALL)
+    
+    if json_matches:
+        # Extract the first JSON match
+        json_string = json_matches[0]
+        
+        try:
+            # Parse the JSON string
+            json_data = json.loads(json_string)
+            return json_data
+        except json.JSONDecodeError:
+            print("Invalid JSON format.")
+    else:
+        print("No JSON found in the text.")
+    
+    return None
+
+
+
 @app.route('/poeexamples',methods=['POST'])
 def poeexamples():    
     global robot
@@ -474,6 +499,7 @@ def poeexamples():
         time.sleep(12)
     text = "Give me " + str(number) + " sentences in " + language + " on a " + level + " level together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
+    result = extract_json(result)
     aresult = json.loads(result)    
     poeresult = aresult['sentences']
     #now we will split this
