@@ -504,10 +504,9 @@ def poeexamples():
     result = poeclient.ask_ai(text,True)
     log.log("Result from poe" + result)
     aresult = extract_json(result)
-    poeresult = aresult['sentences']
     #now we will split this
     result = []
-    for item in poeresult:
+    for item in aresult:
         chinese = item['cantonese']
         tok = textprocessing.split_text(chinese)
         result.append( {"chinese":tok,"english":item['english']} )
