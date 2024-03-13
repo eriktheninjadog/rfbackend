@@ -501,20 +501,12 @@ def poeexamples():
         
     text = "Write " + str(number) + " example sentences in spoken English at a " + level + " level of difficulty, along with their spoken Cantonese translation, in a dictionary in JSON format without any other text."
     #text = "Give me " + str(number) + " sentences in " + language +" at a " + level + " of difficulty together with English translation. Make the format json."
-    result = poeclient.ask_ai(text,True)
-    log.log("Result from poe" + result)
-    aresult = extract_json(result)
+    poeresult = poeclient.ask_ai(text,True)
+    log.log("Result from poe" + poeresult)
+    aresult = extract_json(poeresult)
     print(" aresult " + str(aresult))
-    result = aresult['sentences']
-    for item in result:
-        print(" item " + str(item))
-        chinese = item['cantonese']
-        tok = textprocessing.split_text(chinese)
-        result.append( {"chinese":tok,"english":item['english']} )
-    return jsonify({'result':result})
-
-
-def remove_repeating_sentences(text):
+    if 'sentences' not in aresult.keys():
+        return jsonify({'result':[{'chinese':'error in sentences','english':poeresult}]})
     sentences = text.split('. ')  # Split text into sentences
     unique_sentences = []
 
