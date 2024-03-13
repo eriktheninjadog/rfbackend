@@ -504,9 +504,8 @@ def poeexamples():
     result = poeclient.ask_ai(text,True)
     with open('/tmp/output.txt','w') as f:
         f.write(result)
-        f.close()
-    log.log("Result from poe" + result)
-    aresult = json.loads(result)
+        f.flush()
+    aresult = extract_json(result)
     print(" aresult " + str(aresult))
     if 'sentences' not in aresult.keys():
         return jsonify({'result':[{'chinese':result,'english':'error'}]})
