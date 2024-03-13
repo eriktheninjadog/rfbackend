@@ -502,7 +502,7 @@ def poeexamples():
     text = "Write " + str(number) + " example sentences in spoken English at a " + level + " level of difficulty, along with their spoken Cantonese translation, in a dictionary in JSON format without any other text."
     #text = "Give me " + str(number) + " sentences in " + language +" at a " + level + " of difficulty together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
-    with open('/tmp/output.txt','w') as f:
+    with open('/tmp/output.txt','w',encoding='utf-8') as f:
         f.write(result)
         f.flush()
     aresult = extract_json(result)
