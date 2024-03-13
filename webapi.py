@@ -503,6 +503,7 @@ def poeexampleresult():
     f = open('/var/www/html/scene/examplestest.txt',"w",encoding='utf-8')
     f.write( json.dumps(database))
     f.close()
+    # hi
     return jsonify({'result':'ok'})
     
 
