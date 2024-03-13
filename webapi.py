@@ -509,7 +509,10 @@ def poeexamples():
     print(" aresult " + str(aresult))
     if 'sentences' not in aresult.keys():
         return jsonify({'result':[{'chinese':result,'english':'error'}]})
-    itemarray = aresult['sentences']
+    if 'sentences' in aresult.keys():
+        itemarray = aresult['sentences']
+    if 'example_sentences' in aresult.keys():
+        itemarray = aresult['example_sentences']
     result = []
     #changed
     for item in itemarray:
