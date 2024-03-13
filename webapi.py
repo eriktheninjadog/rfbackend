@@ -509,20 +509,17 @@ def poeexamples():
     print(" aresult " + str(aresult))
     if 'sentences' not in aresult.keys():
         return jsonify({'result':[{'chinese':result,'english':'error'}]})
-    result = aresult['sentences']
-    for item in result:
+    itemarray = aresult['sentences']
+    result = []
+    #changed
+    for item in itemarray:
         print(" item " + str(item))
         chinese = None
         if 'cantonese' in item.keys():
             chinese = item['cantonese']
         if 'chinese' in item.keys():
             chinese = item['chinese']
-        if chinese == None:
-            chinese = "cannot find chinese entry"
-        try:
-            tok = textprocessing.split_text(chinese)
-        except:
-            tok = ['error','processing','text',' ',str(chinese)] 
+        tok = textprocessing.split_text(chinese)
         result.append( {"chinese":tok,"english":item['english']} )
     return jsonify({'result':result})
 
