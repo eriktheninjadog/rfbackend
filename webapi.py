@@ -481,6 +481,16 @@ def extract_json(text):
         print("No JSON found in the text.")    
     return None
 
+
+@app.route('/getexampleresult',methods=['POST'])
+def getexampleresult():
+    f = open('/var/www/html/scene/examplestest.txt',"r",encoding='utf-8')
+    pop = f.read()
+    f.close()
+    database = json.loads(pop)
+    return jsonify({'result':database})
+
+
 @app.route('/poeexampleresult',methods=['POST'])
 def poeexampleresult():
     print(request.get_json())
