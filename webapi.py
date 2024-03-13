@@ -489,7 +489,7 @@ def poeexampleresult():
         f = open('/var/www/html/scene/examplestest.txt',"r",encoding='utf-8')
         pop = f.read()
         f.close()
-        json.loads(pop)
+        database = json.loads(pop)
     except:
         database = []
     chinese = request.json['chinese']
