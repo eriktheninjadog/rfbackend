@@ -517,7 +517,10 @@ def poeexamples():
             chinese = item['chinese']
         if chinese == None:
             chinese = "cannot find chinese entry"
-        tok = textprocessing.split_text(chinese)
+        try:
+            tok = textprocessing.split_text(chinese)
+        except:
+            tok = ['error','processing','text',' ',str(chinese)] 
         result.append( {"chinese":tok,"english":item['english']} )
     return jsonify({'result':result})
 
