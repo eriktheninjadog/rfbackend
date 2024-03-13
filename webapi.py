@@ -499,15 +499,14 @@ def poeexamples():
         robot = bot
         time.sleep(12)
         
-    text = "Write " + str(number) + " example sentences in spoken English at a " + level + " level of difficulty, along with their Cantonese translations, in a dictionary in JSON format without any other text."
+    text = "Write " + str(number) + " example sentences in spoken English at a " + level + " level of difficulty, along with their spoken Cantonese translation, in a dictionary in JSON format without any other text."
     #text = "Give me " + str(number) + " sentences in " + language +" at a " + level + " of difficulty together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
     log.log("Result from poe" + result)
     aresult = extract_json(result)
     print(" aresult " + str(aresult))
-    #now we will split this
-    for key in aresult.keys():
-        item = aresult[key]       
+    result = aresult['sentences']    
+    for item in result:
         chinese = item['cantonese']
         tok = textprocessing.split_text(chinese)
         result.append( {"chinese":tok,"english":item['english']} )
