@@ -465,15 +465,12 @@ def poefree():
 
 def extract_json(text):
     # Regular expression pattern to match JSON
-    json_pattern = r'{.*}'
-    
+    json_pattern = r'{.*}'    
     # Find all occurrences of the JSON pattern in the text
-    json_matches = re.findall(json_pattern, text, re.DOTALL)
-    
+    json_matches = re.findall(json_pattern, text, re.DOTALL)    
     if json_matches:
         # Extract the first JSON match
-        json_string = json_matches[0]
-        
+        json_string = json_matches[0]        
         try:
             # Parse the JSON string
             json_data = json.loads(json_string)
@@ -481,8 +478,7 @@ def extract_json(text):
         except json.JSONDecodeError:
             print("Invalid JSON format.")
     else:
-        print("No JSON found in the text.")
-    
+        print("No JSON found in the text.")    
     return None
 
 
