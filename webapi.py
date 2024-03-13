@@ -511,17 +511,6 @@ def poeexamples():
         chinese = item['cantonese']
         tok = textprocessing.split_text(chinese)
         result.append( {"chinese":tok,"english":item['english']} )
-    """
-    sentences = aresult.split("\n\n")
-    
-    result = []
-
-    for sentence in sentences:
-        parts = sentence.split("\n")
-        chinese_part = parts[0].strip()
-        english_part = parts[-1].strip().strip("(").strip(")")
-        result.append((chinese_part, english_part))
-    """
     return jsonify({'result':result})
 
 
