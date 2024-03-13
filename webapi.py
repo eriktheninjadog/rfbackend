@@ -498,7 +498,7 @@ def poeexampleresult():
     reason = request.json['reason']
     database.append({'chinese':chinese,'english':english,'level':level,'success':success,'reason':reason})
     f = open('/var/www/html/scene/examplestest.txt',"w",encoding='utf-8')
-    f.read( json.dumps(database))
+    f.write( json.dumps(database))
     f.close()
     return jsonify({'result':'ok'})
     
