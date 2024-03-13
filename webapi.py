@@ -493,11 +493,13 @@ def poeexampleresult():
     except:
         database = []
     chinese = request.json['chinese']
+    tokens = request.json['tokens']
     english = request.json['english']
     level = request.json['level']
     success = request.json['success']
     reason = request.json['reason']
-    database.append({'chinese':chinese,'english':english,'level':level,'success':success,'reason':reason})
+    currentTime = request.json['time']
+    database.append({'tokens':tokens,'chinese':chinese,'english':english,'level':level,'success':success,'reason':reason,'time':currentTime})
     f = open('/var/www/html/scene/examplestest.txt',"w",encoding='utf-8')
     f.write( json.dumps(database))
     f.close()
