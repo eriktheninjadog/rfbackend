@@ -481,6 +481,27 @@ def extract_json(text):
         print("No JSON found in the text.")    
     return None
 
+@app.route('/poeexampleresult',methods=['POST'])
+def poeexampleresult():
+    database = []
+    try:
+        f = open('/var/www/html/scene/examplestest.txt',"r",encoding='utf-8')
+        pop = f.read()
+        f.close()
+        json.loads(pop)
+    except:
+        database = []
+    chinese = request.json['chinese']
+    english = request.json['english']
+    level = request.json['level']
+    success = request.json['success']
+    reason = request.json['reason']
+    database.append({'chinese':chinese,'english':english,'level':level,'success':success,'reason':reason})
+    f = open('/var/www/html/scene/examplestest.txt',"w",encoding='utf-8')
+    f.read( json.dumps(database))
+    f.close()
+    return jsonify({'result':'ok'})
+    
 
 
 @app.route('/poeexamples',methods=['POST'])
