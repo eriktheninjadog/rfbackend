@@ -483,6 +483,7 @@ def extract_json(text):
 
 @app.route('/poeexampleresult',methods=['POST'])
 def poeexampleresult():
+    print(request.get_json())
     database = []
     try:
         f = open('/var/www/html/scene/examplestest.txt',"r",encoding='utf-8')
