@@ -503,7 +503,7 @@ def poeexamples():
     #text = "Give me " + str(number) + " sentences in " + language +" at a " + level + " of difficulty together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
     log.log("Result from poe" + result)
-    aresult = extract_json(result)
+    aresult = json.loads(result)
     print(" aresult " + str(aresult))
     if 'sentences' not in aresult.keys():
         return jsonify({'result':[{'chinese':result,'english':'error'}]})
