@@ -482,14 +482,44 @@ def extract_json(text):
     return None
 
 
-@app.route('/getexampleresult',methods=['POST'])
-def getexampleresult():
+
+def read_examples_test_database():
     f = open('/var/www/html/scene/examplestest.txt',"r",encoding='utf-8')
     pop = f.read()
     f.close()
     database = json.loads(pop)
-    return jsonify({'result':database})
+    return database
 
+@app.route('/getexampleresult',methods=['POST'])
+def getexampleresult():    
+    return jsonify({'result':read_examples_test_database()})
+
+import random
+
+def get_failed_examples(nr):
+    database = read_examples_test_database()
+    failed = []
+    for i in database:
+        if i['success'] == False:
+            failed.append(i)
+    uniq = {}
+    for i in failed:
+        # create a "key"
+        akey = ''
+        for t in i['tokens']:
+            akey = akey + t
+        akey = akey + i['english']
+        uniq[akey] = i
+    returnList = []
+    for k in uniq.keys():
+        returnList.append(uniq[k])
+    if len(returnList)  > nr:
+            returnList = random.sample(returnList,nr)
+    # create the real list
+    truelist = []
+    for rl in returnList:
+        truelist.append( {'chinese':rl['tokens'],'english':rl['english']} )
+    return jsonify({'result':truelist})
 
 @app.route('/poeexampleresult',methods=['POST'])
 def poeexampleresult():
@@ -524,6 +554,11 @@ def poeexamples():
     level = request.json['level']
     number = request.json['number']
     language = request.json['language']
+    onlyFailed = request.json['onlyFailed']
+    if onlyFailed == True:
+        return get_failed_examples(number)
+    
+    
     bot = "Claude-3-Opus"
     if not bot == robot:
         poeclient.change_bot(bot)
