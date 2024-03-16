@@ -523,7 +523,7 @@ def get_failed_examples(nr):
 
 
 def get_failed_examples_duplicates(nr):
-
+    
     database = read_examples_test_database()
     failed = []
     for i in database:
