@@ -521,6 +521,59 @@ def get_failed_examples(nr):
         truelist.append( {'chinese':rl['tokens'],'english':rl['english']} )
     return jsonify({'result':truelist})
 
+
+def get_failed_examples_duplicates(nr):
+
+    database = read_examples_test_database()
+    failed = []
+    for i in database:
+        if i['success'] == False:
+            failed.append(i)
+    # get all ENGLISH of failed
+    failedexamples = {}
+    for i in failed:
+        if i['english'] not in failedexamples.keys():
+            failedexamples[i['english']] = []            
+    
+    #now we will add the tokens
+    for i in database:
+        eng = i['english']
+        if eng in failedexamples.keys():
+            #this exist among the failed
+            #even though this TOKEN itself might not be failed
+            knowntokens = failedexamples[eng]
+            known = False
+            #look if we already added this token
+            for k in knowntokens:
+                #The token is among the already collected 
+                #set flag
+                if k == i['tokens']:
+                    known = True
+            if not known:
+                knowntokens.append(i['tokens'])
+                failedexamples['eng'] = knowntokens
+    #know I have a dictionary with failed english phrases as key
+    #and all known phrases in token format as value
+    # lets move through the keys and create the content
+    returnList = []
+    for k in failedexamples.keys():
+        item = failedexamples[k]
+        itemlength = len(item)
+        english_text = k + ' number ' + str(itemlength)
+        chinese_tokens = []
+        for i in item:
+            for j in i:
+                chinese_tokens.append(j)
+            chinese_tokens.append('\n')
+        returnList.append({'tokens':chinese_tokens,'english':english_text} )    
+    if len(returnList)  > nr:
+            returnList = random.sample(returnList,nr)
+    truelist = []
+    for rl in returnList:
+        truelist.append( {'chinese':rl['tokens'],'english':rl['english']} )
+    return jsonify({'result':truelist})
+
+
 @app.route('/poeexampleresult',methods=['POST'])
 def poeexampleresult():
     print(request.get_json())
@@ -556,7 +609,7 @@ def poeexamples():
     language = request.json['language']
     onlyFailed = request.json['onlyFailed']
     if onlyFailed == True:
-        return get_failed_examples(number)
+        return get_failed_examples_duplicates(number)
     
     
     bot = "Claude-3-Opus"
