@@ -527,7 +527,7 @@ def get_failed_examples_duplicates(nr):
     database = read_examples_test_database()
     failed = []
     for i in database:
-        if i['success'] == False and i['english'].find('#') == -1:
+        if i['success'] == False:
             failed.append(i)
     # get all ENGLISH of failed
     failedexamples = {}
