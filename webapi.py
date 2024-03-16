@@ -527,13 +527,13 @@ def get_failed_examples_duplicates(nr):
     database = read_examples_test_database()
     failed = []
     for i in database:
-        if i['success'] == False:
+        if i['success'] == False and i['english'].find('#') == -1:
             failed.append(i)
     # get all ENGLISH of failed
     failedexamples = {}
     for i in failed:
         #filter out follow up questions, not valid
-        if i['english'] not in failedexamples.keys() and i['english'].find('#') == -1:
+        if i['english'] not in failedexamples.keys():
             failedexamples[i['english']] = []            
     
     #now we will add the tokens
