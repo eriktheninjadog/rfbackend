@@ -532,7 +532,8 @@ def get_failed_examples_duplicates(nr):
     # get all ENGLISH of failed
     failedexamples = {}
     for i in failed:
-        if i['english'] not in failedexamples.keys():
+        #filter out follow up questions, not valid
+        if i['english'] not in failedexamples.keys() and i['english'].find('#') == -1:
             failedexamples[i['english']] = []            
     
     #now we will add the tokens
@@ -559,7 +560,7 @@ def get_failed_examples_duplicates(nr):
     for k in failedexamples.keys():
         item = failedexamples[k]
         itemlength = len(item)
-        english_text = k + ' number ' + str(itemlength)
+        english_text = k + ' # ' + str(itemlength)
         chinese_tokens = []
         for i in item:
             for j in i:
