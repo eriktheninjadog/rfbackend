@@ -530,12 +530,14 @@ def get_failed_examples_duplicates(nr):
         if i['success'] == False:
             failed.append(i)
     # get all ENGLISH of failed
+    print("total failed: " + str(len(failed)))    
     failedexamples = {}
     for i in failed:
         #filter out follow up questions, not valid
         if i['english'] not in failedexamples.keys():
             failedexamples[i['english']] = []            
-    
+
+    print("Unique failed english: " + str(len(failedexamples.keys())))    
     #now we will add the tokens
     for i in database:
         eng = i['english']
