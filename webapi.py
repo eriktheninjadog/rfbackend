@@ -621,8 +621,8 @@ def poeexamples():
         robot = bot
         time.sleep(12)
         
-    text = "create "+str(number)+" sentences at A1 level including the following words: " + wordlists.get_sample_A1_wordlist(30) + ". Include their cantonese translation. Format should be in a dictionary in JSON format without any other text."
-    #text = "Write " + str(number) + " example sentences in English at a " + level + " level of difficulty, along with their Cantonese translation, in a dictionary in JSON format without any other text."
+    #text = "create "+str(number)+" sentences at A1 level including the following words: " + wordlists.get_sample_A1_wordlist(30) + ". Include their cantonese translation. Format should be in a dictionary in JSON format without any other text."
+    text = "Write " + str(number) + " example sentences in English at a " + level + " level of difficulty, along with their Cantonese translation, in a dictionary in JSON format without any other text."
     #text = "Give me " + str(number) + " sentences in " + language +" at a " + level + " of difficulty together with English translation. Make the format json."
     result = poeclient.ask_ai(text,True)
     with open('/tmp/output.txt','w',encoding='utf-8') as f:
