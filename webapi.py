@@ -709,6 +709,7 @@ def remove_repeating_sentences(text):
 
 @app.route('/cleanandtranslate',methods=['POST'])
 def cleanandtranslate():
+    global robot
     log.log("cleanandtranslate")
     text = request.json['text']
     #first lets clen this up
