@@ -625,7 +625,7 @@ def poeexamples():
         f.write(result)
         f.flush()
     aresult = extract_json(result)
-    result = parsePoe(aresult)
+    result = newParsePoe(aresult)
     return jsonify({'result':result})
 
 
