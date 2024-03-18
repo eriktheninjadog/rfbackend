@@ -482,6 +482,23 @@ def extract_json(text):
     return None
 
 
+def extract_json_array(text):
+    import json
+    try:
+        # Find the opening bracket of the JSON array
+        start_index = text.index('[')
+        # Find the closing bracket of the JSON array
+        end_index = text.rindex(']') + 1
+        # Extract the JSON array substring
+        json_array_str = text[start_index:end_index]
+        # Parse the JSON array
+        json_array = json.loads(json_array_str)
+        return json_array
+    except (ValueError, json.JSONDecodeError):
+        return None
+
+
+
 
 def read_examples_test_database():
     f = open('/var/www/html/scene/examplestest.txt',"r",encoding='utf-8')
@@ -625,7 +642,8 @@ def poeexamples():
         f.write(result)
         f.flush()
     #aresult = extract_json(result)
-    aresult = json.loads(result)
+    aresult = extract_json_array(result)
+    #aresult = json.loads(result)
     result = newParsePoe(aresult)
     return jsonify({'result':result})
 
