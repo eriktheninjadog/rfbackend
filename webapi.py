@@ -624,7 +624,8 @@ def poeexamples():
     with open('/tmp/output.txt','w',encoding='utf-8') as f:
         f.write(result)
         f.flush()
-    aresult = extract_json(result)
+    #aresult = extract_json(result)
+    aresult = json.loads(result)
     result = newParsePoe(aresult)
     return jsonify({'result':result})
 
