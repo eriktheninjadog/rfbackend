@@ -613,22 +613,44 @@ def poeexamples():
     onlyFailed = request.json['onlyFailed']
     if onlyFailed == True:
         return get_failed_examples_duplicates(number)
-    
-    
+        
     bot = "Claude-3-Opus"
     if not bot == robot:
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
-        
-    #text = "create "+str(number)+" sentences at A1 level including the following words: " + wordlists.get_sample_A1_wordlist(30) + ". Include their cantonese translation. Format should be in a dictionary in JSON format without any other text."
-    text = "Write " + str(number) + " example sentences in English at a " + level + " level of difficulty, along with their Cantonese translation, in a dictionary in JSON format without any other text."
-    #text = "Give me " + str(number) + " sentences in " + language +" at a " + level + " of difficulty together with English translation. Make the format json."
+    text = create_poe_example_question(level,number)
     result = poeclient.ask_ai(text,True)
     with open('/tmp/output.txt','w',encoding='utf-8') as f:
         f.write(result)
         f.flush()
     aresult = extract_json(result)
+    result = parsePoe(aresult)
+    return jsonify({'result':result})
+
+
+def create_poe_example_question(level,number_of_sentences):
+    text = "Write " + str(number_of_sentences) + " example sentences in English at a " + level + " level of difficulty, along with their Cantonese translation, in a dictionary in JSON format without any other text."    
+    text = "Create 10 sentences at A1 level including the following words: bear, ninja, dog, guess,waterfall,homecoming. Return these together with cantonese tranlsation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}]"
+    return text
+
+def is_list(obj):
+    return isinstance(obj, list)
+
+
+def newParsePoe(aresult):
+    result = []
+    for i in aresult:
+        english = i['english']
+        chinese = i['chinese']
+        tok = textprocessing.split_text(chinese)
+        result.append( {"chinese":tok,"english":item['english']} )
+    return result
+        
+
+def parsePoe(aresult):
+    if is_list(aresult):
+        return newParsePoe(aresult)
     print(" aresult " + str(aresult))
     if 'sentences' in aresult.keys():
         itemarray = aresult['sentences']
@@ -650,7 +672,7 @@ def poeexamples():
             chinese = item['chinese']
         tok = textprocessing.split_text(chinese)
         result.append( {"chinese":tok,"english":item['english']} )
-    return jsonify({'result':result})
+    return result
 
 
 def remove_repeating_sentences(text):
