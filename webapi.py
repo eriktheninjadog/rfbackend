@@ -660,7 +660,8 @@ def create_poe_example_question(level,number_of_sentences):
     text = "Create "+ str(number_of_sentences) +" sentences at A1 level including some the following words: " + wordlists.get_sample_A1_wordlist(30)+ ". Return these together with vernacular cantonese translation (use traditional charactters) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
     if random.randint(0,10) > 7:
         text = "Create "+ str(number_of_sentences) +" sentences at A1 level including some the following words: " + wordlists.get_sample_A1_wordlist(30)+ ". Return these together with a simple, spoken cantonese equivalent (use traditional charactters) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."        
-    text = create_pattern_example_question(level,number_of_sentences)
+    if random.randint(0,10) > 5:
+        text = create_pattern_example_question(level,number_of_sentences)
     return text
 
 def is_list(obj):
