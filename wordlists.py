@@ -911,3 +911,54 @@ def get_sample_A1_wordlist(size):
     for a in al:
         ret = ret + ',' + a
     return ret
+
+
+sentence_patterns = [
+    'Comparative Adjective + 啲 (di1) + Noun',
+'Comparative Adjective + 過 (gwo3) + Noun',
+'Question Word + Subject + Verb + (Object)',
+'Question Word Questions (with 乜嘢 (mat1 je5))',
+'Question Word Questions (with 幾時 (gei2 si4))',
+'Question Word Questions (with 邊個 (bin1 go3))',
+'Question Word Questions (with 點樣 (dim2 joeng6))',
+'Question Word Questions (with 點解 (dim2 gaai2))',
+'Subject + Adverb + Verb + Object',
+'Subject + Verb + Complement',
+'Subject + Verb + Indirect Object + Direct Object',
+'Subject + Verb + Object (SVO)',
+'Subject + Verb + Prepositional Phrase',
+'Subject + Verb + Prepositional Phrase (Accompaniment)',
+'Subject + Verb + Prepositional Phrase (Comparison)',
+'Subject + Verb + Prepositional Phrase (Location)',
+'Subject + Verb + Prepositional Phrase (Manner)',
+'Subject + Verb + Prepositional Phrase (Reason)',
+'Subject + Verb + Prepositional Phrase (Time)',
+'Subject + Verb + 咗 (zo2) + Duration + Object',
+'Subject + Verb + 咗 (zo2) + Object',
+'Subject + Verb + 完 (jyun4) + Object',
+'Subject + Verb + 過 (gwo3) + Object',
+'Subject + 冇 (mou5) + Verb + Object',
+'Subject + 冇 (mou5) + Verb + 過 (gwo3) + Object',
+'Subject + 已經 (ji5 ging1) + Verb + Object',
+'Subject + 有 (jau5) + Verb + Object',
+'Subject + 有冇 (jau5 mou5) + Verb + Object',
+'Subject + 未 (mei6) + Verb + Object',
+'Subject + 未 (mei6) + Verb + 完 (jyun4) + Object',
+'Tag Questions (with 好唔好 (hou2 m4 hou2))',
+'Time + Subject + Verb + 咗 (zo2) + Object',
+'Verb + Object + Verb + Object (Serial Verb Construction)',
+'Yes/No Questions (with 係咪 (hai6 mai6))',
+'Yes/No Questions (with 有冇 (jau5 mou5))',
+'同 (tung4) + Noun + 一樣 (jat1 joeng6) + Adjective',
+'唔及 (m4 kap6) + Noun + 咁 (gam3) + Adjective',
+'有 (jau5) + Noun + 咁 (gam3) + Adjective',
+'比 (bei2) + Noun + 更加 (gang3 gaa1) + Adjective',
+'Subject + 冇 (mou5) + Verb + Object',
+'Subject + 冇 (mou5) + Verb',
+'Subject + 未 (mei6) + Verb + Object',
+'Subject + 未 (mei6) + Verb'
+]
+
+def pick_sample_sentence__pattern():
+    pattern = random.choice(sentence_patterns)
+    return pattern
