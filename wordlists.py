@@ -956,7 +956,15 @@ sentence_patterns = [
 'Subject + 冇 (mou5) + Verb + Object',
 'Subject + 冇 (mou5) + Verb',
 'Subject + 未 (mei6) + Verb + Object',
-'Subject + 未 (mei6) + Verb'
+'Subject + 未 (mei6) + Verb',
+'using the particle 嘅 (ge3) to mark relative clauses and comparisons',
+'using of 又 (jau6) and 啫 (ze1) particles, along with the double negative structure',
+'using of 幾時 for "when" and the sequential action marker 先 ',
+'using of 未必 (mei6 bit1) to express uncertainty or possibility ',
+'using the double negative structure with 唔好 and 唔 ',
+'using the double negative structure and the use of 唔到 to express inability ',
+'using a relative clause without a relative pronoun ',
+'using continuous aspect particle 緊 to indicate an ongoing action in the past. '
 ]
 
 def pick_sample_sentence__pattern():
