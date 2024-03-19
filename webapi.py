@@ -647,12 +647,9 @@ def poeexamples():
     result = newParsePoe(aresult)
     return jsonify({'result':result})
 
-
-
 def create_pattern_example_question(level,number_of_sentences):
     text = "Create "+ str(number_of_sentences) +" examples in Cantonese using the following sentence pattern: " + wordlists.pick_sample_sentence__pattern() + ". Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
     return text
-
 
 def create_poe_example_question(level,number_of_sentences):
     text = "Write " + str(number_of_sentences) + " example sentences in English at a " + level + " level of difficulty, along with their Cantonese translation, in a dictionary in JSON format without any other text."    
