@@ -685,6 +685,7 @@ def poeexamples():
                     
     bot = "Claude-3-Opus"
     if not bot == robot:
+        print("In the web api we are switching to Claude")
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
