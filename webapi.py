@@ -627,7 +627,7 @@ def save_cache_to_file(cache):
     
 def pick_random_sentence_from_cache():
     repos = read_cache_from_file()
-    if len(repos):
+    if len(repos) == 0:
         return None
     repo = random.choice(repos)
     sentence = random.choice(repo)
