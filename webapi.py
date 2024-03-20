@@ -625,6 +625,22 @@ def save_cache_to_file(cache):
     f.write( json.dumps(cache))
     f.close()
     
+def pick_random_sentence_from_cache():
+    repos = read_cache_from_file()
+    if len(repos):
+        return None
+    repo = random.choice(repos)
+    sentence = random.choice(repo)
+    return sentence
+
+def pick_random_sentences_from_cache(nr):
+    ret = []
+    for i in range(nr):
+        sentence = pick_random_sentence_from_cache()
+        if sentence != None:
+            ret.append(sentence)
+    return ret
+    
 def read_cache_from_file():
     cache = []
     try:
@@ -635,7 +651,6 @@ def read_cache_from_file():
     except:
         cache = []
     return cache
-
 
 def get_examples_from_cache():
     cache = read_cache_from_file()
@@ -685,6 +700,15 @@ def poeexamples():
         add_examples_to_cache(result)
     return jsonify({'result':result})
 
+def create_proper_cantonese_questions(level,number_of_sentences):
+    sentences = pick_random_sentences_from_cache(number_of_sentences)
+    ret = '\n'
+    for s in sentences:
+        for t in s['tokens']:
+            ret = ret + t
+        ret = ret + '\n'
+    return "For each sentence in the list, rewrite it into plain spoken Cantonese.Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure. Here is the list: " + ret
+
 def create_pattern_example_question(level,number_of_sentences):
     text = "Create "+ str(number_of_sentences) +" examples in Cantonese using the following sentence pattern: " + wordlists.pick_sample_sentence__pattern() + ". Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
     return text
@@ -697,6 +721,7 @@ def create_poe_example_question(level,number_of_sentences):
         text = "Create "+ str(number_of_sentences) +" sentences at A1 level including some the following words: " + wordlists.get_sample_A1_wordlist(30)+ ". Return these together with a simple, spoken cantonese equivalent (use traditional charactters) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."        
     if random.randint(0,10) > 5:
         text = create_pattern_example_question(level,number_of_sentences)
+    text = create_proper_cantonese_questions(level,number_of_sentences)    
     return text
 
 def is_list(obj):

@@ -964,7 +964,21 @@ sentence_patterns = [
 'using the double negative structure with 唔好 and 唔 ',
 'using the double negative structure and the use of 唔到 to express inability ',
 'using a relative clause without a relative pronoun ',
-'using continuous aspect particle 緊 to indicate an ongoing action in the past. '
+'using continuous aspect particle 緊 to indicate an ongoing action in the past. ',
+' [Subject][time expression]唔會[verb]。',
+'我[time expression]會[verb]。',
+'佢[time expression]就[verb]。',
+'[Subject][time expression]冇[verb]。',
+'我[time expression]唔打算[verb]。',
+'[Subject][time expression]可能唔會[verb]。',
+'我哋[time expression]唔會[verb]。',
+'我哋[time expression]要[verb]。',
+'[Subject][time expression][adverb]會[verb]。',
+'我打算[time expression][verb]。',
+'我預計[time expression]會[verb]。',
+'[Subject][time expression]應該會[verb]。',
+'我計劃[time expression][verb]。',
+'[Subject][time expression]一定會[verb]。'  
 ]
 
 def pick_sample_sentence__pattern():
