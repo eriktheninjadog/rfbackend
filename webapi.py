@@ -705,7 +705,7 @@ def create_proper_cantonese_questions(level,number_of_sentences):
     sentences = pick_random_sentences_from_cache(number_of_sentences)
     ret = '\n'
     for s in sentences:
-        for t in s['tokens']:
+        for t in s['chinese']:
             ret = ret + t
         ret = ret + '\n'
     return "For each sentence in the list, rewrite it into plain spoken Cantonese.Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure. Here is the list: " + ret
