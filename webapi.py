@@ -689,7 +689,7 @@ def poeexamples():
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
-    result = poeclient.ask_ai(text,True)
+    result = poeclient.ask_ai(text,False)
     with open('/tmp/output.txt','w',encoding='utf-8') as f:
         f.write(result)
         f.flush()
