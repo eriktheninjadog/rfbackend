@@ -618,8 +618,59 @@ def poeexampleresult():
     f.close()
     # hi
     return jsonify({'result':'ok'})
+
+
+def save_cache_to_file(cache):
+    f = open('/var/www/html/scene/examplescache.txt',"w",encoding='utf-8')
+    f.write( json.dumps(cache))
+    f.close()
+    
+def read_cache_from_file():
+    cache = {}
+    try:
+        f = open('/var/www/html/scene/examplescache.txt',"r",encoding='utf-8')
+        content = f.read()
+        f.close()
+        cache = json.loads(content)
+    except:
+        cache = {}
+    return cache
+
+def add_examples_to_repos(repos,examples):    
+    repos.append(examples)
+    return repos
+
+def does_repos_exist_in_cache(cache,text):
+    return text in cache.keys()
     
 
+def get_example_repos_from_cache(cache,text):
+    if text in cache.keys():
+        return cache[text]
+    else:
+        return []
+    
+def set_repos_to_cache(cache,text,repos):
+    cache[text] = repos
+
+def add_examples_to_cache(text,examples):
+    cache = read_cache_from_file()
+    repos = get_example_repos_from_cache(cache,text)
+    repos = add_examples_to_repos(repos,examples)
+    set_repos_to_cache(cache,text,repos)
+    save_cache_to_file(cache)
+
+def get_examples_from_cache(text):
+    cache = read_cache_from_file()
+    repos = get_example_repos_from_cache(cache,text)
+    if len(repos) == 0:
+        return None
+    examples = repos.pop()
+    set_repos_to_cache(cache,text,repos)
+    save_cache_to_file(cache)
+    return examples
+    
+    
 import wordlists
 @app.route('/poeexamples',methods=['POST'])
 def poeexamples():    
@@ -630,13 +681,19 @@ def poeexamples():
     onlyFailed = request.json['onlyFailed']
     if onlyFailed == True:
         return get_failed_examples_duplicates(number)
-        
+
+    text = create_poe_example_question(level,number)
+
+    if not 'store' in request.json:
+        examples = get_examples_from_cache(text)
+        if examples != None:
+           jsonify({'result':examples}) 
+                    
     bot = "Claude-3-Opus"
     if not bot == robot:
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
-    text = create_poe_example_question(level,number)
     result = poeclient.ask_ai(text,True)
     with open('/tmp/output.txt','w',encoding='utf-8') as f:
         f.write(result)
@@ -645,6 +702,8 @@ def poeexamples():
     aresult = extract_json_array(result)
     #aresult = json.loads(result)
     result = newParsePoe(aresult)
+    if 'store' in request.json:
+        add_examples_to_cache(text,result)
     return jsonify({'result':result})
 
 def create_pattern_example_question(level,number_of_sentences):
