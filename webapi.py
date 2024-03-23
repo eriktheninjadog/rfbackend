@@ -901,6 +901,24 @@ def poebot1():
     
 
 
+from flask import send_file
+
+
+def get_random_file(directory):
+    # Get a list of all files in the directory
+    file_list = os.listdir(directory)
+    
+    # Choose a random file from the list
+    random_file = random.choice(file_list)
+    
+    # Return the path to the random file
+    return os.path.join(directory, random_file)
 
 
 
+@app.route('/audioexample', methods=['GET'])
+def get_audio():
+    # Path to the MP3 file
+    mp3_file = get_random_file('/var/www/html/mp3')
+    # Return the MP3 file
+    return send_file(mp3_file, mimetype='audio/mpeg')
