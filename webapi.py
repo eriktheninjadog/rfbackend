@@ -936,7 +936,7 @@ def read_audio_time():
         return 0
     
 def write_audio_time(totaltime):
-    f = open('/var/www/html/scene/audiotime.txt',"r",encoding='utf-8')
+    f = open('/var/www/html/scene/audiotime.txt',"w",encoding='utf-8')
     db = {'totaltime':totaltime}
     f.write(json.dumps(db))
     f.close()
