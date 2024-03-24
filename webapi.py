@@ -449,7 +449,7 @@ def poefree():
     bot         = request.json['bot']
     clear       = request.json['clear']
     global robot
-    if not bot == robot:
+    if bot != robot:
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
@@ -496,9 +496,6 @@ def extract_json_array(text):
         return json_array
     except (ValueError, json.JSONDecodeError):
         return None
-
-
-
 
 def read_examples_test_database():
     f = open('/var/www/html/scene/examplestest.txt',"r",encoding='utf-8')
@@ -684,7 +681,7 @@ def poeexamples():
            return jsonify({'result':examples}) 
                     
     bot = "Claude-3-Opus"
-    if not bot == robot:
+    if bot != robot:
         print("In the web api we are switching to Claude")
         poeclient.change_bot(bot)
         robot = bot
