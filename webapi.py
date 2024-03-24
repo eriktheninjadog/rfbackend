@@ -929,7 +929,7 @@ def read_audio_time():
         f = open('/var/www/html/scene/audiotime.txt',"r",encoding='utf-8')
         js = f.read()
         f.close()
-        jsonload = json.loads()
+        jsonload = json.loads(js)
         thetime = jsonload['totaltime']
         return thetime
     except:
