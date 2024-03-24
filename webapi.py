@@ -461,7 +461,8 @@ def poefree():
     #result = text + "\n\n" + result
     #result = aisocketapi.ask_ai(text,bot,clear)    
     result = text + "\n\n" + result
-    cws = api.process_chinese("poefree","ai",result,500,cwsid)
+    
+    cws = api.process_chinese("pf:"+text[:25],"ai",result,500,cwsid)
     return jsonify({'result':cws})
 
 
