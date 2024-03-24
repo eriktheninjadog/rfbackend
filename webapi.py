@@ -922,3 +922,31 @@ def get_audio():
     mp3_file = get_random_file('/var/www/html/mp3')
     # Return the MP3 file
     return send_file(mp3_file, mimetype='audio/mpeg')
+
+
+def read_audio_time():
+    try:
+        f = open('/var/www/html/scene/audiotime.txt',"r",encoding='utf-8')
+        js = f.read()
+        f.close()
+        jsonload = json.loads()
+        thetime = jsonload['totaltime']
+        return thetime
+    except:
+        return 0
+    
+def write_audio_time(totaltime):
+    f = open('/var/www/html/scene/audiotime.txt',"r",encoding='utf-8')
+    db = {'totaltime':totaltime}
+    f.write(json.dumps(db))
+    f.close()
+    
+@app.route('/addaudiotime', methods=['POST'])
+def addaudiotime():
+    amount       = request.json['amount']
+    #try to read added time
+    totaltime = read_audio_time()
+    totaltime += amount
+    write_audio_time(totaltime)
+    return jsonify({'result':totaltime})
+    
