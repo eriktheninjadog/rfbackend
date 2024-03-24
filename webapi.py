@@ -449,8 +449,10 @@ def poefree():
     bot         = request.json['bot']
     clear       = request.json['clear']
     global robot
-    print("In poe free: robot = " + bot + " clear: " + clear)
+    print("In poe free: robot = " + bot + " clear: " + str(clear))
+    print("Robot is " + robot)    
     if bot != robot:
+        print("We are switching to" + bot)
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
