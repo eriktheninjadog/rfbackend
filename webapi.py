@@ -440,7 +440,7 @@ def removefile():
 import poe
 import poeclient
 
-robot = "Assistant"
+robot = "Claude-3-Opus"
 
 @app.route('/poefree',methods=['POST'])
 def poefree():
