@@ -544,8 +544,8 @@ def get_failed_examples_duplicates(nr):
     
     #testing
     result = database.get_failed_outputs(nr)
-    jsonify({'result':result})
-    
+    return jsonify({'result':result})
+    """
     database = read_examples_test_database()
     failed = []
     for i in database:
@@ -596,7 +596,7 @@ def get_failed_examples_duplicates(nr):
     truelist = []
     for rl in returnList:
         truelist.append( {'chinese':rl['tokens'],'english':rl['english']} )
-    return jsonify({'result':truelist})
+    return jsonify({'result':truelist})"""
 
 
 @app.route('/poeexampleresult',methods=['POST'])
