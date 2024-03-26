@@ -451,7 +451,6 @@ def get_ai_response_of_type(type):
     return ret
 
 
-
 def update_pleco(pleco):
     mydb = get_connection()
     mycursor = mydb.cursor()
@@ -465,3 +464,14 @@ def update_pleco(pleco):
     mydb.commit()
     mycursor.close()
     mydb.close()
+    
+
+def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "insert into output_exercises(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds) values ('"+english+"','"+chinesetokens+"','" +mp3name +"',"+type+","+result+","+milliseconds+","+whenutcmilliseconds+")"
+    mycursor.execute(sql)
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
+        

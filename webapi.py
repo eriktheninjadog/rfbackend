@@ -951,3 +951,14 @@ def addaudiotime():
     write_audio_time(totaltime)
     return jsonify({'result':totaltime})
     
+@app.route('/addoutputexercise', methods=['POST'])
+def addoutputexercise():
+    english               = request.json['english']
+    chinesetokens         = request.json['chinesetokens']
+    mp3name         = request.json['mp3name']
+    type = request.json['type']
+    result = request.json['result']
+    milliseconds = request.json['milliseconds']
+    whenutcmilliseconds = request.json['whenutcmilliseconds']
+    database.add_output_exercise(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds)
+    return jsonify({'result':'ok'})
