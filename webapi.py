@@ -968,3 +968,9 @@ def addoutputexercise():
 def gettotalaudiotime():
     total = database.get_total_audio_time()
     return jsonify({'result':total})
+
+@app.route('/gettotaloutputtime', methods=['POST'])
+def gettotaloutputtime():
+    total = database.get_total_output_time()
+    return jsonify({'result':total})
+
