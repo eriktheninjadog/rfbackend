@@ -13,6 +13,8 @@ import log
 
 import mysql.connector
 
+import json
+
 from dataobject import CWS
 from dataobject import DictionaryWord
 from dataobject import Activity
@@ -513,3 +515,19 @@ def get_total_output_time():
     mycursor.close()
     mydb.close()
     return total
+
+
+def get_failed_outputs(nr):
+    # def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    result = []
+    sql = "select chinesetokens,english from output_exercise where type = 2 and result = 1 order by rand() limit " + nr
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (chinesetokens,english) in myresult:
+        result.append({"english":english,"chinese": json.loads(chinesetokens) })
+    mycursor.close()
+    mydb.close()
+    return result
+

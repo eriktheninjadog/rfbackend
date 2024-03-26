@@ -542,6 +542,10 @@ def get_failed_examples(nr):
 
 def get_failed_examples_duplicates(nr):
     
+    #testing
+    result = database.get_failed_outputs(nr)
+    jsonify({'result':result})
+    
     database = read_examples_test_database()
     failed = []
     for i in database:
@@ -973,4 +977,5 @@ def gettotalaudiotime():
 def gettotaloutputtime():
     total = database.get_total_output_time()
     return jsonify({'result':total})
+
 
