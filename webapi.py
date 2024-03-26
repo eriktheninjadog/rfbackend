@@ -962,3 +962,9 @@ def addoutputexercise():
     whenutcmilliseconds = request.json['whenutcmilliseconds']
     database.add_output_exercise(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds)
     return jsonify({'result':'ok'})
+
+
+@app.route('/gettotalaudiotime', methods=['POST'])
+def gettotalaudiotime():
+    total = database.get_total_audio_time()
+    return jsonify({'result':total})

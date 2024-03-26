@@ -486,3 +486,16 @@ def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,
     mycursor.close()
     mydb.close()
         
+
+def get_total_audio_time():
+    # def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "select sum(milliseconds) as total from output_exercise where mp3name like 'mp3'"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (id) in myresult:
+        total = id
+    mycursor.close()
+    mydb.close()
+    return total
