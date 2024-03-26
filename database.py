@@ -522,7 +522,7 @@ def get_failed_outputs(nr):
     mydb = get_connection()
     mycursor = mydb.cursor()
     result = []
-    sql = "select chinesetokens,english from output_exercise where type = 2 and result = 1 order by rand() limit " + nr
+    sql = "select chinesetokens,english from output_exercise where type = 2 and result = 1 order by rand() limit " + str(nr)
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
     for (chinesetokens,english) in myresult:
