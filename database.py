@@ -465,11 +465,22 @@ def update_pleco(pleco):
     mycursor.close()
     mydb.close()
     
+    
+def escape_sql_string(string):
+    if string is None:
+        return 'NULL'
+    
+    # Escape single quotes by replacing them with two single quotes
+    string = string.replace("'", "''")
+    
+    # Wrap the string with single quotes
+    return string
+    
 
 def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "insert into output_exercises(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds) values ('"+english+"','"+chinesetokens+"','" +mp3name +"',"+str(type)+","+str(result)+","+str(milliseconds)+","+str(whenutcmilliseconds)+")"
+    sql = "insert into output_exercises(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds) values ('"+escape_sql_string(english)+"','"+escape_sql_string(chinesetokens)+"','" +escape_sql_string(mp3name) +"',"+str(type)+","+str(result)+","+str(milliseconds)+","+str(whenutcmilliseconds)+")"
     mycursor.execute(sql)
     mydb.commit()
     mycursor.close()
