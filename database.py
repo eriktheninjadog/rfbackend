@@ -469,7 +469,7 @@ def update_pleco(pleco):
 def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "insert into output_exercises(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds) values ('"+english+"','"+chinesetokens+"','" +mp3name +"',"+type+","+result+","+milliseconds+","+whenutcmilliseconds+")"
+    sql = "insert into output_exercises(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds) values ('"+english+"','"+chinesetokens+"','" +mp3name +"',"+str(type)+","+str(result)+","+str(milliseconds)+","+str(whenutcmilliseconds)+")"
     mycursor.execute(sql)
     mydb.commit()
     mycursor.close()
