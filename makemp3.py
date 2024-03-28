@@ -71,7 +71,7 @@ def sendRequest():
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             #totalstr = totalstr + 'file ' + "'" +mp3cache + "/silence.mp3'"+ '\n'
-            totalstr = totalstr + 'file ' + "'" +engfilepath + "'"+ '\n'
+            #totalstr = totalstr + 'file ' + "'" +engfilepath + "'"+ '\n'
             #totalstr = totalstr + 'file ' + "'" +mp3cache + "/silence.mp3'"+ '\n'
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
