@@ -63,7 +63,7 @@ def sendRequest():
             tok = i['chinese']
             txt = ''
             for t in tok:
-                txt = txt + t
+                txt = txt + str(t)
             chinese = txt
             makemp3(english,chinese)
             chifilepath = mp3cache + '/' + createmp3name(chinese)   

@@ -978,7 +978,9 @@ sentence_patterns = [
 '我預計[time expression]會[verb]。',
 '[Subject][time expression]應該會[verb]。',
 '我計劃[time expression][verb]。',
-'[Subject][time expression]一定會[verb]。'  
+'[Subject][time expression]一定會[verb]。',
+'using common time adverbs.',
+
 ]
 
 def pick_sample_sentence__pattern():
