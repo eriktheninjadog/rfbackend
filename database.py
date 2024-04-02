@@ -424,8 +424,6 @@ def delete_responses_of_type(type):
     return ret 
 
 
-
-
 def has_question(fulltext):
     ret = False
     mydb = get_connection()
@@ -522,7 +520,7 @@ def get_failed_outputs(nr):
     mydb = get_connection()
     mycursor = mydb.cursor()
     result = []
-    sql = "select chinesetokens,english from output_exercise where type = 2 and result = 1 order by rand() limit " + str(nr)
+    sql = "select distinct(chinesetokens),english from output_exercise where type = 2 and result = 1 order by rand() limit " + str(nr)
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
     for (chinesetokens,english) in myresult:

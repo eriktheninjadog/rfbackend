@@ -980,6 +980,7 @@ sentence_patterns = [
 '我計劃[time expression][verb]。',
 '[Subject][time expression]一定會[verb]。',
 'using common time adverbs.',
+'using common modal verbs.'
 
 ]
 
