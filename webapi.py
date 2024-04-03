@@ -691,13 +691,12 @@ def poeexamples():
         else:
             return get_failed_examples_duplicates(number,True)
 
-    text = create_poe_example_question(level,number)
-
     if not 'store' in request.json:
         examples = get_examples_from_cache()
         if examples != None:
            return jsonify({'result':examples}) 
-                    
+
+    text = create_poe_example_question(level,number)                    
     bot = "Claude-3-Opus"
     if bot != robot:
         print("In the web api we are switching to Claude")
