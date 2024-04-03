@@ -31,6 +31,10 @@ from bs4 import BeautifulSoup
 import urllib.parse
 import newscrawler
 
+
+import random
+
+
 app = Flask(__name__)
 
 @app.route('/version', methods=['GET','PUT'])
@@ -512,7 +516,6 @@ def read_examples_test_database():
 def getexampleresult():    
     return jsonify({'result':read_examples_test_database()})
 
-import random
 
 def get_failed_examples(nr):
     database = read_examples_test_database()
@@ -633,6 +636,7 @@ def save_cache_to_file(cache):
     f.write( json.dumps(cache))
     f.close()
     
+
 def pick_random_sentence_from_cache():
     repos = read_cache_from_file()
     if len(repos) == 0:
