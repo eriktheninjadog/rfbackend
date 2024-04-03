@@ -736,7 +736,6 @@ def create_poe_example_question(level,number_of_sentences):
 def is_list(obj):
     return isinstance(obj, list)
 
-
 def newParsePoe(aresult):
     result = []
     for i in aresult:
