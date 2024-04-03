@@ -460,7 +460,7 @@ def poefree():
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
-    result = poeclient.ask_ai(text,clear)
+    result = poeclient.ask_ai(text,robot,clear)
     #result =  poe.ask_poe_ai_sync(text,bot,clear)
     #result = text + "\n\n" + result
     #result = aisocketapi.ask_ai(text,bot,clear)    
@@ -704,7 +704,7 @@ def poeexamples():
         poeclient.change_bot(bot)
         robot = bot
         time.sleep(12)
-    result = poeclient.ask_ai(text,False)
+    result = poeclient.ask_ai(text,robot,False)
     with open('/tmp/output.txt','w',encoding='utf-8') as f:
         f.write(result)
         f.flush()
@@ -805,11 +805,11 @@ def cleanandtranslate():
     bettertext =  bettertext.replace("\n"," ")
     bettertext =  bettertext.replace("\r"," ")
     log.log("Better text recieved" + bettertext)
-    cleantext = poeclient.ask_ai('Clean up this text: ' + bettertext,False)
+    cleantext = poeclient.ask_ai('Clean up this text: ' + bettertext,robot,False)
     log.log("Clean text recieved" + cleantext)
     poeclient.change_bot('GPT-4')
     time.sleep(10)        
-    chinesecleantext = poeclient.ask_ai('Translate this text to Traditional Chinese ' + cleantext,False)
+    chinesecleantext = poeclient.ask_ai('Translate this text to Traditional Chinese ' + cleantext,robot,False)
     log.log("Chinese Clean text recieved" + chinesecleantext)
     cws = api.process_chinese("messytranslate","ai",chinesecleantext,500,-1)
     return jsonify({'result':'ok'})
