@@ -540,10 +540,13 @@ def get_failed_examples(nr):
     return jsonify({'result':truelist})
 
 
-def get_failed_examples_duplicates(nr):
+def get_failed_examples_duplicates(nr,all):
     
     #testing
-    result = database.get_failed_outputs(nr)
+    if all == False:
+        result = database.get_failed_outputs(nr)
+    else:
+        result = database.get_outputs(nr)
     return jsonify({'result':result})
     """
     database = read_examples_test_database()
@@ -679,7 +682,10 @@ def poeexamples():
     language = request.json['language']
     onlyFailed = request.json['onlyFailed']
     if onlyFailed == True:
-        return get_failed_examples_duplicates(number)
+        if not 'all' in request.json:    
+            return get_failed_examples_duplicates(number,False)
+        else:
+            return get_failed_examples_duplicates(number,True)
 
     text = create_poe_example_question(level,number)
 

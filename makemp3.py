@@ -107,7 +107,8 @@ payload = {
     "number": 20,
     "level": "A1",
     "language": "hi",
-    "store": False
+    "store": False,
+    "all":True
 }
 
 
