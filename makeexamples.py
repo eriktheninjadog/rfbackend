@@ -9,7 +9,7 @@ url = 'https://chinese.eriktamm.com/api/poeexamples'
 # Define the JSON payload for the request
 payload = {
     "onlyFailed":False,
-    "number":10,
+    "number":20,
     "level":"A1",
     "language":"hi",
     "store":True
