@@ -82,4 +82,10 @@ def do_opus_questions():
     f.write(str(responsejson))
     f.close()
     
+    
+def parserouterjson(json):
+    #
+    #
+    None
+
 do_opus_questions()
