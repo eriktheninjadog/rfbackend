@@ -77,9 +77,8 @@ def do_opus_questions():
     })
     )
     responsejson = response.json()
-    print(str(responsejson))
     f = open('opusanswer.json','w',encoding ='utf-8')
-    f.write(str(responsejson))
+    f.write(json.dumps(responsejson))
     f.close()
     
     
@@ -94,11 +93,14 @@ def parserouterjson(adict):
     #
     None
 
-
+"""
 f = open('opusanswer.json','r',encoding ='utf-8')
 l = f.read()
 f.close()
 print(l)
+json.loads(l)
+"""
+
 #parserouterjson(json.loads(l))
 
-#do_opus_questions()
+do_opus_questions()
