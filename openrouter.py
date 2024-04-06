@@ -93,14 +93,12 @@ def parserouterjson(adict):
     #
     None
 
-"""
+
 f = open('opusanswer.json','r',encoding ='utf-8')
 l = f.read()
 f.close()
-print(l)
-json.loads(l)
-"""
-
-#parserouterjson(json.loads(l))
+#print(l)
+#json.loads(l)
+parserouterjson(json.loads(l))
 
 do_opus_questions()
