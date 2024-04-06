@@ -77,7 +77,7 @@ def do_opus_questions():
     })
     )
     responsejson = response.json()
-    print(str(jresponsejson))
+    print(str(responsejson))
     f = open('opusanswer.json','w',encoding ='utf-8')
     f.write(str(responsejson))
     f.close()
