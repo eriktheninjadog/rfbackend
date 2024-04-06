@@ -98,6 +98,7 @@ def parserouterjson(adict):
 f = open('opusanswer.json','r',encoding ='utf-8')
 l = f.read()
 f.close()
-parserouterjson(json.loads(l))
+print(l)
+#parserouterjson(json.loads(l))
 
 #do_opus_questions()
