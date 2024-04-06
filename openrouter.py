@@ -101,4 +101,4 @@ f.close()
 #json.loads(l)
 parserouterjson(json.loads(l))
 
-do_opus_questions()
+#do_opus_questions()
