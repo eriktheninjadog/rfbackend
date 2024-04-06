@@ -76,10 +76,10 @@ def do_opus_questions():
         ]
     })
     )
-    json = response.json()
-    print(str(json))
+    responsejson = response.json()
+    print(str(responsejson))
     f = open('opusanswer.json','w',encoding ='utf-8')
-    f.write(json)
+    f.write(responsejson)
     f.close()
     
 do_opus_questions()
