@@ -81,3 +81,5 @@ def do_opus_questions():
     f = open('opusanswer.json','w',encoding ='utf-8')
     f.write(json)
     f.close()
+    
+do_opus_questions()
