@@ -60,7 +60,7 @@ def create_poe_example_question(level,number_of_sentences):
     return text
 
 def do_opus_questions():
-    question = create_poe_example_question(20)
+    question = create_poe_example_question('A1',20)
     
     response = requests.post(
     url="https://openrouter.ai/api/v1/chat/completions",
