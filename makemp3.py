@@ -150,6 +150,29 @@ def sendRequest():
 
 
 
+def textOnlySendRequest():
+    url = "https://chinese.eriktamm.com/api/poeexamples"
+    # Send the JSON request
+    totalstr = ''
+    response = requests.post(url, json=payload)
+    # Check the response status code
+    if response.status_code == 200:
+        # Request was successful
+        response_data = response.json()
+        # Process the response data as needed
+        result = response_data['result']
+        for i in result:
+            english = i['english']
+            tok = i['chinese']
+            txt = ''
+            for t in tok:
+                txt = txt + str(t)
+            chinese = txt
+            print(chinese+"...")
+            print(chinese+"...")
+           
+
+
 
 def reverseSendRequest():
     url = "https://chinese.eriktamm.com/api/poeexamples"
@@ -194,6 +217,9 @@ def reverseSendRequest():
 if __name__ == "__main__":
     #for i in range(50):
     #    reverseSendRequest()    
-    for i in range(50):
-         sendRequest()
+    #for i in range(50):
+    #     sendRequest()
+         
+    for i in range(20):         
+         textOnlySendRequest()
     
