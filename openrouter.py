@@ -124,4 +124,4 @@ f.close()
 parserouterjson(json.loads(l))
 """
 
-#do_opus_questions()
+do_opus_questions()
