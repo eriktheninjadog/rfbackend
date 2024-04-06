@@ -83,9 +83,21 @@ def do_opus_questions():
     f.close()
     
     
-def parserouterjson(json):
+def parserouterjson(adict):
+    choices = adict['choices']
+    message = choices[0]['message']
+    examples = message['content']
+    for e in examples:
+        print(str(e))
     #
+    
     #
     None
 
-do_opus_questions()
+
+f = open('opusanswer.json','r',encoding ='utf-8')
+l = f.read()
+f.close()
+parserouterjson(json.loads(l))
+
+#do_opus_questions()
