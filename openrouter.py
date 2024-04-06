@@ -3,6 +3,7 @@ import requests
 import json
 import random
 import wordlists
+import textprocessing
 
 
 def pick_random_sentence_from_cache():
@@ -20,6 +21,14 @@ def pick_random_sentences_from_cache(nr):
         if sentence != None:
             ret.append(sentence)
     return ret
+
+
+
+def save_cache_to_file(cache):
+    f = open('/var/www/html/scene/examplescache.txt',"w",encoding='utf-8')
+    f.write( json.dumps(cache))
+    f.close()
+
     
 def read_cache_from_file():
     cache = []
@@ -31,6 +40,12 @@ def read_cache_from_file():
     except:
         cache = []
     return cache
+
+def add_examples_to_cache(examples):
+    cache = read_cache_from_file()
+    cache.append(examples)
+    save_cache_to_file(cache)
+
 
 def create_proper_cantonese_questions(level,number_of_sentences):
     sentences = pick_random_sentences_from_cache(number_of_sentences)
@@ -80,25 +95,33 @@ def do_opus_questions():
     f = open('opusanswer.json','w',encoding ='utf-8')
     f.write(json.dumps(responsejson))
     f.close()
+    parserouterjson(responsejson)
     
+    
+def newParsePoe(aresult):
+    result = []
+    for i in aresult:
+        english = i['english']
+        chinese = i['chinese']
+        tok = textprocessing.split_text(chinese)
+        result.append( {"chinese":tok,"english":english} )
+    return result
     
 def parserouterjson(adict):
     choices = adict['choices']
     message = choices[0]['message']
     examples = message['content']
     parsedexamples = json.loads(examples)
-    #print(examples)
-    for e in parsedexamples:
-        print(str(e))
-    
+    #print(examples))
+    result = newParsePoe(parsedexamples)
+    add_examples_to_cache(result)
     None
 
-
+"""
 f = open('opusanswer.json','r',encoding ='utf-8')
 l = f.read()
 f.close()
-#print(l)
-#json.loads(l)
 parserouterjson(json.loads(l))
+"""
 
 #do_opus_questions()
