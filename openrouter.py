@@ -86,10 +86,10 @@ def parserouterjson(adict):
     choices = adict['choices']
     message = choices[0]['message']
     examples = message['content']
-    for e in examples:
-        print(str(e))
+    #for e in examples:
+    #    print(str(e))
     #
-    
+    print(examples)
     #
     None
 
