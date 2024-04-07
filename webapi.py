@@ -946,7 +946,7 @@ def get_audio():
     return send_file(mp3_file, mimetype='audio/mpeg')
 
 
-@app.route('/audioexample2', methods=['GET'])
+@app.route('/audioexample2', methods=['GET','POST'])
 def get_audio2():
     # Path to the MP3 file
     mp3_file = pick_random_file('/var/www/html/mp3','mp3')
