@@ -124,8 +124,9 @@ def sendRequest():
         # Request was successful
         response_data = response.json()
         # Process the response data as needed
-        print(response_data)    
+        print(response_data)
         result = response_data['result']
+        hinttext = ''
         for i in result:
             english = i['english']
             tok = i['chinese']
@@ -133,6 +134,7 @@ def sendRequest():
             for t in tok:
                 txt = txt + str(t)
             chinese = txt
+            hinttext =  hinttext + chinese + "\n"
             makemp3(english,chinese)
             chifilepath = mp3cache + '/' + createmp3name(chinese,False)
             engfilepath = mp3cache + '/' + createmp3name(english,False) 
@@ -141,7 +143,11 @@ def sendRequest():
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
-        totalstr = 'ffmpeg -f concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + mp3cache + '/'   + 'total' + str(random.randint(0,100000)) + '.mp3'
+        chosennumber = str(random.randint(0,100000))
+        totalstr = 'ffmpeg -f concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + mp3cache + '/'   + 'total' + chosennumber + '.mp3'
+        f = open(mp3cache + '/'   + 'total' + chosennumber + '.mp3.hint','w',encoding='utf-8')
+        f.write(hinttext)
+        f.close()
         print(totalstr)
         subprocess.run(totalstr,shell=True,capture_output=True,text=True)        
     else:
@@ -217,9 +223,9 @@ def reverseSendRequest():
 if __name__ == "__main__":
     #for i in range(50):
     #    reverseSendRequest()    
-    #for i in range(50):
-    #     sendRequest()
+    for i in range(30):
+         sendRequest()
          
-    for i in range(20):         
-         textOnlySendRequest()
+    #for i in range(20):         
+    #     textOnlySendRequest()
     
