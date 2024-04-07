@@ -959,7 +959,7 @@ def get_audio2():
         f.close()
         chiret = textprocessing.split_text(chitext)
     else:
-        chiret = ['no','chinese','to','be','found','!']    
+        chiret = ['no','chinese','to','\n','be','found','!']    
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
 
 
