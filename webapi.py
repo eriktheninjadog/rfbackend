@@ -953,7 +953,7 @@ def get_audio2():
     # Return the MP3 file
     #return jsonify({'result':None})
     hint_file = mp3_file + '.hint'
-    if os.path.exists(hint_file):
+    if os.path.exists('/var/www/html/mp3/'+hint_file):
         f = open('/var/www/html/mp3/'+hint_file,'r',encoding='utf-8')
         chitext = f.read()
         f.close()
