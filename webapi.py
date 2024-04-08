@@ -32,6 +32,8 @@ import urllib.parse
 import newscrawler
 
 
+import cachemanagement
+
 import random
 
 
@@ -631,14 +633,8 @@ def poeexampleresult():
     return jsonify({'result':'ok'})
 
 
-def save_cache_to_file(cache):
-    f = open('/var/www/html/scene/examplescache.txt',"w",encoding='utf-8')
-    f.write( json.dumps(cache))
-    f.close()
-    
-
 def pick_random_sentence_from_cache():
-    repos = read_cache_from_file()
+    repos = cachemanagement.read_cache_from_file()
     if len(repos) == 0:
         return None
     repo = random.choice(repos)
@@ -653,29 +649,15 @@ def pick_random_sentences_from_cache(nr):
             ret.append(sentence)
     return ret
     
-def read_cache_from_file():
-    cache = []
-    try:
-        f = open('/var/www/html/scene/examplescache.txt',"r",encoding='utf-8')
-        content = f.read()
-        f.close()
-        cache = json.loads(content)
-    except:
-        cache = []
-    return cache
 
 def get_examples_from_cache():
-    cache = read_cache_from_file()
+    cache = cachemanagement.read_cache_from_file()
     if len(cache) == 0:
         return None
     examples = cache.pop()
-    save_cache_to_file(cache)
+    cachemanagement.save_cache_to_file(cache)
     return examples
     
-def add_examples_to_cache(examples):
-    cache = read_cache_from_file()
-    cache.append(examples)
-    save_cache_to_file(cache)
         
 import wordlists
 @app.route('/poeexamples',methods=['POST'])
@@ -712,7 +694,7 @@ def poeexamples():
     #aresult = json.loads(result)
     result = newParsePoe(aresult)
     if 'store' in request.json:
-        add_examples_to_cache(result)
+        cachemanagement.add_examples_to_cache(result)
     return jsonify({'result':result})
 
 def create_proper_cantonese_questions(level,number_of_sentences):

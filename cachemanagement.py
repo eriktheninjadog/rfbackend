@@ -3,10 +3,29 @@ import json
 import sys
 
 
-import webapi
 import textprocessing
 
+def save_cache_to_file(cache):
+    f = open('/var/www/html/scene/examplescache.txt',"w",encoding='utf-8')
+    f.write( json.dumps(cache))
+    f.close()
 
+def read_cache_from_file():
+    cache = []
+    try:
+        f = open('/var/www/html/scene/examplescache.txt',"r",encoding='utf-8')
+        content = f.read()
+        f.close()
+        cache = json.loads(content)
+    except:
+        cache = []
+    return cache
+
+    
+def add_examples_to_cache(examples):
+    cache = read_cache_from_file()
+    cache.append(examples)
+    save_cache_to_file(cache)
 
 
 def import_examples_file(filename):
@@ -22,12 +41,13 @@ def import_examples_file(filename):
             chinese = textprocessing.split_text(propchinese)
         tmplines.append({'english':english,'chinese':chinese})
         if len(tmplines) == 10:
-            webapi.add_examples_to_cache(tmplines)
+            add_examples_to_cache(tmplines)
             tmplines = []
-    webapi.add_examples_to_cache(tmplines)
+    add_examples_to_cache(tmplines)
 
 
-import_examples_file(sys.argv[1])
+if __name__ == "__main__":
+    import_examples_file(sys.argv[1])
 
 
 
