@@ -38,7 +38,7 @@ def import_examples_file(filename):
         chinese = l['chinese']
         if (len(chinese) < 2):
             propchinese = chinese[0]
-            propchinese = textprocessing.make_sure_traditional(propchinesechinese)
+            propchinese = textprocessing.make_sure_traditional(propchinese)
             chinese = textprocessing.split_text(propchinese)
         if len(chinese) > 3:
             tmplines.append({'english':english,'chinese':chinese})
