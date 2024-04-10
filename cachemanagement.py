@@ -36,7 +36,7 @@ def import_examples_file(filename):
     for l in lines:
         english = l['english']
         chinese = l['chinese']
-        if (len(chinese) < 2):
+        if (len(chinese) < 5):
             propchinese = chinese[0]
             chinese = textprocessing.make_sure_traditional(chinese)
             chinese = textprocessing.split_text(propchinese)
