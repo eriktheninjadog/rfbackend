@@ -36,11 +36,12 @@ def import_examples_file(filename):
     for l in lines:
         english = l['english']
         chinese = l['chinese']
-        if (len(chinese) < 5):
+        if (len(chinese) < 2):
             propchinese = chinese[0]
-            chinese = textprocessing.make_sure_traditional(chinese)
+            propchinese = textprocessing.make_sure_traditional(propchinesechinese)
             chinese = textprocessing.split_text(propchinese)
-        tmplines.append({'english':english,'chinese':chinese})
+        if len(chinese) > 3:
+            tmplines.append({'english':english,'chinese':chinese})
         if len(tmplines) == 10:
             add_examples_to_cache(tmplines)
             tmplines = []
