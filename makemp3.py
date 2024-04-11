@@ -230,8 +230,9 @@ if __name__ == "__main__":
     create_dialogue()
     #for i in range(50):
     #    reverseSendRequest()    
-    for i in range(20):
-         sendRequest()
+    
+    #for i in range(20):
+    #     sendRequest()
          
     #for i in range(20):         
     #     textOnlySendRequest()
