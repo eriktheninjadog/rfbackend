@@ -220,6 +220,7 @@ def create_dialogue():
     text = dialogue   
     chosennumber = str(random.randint(0,100000))
     filepath = 'total_'+chosennumber + '.mp3'
+    print(filepath)
     #output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
     f = open(filepath+'.hint','w',encoding='utf-8')
     f.write(text)
