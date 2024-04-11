@@ -219,7 +219,7 @@ def create_dialogue():
     dialogue = openrouter.do_open_opus_questions("Create a dialogue in spoken Cantonese between two prisoners discussing prison. Reply only with chinese characters")
     text = dialogue   
     chosennumber = str(random.randint(0,100000))
-    filepath = 'total_'+chosennumber + '.mp3'
+    filepath = 'story_'+chosennumber + '.mp3'
     print(filepath)
     #output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
     f = open(filepath+'.hint','w',encoding='utf-8')
