@@ -216,7 +216,7 @@ def reverseSendRequest():
 
 import openrouter
 def create_dialogue():
-    dialogue = openrouter.do_opus_questions("Create a dialogue in spoken Cantonese between two prisoners discussing prison. Reply only with chinese characters")
+    dialogue = openrouter.do_open_opus_questions("Create a dialogue in spoken Cantonese between two prisoners discussing prison. Reply only with chinese characters")
     text = dialogue   
     chosennumber = str(random.randint(0,100000))
     filepath = 'total_'+chosennumber + '.mp3'
