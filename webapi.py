@@ -549,7 +549,11 @@ def get_failed_examples_duplicates(nr,all):
     
     #testing
     if all == False:
-        result = database.get_failed_outputs(nr)
+        if random.randint(0,1) == 1:        
+            result = database.get_failed_outputs(nr)
+        else:
+            result = database.get_failed_outputs_lately(nr)
+
     else:
         result = database.get_outputs(nr)
     return jsonify({'result':result})

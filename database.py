@@ -530,6 +530,52 @@ def get_failed_outputs(nr):
     return result
 
 
+def get_failed_outputs_highfail_prio(nr):
+    # def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    result = []
+    sql = "select chinesetokens,english from output_exercise where type = 2 and result = 1 order by rand() limit " + str(nr)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (chinesetokens,english) in myresult:
+        result.append({"english":english,"chinese": json.loads(chinesetokens) })
+    mycursor.close()
+    mydb.close()
+    return result
+
+def get_failed_outputs_highfail_timed(nr):
+    # def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    result = []
+    sql = "select chinesetokens,english from output_exercise where type = 2 and result = 1 order by rand() limit " + str(nr)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (chinesetokens,english) in myresult:
+        result.append({"english":english,"chinese": json.loads(chinesetokens) })
+    mycursor.close()
+    mydb.close()
+    return result
+
+
+def get_failed_outputs_lately(nr):
+    # def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    result = []
+    sql = "select distinct(chinesetokens),english from output_exercise where type = 2 and whenutcmilliseconds > (UNIX_TIMESTAMP(CURRENT_TIMESTAMP())-(24*60*60))*1000 order by rand() limit " + str(nr)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (chinesetokens,english) in myresult:
+        result.append({"english":english,"chinese": json.loads(chinesetokens) })
+    mycursor.close()
+    mydb.close()
+    return result
+
+
+
+
 def get_outputs(nr):
     # def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
     mydb = get_connection()
