@@ -176,9 +176,6 @@ def textOnlySendRequest():
             chinese = txt
             print(chinese+"...")
             print(chinese+"...")
-           
-
-
 
 def reverseSendRequest():
     url = "https://chinese.eriktamm.com/api/poeexamples"
@@ -217,10 +214,20 @@ def reverseSendRequest():
         print("Request failed with status code:", response.status_code)
 
 
-
+import openrouter
+def create_dialogue():
+    dialogue = openrouter.do_opus_questions("Create a dialogue in spoken Cantonese between two prisoners discussing prison. Reply only with chinese characters")
+    text = dialogue   
+    chosennumber = str(random.randint(0,100000))
+    filepath = 'total_'+chosennumber + '.mp3'
+    #output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
+    f = open(filepath+'.hint','w',encoding='utf-8')
+    f.write(text)
+    f.close()
 
 #makemp3("hi there","我沖涼")
 if __name__ == "__main__":
+    create_dialogue()
     #for i in range(50):
     #    reverseSendRequest()    
     for i in range(20):

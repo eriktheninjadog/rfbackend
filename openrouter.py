@@ -147,5 +147,5 @@ f.close()
 parserouterjson(json.loads(l))
 """
 if __name__ == "__main__":
-    #do_opus_questions()
-    print(do_open_opus_questions('what is the meaning of båt in swedish?'))
+    do_opus_questions()
+    #print(do_open_opus_questions('what is the meaning of båt in swedish?'))
