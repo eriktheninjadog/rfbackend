@@ -116,6 +116,29 @@ def parserouterjson(adict):
     result = newParsePoe(parsedexamples)
     add_examples_to_cache(result)
     None
+    
+    
+def do_open_opus_questions(question):
+    response = requests.post(
+    url="https://openrouter.ai/api/v1/chat/completions",
+    headers={
+        "Authorization": f"Bearer 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",
+        "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
+        "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
+    },
+    data=json.dumps({
+        "model": "anthropic/claude-3-opus", # Optional
+        "messages": [
+        {"role": "user", "content": question}
+        ]
+    })
+    )
+    responsejson = response.json()
+    choices = responsejson['choices']
+    message = choices[0]['message']
+    content = message['content']
+    return content
+
 
 """
 f = open('opusanswer.json','r',encoding ='utf-8')
@@ -123,5 +146,6 @@ l = f.read()
 f.close()
 parserouterjson(json.loads(l))
 """
-
-do_opus_questions()
+if __name__ == "__main__":
+    #do_opus_questions()
+    print(do_open_opus_questions('what is the meaning of båt in swedish?'))
