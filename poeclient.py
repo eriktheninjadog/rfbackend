@@ -1,10 +1,12 @@
 import socket
 import json
 import struct
+import openrouter
 
 
 #for testing purposes we will use assitant at all times
 def ask_ai(question,bot,clear):
+    return openrouter.do_open_opus_questions(question)
     if clear:
          send_message_to_server("127.0.0.1","robot",bot)
     msg = send_message_to_server("127.0.0.1","ask",question) 
