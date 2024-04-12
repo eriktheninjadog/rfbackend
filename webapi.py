@@ -1001,3 +1001,11 @@ def gettotaloutputtime():
     return jsonify({'result':total})
 
 
+
+import openrouter
+@app.route('/gooutrouter', methods=['POST'])
+def gooutrouter():
+    question = request.json['question']
+    result = openrouter.do_open_opus_questions(question)
+    return jsonify({'result':result})
+

@@ -228,12 +228,12 @@ def create_dialogue():
 
 #makemp3("hi there","我沖涼")
 if __name__ == "__main__":
-    create_dialogue()
+    #create_dialogue()
     #for i in range(50):
     #    reverseSendRequest()    
     
-    #for i in range(20):
-    #     sendRequest()
+    for i in range(20):
+         sendRequest()
          
     #for i in range(20):         
     #     textOnlySendRequest()
