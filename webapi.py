@@ -665,12 +665,13 @@ def get_examples_from_cache():
         
 import wordlists
 @app.route('/poeexamples',methods=['POST'])
-def poeexamples():    
+def poeexamples():
     global robot
     level = request.json['level']
     number = request.json['number']
     language = request.json['language']
     onlyFailed = request.json['onlyFailed']
+        
     if onlyFailed == True:
         if not 'all' in request.json:    
             return get_failed_examples_duplicates(number,False)
@@ -682,7 +683,11 @@ def poeexamples():
         if examples != None:
            return jsonify({'result':examples}) 
 
-    text = create_poe_example_question(level,number)                    
+    text = create_poe_example_question(level,number)
+    
+    if 'question' in request.json:
+        text = request.json['question']
+    
     bot = "Claude-3-Opus"
     if bot != robot:
         print("In the web api we are switching to Claude")
@@ -999,7 +1004,6 @@ def gettotalaudiotime():
 def gettotaloutputtime():
     total = database.get_total_output_time()
     return jsonify({'result':total})
-
 
 
 import openrouter

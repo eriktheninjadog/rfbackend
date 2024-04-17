@@ -215,20 +215,38 @@ def reverseSendRequest():
 
 
 import openrouter
+import wordlists
 def create_dialogue():
-    dialogue = openrouter.do_open_opus_questions("Create a dialogue in spoken Cantonese between two prisoners discussing prison. Reply only with chinese characters")
-    text = dialogue   
+    
+    p1 = random.choice( wordlists.roles)
+    p2 =random.choice(  wordlists.roles)
+    topic = random.choice( wordlists.topics)
+    
+    url = "https://chinese.eriktamm.com/api/gooutrouter"
+    payload ={
+        "question":"Create a dialogue in spoken Cantonese between " + p1 + " and " +p2  + " discussing "+ topic +". Reply only with traditional chinese characters"
+    }
+    # Send the JSON request
+    totalstr = ''
+    response = requests.post(url, json=payload)
+    response = response.json()
+    response = response['result'] 
+    text = "<speak>" + response + "</speak>"
+    text = text.replace("\n","<break time=\\\"1s\\\"/>")
     chosennumber = str(random.randint(0,100000))
-    filepath = 'story_'+chosennumber + '.mp3'
+    filepath = mp3cache + '/' + 'story_'+chosennumber + '.mp3'
     print(filepath)
-    #output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
+    output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
+    print(output)
+    subprocess.run(output,shell=True,capture_output=True,text=True)
     f = open(filepath+'.hint','w',encoding='utf-8')
-    f.write(text)
+    f.write(response)
     f.close()
 
 #makemp3("hi there","我沖涼")
 if __name__ == "__main__":
-    #create_dialogue()
+    #for i in range(20):
+    #    create_dialogue()
     #for i in range(50):
     #    reverseSendRequest()    
     

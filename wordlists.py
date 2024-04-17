@@ -984,6 +984,9 @@ sentence_patterns = [
 
 ]
 
+roles = ['a policeman','a judge','a criminal','a teenage girl','a mother','a soldier','a young child','a monk','a waitress','a politician','a teacher','a plumber','an investor','a female actress','a prostitute','a clerk']
+topics = ['politics','crime','justice','travelling','shopping','latest technology','food','dog training','movies','bodybuilding','meditation','weather','foreigners','pets','Japan','chinese history']
+
 def pick_sample_sentence__pattern():
     pattern = random.choice(sentence_patterns)
     return pattern
