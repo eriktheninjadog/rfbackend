@@ -962,7 +962,7 @@ def get_audio2():
 
 
 @app.route('/audioexample3', methods=['GET','POST'])
-def get_audio2():
+def get_audio3():
     # Path to the MP3 file
     mp3_file = pick_random_artice_file('/var/www/html/mp3','mp3')
     # Return the MP3 file
