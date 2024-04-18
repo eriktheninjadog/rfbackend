@@ -927,6 +927,13 @@ def pick_random_file(directory, extension):
     return random_file
 
 
+def pick_random_artice_file(directory, extension):
+    files = [file for file in os.listdir(directory) if (file.endswith(extension) and file.startswith('article'))]
+    if not files:
+        return None  # No files with the specified extension found
+    random_file = random.choice(files)
+    return random_file
+
 
 
 @app.route('/audioexample', methods=['GET'])
@@ -952,6 +959,24 @@ def get_audio2():
     else:
         chiret = ['no','chinese','to','\n','be','found','!']    
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
+
+
+@app.route('/audioexample3', methods=['GET','POST'])
+def get_audio2():
+    # Path to the MP3 file
+    mp3_file = pick_random_artice_file('/var/www/html/mp3','mp3')
+    # Return the MP3 file
+    #return jsonify({'result':None})
+    hint_file = mp3_file + '.hint'
+    if os.path.exists('/var/www/html/mp3/'+hint_file):
+        f = open('/var/www/html/mp3/'+hint_file,'r',encoding='utf-8')
+        chitext = f.read()
+        f.close()
+        chiret = textprocessing.split_text(chitext)
+    else:
+        chiret = ['no','chinese','to','\n','be','found','!']    
+    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
+
 
 
 def read_audio_time():
