@@ -928,7 +928,7 @@ def pick_random_file(directory, extension):
 
 
 def pick_random_artice_file(directory, extension):
-    files = [file for file in os.listdir(directory) if (file.endswith(extension) and file.startswith('article'))]
+    files = [file for file in os.listdir(directory) if (file.endswith(extension) and file.startswith('spokenarticle_'))]
     if not files:
         return None  # No files with the specified extension found
     random_file = random.choice(files)
