@@ -134,6 +134,7 @@ def do_open_opus_questions(question):
     })
     )
     responsejson = response.json()
+    print(responsejson)
     choices = responsejson['choices']
     message = choices[0]['message']
     content = message['content']
