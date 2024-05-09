@@ -150,12 +150,16 @@ def sendRequest():
         f.write(totalstr)
         f.close()
         chosennumber = str(random.randint(0,100000))
-        totalstr = 'ffmpeg -f concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + mp3cache + '/'   + 'total' + chosennumber + '.mp3'
-        f = open(mp3cache + '/'   + 'total' + chosennumber + '.mp3.hint','w',encoding='utf-8')
+        filebasepath = mp3cache + '/'   + 'total' + chosennumber 
+        totalstr = 'ffmpeg -f concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + filebasepath + '.mp3'
+        f = open(filebasepath + '.mp3.hint','w',encoding='utf-8')
         f.write(hinttext)
         f.close()
         print(totalstr)
         subprocess.run(totalstr,shell=True,capture_output=True,text=True)        
+        scpcommand = "scp " + filebasepath + "* chinese.eriktamm.com:/var/www/html/mp3"   
+        subprocess.run(scpcommand,shell=True,capture_output=True,text=True)        
+
     else:
         # Request failed
         print("Request failed with status code:", response.status_code)
@@ -245,7 +249,7 @@ def create_dialogue():
     output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
     print(output)
     subprocess.run(output,shell=True,capture_output=True,text=True)
-    f = open(filepath+'.hint','w',encoding='utf-8')
+    f = open(filepath +'.hint','w',encoding='utf-8')
     f.write(response)
     f.close()
     
@@ -261,7 +265,7 @@ def make_this_text_into_traditional_chinese(text):
         response = requests.post(url, json=payload)
         response = response.json()
         response = response['result']                
-        return text
+        return response
     else:
         return text
 
@@ -311,9 +315,6 @@ def make_voice_article(text):
     output = "scp " + filepath + "* chinese.eriktamm.com:/var/www/html/mp3"   
     subprocess.run(output,shell=True,capture_output=True,text=True)
     
-    
-    
-    
 def read_articles():
     f = open('articleurls.txt','r',encoding='utf-8')
     urls = f.readlines()
@@ -328,11 +329,11 @@ if __name__ == "__main__":
     #for i in range(50):
     #    reverseSendRequest()   
     
-    read_articles()
+    #read_articles()
     
     #grab_and_simplify_rthk("https://news.rthk.hk/rthk/ch/component/k2/1750261-20240424.htm") 
-    #for i in range(50):
-    #     sendRequest()
+    for i in range(50):
+         sendRequest()
          
     #for i in range(20):         
     #     textOnlySendRequest()
