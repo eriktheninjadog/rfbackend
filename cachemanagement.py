@@ -1,13 +1,27 @@
 #cachemanatmpgement.py
 import json
 import sys
-
+import random
 
 import textprocessing
 
 def save_cache_to_file(cache):
+    bigchunk = []
+    for c in cache:
+        for l in c:
+            bigchunk.append(l)
+    balobacache = []
+    tmpholder = []
+    random.shuffle(bigchunk)
+    for b in bigchunk:
+        tmpholder.append(b)
+        if len(tmpholder) == 10:
+            balobacache.append(tmpholder)
+            tmpholder = []
+    if len(tmpholder) > 0:
+        balobacache.append(tmpholder)        
     f = open('/var/www/html/scene/examplescache.txt',"w",encoding='utf-8')
-    f.write( json.dumps(cache))
+    f.write( json.dumps(balobacache))
     f.close()
 
 def read_cache_from_file():

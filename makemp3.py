@@ -110,7 +110,7 @@ def makemp3(english,chinese):
 
 payload = {
     "onlyFailed": True,
-    "number": 20,
+    "number": 40,
     "level": "A1",
     "language": "hi",
     "store": False,
@@ -144,8 +144,26 @@ def sendRequest():
             makemp3(english,chinese)
             chifilepath = mp3cache + '/' + createmp3name(chinese,False)
             engfilepath = mp3cache + '/' + createmp3name(english,False) 
+            #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
+            totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-            totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
+        for i in range(0,3):
+            random.shuffle(result)
+            for i in result:
+                english = i['english']
+                tok = i['chinese']
+                txt = ''
+                for t in tok:
+                    txt = txt + str(t)
+                chinese = txt
+                hinttext =  hinttext + chinese + "\n"
+                makemp3(english,chinese)
+                chifilepath = mp3cache + '/' + createmp3name(chinese,False)
+                #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
+                totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
+        
+        
+        
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
@@ -316,7 +334,7 @@ def make_voice_article(text):
     subprocess.run(output,shell=True,capture_output=True,text=True)
     
 def read_articles():
-    f = open('articleurls.txt','r',encoding='utf-8')
+    f = open('articleurls.txt','r',encoding='utf-8')        
     urls = f.readlines()
     f.close()
     for u in urls:
