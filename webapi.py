@@ -1043,9 +1043,10 @@ def gooutrouter():
 
 @app.route('/makemp3fromtext', methods=['POST'])
 def makemp3fromtext():
+    print("makemp3fromtext called")
     try:
         mp3cache = '/var/www/html/mp3'
-        incomingtxt = request.json['question']
+        incomingtxt = request.json['text']
         text = "<speak>" + incomingtxt + "</speak>"
         text = text.replace("\n","<break time=\\\"1s\\\"/>")
         chosennumber = str(random.randint(0,100000))
