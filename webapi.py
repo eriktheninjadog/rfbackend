@@ -1062,7 +1062,13 @@ def makemp3fromtext():
         print(filepath)
         output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
         print(output)
-        subprocess.run(output,shell=True,capture_output=True,text=True)
+        
+        
+        f = open(mp3cache+'/makemp3.sh','w',encoding='utf-8')
+        f.write(output)
+        f.close()    
+
+        #subprocess.run(output,shell=True,capture_output=True,text=True)
     except Exception as e:        
         return jsonify({'result':str(e)})    
     return jsonify({'result':'done'})
