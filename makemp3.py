@@ -145,9 +145,9 @@ def sendRequest():
             chifilepath = mp3cache + '/' + createmp3name(chinese,False)
             engfilepath = mp3cache + '/' + createmp3name(english,False) 
             #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-            totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
+            #totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-        for i in range(0,3):
+        for i in range(0,2):
             random.shuffle(result)
             for i in result:
                 english = i['english']
@@ -162,8 +162,7 @@ def sendRequest():
                 #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
                 totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
         
-        
-        
+                
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
@@ -234,7 +233,7 @@ def reverseSendRequest():
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
-        totalstr = 'ffmpeg -f concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + mp3cache + '/'   + 'reverse_' + str(random.randint(0,100000)) + '.mp3'
+        totalstr = 'ffmpeg -f   concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + mp3cache + '/'   + 'reverse_' + str(random.randint(0,100000)) + '.mp3'
         print(totalstr)
         subprocess.run(totalstr,shell=True,capture_output=True,text=True)        
     else:
@@ -339,6 +338,8 @@ def read_articles():
     f.close()
     for u in urls:
         grab_and_simplify_rthk(u)
+
+
         
 #makemp3("hi there","我沖涼")
 if __name__ == "__main__":
@@ -347,10 +348,10 @@ if __name__ == "__main__":
     #for i in range(50):
     #    reverseSendRequest()   
     
-    #read_articles()
+        #read_articles()
     
     #grab_and_simplify_rthk("https://news.rthk.hk/rthk/ch/component/k2/1750261-20240424.htm") 
-    for i in range(50):
+    for i in range(10):
          sendRequest()
          
     #for i in range(20):         

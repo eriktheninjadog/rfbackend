@@ -1041,3 +1041,22 @@ def gooutrouter():
     result = openrouter.do_open_opus_questions(question)
     return jsonify({'result':result})
 
+@app.route('/makemp3fromtext', methods=['POST'])
+def makemp3fromtext():
+    try:
+        mp3cache = '/var/www/html/mp3'
+        incomingtxt = request.json['question']
+        text = "<speak>" + incomingtxt + "</speak>"
+        text = text.replace("\n","<break time=\\\"1s\\\"/>")
+        chosennumber = str(random.randint(0,100000))
+        filepath = mp3cache + '/' + 'spokenarticle_'+chosennumber + '.mp3'
+        print(filepath)
+        output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
+        print(output)
+        subprocess.run(output,shell=True,capture_output=True,text=True)
+        f = open(filepath+'.hint','w',encoding='utf-8')
+        f.write(incomingtxt)
+        f.close()    
+    except Exception as e:        
+        return jsonify({'result':str(e)})    
+    return jsonify({'result':'done'})
