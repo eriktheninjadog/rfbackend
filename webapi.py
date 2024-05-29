@@ -1050,7 +1050,7 @@ def makemp3fromtext():
         
         
         # now lets simplify it
-        incomingtxt = openrouter.do_opus_questions("Simplify this to commonly spoken Cantonese that a young child can understand:" + incomingtxt)
+        incomingtxt = openrouter.do_open_opus_questions("Simplify this to commonly spoken Cantonese that a young child can understand:" + incomingtxt)
         
         chosennumber = str(random.randint(0,100000))
         filepath = mp3cache + '/' + 'spokenarticle_'+chosennumber + '.mp3'
