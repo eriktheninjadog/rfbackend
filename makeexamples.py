@@ -22,7 +22,7 @@ json_payload = json.dumps(payload)
 headers = {'Content-Type': 'application/json'}
 
 # Send the POST request with the JSON payload
-for i in range(10):
+for i in range(20):
     response = requests.post(url, data=json_payload, headers=headers)
 
     # Check the response status code
