@@ -10,7 +10,7 @@ url = 'https://chinese.eriktamm.com/api/poeexamples'
 payload = {
     "onlyFailed":False,
     "number":20,
-    "level":"A1",
+    "level":"A2",
     "language":"hi",
     "store":True
 }
