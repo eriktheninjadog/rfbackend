@@ -517,9 +517,15 @@ def get_total_output_time():
     myresult = mycursor.fetchall()
     for (id) in myresult:
         total = id
+    sql = "select sum(milliseconds) as total from output_exercise where milliseconds < 180000  and type = 2 and whenutcmilliseconds > (unix_timestamp(TIMESTAMP(CAST(CURDATE() AS CHAR), '00:00:00'))*1000)"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (id) in myresult:
+        totalshort = id
+
     mycursor.close()
     mydb.close()
-    return total
+    return [total,totalshort]
 
 
 def get_failed_outputs(nr):
