@@ -496,9 +496,16 @@ def get_total_audio_time():
     myresult = mycursor.fetchall()
     for (id) in myresult:
         total = id
+        
+    sql = "select sum(milliseconds) as total from output_exercise where mp3name like 'mp3' and whenutcmilliseconds > ((unix_timestamp() - (24*3600))*1000)"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (id) in myresult:
+        totalshort = id
+    
     mycursor.close()
     mydb.close()
-    return total
+    return [total,totalshort]
 
 
 def get_total_output_time():
