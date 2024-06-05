@@ -957,8 +957,12 @@ def get_audio2():
     if os.path.exists('/var/www/html/mp3/'+hint_file):
         f = open('/var/www/html/mp3/'+hint_file,'r',encoding='utf-8')
         chitext = f.read()
-        f.close()
+        f.close()        
         chiret = json.loads(chitext)
+        chiba = []
+        for c in chiret:
+            chiba.append(textprocessing.split_text(c))
+        chiret = chiba
     else:
         chiret = ['no','chinese','to','\n','be','found','!',hint_file]    
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
