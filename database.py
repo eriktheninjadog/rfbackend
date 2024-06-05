@@ -479,7 +479,7 @@ def escape_sql_string(string):
 def add_listening_sentence(sentence,tokens,result):
     mydb = get_connection()
     mycursor = mydb.cursor()
-    sql = "insert into listen_sentence(sentence,tokens,result) values ('"+escape_sql_string(sentence)+"','"+escape_sql_string(tokens)+"',"+str(result)+")"
+    sql = "insert into listen_sentence(listen_at,sentence,tokens,result) values (UTC_TIMESTAMP(),'"+escape_sql_string(sentence)+"','"+escape_sql_string(tokens)+"',"+str(result)+")"
     mycursor.execute(sql)
     mydb.commit()
     mycursor.close()
