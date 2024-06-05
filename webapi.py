@@ -970,12 +970,12 @@ def get_audio3():
     mp3_file = pick_random_artice_file('/var/www/html/mp3','mp3')
     # Return the MP3 file
     #return jsonify({'result':None})
-    hint_file = mp3_file + '.hint'
+    hint_file = mp3_file + '.hint.json'
     if os.path.exists('/var/www/html/mp3/'+hint_file):
         f = open('/var/www/html/mp3/'+hint_file,'r',encoding='utf-8')
         chitext = f.read()
         f.close()
-        chiret = textprocessing.split_text(chitext)
+        chiret = json.loads(chitext)
     else:
         chiret = ['no','chinese','to','\n','be','found','!']    
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})

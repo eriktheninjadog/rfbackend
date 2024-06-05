@@ -133,6 +133,7 @@ def sendRequest():
         print(response_data)
         result = response_data['result']
         hinttext = ''
+        hints=[]
         for i in result:
             english = i['english']
             tok = i['chinese']
@@ -140,6 +141,8 @@ def sendRequest():
             for t in tok:
                 txt = txt + str(t)
             chinese = txt
+            if chinese not in hints:
+                hints.append(chinese)
             hinttext =  hinttext + chinese + "\n"
             makemp3(english,chinese)
             chifilepath = mp3cache + '/' + createmp3name(chinese,False)
@@ -147,30 +150,16 @@ def sendRequest():
             #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             #totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-        for i in range(0,2):
-            random.shuffle(result)
-            for i in result:
-                english = i['english']
-                tok = i['chinese']
-                txt = ''
-                for t in tok:
-                    txt = txt + str(t)
-                chinese = txt
-                hinttext =  hinttext + chinese + "\n"
-                makemp3(english,chinese)
-                chifilepath = mp3cache + '/' + createmp3name(chinese,False)
-                #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-                totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-        
-                
+                            
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
         chosennumber = str(random.randint(0,100000))
         filebasepath = mp3cache + '/'   + 'total' + chosennumber 
         totalstr = 'ffmpeg -f concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + filebasepath + '.mp3'
-        f = open(filebasepath + '.mp3.hint','w',encoding='utf-8')
-        f.write(hinttext)
+        
+        f = open(filebasepath + '.mp3.hint.json','w',encoding='utf-8')
+        f.write(json.dumps(hints))
         f.close()
         print(totalstr)
         subprocess.run(totalstr,shell=True,capture_output=True,text=True)        
