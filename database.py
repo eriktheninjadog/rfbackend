@@ -476,6 +476,15 @@ def escape_sql_string(string):
     # Wrap the string with single quotes
     return string
     
+def add_listening_sentence(sentence,tokens,result):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    sql = "insert into listen_sentence(sentence,tokens,result) values ('"+escape_sql_string(sentence)+"','"+escape_sql_string(tokens)+"',"+str(result)+")"
+    mycursor.execute(sql)
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
+
 
 def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
     mydb = get_connection()

@@ -1026,6 +1026,16 @@ def addoutputexercise():
     database.add_output_exercise(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds)
     return jsonify({'result':'ok'})
 
+@app.route('/addlisteningexercise', methods=['POST'])
+def addlisteningexercise():
+    sentence               = request.json['sentence']
+    chinesetokens         = request.json['tokens']
+    if len(chinesetokens) < 2:
+        chinesetokens = textprocessing.split_text(chinesetokens[0])
+    result = request.json['result']
+    database.add_output_exercise(sentence,chinesetokens,result)
+    return jsonify({'result':'ok'})
+
 
 @app.route('/gettotalaudiotime', methods=['POST'])
 def gettotalaudiotime():
