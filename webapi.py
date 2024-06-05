@@ -1033,7 +1033,7 @@ def addlisteningexercise():
     if len(chinesetokens) < 2:
         chinesetokens = textprocessing.split_text(chinesetokens[0])
     result = request.json['result']
-    database.add_output_exercise(sentence,chinesetokens,result)
+    database.add_listening_sentence(sentence,chinesetokens,result)
     return jsonify({'result':'ok'})
 
 
