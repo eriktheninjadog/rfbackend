@@ -40,8 +40,12 @@ def add_examples_to_cache(examples):
     cache = read_cache_from_file()
     cache.append(examples)
     save_cache_to_file(cache)
-
-
+    
+def add_example_to_cache(example):
+    cache = read_cache_from_file()
+    cache.append([example])
+    save_cache_to_file(cache)
+    
 def import_examples_file(filename):
     f = open(filename,'r',encoding='utf-8')
     lines = json.loads(f.read())

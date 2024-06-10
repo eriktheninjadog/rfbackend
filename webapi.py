@@ -907,7 +907,6 @@ def poebot1():
         return jsonify({'result':None})
     
 
-
 from flask import send_file
 
 
@@ -936,8 +935,6 @@ def pick_random_artice_file(directory, extension):
         return None  # No files with the specified extension found
     random_file = random.choice(files)
     return random_file
-
-
 
 @app.route('/audioexample', methods=['GET'])
 def get_audio():
@@ -984,8 +981,6 @@ def get_audio3():
         chiret = ['no','chinese','to','\n','be','found','!']    
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
 
-
-
 def read_audio_time():
     try:
         f = open('/var/www/html/scene/audiotime.txt',"r",encoding='utf-8')
@@ -1028,14 +1023,13 @@ def addoutputexercise():
 
 @app.route('/addlisteningexercise', methods=['POST'])
 def addlisteningexercise():
-    sentence               = request.json['sentence']
+    sentence               = request.jsincomingtxton['sentence']
     chinesetokens         = request.json['tokens']
     if len(chinesetokens) < 2:
         chinesetokens = textprocessing.split_text(chinesetokens[0])
     result = request.json['result']
     database.add_listening_sentence(sentence,chinesetokens,result)
     return jsonify({'result':'ok'})
-
 
 @app.route('/gettotalaudiotime', methods=['POST'])
 def gettotalaudiotime():
@@ -1046,6 +1040,13 @@ def gettotalaudiotime():
 def gettotaloutputtime():
     total = database.get_total_output_time()
     return jsonify({'result':total})
+
+
+@app.route('/add_example_to_cache', methods=['POST'])
+def add_example_to_cache():
+    example = request.json['example']
+    cachemanagement.add_example_to_cache(example)
+    return jsonify({'result':'ok'})
 
 
 import openrouter
@@ -1061,27 +1062,26 @@ def makemp3fromtext():
     try:
         mp3cache = '/var/www/html/mp3'
         incomingtxt = request.json['text']
-        
-        
+                
         # now lets simplify it
         incomingtxt = openrouter.do_open_opus_questions("Simplify this to commonly spoken Cantonese that a young child can understand:" + incomingtxt)
         
         chosennumber = str(random.randint(0,100000))
         filepath = mp3cache + '/' + 'spokenarticle_'+chosennumber + '.mp3'
-        
-        
+        incoming = []
+        for i in incomingtxt.split('\n'):
+            incoming.append(i)        
         f = open(filepath+'.hint','w',encoding='utf-8')
-        f.write(incomingtxt)
-        f.close()    
-
+        f.write(json.dumps(incoming))
+        f.close()
+        
         #
         text = "<speak>" + incomingtxt + "</speak>"
         text = text.replace("\n","<break time=\\\"1s\\\"/>")
         print(filepath)
         output = 'aws polly synthesize-speech --output-format mp3 --voice-id "Hiujin" --engine neural --text-type ssml --text "' + text + '" ' + filepath + ' > out'
         print(output)
-        
-        
+                
         f = open(mp3cache+'/makemp3.sh','w',encoding='utf-8')
         f.write(output)
         f.close()    
