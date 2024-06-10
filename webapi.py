@@ -1049,6 +1049,13 @@ def add_example_to_cache():
     return jsonify({'result':'ok'})
 
 
+@app.route('/add_examples_to_cache', methods=['POST'])
+def add_examples_to_cache():
+    examples = request.json['examples']
+    cachemanagement.add_examples_to_cache(examples)
+    return jsonify({'result':'ok'})
+
+
 import openrouter
 @app.route('/gooutrouter', methods=['POST'])
 def gooutrouter():
