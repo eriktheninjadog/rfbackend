@@ -4,7 +4,7 @@ import json
 import random
 import wordlists
 import textprocessing
-
+import os
 
 def pick_random_sentence_from_cache():
     repos = read_cache_from_file()
@@ -23,10 +23,7 @@ def pick_random_sentences_from_cache(nr):
     return ret
 
 def read_bearer_key():    
-    bearerfile = '/home/erik/openrouterkey.txt'
-    f = open(bearerfile,'r')
-    bearer = f.read()
-    f.close()
+    bearer = os.getenv('OPENROUTER')
     return bearer
 
 def save_cache_to_file(cache):
