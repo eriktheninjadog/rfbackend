@@ -22,9 +22,11 @@ def pick_random_sentences_from_cache(nr):
             ret.append(sentence)
     return ret
 
-def read_bearer_key():    
-    bearer = os.getenv('OPENROUTER')
-    return bearer
+def read_bearer_key():
+    f = open('/var/www/html/api/rfbackend/routerkey.txt','r')
+    bearer = f.readline()
+    f.close()
+    return bearer.strip()
 
 def save_cache_to_file(cache):
     f = open('/var/www/html/scene/examplescache.txt',"w",encoding='utf-8')
