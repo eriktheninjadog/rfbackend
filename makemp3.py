@@ -329,9 +329,45 @@ def read_articles():
         grab_and_simplify_rthk(u)
 
 
+import textprocessing
+
+def make_examples_from_textfile(filename):
+    f = open(filename,'r',encoding='UTF-8')
+    lines = f.readlines()
+    f.close()
+    examples = []
+    for l in lines:
+        # first we translate this line
+        url = "https://chinese.eriktamm.com/api/gooutrouter"
+        payload ={
+            "question":"Explain this text in English:"+l
+            }
+        response = requests.post(url, json=payload)
+        response = response.json()
+        response = response['result']
+        english = response
+        chinese = textprocessing.split_text(l)
+        examples.append({'english':english,'chinese':chinese})
+    payload = {
+        'examples':examples
+    }
+    url = 'https://chinese.eriktamm.com/api/add_examples_to_cache'
+
+    # Define the JSON payload for the request
+
+    # Convert the payload to JSON format
+    json_payload = json.dumps(payload)
+
+    # Set the headers to indicate that the request is sending JSON data
+    headers = {'Content-Type': 'application/json'}
+
+    # Send the POST request with the JSON payload
+    response = requests.post(url, data=json_payload, headers=headers)
+    print(str(response))
         
 #makemp3("hi there","我沖涼")
 if __name__ == "__main__":
+    #make_examples_from_textfile("/home/erik/spiderman.txt")
     #for i in range(50):
     #    create_dialogue()
     #for i in range(50):
@@ -341,7 +377,7 @@ if __name__ == "__main__":
     
     #grab_and_simplify_rthk("https://news.rthk.hk/rthk/ch/component/k2/1750261-20240424.htm") 
     for i in range(20):
-         sendRequest()
+             sendRequest()
          
     #for i in range(20):         
     #     textOnlySendRequest()

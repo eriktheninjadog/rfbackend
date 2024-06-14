@@ -22,7 +22,12 @@ def pick_random_sentences_from_cache(nr):
             ret.append(sentence)
     return ret
 
-
+def read_bearer_key():    
+    bearerfile = '/home/erik/openrouterkey.txt'
+    f = open(bearerfile,'r')
+    bearer = f.read()
+    f.close()
+    return bearer
 
 def save_cache_to_file(cache):
     f = open('/var/www/html/scene/examplescache.txt',"w",encoding='utf-8')
@@ -80,7 +85,7 @@ def do_opus_questions():
     response = requests.post(
     url="https://openrouter.ai/api/v1/chat/completions",
     headers={
-        "Authorization": f"Bearer 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",
+        "Authorization": read_bearer_key(),
         "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
         "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
     },
@@ -122,7 +127,7 @@ def do_open_opus_questions(question):
     response = requests.post(
     url="https://openrouter.ai/api/v1/chat/completions",
     headers={
-        "Authorization": f"Bearer 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",
+        "Authorization": read_bearer_key(),
         "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
         "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
     },
@@ -147,6 +152,9 @@ l = f.read()
 f.close()
 parserouterjson(json.loads(l))
 """
+
+
+        
 if __name__ == "__main__":
     do_opus_questions()
     #print(do_open_opus_questions('what is the meaning of båt in swedish?'))
