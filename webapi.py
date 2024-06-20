@@ -981,6 +981,15 @@ def get_audio3():
         chiret = ['no','chinese','to','\n','be','found','!']    
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
 
+@app.route('/remove_audio', methods=['POST'])
+def remove_audio():
+    # Path to the MP3 file
+    mp3_file = request.json['audiofile']
+    # Return the MP3 file
+    #return jsonify({'result':None})
+    os.unlink('/var/www/html/mp3/'+mp3_file)
+    return jsonify({'result':'ok'})
+
 def read_audio_time():
     try:
         f = open('/var/www/html/scene/audiotime.txt',"r",encoding='utf-8')
