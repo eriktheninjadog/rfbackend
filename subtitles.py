@@ -125,13 +125,25 @@ def cutout(mp4file,vttfile,start_time,duration):
     subprocess.run(scpcommand,shell=True,capture_output=True,text=True)    
     None
 
-if __name__ == "__main__":
-    print("hi")    
-    for i in range(0,90,2):
+
+def process_movie(name):
+    for i in range(0,120,2):
         x = i * 60
-        print("density " +str(i) + " " + str( characters_per_minute('/home/erik/Downloads/beautyandthebeast.vtt',x,120)))
-    #cutout('/home/erik/Downloads/wildwest.mp4','/home/erik/Downloads/wildwest.vtt','00:18:00',120)
-        if characters_per_minute('/home/erik/Downloads/beautyandthebeast.vtt',x,120) > 180:
+        print("density " +str(i) + " " + str( characters_per_minute('/home/erik/Downloads/'+ name+'.vtt',x,120)))
+        if characters_per_minute('/home/erik/Downloads/'+name+'.vtt',x,120) > 80:
             pop = "" + str(int(i/60))+":"+str(int(i%60))+":00"
-            cutout('/home/erik/Downloads/beautyandthebeast.mp4','/home/erik/Downloads/beautyandthebeast.vtt',pop,120)
+            cutout('/home/erik/Downloads/'+name +'.mp4','/home/erik/Downloads/'+name+'.vtt',pop,120)   
+        
+if __name__ == "__main__":
+    """
+    process_movie('wildwest')
+    process_movie('beautyandthebeast')
+    process_movie('dino')
+    process_movie('fistoflegend')
+    
+    process_movie('teacherpet1')
+    process_movie('rocketeer')
+    process_movie('druglords')
+    """
+    process_movie('harrypotter1')
     

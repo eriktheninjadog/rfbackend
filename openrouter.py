@@ -131,7 +131,8 @@ def do_open_opus_questions(question):
         "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
     },
     data=json.dumps({
-        "model": "anthropic/claude-3-opus", # Optional
+        "model": "anthropic/claude-3.5-sonnet",
+        #"model": "anthropic/claude-3-opus", # Optional
         "messages": [
         {"role": "user", "content": question}
         ]
