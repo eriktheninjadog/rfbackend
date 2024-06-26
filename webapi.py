@@ -549,10 +549,10 @@ def get_failed_examples_duplicates(nr,all):
     
     #testing
     if all == False:
-        if random.randint(0,1) == 1:        
-            result = database.get_failed_outputs(nr)
-        else:
-            result = database.get_failed_outputs_lately(nr,random.randint(1,7))
+#        if random.randint(0,1) == 1:        
+#            result = database.get_failed_outputs(nr)
+#        else:
+        result = database.get_failed_outputs_lately(nr,random.randint(1,7))
 
     else:
         result = database.get_outputs(nr)

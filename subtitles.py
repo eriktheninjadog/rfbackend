@@ -114,6 +114,7 @@ def cutout(mp4file,vttfile,start_time,duration):
     ctx = parse_vtt(f.readlines())
     f.close()
     output_vtt = export_vtt(ctx,start_in_seconds,end_in_seconds)
+    output_vtt = textprocessing.make_sure_traditional(output_vtt)
     pop = textprocessing.split_text(output_vtt)
     f = open(filepath+'.hint.json','w',encoding='utf-8')
     f.write(json.dumps(pop))
@@ -137,13 +138,12 @@ def process_movie(name):
 if __name__ == "__main__":
     """
     process_movie('wildwest')
-    process_movie('beautyandthebeast')
     process_movie('dino')
     process_movie('fistoflegend')
-    
+    """    
+    process_movie('beautyandthebeast')
     process_movie('teacherpet1')
     process_movie('rocketeer')
     process_movie('druglords')
-    """
     process_movie('harrypotter1')
     
