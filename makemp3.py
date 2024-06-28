@@ -159,7 +159,7 @@ def sendRequest():
         totalstr = 'ffmpeg -f concat -safe 0 -i /home/erik/mp3cache/inputfiles.txt -c copy ' + filebasepath + '.mp3'
         
         f = open(filebasepath + '.mp3.hint.json','w',encoding='utf-8')
-        f.write(json.dumps(hints))
+        f.write(json.dumps(hinttext))
         f.close()
         print(totalstr)
         subprocess.run(totalstr,shell=True,capture_output=True,text=True)        

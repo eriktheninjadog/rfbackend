@@ -921,8 +921,8 @@ def get_random_file(directory):
     return os.path.join(directory, random_file)
 
 
-def pick_random_file(directory, extension):
-    files = [file for file in os.listdir(directory) if file.endswith(extension)]
+def pick_random_file(directory, contains, extension):
+    files = [file for file in os.listdir(directory) if file.endswith(extension) and file.find(contains)!=-1]
     if not files:
         return None  # No files with the specified extension found
     random_file = random.choice(files)
@@ -947,7 +947,7 @@ def get_audio():
 @app.route('/audioexample2', methods=['GET','POST'])
 def get_audio2():
     # Path to the MP3 file
-    mp3_file = pick_random_file('/var/www/html/mp3','mp3')
+    mp3_file = pick_random_file('/var/www/html/mp3','total','mp3')
     # Return the MP3 file
     #return jsonify({'result':None})
     hint_file = mp3_file + '.hint.json'
