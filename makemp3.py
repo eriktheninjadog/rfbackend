@@ -367,6 +367,10 @@ def make_examples_from_textfile(filename):
         
 #makemp3("hi there","我沖涼")
 if __name__ == "__main__":
+    nr = 20
+    if len(sys.argv) == 2:
+        nr = int(sys.argv[1])        
+        print("found " + str(nr))
     #make_examples_from_textfile("/home/erik/spiderman.txt")
     #for i in range(50):
     #    create_dialogue()
@@ -376,7 +380,7 @@ if __name__ == "__main__":
         #read_articles()
     
     #grab_and_simplify_rthk("https://news.rthk.hk/rthk/ch/component/k2/1750261-20240424.htm") 
-    for i in range(20):
+    for i in range(nr):
              sendRequest()
           
     #for i in range(20):         
