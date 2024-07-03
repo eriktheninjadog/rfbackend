@@ -1064,13 +1064,22 @@ def add_examples_to_cache():
     cachemanagement.add_examples_to_cache(examples)
     return jsonify({'result':'ok'})
 
-
 import openrouter
 @app.route('/gooutrouter', methods=['POST'])
 def gooutrouter():
     question = request.json['question']
     result = openrouter.do_open_opus_questions(question)
     return jsonify({'result':result})
+
+@app.route('/getspokenarticles',methods=['POST'])
+def getspokenarticles():
+    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3') and file.find('spoken')!=-1]
+    return jsonify({'result':files})
+    None
+    
+@app.route('/getspokenarticle',methods=['POST'])
+def getspokenarticle():
+    None
 
 @app.route('/makemp3fromtext', methods=['POST'])
 def makemp3fromtext():

@@ -366,7 +366,7 @@ def make_examples_from_textfile(filename):
     print(str(response))
         
 #makemp3("hi there","我沖涼")
-if __name__ == "__main__":
+if __name__ == "__main__":  
     nr = 20
     if len(sys.argv) == 2:
         nr = int(sys.argv[1])        
