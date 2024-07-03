@@ -1074,6 +1074,7 @@ def gooutrouter():
 @app.route('/getspokenarticles',methods=['POST'])
 def getspokenarticles():
     files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3') and file.find('spoken')!=-1]
+    files.sort()
     return jsonify({'result':files})
     None
     
