@@ -1079,8 +1079,21 @@ def getspokenarticles():
     None
     
 @app.route('/getspokenarticle',methods=['POST'])
-def getspokenarticle():
-    None
+def getspokenarticle():    
+    # Path to the MP3 file
+    mp3_file = request.json['mp3file']
+    # Return the MP3 file
+    #return jsonify({'result':None})
+    hint_file = mp3_file + '.hint.json'
+    if os.path.exists('/var/www/html/mp3/'+hint_file):
+        f = open('/var/www/html/mp3/'+hint_file,'r',encoding='utf-8')
+        chitext = f.read()
+        f.close()
+        chiret = json.loads(chitext)
+    else:
+        chiret = ['no','chinese','to','\n','be','found','!']    
+    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
+
 
 @app.route('/makemp3fromtext', methods=['POST'])
 def makemp3fromtext():
