@@ -123,9 +123,9 @@ def cutout(mp4file,vttfile,start_time,duration):
     start_in_seconds = time_since_start(start_time)
     end_in_seconds = start_in_seconds + duration
     chosennumber = str(start_time)+"_"+str(duration)     
-    filepath = mp3cache + '/' + 'spokenarticle#'+ get_filename_without_extension(vttfile) +"#"+ chosennumber + '.mp3'
-    filepath = filepath.replace(" ","#")
-    filepath = filepath.replace("_","#")    
+    filepath = mp3cache + '/' + 'spokenarticle'+ get_filename_without_extension(vttfile) +"."+ chosennumber + '.mp3'
+    filepath = filepath.replace(" ",".")
+    filepath = filepath.replace("_",".")    
     export_audio(mp4file,filepath,start_in_seconds,end_in_seconds)
 
     f = open(vttfile,'r',encoding='utf-8')
