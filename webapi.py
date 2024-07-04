@@ -1078,12 +1078,28 @@ def getspokenarticles():
     return jsonify({'result':files})
     
     
+def get_next_spoken_article(mp3_file):
+    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3') and file.find('spoken')!=-1]    
+    files = sorted(files, key=lambda f: os.path.getctime(os.path.join('/var/www/html/mp3', f)))
+    nrfiles = len(files)
+    idx = -1
+    for i in range(0,nrfiles):
+        if files[i].find(mp3_file) != -1:
+            idx = i
+    if idx != -1:
+        return files[idx+1]
+    else:
+        return mp3_file
+    
 @app.route('/getspokenarticle',methods=['POST'])
 def getspokenarticle():    
     # Path to the MP3 file
     mp3_file = request.json['mp3file']
     # Return the MP3 file
     #return jsonify({'result':None})
+    if request.json['next'] == True:
+        mp3_file = get_next_spoken_article(mp3_file)
+                
     hint_file = mp3_file + '.hint.json'
     if os.path.exists('/var/www/html/mp3/'+hint_file):
         f = open('/var/www/html/mp3/'+hint_file,'r',encoding='utf-8')
