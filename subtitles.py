@@ -4,22 +4,33 @@ import textprocessing
 import os
 
 
+from pydub import AudioSegment
+
+
 mp3cache = '/home/erik/mp3cache'
 
 
 def is_line_time_segment(line):
-    if (line.find(',end') != -1):
+    if (line.find('-->') != -1):
         return True
     else:
         return False
 
 def time_since_start(atime):
     popit = atime.split(':')
-    hour = float(popit[0])
-    minute = float(popit[1])
-    second = float(popit[2])
-    totalsec = (hour*3600)+(minute*60) + second
-    return totalsec
+    if len(popit) == 3:
+        hour = float(popit[0])
+        minute = float(popit[1])
+        second = float(popit[2])
+        totalsec = (hour*3600)+(minute*60) + second
+        return totalsec
+    else:
+        hour = 0.0
+        minute = float(popit[0])
+        second = float(popit[1])
+        totalsec = (hour*3600)+(minute*60) + second
+        return totalsec
+        
 
 
 def parse_time(line):
@@ -70,6 +81,17 @@ def export_audio(mp4file,outputfile,start_time,end_time):
     trimmed_audio = audio.filter('atrim', start=start_time, end=end_time)
     # Write the trimmed audio to the output file
     ffmpeg.output(trimmed_audio, output_file).run()
+
+
+def cut_out_audio(mp3file,outputfile,start_time,end_time):
+    # Load the audiotfile
+    audio = AudioSegment.from_file(mp3file, format="mp3")
+    # Trim the audio stream to the desired start and end time
+    trimmed_audio = audio[start_time*1000:end_time*1000]
+    # Write the trimmed audio to the output file
+    trimmed_audio.export(outputfile, format="mp3")
+
+
 
 
 def export_vtt(ctx,start_time,end_time):
@@ -125,9 +147,12 @@ def cutout(mp4file,vttfile,start_time,duration):
     chosennumber = str(start_time)+"_"+str(duration)     
     filepath = mp3cache + '/' + 'spokenarticle'+ get_filename_without_extension(vttfile) +"."+ chosennumber + '.mp3'
     filepath = filepath.replace(" ",".")
-    filepath = filepath.replace("_",".")    
-    export_audio(mp4file,filepath,start_in_seconds,end_in_seconds)
-
+    filepath = filepath.replace("_",".")
+    if mp4file.find('mp3') != -1:
+        cut_out_audio(mp4file,filepath,start_in_seconds,end_in_seconds)
+    else:
+        export_audio(mp4file,filepath,start_in_seconds,end_in_seconds)
+        
     f = open(vttfile,'r',encoding='utf-8')
     ctx = parse_vtt(f.readlines())
     f.close()
@@ -143,7 +168,7 @@ def cutout(mp4file,vttfile,start_time,duration):
     subprocess.run(scpcommand,shell=True,capture_output=True,text=True)        
     scpcommand = "scp " + filepath + '.hint.json'" chinese.eriktamm.com:/var/www/html/mp3"   
     subprocess.run(scpcommand,shell=True,capture_output=True,text=True)    
-    None
+
 
 
 def process_movie(name):
@@ -153,6 +178,16 @@ def process_movie(name):
         if characters_per_minute('/home/erik/Downloads/'+name+'.vtt',x,120) > 80:
             pop = "" + str(int(i/60))+":"+str(int(i%60))+":00"
             cutout('/home/erik/Downloads/'+name +'.mp4','/home/erik/Downloads/'+name+'.vtt',pop,120)   
+
+
+def process_mp3(name):
+    for i in range(0,120,2):
+        x = i * 60
+        print("density " +str(i) + " " + str( characters_per_minute('/home/erik/Downloads/'+ name+'.vtt',x,120)))
+        if characters_per_minute('/home/erik/Downloads/'+name+'.vtt',x,120) > 80:
+            pop = "" + str(int(i/60))+":"+str(int(i%60))+":00"
+            cutout('/home/erik/Downloads/'+name +'.mp3','/home/erik/Downloads/'+name+'.vtt',pop,120)   
+
         
 if __name__ == "__main__":
     """
@@ -163,11 +198,15 @@ if __name__ == "__main__":
     process_movie('teacherpet1')
     process_movie('rocketeer')
     process_movie('druglords')
+    process_movie('incredibles1')
+    process_movie('monsterinc')
+    process_movie('stained2')
+    process_movie('stained3')
     process_movie('harrypotter1')
     process_movie('whitestorm')
-
-    process_movie('monsterinc')
+    process_mp3('breakingyourself_br')
+    process_mp3('tuesday')
 """
-    process_movie('stained1')
-
+    process_movie('election')
+   
 
