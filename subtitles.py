@@ -4,7 +4,10 @@ import textprocessing
 import os
 
 
+
+import speech_recognition as sr
 from pydub import AudioSegment
+
 
 
 mp3cache = '/home/erik/mp3cache'
@@ -67,6 +70,12 @@ def handle_vtt_line(ctx,line):
         return handle_waiting_for_talk(ctx,line)
     return ctx
 
+
+import openrouter
+
+
+def split_into_sentences(txt):
+    return openrouter.do_open_opus_questions("Sp;it this text into proper sentences:\n"  + txt)
 
 def export_audio(mp4file,outputfile,start_time,end_time):
     # Input MP4 file
@@ -158,6 +167,7 @@ def cutout(mp4file,vttfile,start_time,duration):
     f.close()
     output_vtt = export_vtt(ctx,start_in_seconds,end_in_seconds)
     output_vtt = textprocessing.make_sure_traditional(output_vtt)
+    output_vtt = split_into_sentences(output_vtt)
     output_vtt = get_filename_without_extension(vttfile) + "\n" + output_vtt
     pop = textprocessing.split_text(output_vtt)
     f = open(filepath+'.hint.json','w',encoding='utf-8')
@@ -188,7 +198,103 @@ def process_mp3(name):
             pop = "" + str(int(i/60))+":"+str(int(i%60))+":00"
             cutout('/home/erik/Downloads/'+name +'.mp3','/home/erik/Downloads/'+name+'.vtt',pop,120)   
 
+ 
+import webrtcvad
+import wave
+import contextlib
+from pydub import AudioSegment
+from pydub.utils import make_chunks       
+
+def convert_mp4_to_mp3(mp4_file, mp3_file):
+    # Output audio file
+    output_file = mp3_file
+    # Load the input video file
+    stream = ffmpeg.input(mp4_file)
+    # Extract the audio stream
+    audio = stream.audio
+    # Trim the audio stream to the desired start and end time
+    trimmed_audio = audio.filter('atrim')
+    # Write the trimmed audio to the output file
+    ffmpeg.output(trimmed_audio, output_file).run()
+
+
+def read_wave(path):
+    with contextlib.closing(wave.open(path, 'rb')) as wf:
+        num_channels = wf.getnchannels()
+        assert num_channels == 1
+        sample_width = wf.getsampwidth()
+        assert sample_width == 2
+        sample_rate = wf.getframerate()
+        assert sample_rate in (8000, 16000, 32000, 48000)
+        pcm_data = wf.readframes(wf.getnframes())
+        return pcm_data, sample_rate
+    
+
+def extract_segments(input_file, segments, output_file):
+    # Load the audio file
+    audio = AudioSegment.from_mp3(input_file)    
+    # Initialize an empty audio segment for the output
+    output_audio = AudioSegment.empty()    
+    # Extract and concatenate the specified segments
+    for start, end in segments:
+        # Convert time to milliseconds
+        start_ms = int(start * 1000.0)
+        end_ms = int(end * 1000.0)        
+        # Extract the segment and add it to the output audio
+        segment = audio[start_ms:end_ms]
+        output_audio += segment    
+    # Export the result to a new MP3 file
+    output_audio.export(output_file, format="mp3")
+    
+    print(f"Extracted segments saved to {output_file}")
+
+
+def detect_speech(audio_file, frame_duration_ms=30, padding_duration_ms=300, aggressiveness=2):
+    if audio_file.find('mp4') != -1:
+        convert_mp4_to_mp3(audio_file,audio_file+".mp3")
+        audio_file = audio_file+".mp3"
+    audio = AudioSegment.from_mp3(audio_file)
+    audio = audio.set_channels(1)  # Convert to mono
+    audio = audio.set_frame_rate(16000)  # Set sample rate to 16kHz
+
+    vad = webrtcvad.Vad(aggressiveness)
+
+    # Convert audio to raw PCM
+    raw_data = audio.raw_data
+    sample_rate = audio.frame_rate
+
+    # Create frames
+    frame_length = int(sample_rate * (frame_duration_ms / 1000.0))
+    frames = make_chunks(audio, frame_duration_ms)
+
+    speech_segments = []
+    is_speech = False
+    start_time = 0
+
+    for i, frame in enumerate(frames):
+        is_speech_frame = vad.is_speech(frame.raw_data, sample_rate)
+
+        if is_speech_frame and not is_speech:
+            is_speech = True
+            start_time = i * frame_duration_ms / 1000.0
+        elif not is_speech_frame and is_speech:
+            end_time = i * frame_duration_ms / 1000.0
+            if end_time - start_time >= padding_duration_ms / 1000.0:
+                speech_segments.append((start_time, end_time))
+            is_speech = False
+
+    # Handle the case where speech continues to the end of the file
+    if is_speech:
+        end_time = len(frames) * frame_duration_ms / 1000.0
+        if end_time - start_time >= padding_duration_ms / 1000.0:
+            speech_segments.append((start_time, end_time))
+            
+    extract_segments(audio_file,speech_segments,audio_file+".sp.mp3")
+    return speech_segments
+
+
         
+
 if __name__ == "__main__":
     """
     process_movie('wildwest')
@@ -205,8 +311,10 @@ if __name__ == "__main__":
     process_movie('harrypotter1')
     process_movie('whitestorm')
     process_mp3('breakingyourself_br')
-    process_mp3('tuesday')
-"""
-    process_movie('election')
+    detect_speech('/home/erik/Downloads/_bolt.mp4')
+    """
+
+    process_mp3('_bolt.mp4.mp3.sp')    
+    #process_movie('bolt')
    
 
