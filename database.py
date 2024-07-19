@@ -590,7 +590,7 @@ def get_failed_outputs_lately(nr,days):
     sql = "select distinct(chinesetokens),english,whenutcmilliseconds from output_exercise where type = 2 order by whenutcmilliseconds DESC limit 20"
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
-    for (chinesetokens,english) in myresult:
+    for (chinesetokens,english,timewhen) in myresult:
         result.append({"english":english,"chinese": json.loads(chinesetokens) })
     mycursor.close()
     mydb.close()
