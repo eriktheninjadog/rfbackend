@@ -587,7 +587,6 @@ def get_failed_outputs_lately(nr,days):
     mycursor = mydb.cursor()
     result = []    
     #sql = "select distinct(chinesetokens),english from output_exercise where type = 2 and whenutcmilliseconds > (UNIX_TIMESTAMP(CURRENT_TIMESTAMP())-("+str(24*days)+"*60*60))*1000 order by rand() limit " + str(nr)
-    sql = "select distinct(chinesetokens),english from output_exercise where type = 2 and whenutcmilliseconds > (UNIX_TIMESTAMP(CURRENT_TIMESTAMP())-("+str(24*days)+"*60*60))*1000 order by rand() limit " + str(nr)
     sql = "select distinct(chinesetokens),english,whenutcmilliseconds from output_exercise where type = 2 order by whenutcmilliseconds DESC limit 20"
     mycursor.execute(sql)
     myresult = mycursor.fetchall()

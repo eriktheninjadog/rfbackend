@@ -553,9 +553,8 @@ def get_failed_examples_duplicates(nr,all):
 #            result = database.get_failed_outputs(nr)
 #        else:
         result = database.get_failed_outputs_lately(nr,random.randint(1,2))
-
     else:
-        result = database.get_outputs(nr)
+        result = database.get_failed_outputs_lately(nr,random.randint(1,2))
     return jsonify({'result':result})
     """
     database = read_examples_test_database()

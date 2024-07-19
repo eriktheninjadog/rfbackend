@@ -26,8 +26,6 @@ def createmp3name(word,slow):
     ret = ret.replace("?","")    
     return ret
 
-
-
 def makeamazonmp3(text,voice,engine,slow):
     text = text.replace('\n','')
     filepath = mp3cache + '/' + createmp3name(text,slow)
