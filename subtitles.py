@@ -174,6 +174,20 @@ def cutout(mp4file,vttfile,start_time,duration):
     f.write(json.dumps(pop))
     f.close()
     
+    # a raw file
+    f = open('time.txt','w',encoding='utf-8')
+    f.write(output_vtt)
+    f.close()
+    
+    
+    output = "aws polly synthesize-speech --output-format mp3 --voice-id \"Hiujin\" --engine neural --text \"" + output_vtt + "\" " + filepath + ".simple.mp3"
+    result = subprocess.run(output,shell=True,capture_output=True,text=True)
+    print(result)
+    f = open(filepath+'.simple.mp3.hint.json','w',encoding='utf-8')
+    f.write(json.dumps(pop))
+    f.close()
+
+   
     scpcommand = "scp " + filepath + "* chinese.eriktamm.com:/var/www/html/mp3"
     subprocess.run(scpcommand,shell=True,capture_output=True,text=True)        
     scpcommand = "scp " + filepath + '.hint.json'" chinese.eriktamm.com:/var/www/html/mp3"   
@@ -305,16 +319,37 @@ if __name__ == "__main__":
     process_movie('rocketeer')
     process_movie('druglords')
     process_movie('incredibles1')
-    process_movie('monsterinc')
     process_movie('stained2')
     process_movie('stained3')
-    process_movie('harrypotter1')
     process_movie('whitestorm')
-    process_mp3('breakingyourself_br')
+    process_movie('harrypotter1')
     detect_speech('/home/erik/Downloads/_bolt.mp4')
+    process_movie('whitestorm')
+    process_movie('bolt')
+    process_movie('monsterinc')
+    
+    process_movie('whitestorm')home
+    process_movie('nemo')
+    process_movie('pjspeedcat_spoken')
+    process_movie('electionspoken')
+    process_movie('deathnotice1')
+
+    process_mp3('JackmanPomato')
+
+    process_mp3('breakingyourself_br')    
+    process_mp3('theonething_br')
+    process_mp3('sparksine')
+
+    process_mp3('bakbingEP73')
+
+    process_mp3('hkbookfair')
+    process_mp3('hkoffice')
+    process_mp3('hkpopulation')
+    process_mp3('hkcourtjimmy')
+
+    
     """
 
-    process_mp3('_bolt.mp4.mp3.sp')    
-    #process_movie('bolt')
-   
+
+    process_movie('aberdeen')
 
