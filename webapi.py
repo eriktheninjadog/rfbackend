@@ -1021,6 +1021,7 @@ def addoutputexercise():
     chinesetokens         = request.json['chinesetokens']
     if len(chinesetokens) < 2:
         chinesetokens = textprocessing.split_text(chinesetokens[0])
+        chinesetokens = json.dumps(chinesetokens)
     mp3name         = request.json['mp3name']
     type = request.json['type']
     result = request.json['result']
