@@ -118,6 +118,24 @@ payload = {
 
 import random
 
+def result_has_been_done_before(result):
+    try:
+        f = open('lastresult.txt','r',encoding='utf-8')
+        laststr = f.read()
+        lastresult = json.loads(laststr)
+        if json.dumps(lastresult) == json.dumps(result):
+            return True
+        else:
+            f = open('lastresult.txt','w',encoding='utf-8')
+            f.write(json.dumps(result))
+            f.close()
+            return False
+    except:
+        f = open('lastresult.txt','w',encoding='utf-8')
+        f.write(json.dumps(result))
+        f.close()
+        return False
+
 def sendRequest():
     url = "https://chinese.eriktamm.com/api/poeexamples"
     # Send the JSON request
@@ -132,6 +150,8 @@ def sendRequest():
         result = response_data['result']
         hinttext = ''
         hints=[]
+        if result_has_been_done_before(result):
+            return
         for i in result:
             english = i['english']
             tok = i['chinese']
@@ -379,7 +399,7 @@ if __name__ == "__main__":
     
     #grab_and_simplify_rthk("https://news.rthk.hk/rthk/ch/component/k2/1750261-20240424.htm") 
     for i in range(nr):
-             sendRequest()
+        sendRequest()
           
     #for i in range(20):         
     #     textOnlySendRequest()
