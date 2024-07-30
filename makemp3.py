@@ -152,6 +152,8 @@ def sendRequest():
         hints=[]
         if result_has_been_done_before(result):
             return
+        # randomize to avoid too simple repetition
+        random.shuffle(result)
         for i in result:
             english = i['english']
             tok = i['chinese']

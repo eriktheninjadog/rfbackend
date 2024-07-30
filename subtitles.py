@@ -167,7 +167,10 @@ def cutout(mp4file,vttfile,start_time,duration):
     f.close()
     output_vtt = export_vtt(ctx,start_in_seconds,end_in_seconds)
     output_vtt = textprocessing.make_sure_traditional(output_vtt)
-    output_vtt = split_into_sentences(output_vtt)
+    try:
+        output_vtt = split_into_sentences(output_vtt)
+    except:
+        None
     output_vtt = get_filename_without_extension(vttfile) + "\n" + output_vtt
     pop = textprocessing.split_text(output_vtt)
     f = open(filepath+'.hint.json','w',encoding='utf-8')
@@ -346,8 +349,10 @@ if __name__ == "__main__":
     process_mp3('hkoffice')
     process_mp3('hkpopulation')
     process_mp3('hkcourtjimmy')    
+    process_movie('aberdeen')
+
     """
 
+    process_mp3('diy')    
 
-    process_movie('aberdeen')
 
