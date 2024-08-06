@@ -1156,7 +1156,7 @@ def replace_chinese_with_links(text):
     def replace_function(match):
         chinese_text = match.group()
         encoded_chinese = urllib.parse.quote(chinese_text)
-        return f'<a href="http://www.google.com?chinese={encoded_chinese}">{chinese_text}</a>'    
+        return f'<a href="http://chinese.eriktamm.com/api/makeexamples?chinese={encoded_chinese}">{chinese_text}</a>'    
     return re.sub(pattern, replace_function, text)
 
 
@@ -1167,4 +1167,11 @@ def getexplainationpage():
     ret = ret + openrouter.do_open_opus_questions('Rewrite this to spoken Cantonese:' + sentence)
     baloba = ret.replace('\n','<br/>')  
     baloba = replace_chinese_with_links(baloba)  
-    return '<html><head/><body>' + baloba + '</body></html'
+    return '<html><head/><body>' + baloba + '</body></html>'
+
+
+@app.route('/makeexamples', methods=['GET'])
+def makeexamples():
+    chinese = request.args['sentence']
+    
+
