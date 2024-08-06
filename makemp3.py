@@ -136,6 +136,30 @@ def result_has_been_done_before(result):
         f.close()
         return False
 
+import os
+from mutagen.mp3 import MP3
+
+
+def get_mp3_duration(file_path):
+    """
+    Calculates the duration of an MP3 file in seconds.
+    
+    Args:
+        file_path (str): The path to the MP3 file.
+    
+    Returns:
+        float: The duration of the MP3 file in seconds.
+    """
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    
+    try:
+        audio = MP3(file_path)
+        return audio.info.length
+    except Exception as e:
+        raise ValueError(f"Failed to read the duration of the MP3 file: {e}")
+
+
 def sendRequest():
     url = "https://chinese.eriktamm.com/api/poeexamples"
     # Send the JSON request
@@ -150,10 +174,12 @@ def sendRequest():
         result = response_data['result']
         hinttext = ''
         hints=[]
+        totalseconds = 0
         if result_has_been_done_before(result):
             return
         # randomize to avoid too simple repetition
         random.shuffle(result)
+        boba = []
         for i in result:
             english = i['english']
             tok = i['chinese']
@@ -165,8 +191,10 @@ def sendRequest():
                 hints.append(chinese)
             hinttext =  hinttext + chinese + "\n"
             makemp3(english,chinese)
-            chifilepath = mp3cache + '/' + createmp3name(chinese,False)
-            engfilepath = mp3cache + '/' + createmp3name(english,False) 
+            chifilepath = mp3cache + '/' + createmp3name(chinese,False)            
+            swoon = get_mp3_duration(chifilepath)
+            boba.append([tok,totalseconds,swoon])
+            totalseconds += swoon
             #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             #totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
@@ -181,11 +209,15 @@ def sendRequest():
         f = open(filebasepath + '.mp3.hint.json','w',encoding='utf-8')
         f.write(json.dumps(hinttext))
         f.close()
+        
+        f = open(filebasepath + '.mp3.times.json','w',encoding='utf-8')
+        f.write(json.dumps(boba))
+        f.close()
+        
         print(totalstr)
         subprocess.run(totalstr,shell=True,capture_output=True,text=True)        
         scpcommand = "scp " + filebasepath + "* chinese.eriktamm.com:/var/www/html/mp3"   
-        subprocess.run(scpcommand,shell=True,capture_output=True,text=True)        
-
+        subprocess.run(scpcommand,shell=True,capture_output=True,text=True)                
     else:
         # Request failed
         print("Request failed with status code:", response.status_code)

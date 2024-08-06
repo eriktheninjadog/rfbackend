@@ -351,8 +351,12 @@ if __name__ == "__main__":
     process_mp3('hkcourtjimmy')    
     process_movie('aberdeen')
 
-    """
+    process_movie('firestorm')
+    process_mp3('chopchoplady_sr')    
 
-    process_mp3('diy')    
+
+    """
+    process_mp3('ladies12')
+
 
 
