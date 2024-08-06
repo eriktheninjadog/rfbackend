@@ -1149,11 +1149,21 @@ def makemp3fromtext():
     return jsonify({'result':'done'})
 
 
+def replace_chinese_with_links(text):
+    # Define a regular expression pattern to match Chinese characters
+    pattern = r'[\u4e00-\u9fff]+'
+
+    def replace_function(match):
+        chinese_text = match.group()
+        encoded_chinese = urllib.parse.quote(chinese_text)
+        return f'<a href="http://www.google.com?chinese={encoded_chinese}">{chinese_text}</a>'    
+    return re.sub(pattern, replace_function, text)
 
 
 @app.route('/getexplainationpage', methods=['GET'])
 def getexplainationpage():
     sentence = request.args['sentence']
     ret = openrouter.do_open_opus_questions('Explain this cantonese sentence using English:' + sentence)
-    baloba = ret.replace('\n','<br/>')
+    ret = ret + openrouter.do_open_opus_questions('Rewrite this to spoken Cantonese:' + sentence)
+    baloba = ret.replace('\n','<br/>')    
     return '<html><head/><body>' + baloba + '</body></html'
