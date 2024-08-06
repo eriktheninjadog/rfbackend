@@ -1147,3 +1147,13 @@ def makemp3fromtext():
     except Exception as e:        
         return jsonify({'result':str(e)})    
     return jsonify({'result':'done'})
+
+
+
+
+@app.route('/getexplainationpage', methods=['GET'])
+def getexplainationpage():
+    sentence = request.args['sentence']
+    ret = openrouter.do_open_opus_questions('Explain this cantonese sentence using English:' + sentence)
+    baloba = ret.replace('\n','<br/>')
+    return '<html><head/><body>' + baloba + '</body></html'
