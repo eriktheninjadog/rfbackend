@@ -1170,8 +1170,26 @@ def getexplainationpage():
     return '<html><head/><body>' + baloba + '</body></html>'
 
 
+from datetime import datetime 
+
 @app.route('/makeexamples', methods=['GET'])
 def makeexamples():
     chinese = request.args['sentence']
-    
+    aiquestion = 'Create 3 sentences in B1 level Cantonese containing this chunk: ' + chinese + ". Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
+    ret = openrouter.do_open_opus_questions('Explain this cantonese sentence using English:' + aiquestion)
+    parsedret = json.loads(ret)
+    cachedresult = []
+    htmlout = '<html><head/><body>'
+    for r in parsedret:
+        english = r['english']
+        chinese = r['chinese']
+        # lets make tokens out of chinese
+        tradchinese = textprocessing.make_sure_traditional(chinese)
+        htmlout = htmlout + english + '---' + tradchinese + '<br/>'
 
+        chinesetokens = textprocessing.split_text(tradchinese)
+        cachedresult.append({'chinese':chinesetokens,'english':english})
+        database.add_output_exercise(english,json.dumps(chinesetokens),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+    cachemanagement.add_examples_to_cache(cachedresult)
+    html = html + '</body></html'
+    return html
