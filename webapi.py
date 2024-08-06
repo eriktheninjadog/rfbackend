@@ -1174,7 +1174,7 @@ from datetime import datetime
 
 @app.route('/makeexamples', methods=['GET'])
 def makeexamples():
-    chinese = request.args['sentence']
+    chinese = request.args['chinese']
     aiquestion = 'Create 3 sentences in B1 level Cantonese containing this chunk: ' + chinese + ". Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
     ret = openrouter.do_open_opus_questions('Explain this cantonese sentence using English:' + aiquestion)
     parsedret = json.loads(ret)
