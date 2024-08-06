@@ -1165,5 +1165,6 @@ def getexplainationpage():
     sentence = request.args['sentence']
     ret = openrouter.do_open_opus_questions('Explain this cantonese sentence using English:' + sentence)
     ret = ret + openrouter.do_open_opus_questions('Rewrite this to spoken Cantonese:' + sentence)
-    baloba = ret.replace('\n','<br/>')    
+    baloba = ret.replace('\n','<br/>')  
+    baloba = replace_chinese_with_links(baloba)  
     return '<html><head/><body>' + baloba + '</body></html'
