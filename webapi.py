@@ -1189,7 +1189,7 @@ def makeexamples():
 
         chinesetokens = textprocessing.split_text(tradchinese)
         cachedresult.append({'chinese':chinesetokens,'english':english})
-        database.add_output_exercise(english,json.dumps(chinesetokens),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+        database.add_output_exercise(english,str(chinesetokens),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
     cachemanagement.add_examples_to_cache(cachedresult)
     htmlout = htmlout + '</body></html'
     return htmlout
