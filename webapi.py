@@ -1151,7 +1151,7 @@ def makemp3fromtext():
 
 def replace_chinese_with_links(text):
     # Define a regular expression pattern to match Chinese characters
-    pattern = r'[\u4e00-\u9fff\u0021\u003f\u002e\u002c\u002c]+'
+    pattern = r'[\u4e00-\u9fff\u0021\u003f\u002e\u002c\u002c\uff0c]+'
 
     def replace_function(match):
         chinese_text = match.group()
