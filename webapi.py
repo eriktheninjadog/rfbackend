@@ -961,7 +961,16 @@ def get_audio2():
         chiret = chiba
     else:
         chiret = ['no','chinese','to','\n','be','found','!',hint_file]    
-    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
+    
+    time_file = mp3_file + '.times.json'
+    if os.path.exists('/var/www/html/mp3/'+time_file):
+        f = open('/var/www/html/mp3/'+time_file,'r',encoding='utf-8')
+        timetext = f.read()
+        f.close()        
+        timetext = json.loads(timetext)
+    else:
+        timetext = None    
+    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'times':timetext}})
 
 
 @app.route('/audioexample3', methods=['GET','POST'])

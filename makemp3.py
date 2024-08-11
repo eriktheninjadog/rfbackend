@@ -179,7 +179,7 @@ def sendRequest():
             return
         # randomize to avoid too simple repetition
         random.shuffle(result)
-        boba = []
+        timesignatures = []
         for i in result:
             english = i['english']
             tok = i['chinese']
@@ -192,9 +192,9 @@ def sendRequest():
             hinttext =  hinttext + chinese + "\n"
             makemp3(english,chinese)
             chifilepath = mp3cache + '/' + createmp3name(chinese,False)            
-            swoon = get_mp3_duration(chifilepath)
-            boba.append([tok,totalseconds,swoon])
-            totalseconds += swoon
+            duration = get_mp3_duration(chifilepath)
+            timesignatures.append([tok,english,totalseconds,duration])
+            totalseconds += duration
             #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             #totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
@@ -211,7 +211,7 @@ def sendRequest():
         f.close()
         
         f = open(filebasepath + '.mp3.times.json','w',encoding='utf-8')
-        f.write(json.dumps(boba))
+        f.write(json.dumps(timesignatures))
         f.close()
         
         print(totalstr)
