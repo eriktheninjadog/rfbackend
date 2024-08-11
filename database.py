@@ -593,7 +593,8 @@ def get_failed_outputs_lately(nr,days):
     myresult = mycursor.fetchall()
     for (chinesetokens,english,timewhen) in myresult:
         result.append({"english":english,"chinese": json.loads(chinesetokens) })
-    new_array = random.sample(result,2000-20)
+    new_array = random.sample(result,20)
+    random.shuffle(new_array)
     result = new_array
     mycursor.close()
     mydb.close()
