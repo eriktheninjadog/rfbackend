@@ -588,7 +588,7 @@ def get_failed_outputs_lately(nr,days):
     mycursor = mydb.cursor()
     result = []    
     #sql = "select distinct(chinesetokens),english from output_exercise where type = 2 and whenutcmilliseconds > (UNIX_TIMESTAMP(CURRENT_TIMESTAMP())-("+str(24*days)+"*60*60))*1000 order by rand() limit " + str(nr)
-    sql = "select distinct(chinesetokens),english,whenutcmilliseconds from output_exercise where type = 2 order by whenutcmilliseconds DESC limit 2000"
+    sql = "select distinct(chinesetokens),english,whenutcmilliseconds from output_exercise where type = 2 order by whenutcmilliseconds DESC limit 30"
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
     for (chinesetokens,english,timewhen) in myresult:
@@ -596,9 +596,9 @@ def get_failed_outputs_lately(nr,days):
             result.append({"english":english,"chinese": json.loads(chinesetokens) })
         except:
             None
-    new_array = random.sample(result,20)
-    random.shuffle(new_array)
-    result = new_array
+    #new_array = random.sample(result,20)
+    #random.shuffle(new_array)
+    #result = new_array
     mycursor.close()
     mydb.close()
     return result
