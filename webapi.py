@@ -950,7 +950,7 @@ def copymp3fromremote(file):
     
     # Run the script in the background with parameters
     print(command)
-    subprocess.Popen(shlex.split(command), 
+    subprocess.Popen([script_path,file], 
                      stdout=subprocess.DEVNULL, 
                      stderr=subprocess.DEVNULL, 
                      shell=False)
