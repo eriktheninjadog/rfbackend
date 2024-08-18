@@ -938,7 +938,7 @@ def pick_random_artice_file(directory, extension):
 import shlex
 
 def copymp3fromremote(file):
-    script_path = "/usr/local/bin/opymp3fromremote.sh"
+    script_path = "/usr/local/bin/copymp3fromremote.sh"
     
     # Get parameters from the query string
     
