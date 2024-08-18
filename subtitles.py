@@ -115,6 +115,25 @@ def export_vtt(ctx,start_time,end_time):
     return output
 
 
+def export_vtt_for_time_codes(ctx,start_time,end_time):
+    lines = ctx[1]
+    returnlines = []
+    totalseconds = 0
+    for l in lines:
+        start = l[0][0]
+        end = l[0][1]
+        if start > start_time and end < end_time:
+            wholeline = ''
+            for i in l[1]:
+               wholeline += i + ' '
+            tokens = textprocessing.split_text(wholeline)
+            duration = end-start            
+            returnlines.append([tokens,'***',totalseconds,duration])
+            totalseconds+=duration 
+    return returnlines
+    
+
+
 def parse_vtt(lines):
     ctx = ['init',[],None,[]]
     for l in lines:
@@ -167,15 +186,17 @@ def cutout(mp4file,vttfile,start_time,duration):
     f.close()
     output_vtt = export_vtt(ctx,start_in_seconds,end_in_seconds)
     output_vtt = textprocessing.make_sure_traditional(output_vtt)
-    try:
-        output_vtt = split_into_sentences(output_vtt)
-    except:
-        None
-    output_vtt = get_filename_without_extension(vttfile) + "\n" + output_vtt
+    output_vtt = output_vtt    
     pop = textprocessing.split_text(output_vtt)
     f = open(filepath+'.hint.json','w',encoding='utf-8')
     f.write(json.dumps(pop))
     f.close()
+    
+    timelines = export_vtt_for_time_codes(ctx,start_in_seconds,end_in_seconds)
+    f = open(filepath+'.times.json','w',encoding='utf-8')
+    f.write(json.dumps(timelines))
+    f.close()
+    
     
     # a raw file
     f = open('time.txt','w',encoding='utf-8')
@@ -356,9 +377,12 @@ if __name__ == "__main__":
     process_mp3('ladies12')
     process_mp3('ladies160')
 
+    process_mp3('ngaihimjanmat4')
+
+    process_mp3('ladies164')
 
     """
-    process_mp3('ladies56')
-    
+        
+    process_mp3('ladies163')
 
 

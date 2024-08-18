@@ -935,6 +935,26 @@ def pick_random_artice_file(directory, extension):
     random_file = random.choice(files)
     return random_file
 
+import shlex
+
+def copymp3fromremote(file):
+    script_path = "/home/erik/copymp3fromremote.sh"
+    
+    # Get parameters from the query string
+    
+    # Ensure the script is executable
+    #os.chmod(script_path, 0o755)
+    
+    # Construct the command with parameters
+    command = script_path + " " + file
+    
+    # Run the script in the background with parameters
+    subprocess.Popen(shlex.split(command), 
+                     stdout=subprocess.DEVNULL, 
+                     stderr=subprocess.DEVNULL, 
+                     shell=False)
+    
+
 @app.route('/audioexample', methods=['GET'])
 def get_audio():
     # Path to the MP3 file
@@ -942,6 +962,8 @@ def get_audio():
     # Return the MP3 file
     return send_file(mp3_file, mimetype='audio/mpeg')
 
+
+import makemp3
 
 @app.route('/audioexample2', methods=['GET','POST'])
 def get_audio2():
@@ -960,16 +982,20 @@ def get_audio2():
             chiba.append(textprocessing.split_text(c))
         chiret = chiba
     else:
-        chiret = ['no','chinese','to','\n','be','found','!',hint_file]    
+        chiret = ['no','chinese','to','\n','be','found','!',hint_file]
     
     time_file = mp3_file + '.times.json'
     if os.path.exists('/var/www/html/mp3/'+time_file):
         f = open('/var/www/html/mp3/'+time_file,'r',encoding='utf-8')
         timetext = f.read()
-        f.close()        
+        f.close()
         timetext = json.loads(timetext)
+        for i in timetext:
+            english = i[1]
+            filename = makemp3.createmp3name(english,False)
+            copymp3fromremote(filename)
     else:
-        timetext = None    
+        timetext = None
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'times':timetext}})
 
 
