@@ -433,7 +433,7 @@ if __name__ == "__main__":
         #read_articles()
     
     #grab_and_simplify_rthk("https://news.rthk.hk/rthk/ch/component/k2/1750261-20240424.htm") 
-    bop = True
+    bop = sendRequest()
     while bop:
         bop = sendRequest()
           
