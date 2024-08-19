@@ -990,11 +990,7 @@ def get_audio2():
         f = open('/var/www/html/mp3/'+time_file,'r',encoding='utf-8')
         timetext = f.read()
         f.close()
-        timetext = json.loads(timetext)
-        for i in timetext:
-            english = i[1]
-            filename = makemp3.createmp3name(english,False)
-            copymp3fromremote(filename)
+        timetext = json.loads(timetext)            
     else:
         timetext = None
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'times':timetext}})

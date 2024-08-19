@@ -176,7 +176,7 @@ def sendRequest():
         hints=[]
         totalseconds = 0
         if result_has_been_done_before(result):
-            return
+            return False
         # randomize to avoid too simple repetition
         random.shuffle(result)
         timesignatures = []
@@ -198,7 +198,7 @@ def sendRequest():
             #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             #totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-                            
+             
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
@@ -215,13 +215,14 @@ def sendRequest():
         f.close()
         
         print(totalstr)
-        subprocess.run(totalstr,shell=True,capture_output=True,text=True)        
+        subprocess.run(totalstr,shell=True,capture_output=True,text=True)
         scpcommand = "scp " + filebasepath + "* chinese.eriktamm.com:/var/www/html/mp3"   
-        subprocess.run(scpcommand,shell=True,capture_output=True,text=True)                
+        subprocess.run(scpcommand,shell=True,capture_output=True,text=True)
+        return True
     else:
         # Request failed
         print("Request failed with status code:", response.status_code)
-
+        return False
 
 
 def textOnlySendRequest():
@@ -432,8 +433,9 @@ if __name__ == "__main__":
         #read_articles()
     
     #grab_and_simplify_rthk("https://news.rthk.hk/rthk/ch/component/k2/1750261-20240424.htm") 
-    for i in range(nr):
-        sendRequest()
+    bop = True
+    while bop:
+        bop = sendRequest()
           
     #for i in range(20):         
     #     textOnlySendRequest()
