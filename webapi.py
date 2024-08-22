@@ -3,7 +3,6 @@ import time
 import re
 import traceback
 from flask import Flask, Response, jsonify, request, url_for
-from flask_sse import sse
 
 import api
 import log
@@ -39,7 +38,6 @@ import random
 
 
 app = Flask(__name__)
-app.register_blueprint(sse, url_prefix='/stream', storage="memory")
 
 
 @app.route('/version', methods=['GET','PUT'])
