@@ -1232,14 +1232,13 @@ def makeexamples():
     return htmlout
 
 
-
-
 announcer = MessageAnnouncer.MessageAnnouncer()
 
 
-@app.route('/ping')
+@app.route('/ping/<data>')
 def ping():
-    msg = MessageAnnouncer.format_sse(data='pong')
+    data = request.args.get('data')
+    msg = MessageAnnouncer.format_sse(data= data )
     announcer.announce(msg=msg)
     return {}, 200
 
