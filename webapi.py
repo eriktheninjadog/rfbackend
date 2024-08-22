@@ -39,7 +39,7 @@ import random
 
 
 app = Flask(__name__)
-app.register_blueprint(sse, url_prefix='/commandstream')
+app.register_blueprint(sse, url_prefix='/stream')
 
 
 @app.route('/version', methods=['GET','PUT'])
@@ -1233,8 +1233,8 @@ def makeexamples():
 
 
 
-@sse.route('/commandstream')
-def commandstream():
+@sse.route('/command')
+def command():
     def events():
         yield 'data: Hello, world!\n\n'
         yield 'data: This is another message.\n\n'
