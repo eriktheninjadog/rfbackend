@@ -3,6 +3,7 @@ import time
 import re
 import traceback
 from flask import Flask, Response, jsonify, request, url_for
+from flask_sse import sse
 
 import api
 import log
@@ -1227,3 +1228,19 @@ def makeexamples():
     cachemanagement.add_examples_to_cache(cachedresult)
     htmlout = htmlout + '</body></html'
     return htmlout
+
+
+
+@sse.route('/commandstream')
+def commandstream():
+    def events():
+        yield 'data: Hello, world!\n\n'
+        yield 'data: This is another message.\n\n'
+    return app.response_class(events(), mimetype="text/event-stream")
+
+
+@app.route('/send-message-to-all', methods=['POST'])
+def notify_all():
+    message = 'This message will be sent to all connected clients.'
+    sse.publish({"message": message}, type='message')
+    return 'Message published', 200

@@ -122,7 +122,7 @@ def parserouterjson(adict):
     None
     
     
-def do_open_opus_questions(question):
+def     do_open_opus_questions(question):
     response = requests.post(
     url="https://openrouter.ai/api/v1/chat/completions",
     headers={
