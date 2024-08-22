@@ -34,6 +34,8 @@ import newscrawler
 
 import cachemanagement
 
+import MessageAnnouncer
+
 import random
 
 
@@ -1229,6 +1231,29 @@ def makeexamples():
     htmlout = htmlout + '</body></html'
     return htmlout
 
+
+
+
+announcer = MessageAnnouncer.MessageAnnouncer()
+
+
+@app.route('/ping')
+def ping():
+    msg = MessageAnnouncer.format_sse(data='pong')
+    announcer.announce(msg=msg)
+    return {}, 200
+
+
+@app.route('/commandstream', methods=['GET'])
+def commandstream():
+
+    def stream():
+        messages = announcer.listen()  # returns a queue.Queue
+        while True:
+            msg = messages.get()  # blocks until a new message arrives
+            yield msg
+
+    return Response(stream(), mimetype='text/event-stream')
 
 """
 @sse.route('/command')
