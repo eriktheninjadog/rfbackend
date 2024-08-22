@@ -1233,7 +1233,7 @@ def makeexamples():
 
 
 
-@sse.route('/commandstream',methods=['GET'])
+@sse.route('/commandstream')
 def commandstream():
     def events():
         yield 'data: Hello, world!\n\n'
