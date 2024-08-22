@@ -1237,8 +1237,8 @@ announcer = MessageAnnouncer.MessageAnnouncer()
 
 @app.route('/ping/<data>')
 def ping():
-    data = request.args.get('data')
-    msg = MessageAnnouncer.format_sse(data= data )
+    datavalue = request.args.get('data')
+    msg = MessageAnnouncer.format_sse(data= datavalue )
     announcer.announce(msg=msg)
     return {}, 200
 
