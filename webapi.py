@@ -39,6 +39,8 @@ import random
 
 
 app = Flask(__name__)
+app.register_blueprint(sse, url_prefix='/commandstream')
+
 
 @app.route('/version', methods=['GET','PUT'])
 def version():
