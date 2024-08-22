@@ -1235,7 +1235,7 @@ def makeexamples():
 announcer = MessageAnnouncer.MessageAnnouncer()
 
 
-@app.route('/ping/<data>')
+@app.route('/ping')
 def ping():
     datavalue = request.args.get('data')
     msg = MessageAnnouncer.format_sse(data= datavalue )
