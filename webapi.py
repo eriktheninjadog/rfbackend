@@ -1254,19 +1254,3 @@ def commandstream():
 
     return Response(stream(), mimetype='text/event-stream')
 
-"""
-@sse.route('/command')
-def command():
-    def events():
-        yield 'data: Hello, world!\n\n'
-        yield 'data: This is another message.\n\n'
-    return app.response_class(events(), mimetype="text/event-stream")
-
-
-@app.route('/send-message-to-all', methods=['POST'])
-def notify_all():
-    message = 'This message will be sent to all connected clients.'
-    sse.publish({"message": message}, type='message')
-    return 'Message published', 200
-
-"""
