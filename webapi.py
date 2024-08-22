@@ -1232,7 +1232,7 @@ def makeexamples():
     return htmlout
 
 
-
+"""
 @sse.route('/command')
 def command():
     def events():
@@ -1246,3 +1246,5 @@ def notify_all():
     message = 'This message will be sent to all connected clients.'
     sse.publish({"message": message}, type='message')
     return 'Message published', 200
+
+"""
