@@ -23,7 +23,8 @@ def createmp3name(word,slow):
         ret = word.replace(' ','_') + "slow.mp3"        
     ret = ret.replace('\n','')
     ret = ret.replace("'","")
-    ret = ret.replace("?","")    
+    ret = ret.replace(",","_")
+    ret = ret.replace("?","")
     return ret
 
 def makeamazonmp3(text,voice,engine,slow):
@@ -192,7 +193,7 @@ def sendRequest():
             hinttext =  hinttext + chinese + "\n"
             makemp3(english,chinese)
             chifilepath = mp3cache + '/' + createmp3name(chinese,False)
-            engfilepath = mp3cache + '/' + createmp3namr(english,False)
+            engfilepath = mp3cache + '/' + createmp3name(english,False)
             engduration = get_mp3_duration(engfilepath)
             duration = get_mp3_duration(chifilepath) + engduration
             timesignatures.append([tok,english,totalseconds,duration,engduration])
@@ -200,7 +201,7 @@ def sendRequest():
             #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             #totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-            totalstr = totalstr + 'file ' + ":" + engfilepath + "'" + '\n' 
+            totalstr = totalstr + 'file ' + "'" + engfilepath + "'" + '\n' 
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
@@ -220,6 +221,7 @@ def sendRequest():
         subprocess.run(totalstr,shell=True,capture_output=True,text=True)
         scpcommand = "scp " + filebasepath + "* chinese.eriktamm.com:/var/www/html/mp3"   
         subprocess.run(scpcommand,shell=True,capture_output=True,text=True)
+
         return True
     else:
         # Request failed
