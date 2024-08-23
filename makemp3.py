@@ -159,7 +159,7 @@ def get_mp3_duration(file_path):
     except Exception as e:
         raise ValueError(f"Failed to read the duration of the MP3 file: {e}")
 
-
+    
 def sendRequest():
     url = "https://chinese.eriktamm.com/api/poeexamples"
     # Send the JSON request
@@ -191,14 +191,16 @@ def sendRequest():
                 hints.append(chinese)
             hinttext =  hinttext + chinese + "\n"
             makemp3(english,chinese)
-            chifilepath = mp3cache + '/' + createmp3name(chinese,False)            
-            duration = get_mp3_duration(chifilepath)
-            timesignatures.append([tok,english,totalseconds,duration])
+            chifilepath = mp3cache + '/' + createmp3name(chinese,False)
+            engfilepath = mp3cache + '/' + createmp3namr(english,False)
+            engduration = get_mp3_duration(engfilepath)
+            duration = get_mp3_duration(chifilepath) + engduration
+            timesignatures.append([tok,english,totalseconds,duration,engduration])
             totalseconds += duration
             #totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
             #totalstr = totalstr + 'file ' + "'" +engfilepath + "'" + '\n'
             totalstr = totalstr + 'file ' + "'" +chifilepath + "'" + '\n'
-             
+            totalstr = totalstr + 'file ' + ":" + engfilepath + "'" + '\n' 
         f = open(mp3cache + '/' + 'inputfiles.txt','w',encoding='utf-8')
         f.write(totalstr)
         f.close()
