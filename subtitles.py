@@ -24,7 +24,7 @@ def time_since_start(atime):
     if len(popit) == 3:
         hour = float(popit[0])
         minute = float(popit[1])
-        second = float(popit[2])
+        second = float( popit[2].replace(",","."))
         totalsec = (hour*3600)+(minute*60) + second
         return totalsec
     else:
@@ -218,6 +218,51 @@ def cutout(mp4file,vttfile,start_time,duration):
     subprocess.run(scpcommand,shell=True,capture_output=True,text=True)    
 
 
+import re
+
+def srt_to_vtt(srt_file_path, vtt_file_path):
+    def convert_time(time_string):
+        """Convert SRT time format to VTT time format."""
+        # Replace comma with dot for milliseconds
+        return time_string.replace(',', '.')
+    try:
+        with open(srt_file_path, 'r', encoding='utf-8') as srt_file:
+            srt_content = srt_file.read()
+        # Add WEBVTT header
+        vtt_content = "WEBVTT\n\n"
+
+        # Use regex to find and process each subtitle block
+        subtitle_blocks = re.findall(r'(\d+)\n(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\n((?:(?!\n\n).|\n)*)', srt_content, re.DOTALL)
+
+        for block in subtitle_blocks:
+            # Convert time format
+            start_time = convert_time(block[1])
+            end_time = convert_time(block[2])
+            
+            # Add the converted block to VTT content
+            vtt_content += f"{start_time} --> {end_time}\n{block[3]}\n\n"
+
+        # Write the VTT content to file
+        with open(vtt_file_path, 'w', encoding='utf-8') as vtt_file:
+            vtt_file.write(vtt_content)
+
+        print(f"Conversion complete. VTT file saved as {vtt_file_path}")
+
+    except FileNotFoundError:
+        print(f"Error: The file {srt_file_path} was not found.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+# Example usage
+# srt_to_vtt('path/to/your/input.srt', 'path/to/your/output.vtt')
+
+
+def makeVTT_flle_path_and_name(name):
+    return '/home/erik/Downloads/'+ name+'.vtt'
+
+def makeSRT_flle_path_and_name(name):
+    return '/home/erik/Downloads/'+ name+'.srt'
+
 
 def process_movie(name):
     for i in range(0,120,2):
@@ -231,7 +276,8 @@ def process_movie(name):
 def process_mp3(name):
     for i in range(0,120,2):
         x = i * 60
-        print("density " +str(i) + " " + str( characters_per_minute('/home/erik/Downloads/'+ name+'.vtt',x,120)))
+        srt_to_vtt(makeSRT_flle_path_and_name(name),makeVTT_flle_path_and_name(name))
+        print("density " +str(i) + " " + str( characters_per_minute( makeVTT_flle_path_and_name(name)  ,x,120)))
         if characters_per_minute('/home/erik/Downloads/'+name+'.vtt',x,120) > 80:
             pop = "" + str(int(i/60))+":"+str(int(i%60))+":00"
             cutout('/home/erik/Downloads/'+name +'.mp3','/home/erik/Downloads/'+name+'.vtt',pop,120)   
@@ -372,7 +418,6 @@ if __name__ == "__main__":
     process_mp3('hkcourtjimmy')    
     process_movie('aberdeen')
 
-    process_movie('firestorm')
     process_mp3('chopchoplady_sr')    
     process_mp3('ladies12')
     process_mp3('ladies160')
@@ -383,9 +428,13 @@ if __name__ == "__main__":
 
     process_mp3('ladies163')
 
-    """
-        
     process_mp3('ladies161_001')
     process_mp3('ladies161_002')
+
+    process_mp3('buddha5_part2')
+
+    """
+        
+    process_movie('coldwar')
 
 
