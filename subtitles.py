@@ -203,14 +203,14 @@ def cutout(mp4file,vttfile,start_time,duration):
     f.write(output_vtt)
     f.close()
     
-    
+    """
     output = "aws polly synthesize-speech --output-format mp3 --voice-id \"Hiujin\" --engine neural --text \"" + output_vtt + "\" " + filepath + ".simple.mp3"
     result = subprocess.run(output,shell=True,capture_output=True,text=True)
     print(result)
     f = open(filepath+'.simple.mp3.hint.json','w',encoding='utf-8')
     f.write(json.dumps(pop))
     f.close()
-
+    """
    
     scpcommand = "scp " + filepath + "* chinese.eriktamm.com:/var/www/html/mp3"
     subprocess.run(scpcommand,shell=True,capture_output=True,text=True)        
@@ -286,7 +286,7 @@ def process_movie(name):
 def process_mp3(name):
     for i in range(0,120,2):
         x = i * 60
-        srt_to_vtt(makeSRT_flle_path_and_name(name),makeVTT_flle_path_and_name(name))
+        srt_to_vtt(     makeSRT_flle_path_and_name(name),makeVTT_flle_path_and_name(name))
         print("density " +str(i) + " " + str( characters_per_minute( makeVTT_flle_path_and_name(name)  ,x,120)))
         if characters_per_minute('/home/erik/Downloads/'+name+'.vtt',x,120) > 80:
             pop = "" + str(int(i/60))+":"+str(int(i%60))+":00"
