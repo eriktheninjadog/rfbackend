@@ -265,6 +265,16 @@ def makeSRT_flle_path_and_name(name):
 
 
 def process_movie(name):
+    # lets split it into mp3 files first
+    try:
+        for i in range(4):
+            startat = i*15*60
+            endat = (i+1)*15*60
+            moviefile = '/home/erik/Downloads/'+name+ ".mp4"
+            mp3file = '/home/erik/Downloads/'+name+ "_"+str(i) + ".mp3"
+            export_audio(moviefile,mp3file,startat,endat)
+    except:
+        print("uhu")
     for i in range(0,120,2):
         x = i * 60
         print("density " +str(i) + " " + str( characters_per_minute('/home/erik/Downloads/'+ name+'.vtt',x,120)))
@@ -377,7 +387,7 @@ def detect_speech(audio_file, frame_duration_ms=30, padding_duration_ms=300, agg
     return speech_segments
 
 
-        
+import sys
 
 if __name__ == "__main__":
     """
@@ -433,8 +443,13 @@ if __name__ == "__main__":
 
     process_mp3('buddha5_part2')
 
-    """
-        
     process_movie('coldwar')
+
+    """
+    if len(sys.argv) > 1:
+        process_mp3(sys.argv[1])
+    else:    
+        process_mp3('coldwar_0')
+        
 
 
