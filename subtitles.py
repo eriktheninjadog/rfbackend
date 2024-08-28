@@ -109,7 +109,7 @@ def export_vtt(ctx,start_time,end_time):
     for l in lines:
         start = l[0][0]
         end = l[0][1]
-        if start > start_time and end < end_time:
+        if start >= start_time and end <= end_time:
             for i in l[1]:
                output += i + '\n'
     return output
