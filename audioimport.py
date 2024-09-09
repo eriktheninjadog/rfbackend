@@ -1,12 +1,9 @@
-#audioimport.py
-
 import os
 import mysql.connector
 from mutagen.mp3 import MP3
+import json
 
-
-def add_mp3_to_database(file_path):
-# Database connection setup
+def get_db_connection():
     db = mysql.connector.connect(
         host="localhost",                                                            
         user="erik",                                                                 
@@ -14,6 +11,31 @@ def add_mp3_to_database(file_path):
         database='language'                                                          
     )
     cursor = db.cursor()
+    return db,cursor
+
+def close_db_connect(db,cursor):
+    cursor.close()
+    db.close()
+    
+def add_transcription(audio_file_id, transcription_content, comment):
+    db,cursor  = get_db_connection()
+    sql = """INSERT INTO transcription_data 
+             (audio_file_id, content, comment) 
+             VALUES (%s, %s, %s)"""
+    
+    # Convert the Python dictionary to a JSON string
+    content_json = json.dumps(transcription_content)    
+    values = (audio_file_id, content_json, comment)    
+    cursor.execute(sql, values)
+    db.commit()
+    new_id = cursor.lastrowid
+    close_db_connect(db,cursor)
+    print(f"Added transcription data for audio file {audio_file_id}")
+    return new_id
+
+def add_mp3_to_database(file_path):
+    # Database connection setup
+    db,cursor  = get_db_connection()
     # Get the file name from the path
     file_name = os.path.basename(file_path)    
     # Get MP3 metadata
@@ -35,12 +57,29 @@ def add_mp3_to_database(file_path):
     values = (file_name, dest_path, title, artist, album, duration)    
     cursor.execute(sql, values)
     db.commit()
+    new_id = cursor.lastrowid
     print(f"Added {file_name} to the database.")
-    cursor.close()
-    db.close()
+    close_db_connect(db,cursor)
+    return new_id
 
-# Example usage
-#mp3_file = "/path/to/your/mp3/file.mp3"
-#add_mp3_to_database(mp3_file)
+def add_processed_mp3(file_path,jsoncontent,comment):
+    newid = add_mp3_to_database(file_path)
+    add_transcription(newid,jsoncontent,comment)
+        
+def get_audio_files_list():
+    db,cursor  = get_db_connection()    
+    sql = """SELECT id, title, file_path 
+             FROM audio_files 
+             ORDER BY id"""    
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    audio_files = []
+    for row in results:
+        audio_files.append({
+            'id': row['id'],
+            'title': row['title'],
+            'file_path': row['file_path']
+        })
+    close_db_connect(db,cursor)
+    return audio_files
 
-# Close the database connection
