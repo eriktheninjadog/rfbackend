@@ -41,7 +41,7 @@ def add_mp3_to_database(file_path):
     file_name = os.path.basename(file_path)    
     # Get MP3 metadata
     title = "notitle"
-    with io.open(file_path, 'rb') as file:
+    with io.open(file_path, 'rb',encoding='utf-8') as file:
         audio = MP3(file)
     # Extract metadata (adjust as needed based on your MP3 files)
         title = audio.get('TIT2', ['Unknown Title'])[0]
