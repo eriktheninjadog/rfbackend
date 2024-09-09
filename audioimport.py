@@ -40,12 +40,8 @@ def add_mp3_to_database(file_path):
     # Get the file name from the path
     file_name = os.path.basename(file_path)    
     # Get MP3 metadata
-    title = "notitle"
-    with io.open(file_path, 'r',encoding='utf-8') as file:
-        audio = MP3(file)
-    # Extract metadata (adjust as needed based on your MP3 files)
-        title = audio.get('TIT2', ['Unknown Title'])[0]
-    duration = int(audio.info.length)
+    title = file_name
+    duration = int(1000)
     # Define the destination directory
     dest_dir = "/opt/shared_audio"
     # Create the destination directory if it doesn't exist
@@ -57,7 +53,7 @@ def add_mp3_to_database(file_path):
     sql = """INSERT INTO imported_audio_files 
              (file_name, file_path, title, duration) 
              VALUES (%s, %s, %s, %s)"""
-    values = (file_name, dest_path, title, artist, album, duration)    
+    values = (file_name, dest_path, title, duration)    
     cursor.execute(sql, values)
     db.commit()
     new_id = cursor.lastrowid
