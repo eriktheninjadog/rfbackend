@@ -34,6 +34,8 @@ def add_transcription(audio_file_id, transcription_content, comment):
     print(f"Added transcription data for audio file {audio_file_id}")
     return new_id
 
+import shutil
+
 def add_mp3_to_database(file_path):
     # Database connection setup
     db,cursor  = get_db_connection()
@@ -48,7 +50,8 @@ def add_mp3_to_database(file_path):
     os.makedirs(dest_dir, exist_ok=True)    
     # Copy the file to the destination directory
     dest_path = os.path.join(dest_dir, file_name)
-    os.system(f"cp '{file_path}' '{dest_path}'")    
+    
+    shutil.copy2(file_path,dest_path)
     # Insert metadata into the database
     sql = """INSERT INTO imported_audio_files 
              (file_name, file_path, title, duration) 
