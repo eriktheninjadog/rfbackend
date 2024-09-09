@@ -50,6 +50,7 @@ def add_mp3_to_database(file_path):
     dest_dir = "/opt/shared_audio"
     # Create the destination directory if it doesn't exist
     # Copy the file to the destination directory
+    print(file_path)
     f = open(file_path,'rb')
     binarydata = f.read()
     f.close()
