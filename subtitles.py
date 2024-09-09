@@ -449,7 +449,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         process_mp3(sys.argv[1])
     else:    
-        process_mp3('coldwar_0')
+        process_mp3('testnew')
         
 
 

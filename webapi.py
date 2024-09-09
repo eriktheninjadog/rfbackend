@@ -1254,3 +1254,10 @@ def commandstream():
 
     return Response(stream(), mimetype='text/event-stream')
 
+
+import audioimport
+
+@app.route('/import_mp3', methods=['POST'])
+def import_mp3():
+    audioimport.add_mp3_to_database(request.json['filepath'])
+    return {}, 200
