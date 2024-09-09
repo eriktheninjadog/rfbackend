@@ -50,7 +50,13 @@ def add_mp3_to_database(file_path):
     dest_dir = "/opt/shared_audio"
     # Create the destination directory if it doesn't exist
     # Copy the file to the destination directory
-    subprocess.run(["cp",file_path,dest_dir],capture_output=True, text=True, check=True)    
+    f = open(file_path,'rb')
+    binarydata = f.read()
+    f.close()
+    f = open(dest_dir+"/"+file_name,'wb')
+    f.write(binarydata)
+    f.close()
+    
     # Insert metadata into the database
     sql = """INSERT INTO imported_audio_files 
              (file_name, file_path, title, duration) 
