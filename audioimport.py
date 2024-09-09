@@ -62,9 +62,6 @@ def add_mp3_to_database(file_path):
     close_db_connect(db,cursor)
     return new_id
 
-def add_processed_mp3(file_path,jsoncontent,comment):
-    newid = add_mp3_to_database(file_path)
-    add_transcription(newid,jsoncontent,comment)
         
 def get_audio_files_list():
     db,cursor  = get_db_connection()    
@@ -83,3 +80,26 @@ def get_audio_files_list():
     close_db_connect(db,cursor)
     return audio_files
 
+def add_word_timestamp(db,cursor,mp3_name, start_time, end_time, word, eng_word):
+    sql = """INSERT INTO word_timestamps 
+             (mp3_name, start_time, end_time, word, eng_word) 
+             VALUES (%s, %s, %s, %s, %s)"""
+    
+    values = (mp3_name, start_time, end_time, word, eng_word)    
+    cursor.execute(sql, values)
+    db.commit()
+    new_id = cursor.lastrowid    
+    print(f"Added word timestamp with ID {new_id}")
+    return new_id
+
+
+def add_processed_mp3(file_path,jsoncontent,comment):
+    newid = add_mp3_to_database(file_path)
+    add_transcription(newid,jsoncontent,comment)    
+    db,cursor  = get_db_connection()    
+    data = json.loads(jsoncontent)
+    results = data['results']
+    file_name = os.path.basename(file_path)
+    for r in results:
+        add_word_timestamp(db,cursor,file_name, r['start_time'], r['end_time'], r['alternatives'][0]['content'], '')
+    close_db_connect(db,cursor)
