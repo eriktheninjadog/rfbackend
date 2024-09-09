@@ -2,6 +2,7 @@ import os
 import mysql.connector
 from mutagen.mp3 import MP3
 import json
+import io
 
 def get_db_connection():
     db = mysql.connector.connect(
@@ -39,9 +40,11 @@ def add_mp3_to_database(file_path):
     # Get the file name from the path
     file_name = os.path.basename(file_path)    
     # Get MP3 metadata
-    audio = MP3(file_path)
+    title = "notitle"
+    with io.open(file_path, 'rb') as file:
+        audio = MP3(file)
     # Extract metadata (adjust as needed based on your MP3 files)
-    title = audio.get('TIT2', ['Unknown Title'])[0]
+        title = audio.get('TIT2', ['Unknown Title'])[0]
     duration = int(audio.info.length)
     # Define the destination directory
     dest_dir = "/opt/shared_audio"
