@@ -50,12 +50,12 @@ def add_mp3_to_database(file_path):
     dest_dir = "/opt/shared_audio"
     # Create the destination directory if it doesn't exist
     # Copy the file to the destination directory
-    subprocess.run("cp '"+file_path +"' " + dest_dir)    
+    subprocess.run(["cp",file_path,dest_dir],capture_output=True, text=True, check=True)    
     # Insert metadata into the database
     sql = """INSERT INTO imported_audio_files 
              (file_name, file_path, title, duration) 
              VALUES (%s, %s, %s, %s)"""
-    values = (file_name, dest_path, title, duration)    
+    values = (file_name, dest_dir+"/"+file_name, title, duration)    
     cursor.execute(sql, values)
     db.commit()
     new_id = cursor.lastrowid
