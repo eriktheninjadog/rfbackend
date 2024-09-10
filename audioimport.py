@@ -107,7 +107,7 @@ def add_processed_mp3(file_path,jsoncontent,comment):
     newid = add_mp3_to_database(file_path)
     add_transcription(newid,jsoncontent,comment)    
     db,cursor  = get_db_connection()    
-    data = json.loads(jsoncontent)
+    data = jsoncontent
     results = data['results']
     file_name = os.path.basename(file_path)
     for r in results:
