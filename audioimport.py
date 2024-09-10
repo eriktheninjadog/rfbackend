@@ -59,7 +59,7 @@ import shutil
 
 import subprocess
 
-def add_mp3_to_database(file_path):
+def add_mp3_to_database(file_path): 
     # Database connection setup
     print("Here comes the add_mp3_to_database")
     print("type of filename is " + str(type(file_path)))
@@ -134,3 +134,30 @@ def add_processed_mp3(file_path,jsoncontent,comment):
         add_word_timestamp(db,cursor,file_name, r['start_time'], r['end_time'], r['alternatives'][0]['content'], '')
     db.commit()
     close_db_connect(db,cursor)
+
+
+def explode_file(filename):
+    shutil.copy2("/opt/shared_audio/"+filename,"/var/www/html/mp3")
+    sql = """SELECT id, word, start_time,end_time 
+             FROM word_timestamps where mp3_name = """ + filename + """"
+             ORDER BY start_time"""    
+    db,cursor  = get_db_connection()
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    words = []
+    for row in results:     
+        words.append({
+            'word': row['word'],
+            'start_time': row['start_time'],
+            'end_time': row['end_time']
+        })
+    close_db_connect(db,cursor)
+    text =''
+    for i in words:
+        text = text + i['word']
+        if i['word']=='。' or i['word']=='？':
+            text = text + '\n'
+    f = open('/var/www/html/mp3/'+filename+".hint",'w',encoding='utf-8')
+    f.write(text)
+    f.close()
+    

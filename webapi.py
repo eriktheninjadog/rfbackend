@@ -1260,3 +1260,9 @@ import audioimport
 def import_mp3():   
     audioimport.add_processed_mp3(request.json['filepath'],request.json['jsoncontent'],'')
     return {}, 200
+
+
+@app.route('/explode_mp3', methods=['GET'])
+def import_mp3():   
+    audioimport.explode_file(request.args.get('filename'))
+    return {}, 200
