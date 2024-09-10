@@ -118,7 +118,6 @@ def add_word_timestamp(db,cursor,mp3_name, start_time, end_time, word, eng_word)
     
     values = (mp3_name, start_time, end_time, word, eng_word)    
     cursor.execute(sql, values)
-    db.commit()
     new_id = cursor.lastrowid    
     print(f"Added word timestamp with ID {new_id}")
     return new_id
@@ -133,4 +132,5 @@ def add_processed_mp3(file_path,jsoncontent,comment):
     file_name = os.path.basename(file_path)
     for r in results:
         add_word_timestamp(db,cursor,file_name, r['start_time'], r['end_time'], r['alternatives'][0]['content'], '')
+    db.commit()
     close_db_connect(db,cursor)
