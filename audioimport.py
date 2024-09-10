@@ -1,8 +1,29 @@
 import os
 import mysql.connector
 from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, TIT2
 import json
 import io
+
+def get_mp3_title(file_path):
+    try:
+        # Try to load ID3 tags
+        audio = ID3(file_path)
+        
+        # Check if the title tag exists
+        if 'TIT2' in audio:
+            return audio['TIT2'].text[0]
+        else:
+            return "Title not found in ID3 tags"
+    
+    except:
+        # If ID3 tags are not present, try to get the filename
+        try:
+            audio = MP3(file_path)
+            return os.path.splitext(os.path.basename(file_path))[0]
+        except:
+            return "Unable to read the file"
+
 
 def get_db_connection():
     db = mysql.connector.connect(
@@ -46,7 +67,7 @@ def add_mp3_to_database(file_path):
     # Get the file name from the path
     file_name = os.path.basename(file_path)    
     # Get MP3 metadata
-    title = file_name
+    title = get_mp3_title(file_path)
     duration = int(1000)
     # Define the destination directory
     dest_dir = "/opt/shared_audio"
