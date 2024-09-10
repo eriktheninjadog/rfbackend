@@ -139,8 +139,9 @@ def add_processed_mp3(file_path,jsoncontent,comment):
 def explode_file(filename):
     shutil.copy2("/opt/shared_audio/"+filename,"/var/www/html/mp3")
     sql = """SELECT id, word, start_time,end_time 
-             FROM word_timestamps where mp3_name = """ + filename + """"
+             FROM word_timestamps where mp3_name = '""" + filename + """' 
              ORDER BY start_time"""    
+    print(sql)
     db,cursor  = get_db_connection()
     cursor.execute(sql)
     results = cursor.fetchall()
