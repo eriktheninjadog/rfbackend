@@ -40,6 +40,8 @@ import subprocess
 
 def add_mp3_to_database(file_path):
     # Database connection setup
+    print("Here comes the add_mp3_to_database")
+    print("type of filename is " + type(file_path))
     db,cursor  = get_db_connection()
     # Get the file name from the path
     file_name = os.path.basename(file_path)    
