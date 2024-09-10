@@ -158,7 +158,7 @@ def explode_file(filename):
         text = text + i['word']
         if i['word']=='。' or i['word']=='？':
             text = text + '\n'
-    f = open('/var/www/html/mp3/spokenarticle_'+filename+".hint",'w',encoding='utf-8')
-    f.write(text)
+    f = open('/var/www/html/mp3/spokenarticle_'+filename+".hint.json",'w',encoding='utf-8')
+    f.write(json.dumps(words))
     f.close()
     
