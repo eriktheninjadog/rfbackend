@@ -137,7 +137,7 @@ def add_processed_mp3(file_path,jsoncontent,comment):
 
 
 def explode_file(filename):
-    shutil.copy2("/opt/shared_audio/"+filename,"/var/www/html/mp3")
+    shutil.copy2("/opt/shared_audio/"+filename,"/var/www/html/mp3/spokenarticle_"+filename)
     sql = """SELECT id, word, start_time,end_time 
              FROM word_timestamps where mp3_name = '""" + filename + """' 
              ORDER BY start_time"""    
@@ -158,7 +158,7 @@ def explode_file(filename):
         text = text + i['word']
         if i['word']=='。' or i['word']=='？':
             text = text + '\n'
-    f = open('/var/www/html/mp3/'+filename+".hint",'w',encoding='utf-8')
+    f = open('/var/www/html/mp3/spokenarticle_'+filename+".hint",'w',encoding='utf-8')
     f.write(text)
     f.close()
     
