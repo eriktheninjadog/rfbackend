@@ -1263,6 +1263,6 @@ def import_mp3():
 
 
 @app.route('/explode_mp3', methods=['GET'])
-def import_mp3():   
+def explode_mp3():   
     audioimport.explode_file(request.args.get('filename'))
     return {}, 200
