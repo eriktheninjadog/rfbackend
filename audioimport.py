@@ -146,12 +146,14 @@ def explode_file(filename):
     cursor.execute(sql)
     results = cursor.fetchall()
     words = []
+    mywords = []
     for row in results:     
         words.append({
             'word': row[1],
             'start_time': row[2],
             'end_time': row[3]
         })
+        mywords.append(row[1])
     close_db_connect(db,cursor)
     text =''
     for i in words:
@@ -159,6 +161,6 @@ def explode_file(filename):
         if i['word']=='。' or i['word']=='？':
             text = text + '\n'
     f = open('/var/www/html/mp3/spokenarticle_'+filename+".hint.json",'w',encoding='utf-8')
-    f.write(json.dumps(words))
+    f.write(json.dumps(mywords))
     f.close()
     
