@@ -104,8 +104,7 @@ def add_word_timestamp(db,cursor,mp3_name, start_time, end_time, word, eng_word)
 
 
 def add_processed_mp3(file_path,jsoncontent,comment):
-    filepathutf8 = file_path.decode('utf-8')
-    newid = add_mp3_to_database(filepathutf8)
+    newid = add_mp3_to_database(file_path)
     add_transcription(newid,jsoncontent,comment)    
     db,cursor  = get_db_connection()    
     data = json.loads(jsoncontent)
