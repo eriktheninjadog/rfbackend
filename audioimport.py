@@ -21,7 +21,7 @@ def close_db_connect(db,cursor):
 def add_transcription(audio_file_id, transcription_content, comment):
     db,cursor  = get_db_connection()
     sql = """INSERT INTO transcription_data 
-             (audio_file_id, content, comment) 
+             (imported_audio_files_id, content, comment) 
              VALUES (%s, %s, %s)"""
     
     # Convert the Python dictionary to a JSON string
@@ -81,7 +81,7 @@ def get_audio_files_list():
     cursor.execute(sql)
     results = cursor.fetchall()
     audio_files = []
-    for row in results:
+    for row in results:     
         audio_files.append({
             'id': row['id'],
             'title': row['title'],
