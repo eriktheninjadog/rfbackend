@@ -148,9 +148,9 @@ def explode_file(filename):
     words = []
     for row in results:     
         words.append({
-            'word': row['word'],
-            'start_time': row['start_time'],
-            'end_time': row['end_time']
+            'word': row[1],
+            'start_time': row[2],
+            'end_time': row[3]
         })
     close_db_connect(db,cursor)
     text =''
