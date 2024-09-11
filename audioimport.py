@@ -154,13 +154,23 @@ def explode_file(filename):
             'end_time': row[3]
         })
         mywords.append(row[1])
+        if (row[1] == '。' or row[1] == '？' ):
+            mywords.append("\n")
+            words.append({
+                'word': "\n",
+                'start_time': row[2],
+                'end_time': row[3]
+            })
     close_db_connect(db,cursor)
     text =''
     for i in words:
         text = text + i['word']
         if i['word']=='。' or i['word']=='？':
-            text = text + '\n'
+            text = text + "\n"
     f = open('/var/www/html/mp3/spokenarticle_'+filename+".hint.json",'w',encoding='utf-8')
+    f.write(json.dumps(mywords))
+    f.close()
+    f = open('/var/www/html/mp3/spokenarticle_'+filename+".allhint.json",'w',encoding='utf-8')
     f.write(json.dumps(mywords))
     f.close()
     
