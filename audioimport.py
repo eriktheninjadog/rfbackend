@@ -171,6 +171,6 @@ def explode_file(filename):
     f.write(json.dumps(mywords))
     f.close()
     f = open('/var/www/html/mp3/spokenarticle_'+filename+".allhint.json",'w',encoding='utf-8')
-    f.write(json.dumps(mywords))
+    f.write(json.dumps(words))
     f.close()
     
