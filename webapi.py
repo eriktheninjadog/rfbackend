@@ -1145,7 +1145,16 @@ def getspokenarticle():
         chiret = json.loads(chitext)
     else:
         chiret = ['no','chinese','to','\n','be','found','!']    
-    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret}})
+    allhint_file = mp3_file + '.allhint.json'
+    
+    if os.path.exists('/var/www/html/mp3/'+allhint_file):
+        f = open('/var/www/html/mp3/'+allhint_file,'r',encoding='utf-8')
+        allchitext = f.read()
+        f.close()
+        allchiret = json.loads(allchitext)
+    else:
+        allchiret = None
+    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'extendedtokens':allchiret}})
 
 
 @app.route('/makemp3fromtext', methods=['POST'])
