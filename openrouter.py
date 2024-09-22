@@ -134,7 +134,7 @@ def     do_open_opus_questions(question):
         "model": "anthropic/claude-3.5-sonnet",
         #"model": "anthropic/claude-3-opus", # Optional
         "messages": [
-        {"role": "user", "content": question}
+        {"role": "A helpful cantonese tutor", "content": question}
         ]
     })
     )
