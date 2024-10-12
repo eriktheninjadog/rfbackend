@@ -122,7 +122,7 @@ def parserouterjson(adict):
     None
     
     
-def     do_open_opus_questions(question):
+def do_open_opus_questions(question):
     response = requests.post(
     url="https://openrouter.ai/api/v1/chat/completions",
     headers={
@@ -146,15 +146,101 @@ def     do_open_opus_questions(question):
     return content
 
 
+def open_router_chatgpt_4o(system_content,user_content):
+    response = requests.post(
+  url="https://openrouter.ai/api/v1/chat/completions",
+  headers={
+        "Authorization": read_bearer_key(),
+        "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
+        "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
+  },
+  data=json.dumps({
+    "model": "openai/chatgpt-4o-latest", # Optional
+        "messages": [
+        {"role": "user", "content": user_content},
+        {"role": "system", "content": system_content}        
+        ],
+        
+    })
+    )
+    responsejson = response.json()
+    print(responsejson)
+    choices = responsejson['choices']
+    message = choices[0]['message']
+    content = message['content']
+    return content
+
+
+def open_router_chatgpt_4o_mini(system_content,user_content):
+    response = requests.post(
+  url="https://openrouter.ai/api/v1/chat/completions",
+  headers={
+        "Authorization": read_bearer_key(),
+        "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
+        "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
+  },
+  data=json.dumps({
+    "model": "openai/gpt-4o-mini", # Optional
+        "messages": [
+        {"role": "user", "content": user_content},
+        {"role": "system", "content": system_content}        
+        ],
+        
+    })
+    )
+    responsejson = response.json()
+    print(responsejson)
+    choices = responsejson['choices']
+    message = choices[0]['message']
+    content = message['content']
+    print(content)
+    return content
+
+
+
+def open_router_qwen(system_content,user_content):
+    response = requests.post(
+  url="https://openrouter.ai/api/v1/chat/completions",
+  headers={
+        "Authorization": read_bearer_key(),
+        "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
+        "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
+  },
+  data=json.dumps({
+    "model": "qwen/qwen-2.5-72b-instruct", # Optional
+        "messages": [
+        {"role": "user", "content": user_content},
+        {"role": "system", "content": system_content}        
+        ],
+        
+    })
+    )
+    responsejson = response.json()
+    print(responsejson)
+    choices = responsejson['choices']
+    message = choices[0]['message']
+    content = message['content']
+    print(content)
+    return content
+
+
+
+
 """
 f = open('opusanswer.json','r',encoding ='utf-8')
 l = f.read()
 f.close()
 parserouterjson(json.loads(l))
 """
-
-
-        
+    
 if __name__ == "__main__":
-    do_opus_questions()
+    
+    open_router_chatgpt_4o("You are a Cantonese language expert, specializing in correcting errors in transcriptions based upon context.",'''
+    Here is a transcription. Each word is on a new line. Give the lines where you think there are mistakes and what the proper word should be:
+    
+
+
+ ''')
+    
+    #do_opus_questions()
     #print(do_open_opus_questions('what is the meaning of båt in swedish?'))

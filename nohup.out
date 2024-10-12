@@ -1,0 +1,1312 @@
+  File "/home/erik/Documents/dev/fullapp/read-chinese-backend/newscrawler.py", line 109
+    except:
+    ^^^^^^
+SyntaxError: invalid syntax
+Building prefix dict from /var/www/html/api/rfbackend/dict.txt.big ...
+Loading model from cache /tmp/jieba.u4aea97e3b8f247643cfbc8e5aa52d0bf.cache
+Loading model cost 0.687 seconds.
+Prefix dict has been built successfully.
+US election 2024
+US election polls: Who is ahead - Harris or Trump?
+
+An in-depth look at the polls and what they can and can’t tell us about who will win the White House.Latest News & Updates
+How do young Palestinians and Israelis see their future?
+
+Jeremy Bowen speaks to young Palestinians and Israelis about the ongoing war and how they see the future.Latest News & Updates
+Copyright 2024 BBC. All rights reserved. The BBC is not responsible for the content of external sites. Read about our approach to external linking.US & Canada
+'It's non-stop': Swing state voters bombarded with ads - will they make a difference?
+
+Record sums are being spent on advertising in the US election - but will that make a difference?Latest News & Updates
+Sarah Ferguson jokes about making Coronation Street cameo appearance
+
+The Duchess of York pulled a pint in the Rovers and said she would have to 'bamboozle' producers to get a part.Latest News & Updates
+Copyright 2024 BBC. All rights reserved. The BBC is not responsible for the content of external sites. Read about our approach to external linking.Latest News & Updates
+Rescued seal pups released back into the wild
+
+Sage, Lilly, and Snowdrop were likely to have been left by their mother too early, says the Sea Life centreLatest News & Updates
+Court told about hand photo on Noah Donohoe phone
+
+A photo of a hand may have been taken on the teenager's mobile hours after he went missing, a court has heard.Northern Ireland Politics
+'I should not have commented' on McMonagle case - Murphy
+
+He said previously that warning of an investigation into an ex-press officer could have prejudiced the case.Latest News & Updates
+Take a look at the Scottish Parliament building on its 20th birthday
+
+The Scottish Parliament officially opened 20 years ago - but did you know the meanings behind some of its key features?Latest News & Updates
+Take a look at the Scottish Parliament building on its 20th birthday
+
+The Scottish Parliament officially opened 20 years ago - but did you know the meanings behind some of its key features?Latest News & Updates
+Gavin and Stacey cast 'in tears' as show wraps
+
+The final episode of the sitcom, written by James Corden and Ruth Jones, will air on Christmas Day.Latest News & Updates
+Families offered £5,000 to live in parts of Wales
+
+An incentive of up to £5,000 is available to families who want to return to some areas of Wales.Latest News & Updates
+Cameroon insists president is well despite month's absence
+
+Paul Biya, 91, has not been seen in public for weeks, stoking speculation about his health.Latest News & Updates
+Copyright 2024 BBC. All rights reserved. The BBC is not responsible for the content of external sites. Read about our approach to external linking.Latest News & Updates
+Copyright 2024 BBC. All rights reserved. The BBC is not responsible for the content of external sites. Read about our approach to external linking.Latest News & Updates
+Climbers rescued after three days in the Himalayas
+
+A British climber who went missing in the Himalayas has spoken of her relief after surviving for two days in "brutal" conditions that put her life in danger.Latest News & Updates
+Copyright 2024 BBC. All rights reserved. The BBC is not responsible for the content of external sites. Read about our approach to external linking.Latest News & Updates
+UK sanctions Russian troops over chemical weapons use in Ukraine
+
+Russia's Radiological Chemical and Biological Defence troops will be subject to an assets freeze and travel ban.Latest News & Updates
+Copyright 2024 BBC. All rights reserved. The BBC is not responsible for the content of external sites. Read about our approach to external linking.
+{'id': 'gen-1728553219-2LomxeAl9Qc91IxBr3Fd', 'provider': 'OpenAI', 'model': 'openai/gpt-4o-mini', 'object': 'chat.completion', 'created': 1728553219, 'choices': [{'logprobs': None, 'finish_reason': 'stop', 'index': 0, 'message': {'role': 'assistant', 'content': '### Summary of News Articles\n\n**1. US Election 2024: Polling Insights**\nAs the 2024 US presidential election approaches, polls are revealing intriguing data about who might win. Many citizens are curious about the race between Vice President Kamala Harris and former President Donald Trump. Polls can show how people feel about candidates, but they do not always predict the final outcome accurately. People are closely watching these developments as the election date draws near. Voters often change their minds, and many factors can influence the election\'s result. \n\n**2. Perspectives of Young Palestinians and Israelis**\nIn a discussion led by journalist Jeremy Bowen, young Palestinians and Israelis share their feelings about the ongoing conflict. Many are worried about the future and hope for peace between their communities. This conversation highlights how the younger generation views the necessary changes and what they want for their lives. Despite facing tough challenges, many young people desire understanding and cooperation between the two sides.\n\n**3. Impact of Election Ads in Swing States**\nVoters in key swing states are being flooded with advertisements ahead of the US elections. A record amount of money is being spent on these ads to influence opinions. The question remains whether these advertisements will actually make a difference in the way people vote. With many messages bombarding voters, it is hard to know if they will change minds or simply overwhelm them. \n\n**4. Emotional Gavin and Stacey Farewell**\nThe beloved British sitcom "Gavin and Stacey," created by James Corden and Ruth Jones, is coming to an end. The cast expressed deep emotion as they wrapped up filming. The final episode will air on Christmas Day, marking the end of a series that has won many hearts over the years. Fans are excited but sad to say goodbye to their favorite characters.\n\n**5. Families Encouraged to Move Back to Wales**\nThe government in Wales is offering families £5,000 to encourage them to return to some areas in the country. This initiative aims to boost local communities and make them lively again. It is an effort to bring families back to regions that may have seen population declines in recent years.\n\n**6. President of Cameroon’s Health Speculations**\nThere are concerns about the health of Cameroon’s President Paul Biya, who is 91 years old and has not been seen publicly for several weeks. Officials are insisting that the president is fine, despite growing speculation about his condition. Observers are waiting to see if he will return to public life soon.\n\n**7. Rescued Climbers in the Himalayas**\nA British climber missing for three days in the Himalayas spoke about her sense of relief after her rescue. She described her experience in harsh conditions that made survival very difficult. This story emphasizes the dangers of climbing in extreme environments. \n\n**8. UK Sanctions on Russian Troops**\nThe UK government has announced new sanctions against certain Russian troops due to their use of chemical weapons in Ukraine. These sanctions will include a freeze on their assets and a ban on travel. This action reflects ongoing international tensions and the need for accountability regarding war crimes.', 'refusal': ''}}], 'system_fingerprint': 'fp_8552ec53e1', 'usage': {'prompt_tokens': 846, 'completion_tokens': 619, 'total_tokens': 1465}}
+### Summary of News Articles
+
+**1. US Election 2024: Polling Insights**
+As the 2024 US presidential election approaches, polls are revealing intriguing data about who might win. Many citizens are curious about the race between Vice President Kamala Harris and former President Donald Trump. Polls can show how people feel about candidates, but they do not always predict the final outcome accurately. People are closely watching these developments as the election date draws near. Voters often change their minds, and many factors can influence the election's result. 
+
+**2. Perspectives of Young Palestinians and Israelis**
+In a discussion led by journalist Jeremy Bowen, young Palestinians and Israelis share their feelings about the ongoing conflict. Many are worried about the future and hope for peace between their communities. This conversation highlights how the younger generation views the necessary changes and what they want for their lives. Despite facing tough challenges, many young people desire understanding and cooperation between the two sides.
+
+**3. Impact of Election Ads in Swing States**
+Voters in key swing states are being flooded with advertisements ahead of the US elections. A record amount of money is being spent on these ads to influence opinions. The question remains whether these advertisements will actually make a difference in the way people vote. With many messages bombarding voters, it is hard to know if they will change minds or simply overwhelm them. 
+
+**4. Emotional Gavin and Stacey Farewell**
+The beloved British sitcom "Gavin and Stacey," created by James Corden and Ruth Jones, is coming to an end. The cast expressed deep emotion as they wrapped up filming. The final episode will air on Christmas Day, marking the end of a series that has won many hearts over the years. Fans are excited but sad to say goodbye to their favorite characters.
+
+**5. Families Encouraged to Move Back to Wales**
+The government in Wales is offering families £5,000 to encourage them to return to some areas in the country. This initiative aims to boost local communities and make them lively again. It is an effort to bring families back to regions that may have seen population declines in recent years.
+
+**6. President of Cameroon’s Health Speculations**
+There are concerns about the health of Cameroon’s President Paul Biya, who is 91 years old and has not been seen publicly for several weeks. Officials are insisting that the president is fine, despite growing speculation about his condition. Observers are waiting to see if he will return to public life soon.
+
+**7. Rescued Climbers in the Himalayas**
+A British climber missing for three days in the Himalayas spoke about her sense of relief after her rescue. She described her experience in harsh conditions that made survival very difficult. This story emphasizes the dangers of climbing in extreme environments. 
+
+**8. UK Sanctions on Russian Troops**
+The UK government has announced new sanctions against certain Russian troops due to their use of chemical weapons in Ukraine. These sanctions will include a freeze on their assets and a ban on travel. This action reflects ongoing international tensions and the need for accountability regarding war crimes.
+{'id': 'gen-1728553232-Qp1PZTfYgwAR5VD1DN4d', 'provider': 'Anthropic', 'model': 'anthropic/claude-3.5-sonnet', 'object': 'chat.completion', 'created': 1728553232, 'choices': [{'logprobs': None, 'finish_reason': 'end_turn', 'index': 0, 'message': {'role': 'assistant', 'content': '我會將呢篇新聞總結用好簡單嘅廣東話講出嚟,等8歲細路都聽得明。個人名、地名、品牌名、機構名同產品名我會用英文講。\n\n1. 美國大選2024年嘅民意調查\n大家都好關心邊個會贏2024年美國總統大選。有好多人想知道 Kamala Harris 同 Donald Trump 邊個會贏。民意調查可以話畀我哋知人哋鍾意邊個,但唔一定準。大選日仲有段時間,選民嘅意見可能會變,仲有好多嘢可以影響結果。\n\n2. 年輕嘅巴勒斯坦人同以色列人嘅睇法\n有個叫 Jeremy Bowen 嘅記者問咗啲後生嘅巴勒斯坦人同以色列人佢哋點睇呢場戰爭。好多人都擔心將來,希望大家可以和平相處。佢哋都想兩邊可以互相明白,一齊合作。\n\n3. 選舉廣告喺搖擺州嘅影響\n喺啲重要嘅搖擺州,選民見到好多選舉廣告。有人用好多錢去做呢啲廣告,想影響人哋嘅投票。但係唔知呢啲廣告會唔會真係改變到人哋嘅諗法。\n\n4. Gavin and Stacey 嘅感人告別\n英國人好鍾意嘅電視劇 Gavin and Stacey 就嚟完咗。James Corden 同 Ruth Jones 整呢套劇。最後一集會喺聖誕節播出。好多人都好開心,但又好唔捨得。\n\n5. 鼓勵家庭返去威爾斯\n威爾斯政府俾5000英鎊畀啲家庭,想佢哋返去住。佢哋想啲地方可以熱鬧啲。\n\n6. 喀麥隆總統嘅健康情況\n有人擔心喀麥隆總統 Paul Biya 嘅健康。佢91歲,好耐冇見到佢出現。政府話佢冇事,但有好多人唔相信。\n\n7. 喺喜馬拉雅山獲救嘅登山者\n有個英國登山者喺喜馬拉雅山失蹤咗三日,之後俾人救咗。佢話好慶幸自己冇事。呢個故仔話畀我哋知喺啲好寒冷嘅地方爬山好危險。\n\n8. 英國制裁俄羅斯軍隊\n英國政府宣布要懲罰一啲俄羅斯軍人,因為佢哋喺烏克蘭用咗化學武器。呢啲軍人唔可以去英國旅行,佢哋嘅錢都會俾人凍結。', 'refusal': ''}}], 'usage': {'prompt_tokens': 752, 'completion_tokens': 915, 'total_tokens': 1667}}
+MP3 file created successfully: spokenarticle_news1728553247.6168585_0.mp3
+Live Updates: Israel says it killed two Hezbollah commanders in Lebanon; U.S. calls out 'catastrophic conditions' in Gaza
+At least a quarter of Lebanese territory is now under Israeli “military displacement orders,” according to the United Nations.
+
+The United Nations Office for the Coordination of Humanitarian Affairs said in an update earlier this week that displacement orders had been issued for more than 100 villages and urban neighborhoods across southern Lebanon.
+
+The report cites data from the Office of the High Commissioner for Human Rights showing that more than 1.2 million people have been forced to flee their homes.
+
+Some of those people have been displaced more than once since Israel ramped up its offensive in the country, with a growing number of people sleeping on the streets, in car parks and in playgrounds as shelters continue to fill up.NBC Affiliates
+IE 11 is not supported. For an optimal experience visit our site on another browser.
+
+U.S. news NBC Affiliates NBC's affiliated stations
+
+
+
+
+
+Alabama WVTM Birmingham, AL www.wvtm13.com WAFF Huntsville, AL www.waff.com WPMI Mobile, AL www.local15tv.com WSFA Montgomery, AL www.wsfa.com Alaska KTUU Anchorage, AK www.ktuu.com KTVF Fairbanks, AK www.webcenter11.com KATH Juneau, AK www.kath.tv Arizona KNAZ Flagstaff, AZ www.12news.com KAIT Jonesboro, AZ www.kait8.com KPNX Phoenix, AZ www.12news.com KVOA Tucson, AZ www.kvoa.com KYMA Yuma, AZ www.kyma.com Arkansas KARK Little Rock, AR www.kark.com KNWA Fayetteville, AR www.knwa.com California KGET Bakersfield, CA www.kget.com KNBC Universal City, CA www.nbclosangeles.com KNVN Chico, CA www.actionnewsnow.com/home KIEM Eureka, CA www.kiem-tv.com KSEE Fresno, CA www.ksee24.com KMIR Palm Desert, CA www.nbcpalmsprings.com KCRA Sacramento, CA www.kcra.com KSBW Salinas, CA www.ksbw.com KNSD San Diego, CA 92101 www.nbcsandiego.com KNTV San Francisco Bay Area, CA www.nbcbayarea.com KSBY San Luis Obispo, CA www.ksby.com Colorado KUSA Denver, CO www.9news.com KOAA Colorado Springs, CO www.koaa.com KKCO Grand Junction, CO www.nbc11news.com Connecticut WVIT Hartford, CT www.nbcconnecticut.com Delaware WRDE Lewes, DE www.wrdetv.com District of Columbia WRC Washington, DC www.nbcwashington.com Florida WBBH Fort Myers, FL www.nbc-2.com WNBW Gainesville, FL www.mygtn.tv WTLV Jacksonville, FL www.firstcoastnews.com WTVJ Miramar, FL www.nbc6.com WJHG Panama City, FL www.wjhg.com WTWC Tallahassee, FL www.wtwc40.com WFLA Tampa, FL www.wfla.com WPTV West Palm Beach, FL www.wptv.com WESH Winter Park, FL www.wesh.com Georgia WALB Albany, GA www.walb.com WXIA Atlanta, GA www.11alive.com WAGT Augusta, GA www.wrdw.com/nbc26 WLTZ Columbus, GA www.wltz.com WMGT Macon, GA www.41nbc.com WSAV Savannah, GA www.wsav.com Hawaii KHNL Honolulu, HI www.khnl.com Idaho KTVB Boise, ID www.ktvb.com KPVI Pocatello, ID www.kpvi.com Illinois WMAQ Chicago, IL www.nbcchicago.com WAND Decatur, IL www.wandtv.com WEEK Peoria, IL www.week.com WGEM Quincy, IL www.wgem.com WREX Rockford, IL www.wrex.com Indiana WFIE Evansville, IN www.14wfie.com WPTA Fort Wayne, IN www.fortwaynesnbc.com WTHR Indianapolis, IN www.wthr.com WNDU South Bend, IN www.wndu.com WTWO Terre Haute, IN www.wtwo.com Iowa KWQC Davenport, IA www.kwqc.com WHO Des Moines, IA www.whotv.com KTIV Sioux City, IA www.ktiv.com KWWL Waterloo, IA www.kwwl.com Kansas KSNG Garden City, KS ksn.com KSNC Great Bend, KS ksn.com KSNK Oberlin, KS ksn.com KSNT Topeka, KS www.ksnt.com KSNW Wichita, KS www.ksn.com Kentucky WNKY Bowling Green, KY www.wnky.com WLEX Lexington, KY www.lex18.com WAVE Louisville, KY www.WAVE3.com WPSD Paducah, KY www.wpsdlocal6.com Louisiana KALB Alexandria, LA www.kalb.com WVLA Baton Rouge, LA www.nbc33tv.com KLAF Lafayette, LA www.kadn.com KPLC Lake Charles, LA www.kplctv.com WDSU New Orleans, LA www.wdsu.com KTAL Shreveport, LA arklatexhomepage.com KTVE West Monroe, LA www.myarklamiss.com Maine WLBZ Bangor, ME www.wlbz2.com WCSH Portland, ME www.wcsh6.com Maryland WBAL Baltimore, MD www.thewbalchannel.com WHAG Hagerstown, MD www.nbc25.com Massachusetts WBTS Newton, MA www.nbcboston.com WWLP Springfield, MA www.wwlp.com Michigan WEYI Clio, MI www.minbcnews.com WDIV Detroit, MI www.clickondetroit.com WOOD Grand Rapids, MI www.woodtv.com WILX Lansing, MI www.wilx.com WLUC Marquette, MI www.uppermichigansource.com WPBN Traverse City, MI www.tv7-4.com WTOM Traverse City, MI www.upnorthlive.com Minnesota KBJR Duluth, MN www.kbjr6.com KARE Minneapolis, MN www.kare11.com KTTC Rochester, MN www.kttc.com Mississippi WNBD Greenville, MS www.deltanews.tv WLBT Jackson, MS www.wlbt.com WDAM Moselle, MS www.wdam.com WTVA Tupelo, MS www.wtva.com Missouri KOMU Columbia, MO www.KOMU.com KSNF Joplin, MO www.fourstateshomepage.com KSHB Kansas City, MO www.kshb.com KYTV Springfield, MO www.ky3.com KSDK St. Louis, MO www.ksdk.com Montana KULR Billings, MT www.kulr8.com KTVM Butte, MT www.ktvm.com KTVH Helena, MT www.ktvh.com KCFW Kalispell, MT www.kcfw.com KECI Missoula, MT www.keci.com Nebraska KHAS Hastings, NE www.ksnblocal4.com KSNB Grand Island, NE www.ksnblocal4.com KNOP North Platte, NE www.knopnews2.com WOWT Omaha, NE www.wowt.com Nevada KMCC Las Vegas, NV www.mynews3.com KSNV Las Vegas, NV www.mynews3.com KRNV Reno, NV www.krnv.com New Mexico KOB Albuquerque, NM www.kob.com KOBF Farmington, NM www.kob.com KOBR Roswell, NM www.kob.com New York WNYT Albany, NY www.wnyt.com WBGH Binghamton, NY www.newschannel34.com WGRZ Buffalo, NY www.wgrz.com WETM Elmira, NY www.wetmtv.com WNBC New York, NY www.nbcnewyork.com WPTZ Plattsburgh, NY www.wptz.com WHEC Rochester, NY www.whec.com WSTM Syracuse, NY www.wstm.com WKTV Utica, NY www.wktv.com North Carolina WCNC Charlotte, NC www.wcnc.com WRAL Raleigh, NC www.wral.com WITN Washington, NC www.witntv.com WECT Wilmington, NC www.wect.com WXII Winston-Salem, NC www.wxii.com North Dakota KFYR Bismarck, ND www.kfyrtv.com KQCD Bismarck, ND www.kqcd.com KVLY Fargo, ND www.valleynewslive.com KMOT Minot, ND www.kmot.com KUMV Williston, ND www.kumv.com Ohio WLWT Cincinnati, OH www.wlwt.com WKYC Cleveland, OH www.wkyc.com WCMH Columbus, OH www.nbc4columbus.com WDTN Dayton, OH www.wdtn.com WLIO Lima, OH www.hometownstations.com WTOV Steubenville, OH www.wtov9.com WNWO Toledo, OH www.nbc24.com WFMJ Youngstown, OH www.wfmj.com WHIZ Zanesville, OH www.whizamfmtv.com Oklahoma KFOR Oklahoma City, OK www.kfor.com KJRH Tulsa, OK www.kjrh.com Oregon KTVZ Bend, OR www.ktvz.com KMTR Eugene, OR www.nbc16.com KOTI Klamath Falls, OR www.KOTI2.com KOBI Medford, OR www.kobi5.com KGW Portland, OR www.kgw.com KUCW Ogden, OR www.kgw.com KMTX Springfield, OR www.kmtr.com KMTZ Springfield, OR www.kmtr.com Pennsylvania WCAU Philadelphia, PA www.nbc10.com WICU Erie, PA www.wicu12.com WJAC Johnstown, PA www.wjactv.com WGAL Lancaster, PA www.wgal.com WPXI Pittsburgh, PA www.wpxi.com WBRE Wilkes-Barre, PA www.wbre.com Rhode Island WJAR Cranston, RI www.turnto10.com South Carolina WCBD Charleston, SC www.counton2.com WIS Columbia, SC www.wistv.com WYFF Greenville, SC www.wyff4.com WMBF Myrtle Beach, SC www.wmbfnews.com South Dakota KNBN Rapid City, SD www.newscenter1.tv KDLT Sioux Falls, SD www.kdlt.com KDLV Sioux Falls, SD www.kdlt.com Tennessee WRCB Chattanooga, TN www.wrcbtv.com WBIR Knoxville, TN www.wbir.com WMC Memphis, TN www.wmcstations.com WSMV Nashville, TN www.wsmv.com Texas KRBC Abilene, TX www.bigcountryhomepage.com KAMR Amarillo, TX www.kamr.com KXAN Austin, TX www.kxan.com KBMT Beaumont, TX www.12newsnow.com KVEO Brownsville, TX www.kveo.com KAGS Bryan, TX www.kagstv.com KRIS Corpus Christi, TX www.kristv.com KTEN Denison, TX www.kten.com KCEN Eddy, TX www.kcentv.com KTSM El Paso, TX www.ktsm.com KXAS Fort Worth, TX www.nbcdfw.com KPRC Houston, TX www.kprc.com KGNS Laredo, TX www.kgns.tv KCBD Lubbock, TX www.kcbd.com KWAB Midland, TX www.kwes.com KWES Midland, TX www.kwes.com KLSB Nacogdoches, TX www.nbc56.com KSAN San Angelo, TX conchovalleyhomepage.com WOAI San Antonio, TX www.news4sanantonio.com KETK Tyler, TX www.easttexasmatters.com KMOL Victoria, TX www.crossroadstoday.com KFDX Wichita Falls, TX www.kfdx.com Utah KSL Salt Lake City, UT www.ksl.com Virginia WCYB Bristol, VA www.wcyb.com WVIR Charlottesville, VA www.nbc29.com WAVY Portsmouth, VA www.wavy.com WWBT Richmond, VA www.nbc12.com WSLS Roanoke, VA www.wsls.com Washington KNDU Kennewick, WA kndu.com KING Seattle, WA www.king5.com KHQ Spokane, WA www.khq.com KNDO Yakima, WA www.kndo.com West Virginia WVVA Bluefield, WV www.wvva.com WBOY Clarksburg, WV www.wboy.com WSAZ Huntington, WV www.wsaz.com WTAP Parkersburg, WV www.wtap.com Wisconsin WEAU Claire, WI www.weau.com WGBA Green Bay, WI www.wgba.com WMTV Madison, WI www.nbc15.com WTMJ Milwaukee, WI www.tmj4.com WJFW Rhinelander, WI www.wjfw.com Wyoming KCHY Mills, WY www.kcwy13.com KLK Mills, WY www.kcwy13.com KCWY Mills, WY www.kcwy13.comLatest Weather News: Winter Storm Warnings, Updates, Video, Photos and More
+Hurricane Milton brought torrential rainfall to portions of the north and east of Florida. It is expected to head out to sea again off the east coast early Thursday morning. NBC News meteorologist Michelle Grossman has the very latest details on Early Today.NBC News NOW Live Audio
+NBC News NOW is a streaming network from NBC News. NOW features deep reporting, thoughtful storytelling, and live, breaking news from the global resources of NBC News. Get the latest breaking news and stay on top of the stories that matter most.
+
+Listen to more audio by subscribing to MSNBC and NBC News podcasts.China News: Breaking News, Photos & Videos on China
+The pair, a gift from Beijing, increases the total number of pandas in the Chinese territory to six, while Finland will return its two bears to China more than eight years early.Africa News: Breaking News, Photos & Videos on Africa
+Western partners have promised about 380,000 doses of mpox vaccines — less than 15% of the 3 million doses authorities have said are needed to end the outbreaks in Congo.Asia News: Breaking News, Photos & Videos on Asia
+IE 11 is not supported. For an optimal experience visit our site on another browser.Europe: Breaking News, Photos & Videos on Europe
+“Fenix is a team of trans boys created entirely by trans boys, but I think it’s more than that — a family, a safe space where you can be free and express yourself," one player said.Destruction like Gaza or civil war? Netanyahu's warning adds to questions over Israel's goals in Lebanon
+New divisions sent to join an expanding ground invasion, troops raising a flag outside a border village and an unmistakable warning to Lebanese civilians: Israel is sending increasingly mixed signals about the goals of a military operation it had insisted was limited.
+
+Concerns over the country's plans mounted Wednesday after Israeli Prime Minister Benjamin Netanyahu suggested that Lebanese people either rise up against Hezbollah or face destruction like the Gaza Strip.
+
+For many observers, this amounted to a choice between civil war or the same fate as that of Palestinians in the besieged and bombarded enclave.
+
+"You have an opportunity to save Lebanon before it falls into the abyss of a long war that will lead to destruction and suffering like we see in Gaza," Netanyahu said in a video address Tuesday delivered in English. "It doesn’t have to be that way."
+
+Follow live coverage
+
+His comments came as Israel expanded its invasion into southwestern Lebanon, deploying a fourth division of troops to battle Hezbollah as the military ordered evacuations well beyond a United Nations-declared buffer zone.
+
+This had already raised questions about Israel's stated objectives in its neighbor's territory.
+
+The charred shell of a building after an Israeli airstrike in Beirut on Tuesday. Scott Peterson / Getty Images
+
+Israel has said that what it calls a "limited, localized, targeted" operation against Hezbollah is necessary to ensure the safe return and security of the thousands of people who have been displaced from their homes in northern Israel, after the Iran-backed militant and political group began firing across the border a year ago in solidarity with Hamas and Palestinians in Gaza.
+
+Israeli officials have suggested this would involve Hezbollah retreating north of the Litani River, as outlined in U.N. Security Council Resolution 1701, which laid out the terms for a cease-fire in the 2006 war but has not been fully implemented.
+
+Is that still the case?
+
+Fawaz Gerges, a professor of international relations at the London School of Economics, told NBC News that he believed many were missing the broader picture of the “underlying thinking and plotting by Netanyahu and his war Cabinet.”
+
+Netanyahu appeared to be “trying to incite the Lebanese population against Hezbollah,” using rhetoric that will “pour gasoline on a raging fire," Gerges said in a phone interview Wednesday,
+
+Hezbollah is not just a militant group with thousands of fighters and a powerful arsenal, but also a political organization embedded throughout the institutions of a deeply divided country. To rise up against it would likely mean an armed struggle.
+
+"This is a recipe really for civil strife and civil war," Gerges said.
+
+Netanyahu’s warning “was a direct threat,” Yossi Mekelberg, a senior consulting fellow with Chatham House’s Middle East and North Africa Program, said in a phone interview Wednesday morning.
+
+Noting the rising death toll in Gaza, where more than 42,000 people have now been killed, according to the local Health Ministry, Mekelberg said Netanyahu had intimated that thousands more people could be killed in Lebanon. More than 2,000 people have been killed and more than 1.2 million displaced in the country in the past year, according to Lebanese officials.
+
+Mekelberg said Netanyahu's comments should "really lead the international community to jump and say, 'This is completely unacceptable.'"
+
+"Look at the pictures of Gaza, the images coming out of Gaza," he said.
+
+Israeli soldiers raise their national flag in Lebanon's southern border village of Maroun al-Ras. via AFP - Getty Images
+
+Images have also begun to convey the destruction wrought in Lebanon — from nightly airstrikes on Beirut to the aerial and ground assault in the south. And Wednesday, a video, geolocated by NBC News, stoked outrage: Israeli soldiers raising the country's flag on the outskirts of a border village.
+
+Lebanese people who spoke to NBC News on Wednesday bristled at Netanyahu’s warning, with some also mocking the footage of Israeli soldiers planting the flag in the southern village of Maroun Al-Ras.
+
+“I laughed when I heard about Netanyahu’s threats,” said Hisham Karameh, a salesperson at a local clothing store. “This is not the first time.”
+
+“Israel invaded Lebanon many times,” Karameh, 28, said. Israel’s invasion of Lebanon amid its 1982 civil war resulted in a nearly two-decade occupation of the country’s south.
+
+“They already did destroy the south and Dahieh,” he said, referring to the Beirut suburb and Hezbollah stronghold that has been bombarded for weeks. “Too late now to send more threats. We trust him on that issue.”
+
+Karameh also dismissed video on social media showing Israeli forces planting a flag in southern Lebanon as “a joke.”
+
+“They crossed the border for a few meters, raised their flag, took a picture and withdrew,” he said. “Please don’t insult our intelligence.”
+
+The State Department said Israeli soldiers raising a flag in southern Lebanon was “obviously inappropriate.”
+
+“We would look to them to comply with what they have said, which these are limited incursions, not with the goal of holding territory,” spokesperson Matthew Miller told reporters Tuesday night.Kremlin claims Trump sent Covid test machines to Putin
+Former President Donald Trump sent coronavirus testing devices to Russian President Vladimir Putin at the height of the pandemic, the Kremlin claimed Wednesday in a statement.
+
+Kremlin spokesperson Dmitry Peskov told Bloomberg News in a written statement that “we also sent equipment at the beginning of the pandemic.” The Kremlin did not respond to NBC News' request for comment.
+
+The story was initially reported in “War,” a new book by veteran Washington Post journalist Bob Woodward, which reports on Trump and President Joe Biden’s relationships with foreign leaders.
+
+The book claims that Trump secretly sent Abbott Covid-19 testing devices to Putin when the machines were in short supply. NBC News has not been able to independently verify this.
+
+Peskov also denied Woodward's claim that Trump and Putin have spoken on the telephone several times since Trump left office. “No, that’s not true,” he told Russian outlet RBC.
+
+Trump also denied the reporting in an interview with ABC News’ Jonathan Karl. “He’s a storyteller. A bad one. And he’s lost his marbles,” Trump said of Woodward.
+
+In a separate statement to Bloomberg, Trump's re-election team accused the journalist of bias and said “none of these made up stories by Bob Woodward are true.”
+
+The book, which is set to be published Oct. 15, raises questions about how Trump would handle the war in Ukraine if re-elected and whether he would continue to provide aid to the country.
+
+Trump has repeatedly said he could settle the war between Russia and Ukraine in one day if he’s elected president again. But when he was asked about this claim in July, Russia’s ambassador to the United Nations Vassily Nebenzia told reporters that “the Ukrainian crisis cannot be solved in one day.”
+
+The Republican nominee said last month that his relationship with Putin is “very good.” He said the same of his ties to Ukrainian President Volodymyr Zelenskyy when the two met at Trump Tower last month.
+
+As a private citizen, Trump would need the sitting president’s express permission to negotiate on behalf of the U.S. government.
+
+Woodward says in the book that senior adviser Jason Miller told him in July that he was “not aware” of any conversations between Trump and Putin, but should they wish to speak, “they’d know how to get in touch with each other.”
+
+Trump’s critics have long taken issue with his coziness with authoritarian leaders, including Putin. Trump has referred to Putin as “very savvy” and a “strong man,” and praised Russia’s invasion of Ukraine as “genius.”Trump and Putin have talked as many as 7 times since 2021, new book claims
+Former President Donald Trump has spoken with Russian President Vladimir Putin as many as seven times since he left the White House, including as recently as this year, according to new reporting by journalist Bob Woodward.
+
+Woodward makes the claims in his forthcoming book, “War,” a dramatic account of the White House under Trump and President Joe Biden that details elements of their relationships with foreign leaders. The book is set to be published Oct. 15.
+
+The book details how Trump’s relationship with Putin has continued as he mounts another bid for the White House amid the ongoing war in Ukraine.
+
+In one scene, Woodward recounts that Trump directed a senior aide to leave his private office at Mar-a-Lago this year “so he could have what he said was a private phone call” with the Russian leader. The aide, who loitered in a hallway outside while the two spoke, told Woodward that Trump and Putin have had “maybe as many as seven” phone calls since Trump left office in 2021.
+
+The account is credited to a single anonymous aide and provides no further details. Trump’s campaign did not respond when asked to comment directly on whether Trump has had any conversations with Putin since he left office. Trump’s communications director, Steven Cheung, in an emailed statement attacked Woodward personally and claimed the book is comprised of “made-up stories.”
+
+Trump told ABC News that the Putin report was "false" and that Woodward had "lost his marbles."
+
+Asked about Woodward's claims, Trump's running mate, Sen. JD Vance of Ohio, said Tuesday, “I honestly didn’t know that Bob Woodward was still alive until you asked me that question." He went on to knock Woodward as a “hack” and said that even if the reporting is true, "Look, is there something wrong with speaking to world leaders? No. Is there anything wrong with engaging in diplomacy?”
+
+Woodward also includes an account of Trump’s time in the White House when, at the height of the pandemic, he sent Putin testing equipment for the virus.
+
+The book raises new questions about Trump’s claim that he would end the war in Ukraine if elected, possibly before he even took office. He said last month that his relationship with Putin is “very good,” and he said the same of his ties to Ukrainian President Volodymyr Zelenskyy when the two met at Trump Tower last month. As a private citizen, Trump would need the sitting president's express permission to negotiate on behalf of the U.S. government, and Woodward says he probed the issue with an aide to Trump.
+
+According to Woodward, senior adviser Jason Miller told him in July that he was “not aware” of any conversations between Trump and Putin, but should they wish to speak, “they’d know how to get in touch with each other.”
+
+“[J]ust be very careful that we’re not saying they’re in communication or anything beforehand,” Woodward said Miller told him. “For the purpose of ending a war?” Woodward asked. “But that’s not going to happen, ultimately, not going to happen until President Trump wins on November 5th and it’s clear that he’s coming in,” Miller said, according to the author. “After November 5th, I think President Trump will be able to have it solved or largely solved by the time he gets sworn in.”
+
+The revelations come just weeks before Election Day as Trump mounts a bid for the White House against Vice President Kamala Harris, an election that could determine the future of U.S. support for Ukraine. NBC News obtained a copy of the book.
+
+The book also raises further questions about how Trump would handle the war in Ukraine if he is re-elected and whether he would continue to provide aid to Ukraine, as Harris has said she would. Before his meeting with Zelenskyy last month, Trump told reporters that he would help broker a deal “that’s good for both sides.” Vance has been sharply critical of U.S. funding for Ukraine and of Zelenskyy himself.Critics have long taken issue with Trump's coziness with authoritarian leaders, including Putin. Trump has referred to Putin as "very savvy" and a "strong man," and he praised Russia's invasion of Ukraine as "genius."
+
+In an interview Tuesday on "The Howard Stern Show," Harris reacted to Woodward's reporting on the Covid tests by accusing Trump of "secretly helping out an adversary while Americans are dying by the hundreds every day."
+
+In an interview Tuesday with Ben Shapiro, Trump said it was "a good thing, not a bad thing," that he got along with Putin "very well."
+
+"A lot of people think that’s a bad thing," Trump said. "No, no, that’s a great thing.Israel expands invasion into southwestern Lebanon; Hezbollah fires rockets at Haifa
+Israel’s orders for civilians to evacuate areas along Lebanon’s Mediterranean coast south of the Awali River suggest its navy could soon take a “more prominent role” in Israel’s invasion of Lebanon as fighting between ground troops and Hezbollah members continues in the south, a military expert said.
+
+“So far, the IDF largely relied on its ground and air force,” Michael Horowitz, a geopolitical and security analyst, said in an email this morning. “I doubt this signals difficulties,” he said of the efforts, but he said: “From a military standpoint, this may just be meant to let the navy take on a more prominent role — as it did in Gaza.”
+
+Israel’s expansion of its evacuation orders has spread both confusion and fear among those sheltering near the Mediterranean coast, with many wondering whether they’ll be safe from Israel’s operations in the days ahead.
+
+“The evacuation orders that the IDF has given have sometimes been very general, and hard to follow or understand — though some of them are more specific,” said Horowitz, the head of intelligence at Le Beck International, a security consultancy. “This one I think is also broad.”Israel has not briefed U.S. military officials on its plans for retaliation against Iran, U.S. officials say
+Israeli leaders still have not briefed the United States on specific details of their military response to last week’s ballistic missile attack by Iran, even after American military officials have discussed possibly supporting Israeli retaliation with intelligence or airstrikes of their own, according to two U.S. officials.
+
+Defense Secretary Lloyd Austin spoke with Israeli Defense Minister Yoav Gallant on Sunday evening, and one former and two current officials familiar with the call said the two discussed potential responses but not Israel’s final decision on what it could do and when. Israeli officials had met Sunday morning to discuss response options, according to two U.S. officials.
+
+U.S. officials said they do not believe Israel has made a final decision on the specifics of its response but said it has been narrowing and finalizing its options with additional meetings yesterday and today. The options that remain under consideration are targeting Iranian military and intelligence infrastructure, air defenses and energy facilities, the officials said. Gallant and Austin did not discuss nuclear facilities as possible targets, the officials said.
+
+Gallant was scheduled to meet with Austin in Washington on Wednesday — a trip Gallant initiated — but the trip has now been postponed at the request of Prime Minister Benjamin Netanyahu. Three U.S. officials had said they were concerned that the Israeli response could come while Gallant was meeting with Austin.
+
+After Iran launched approximately 200 ballistic missiles at Israel last week, U.S. military officials discussed options for joining Israel in its retaliation against Iran, according to two U.S. officials familiar with the discussions.
+
+The U.S. has long supported Israel with intelligence and that support could continue during Israel’s retaliatory strikes against Iran, the two officials said. Senior U.S. military officials have also discussed conducting very limited strikes against Iranian targets, the two officials said. Strikes inside Iran have been discussed, as have strikes on targets outside Iran, though strikes of any kind are less likely than intelligence sharing, the officials said.
+
+The U.S. could target Iranian assets at sea, the officials said, or try to disrupt Iran’s military assistance to proxies in the region by hitting Islamic Revolutionary Guards Corps sites that support militia groups in Yemen or Syria. A U.S. strike on an Iranian target could be considered defensive if it eliminates a possible threat to the U.S. or allies, like previous American strikes on Iran-linked targets inside Yemen, Iraq, and Syria.
+
+Administration officials emphasized that while the U.S. intends to support Israel’s right to defend itself, no decision on any U.S. action has been made. Three U.S. officials said they do not expect the U.S. to support the Israeli response directly and instead expect the U.S. to back Israel by issuing strong sanctions against Iran.
+
+The three officials said that Israel’s failure to give the U.S. concrete assurances that it will inform the U.S. of its plans well in advance of acting has made the U.S. less likely to take an active role in Israel’s response.
+
+In a statement, a defense official said, "We continue to consult with the Israelis on their next steps but won’t speculate or get into hypotheticals on a potential response to Iran’s Oct. 1 missile attack.”
+
+Israel did not immediately respond to a request for comment.
+
+Gallant asked to come to the U.S.
+
+As Israel weighs its response, U.S. officials are watching for clues about the timing. Austin was expected to meet Gallant at the Pentagon on Wednesday before his trip was postponed. Gallant is the one who suggested he come to the U.S., according to two U.S. officials familiar with the planning.
+
+Generally, a nation does not conduct a major military action while senior leaders are abroad, but Israel dispelled that notion when it killed Hezbollah leader Hassan Nasrallah in Beirut while Netanyahu was in New York for the United Nations General Assembly. Some U.S. officials believe Israel’s retaliation could come while Gallant is in Washington.
+
+Austin was frustrated and angry that Israel did not inform the U.S. that it intended to target Nasrallah, according to multiple U.S. officials. In recent months, Gallant and Austin have spoken multiple times every week, but Gallant informed Austin of the operation against Nasrallah as it was underway.
+
+At a meeting with reporters Monday morning, Pentagon press secretary Maj. Gen. Pat Ryder did not respond directly when asked whether Israel has assured U.S. officials that it will not surprise them again.
+
+“Secretary Austin and Minister Gallant have very regular touchpoints,” Ryder said. “We’ve been very clear that it’s helpful to have awareness about activities in the region for several reasons … We’ll keep those lines of communication open.”
+
+Senior U.S. leaders usually would not be in Israel when it launches an attack like its expected retaliation against Iran. Commander of U.S. Central Command Gen. Michael “Erik” Kurilla was in Israel over the weekend but has now left the country and is not expected to return immediately, according to U.S. officials familiar with his dynamic travel schedule. And U.S. officials say Israel has made it clear that it is not ruling out a response during the Yom Kippur holiday this week.
+
+Since Oct. 7, the U.S. and Iran have communicated to one another that neither side wants this conflict to escalate, according to the one former and two current U.S. officials. U.S. officials believe that short of a major attack on Iranian nuclear infrastructure that shuts down or sets its program back significantly, Iran is not looking for a direct war with Israel and the U.S.Middle East Conflict
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month.They were Israel's eyes on the border, but their warnings about Hamas went unheard
+TEL AVIV — They were Israel’s eyes on the border with Gaza, but former soldiers from a military observation unit say their warnings about suspicious Hamas activity ahead of the Oct. 7 terror attacks were repeatedly ignored. A year later, they are still seeking answers.
+
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month. “It’s anger and sadness, mainly frustration, because I was there and no one listened to me.”
+
+Lifshitz, 21, was part of the Israel Defense Forces' unit 414 stationed at the Nahal Oz military base on the Gaza border. Soldiers in the all-women field observers team, most just 19 or 20 years old and fulfilling their mandatory military service, would spend hours glued to feeds from surveillance cameras watching for threats.
+
+In the months leading up to Oct. 7, Lifshitz said she started noticing unusual activity. Truckloads of Hamas militants, which appeared to be special forces units because they were all dressed in black, were driving within 300 yards of the fence, in a “combat patrol,” she said. After they stopped, she said they would carefully scan Israeli positions while talking amongst themselves.
+
+Israeli soldier Roni Lifshitz speaking to NBC News' chief foreign correspondent, Richard Engel, in Tel Aviv on Sept. 12. NBC News
+
+On another occasion she said she saw militants using a “model of an Israeli tank they had built to train to kidnap soldiers. They were actually practicing scenarios that happened on Oct. 7,” she said.
+
+Lifshitz said she reported all of these events up the official chain of command, but was met with silence. “No one updated me. No one told me, ‘Roni, what you reported is being handled,’ or ‘Just so you know, they’re doing something about it, they’re dealing with it, they heard about it.’ No one said anything to me,” she said.
+
+On the morning of the attacks, Lifshitz was training in Jerusalem.
+
+Hamas militants stormed the Nahal Oz Base and 15 of Lifshitz’s colleagues — all young women like her —were killed in the assault. Seven more were dragged away into Gaza. Video taken on the day of the attack shows some of the young women covered in blood. Most were wearing sweatpants and the clothes they were sleeping in. Some were later seen in the streets of Gaza being put in jeeps and trucks.
+
+One of Lifshitz’s colleagues, Ori Megidish, was rescued weeks after the attacks, and another, Noa Marciana, was killed at the Al-Shifa Hospital in northern Gaza, according to the Israeli military. Five are still in captivity.
+
+Palestinians break through a fence along the border with Israel from Khan Younis in the southern Gaza Strip on Oct. 7, 2023. APA images via Reuters file
+
+Lifshitz said she was trying to put on a positive front while she worked in a shoe store, but she cried herself to sleep every night, wracked with the ever-present guilt of having survived.
+
+“Everything I do comes with the feeling of, ‘Why me and not them? Why am I different from them? Why were they murdered, and I wasn’t?’”
+
+She and other surviving members of unit 414 are also seeking answers.
+
+“I want an answer to just one question,” she said. “Who received the information and didn’t give the order to do something about it? Who turned a blind eye, and who is responsible for this?”
+
+Asked whether the warnings issued by the observers were acted upon or ignored, the Israeli military told NBC it is currently focused on fighting Hamas and “questions of this kind will be looked into at a later stage.”
+
+After a July meeting between the observers, their families and Israel’s Prime Minister Benjamin Netanyahu, his office said in a statement that he heard their requests for an investigation and promised that “matters would be thoroughly checked and that the lessons would be learned at all levels.”
+
+Speaking Tuesday on a visit to Nahal Oz, Israeli President Isaac Herzog said it was the site of "a terrible massacre."
+
+"I very much hope that the investigation will be published fully and comprehensively, to shed light on everything that happened. It won't change reality, but it's good that we know the truth in order to draw lessons," Herzog said.
+
+But so far, Israel has not launched an official inquiry, despite pleas from the families of observers and other victims of the attacks.
+
+Undeterred, surviving members of unit 414 have been making their concerns public.
+
+In September, Lifshitz and two other former soldiers, Amit Yerushalmi and Margaret Weinstein, took part in an unofficial civil commission of inquiry that has been collecting evidence of intelligence failures around the Hamas attacks, which saw 1,200 people and around 240 people taken hostage, according to Israeli tallies. Israel’s offensive in Gaza since then has killed more than 41,000 people, according to health officials in the enclave.
+
+Weinstein testified to equipment failures on the base, including surveillance cameras that had fallen down or didn’t work properly. Yerushalmi also alleged that the pattern of suspicious Hamas activity was increasing in the weeks leading up to the attack.
+
+Israeli President Isaac Herzog at the Nahal Oz outpost in southern Israel on Tuesday. Amos Ben Gershom / GPO
+
+Both echoed Lifshitz’s allegations that their claims were ignored.
+
+The commission was started by Ofer Rosenbaum and Haim Rubenstein as part of a promise that Rubenstein made to Eyal Eshel, the father of 19-year-old Roni Eshel, an observer from the unit who was killed at the base.
+
+Varda Alshech, a retired judge, leads the commission. Other members include retired Maj. Gen. Eyal Ben-Reuven, retired Brig. Gen.General Yehudit Grisaro and Shlomo Aharonishki, who served as the high commissioner of the Israeli Police between 2001 and 2008. Raphael Ben-Sheetrit, the former mayor of the northern town of Beit She’an, also sits on the commission.
+
+“We’re looking for an answer to the families — what really happened?” said Rubenstein, who, like Rosenbaum, worked in crisis management before the attacks. “If the army failed, I need to understand what’s happened in the army. If the government failed, I need to understand what’s happened over there.”
+
+Despite receiving no support from the government, the commission is pressing on with the investigation and plans to release a preliminary report next month.
+
+“If Israeli citizens will not have these answers, how can we make sure that this will never be happening again,” Rosenbaum said of their mission.
+
+Other former and current soldiers have also testified before their commission, as well as members of the intelligence community, journalists, former prime ministers and other government officials.
+
+In August, opposition leader Yair Lapid testified that, two months before the Oct. 7 attacks, he had taken part in a military intelligence briefing in which Netanyahu received detailed warnings that Hamas had noticed a weakness, division and a loss of military competence in Israel.
+
+Netanyahu appeared “bored and indifferent,” he said.
+
+Israeli soldiers in a new surveillance and situation room in Re’im Camp, built after their previous base at Nahal Oz was overrun and destroyed in the Hamas terrorist attack. via Israel Defense Forces
+
+Danny Yatom, the former head of Israel’s Mossad intelligence agency, also testified on Sept. 10.
+
+Speaking to NBC News at the commission’s offices in Tel Aviv on the day of his testimony, Yatom said he did not have an explanation for Israel’s security failures, but said all the layers of defense in Israel, in his assessment, “collapsed at the same time.”
+
+He added that Netanyahu “is responsible because he got some early warning, even though it was not the exact date, the exact location. He did not pay attention to it the way the prime minister should pay attention to it.”
+
+These days, Lifshitz wears a necklace with a small photo of her friend Shahaf Nissani, a young woman with a big mass of curly, chestnut colored hair spilling out and around her face and across her neck. She was Lifshitz’s best friend, and a fellow observer, who was also killed at the base.
+
+When customers at her shoe store ask her about the necklace, she tells them about her friend and then tries to change the subject.
+
+“People can see I hide my emotions,” she said. “I laugh, joke, and seem happy and go out, but my heart is broken, black. There’s no soul, nothing.”There is no evidence Iran has decided to rush toward building a nuclear weapon, CIA director says
+There is no evidence that Iran has decided to build a nuclear weapon, and if it did, the U.S. and its allies would most likely be able to detect such a step soon after it was taken, CIA Director William Burns said Monday.
+
+As Israel weighs how it will retaliate against Iran after it came under an Iranian ballistic missile barrage last week, speculation has focused on whether it might choose to strike nuclear sites in Iran to try to cut off Tehran’s possible path to a nuclear weapon.
+
+Speaking at the Cipher Brief security conference in Sea Island, Georgia, Burns said Iran has advanced its nuclear program by stockpiling uranium enriched to near weapons-grade levels. As a result, Iran could quickly secure enough fissile material for an atomic bomb if it chose to and there would be less time for the outside world to respond, he said.
+
+CIA Director William Burns during a hearing of the House (Select) Intelligence Committee in Washington, D.C., on March 12, 2024. Anna Moneymaker / Getty Images file
+
+“No, we do not see evidence today that the supreme leader has reversed the decision that he took at the end of 2003 to suspend the weaponization program,” Burns said of Iran’s unelected leader, Ayatollah Ali Khamenei, who holds ultimate authority in the country’s theocratic system. Khamenei issued a fatwa against nuclear weapons in 2003.
+
+Iran has developed the “means of delivery” for a potential nuclear weapon by building up its missile arsenal, he said. And since the U.S. pulled out of the 2015 nuclear agreement between Iran and major powers known as the JCPOA in 2018, Tehran “is in a much closer position to produce a bomb’s worth of ... enriched material for a single weapon,” Burns said.
+
+The JCPOA imposed strict limits on Tehran’s nuclear program while easing economic sanctions on the country. As president, Donald Trump pulled the U.S. out of the deal six years ago, reimposed sanctions and introduced new sanctions. Since the U.S. exit, Iran has steadily blown through the restrictions on its nuclear activities and blocked international inspectors from seeing some nuclear sites.
+
+When the JCPOA was in effect, he said, it would have taken Iran more than a year to amass enough highly enriched uranium for a nuclear bomb.
+
+“Now it’s probably more like a week or a little more to produce one bomb’s worth of weapons-grade material. So the risks have increased,” Burns said.
+
+Estimates vary as to how much time it would take Iran to build a viable nuclear weapon once it has acquired enough fissile material. Some experts say it could take up to a year to produce a warhead.
+
+Burns said the U.S. has closely monitored Iran’s nuclear activity for any sign that the regime is rushing toward a bomb.
+
+“We don’t see evidence today that such a decision has been made. We watch it very carefully,” Burns said.
+
+“I think we are reasonably confident that — working with our friends and allies — we will be able to see it relatively early on. But ... the great danger in a way is that time frame has been compressed in ways which create new challenges for us,” he said.
+
+Israel versus Iranian proxies
+
+Burns said Israel had scored major tactical successes against Iran’s most important proxy force, the Hezbollah militia in Lebanon.
+
+Speaking on the first anniversary of the Oct. 7 Hamas terrorist attack on Israel, Burns said the military strength of Hamas, another major Iranian proxy, had also been severely degraded over the past year.
+
+But he said the difficult task now was to combine those battlefield gains with “smart diplomacy” to halt fighting between Israel and Hezbollah and between Israel and Hamas in the Gaza Strip.
+
+“Now we face the very real danger of a further regional escalation of conflict,” said Burns, a former career diplomat who spent years in the Middle East.
+
+Even though leaders in both Iran and Israel are not necessarily looking for an all-out conflict, “there remains a risk,” Burns said.
+
+Burns said Israel, with excellent air defenses and intelligence, was able to fend off two rounds of Iranian missile attacks on Israel, one in April and again last week.
+
+“I think, in some ways, that did expose some of the limitations in Iranian military capabilities,” he said. “But that’s not to suggest that those capabilities are still not quite potent. And, you know, something that not only Israel but the United States needs to take very seriously, too.”
+
+Burns also touted the CIA’s recent efforts to reach out on social media to disaffected Russians, offering potential informants a way to contact it secretly.
+
+He said the effort is going “pretty well” and has also angered his intelligence counterparts in Russia.
+
+“It has produced results,” Burns said. “And alongside those results, in terms of what the purpose of this is, it has thoroughly pissed off my Russian counterparts, including the head of their services, which in itself is probably worth the effort.”Middle East Conflict
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month.A year from Oct 7, tens of thousands killed and fears of a 'forever war'
+In the dark days after the Oct. 7 terror attack on Israel and the ensuing military assault on Gaza, some dared hope the carnage could, in some way, become a catalyst for peace.
+
+“Crises can create opportunities,” veteran Israeli peace negotiator Yossi Beilin told NBC News last year. The world had given up on the Israel-Palestinian question, he said, but the horror of Oct. 7 and its aftermath “changed everything,” provoking a worldwide cry that this should never happen again.
+
+“There’s definitely room for hope,” Omar Dajani, a former legal adviser to Palestinian negotiation teams, agreed. “So long as we bear in mind that hope and optimism are different things.”
+
+One year later, those glimmers of hope have been shredded.Why Everest, the world's tallest mountain, is growing even taller
+Mount Everest is astoundingly tall at 29,032 feet above sea level, besting its Himalayan neighbors by hundreds of feet.
+
+But the world’s tallest peak is still growing, scientists say, thanks in part to the merger of two nearby river systems tens of thousands of years ago.
+
+An estimated 50 to 160 feet of Everest’s current height can be attributed to that merger, researchers revealed in a study published Monday in the journal Nature Geoscience, which found that in recent years, the annual pace of growth has sped up to fractions of a millimeter.
+
+“Even a feature as seemingly permanent as Mount Everest is subject to ongoing changes driven by various geological forces,” a co-author of the study, Dai Jingen, a geoscientist at China University of Geosciences in Beijing, said in an email Tuesday.
+
+The mountain peak has been steadily gaining height along with the rest of the Himalayas since its birth about 45 million years ago from the collision of the tectonic plates beneath the Indian subcontinent and Eurasia.
+
+But that didn’t fully explain how much Everest was growing. Researchers now say that when the Kosi River took over the Arun River about 89,000 years ago, it gave rise to a combined river of such immense power that it eroded large quantities of rock and soil from the Himalayan base nearly 50 miles away from Everest.
+
+In a geological process known as isostatic rebound, the erosion reduced the weight of the region, allowing the rise of land masses on the Earth’s crust, its outermost layer that floats atop a mantle layer made of hot, semiliquid rock.
+
+“Essentially, as the river carved away more rocks, the Earth’s crust rebounded, rising like a boat when weight is removed,” said Dai, adding that even though the river itself didn’t directly make Everest taller, the erosion and crust movement it caused contributed to the mountain’s elevation.
+
+Scientists estimate the rebound is causing Everest to grow 0.16 to 0.53 millimeters a year, accounting for as much as half of its annual uplift rate. They said Everest had gained as much as 2 millimeters annually in recent years.
+
+Researchers also say that could explain why Everest is unusually tall, reaching nearly 800 feet higher than its neighbors.
+
+Dai said the idea that river capture and erosion-related isostatic rebound play a role in Everest’s elevation adds a “surprising” dimension to the study of mountain formation, which is traditionally explained by tectonic activity.
+
+“While not entirely revolutionary, these findings are certainly surprising,” Dai said, adding that they could lead to a re-examination of current models of Himalayan formation and evolution.
+
+“It also emphasizes the importance of viewing the Earth as an interconnected system, where changes in one area can have surprising and significant impacts elsewhere,” he said.Ticketing platform under fire over scalping of Coldplay tickets
+Authorities in India have summoned executives of a ticketing platform after furious Coldplay fans failed to secure tickets for the British rock band’s coming concerts in Mumbai and complained about unchecked scalping.
+
+It’s the latest in a series of frustrating experiences around the world for fans facing growing competition and rising prices to see their favorite international artists onstage. Many of them are directing their anger at the platforms selling tickets — and calling on officials to act.
+
+Last month, the American company Ticketmaster came under British government scrutiny after Oasis fans complained about its “dynamic pricing” for the band’s reunion tour. The platform was also criticized in the U.S. over its disastrous 2022 sale for Taylor Swift’s Eras Tour, and along with its parent company, Live Nation, it is the subject of an antitrust suit the Justice Department brought this year.
+
+Coldplay fans say they endured long waits and technical glitches on BookMyShow, the official ticketing platform in India for the band’s Music of the Spheres world tour, which is heading to India’s financial capital in January. They were left disappointed, they said, when tickets were snapped up by scalpers who are selling them at several times their original price.
+
+Lavanya Maheshwari said she and five of her friends were ready and waiting when tickets went on sale at noon local time on Sept. 22, each refreshing the concert’s website on their laptops and phones.
+
+“We had 12 devices in the room trying to book the tickets,” said Maheshwari, an accountant based in Gurugram, a city southwest of New Delhi.
+
+But the website crashed even before sales began.
+
+“We kept refreshing for half an hour,” she said.
+
+When they eventually got in, she said, they were placed in a virtual ticketing line with hundreds of thousands of people ahead of them. They spent hours moving up the line, she said, only for the tickets to sell out.
+
+Tickets for the show had been priced from 2,500 rupees ($30) to 35,000 rupees ($415). But within hours, reselling platforms were listing them for thousands of dollars.
+
+On Monday, the website Viagogo showed the lowest-tier tickets available for $1,500 and the highest-tier tickets for as much as $4,000.
+
+“It was the first English band that I ever listened to, and I really wanted to watch them perform on the stage,” said Maheshwari, who turned 23 the day tickets went on sale. “This was definitely not the birthday present I was expecting.”
+
+BookMyShow’s chief executive, Ashish Hemrajani, was summoned before investigators Monday, a spokesperson for Mumbai police told NBC News. It is unclear whether he complied.
+
+The platform said it had experienced a “brief delay.” It said that tickets were limited to four per person and that the virtual line was designed to manage the high demand.
+
+“We’ve worked hard to ensure every fan had a fair chance to secure tickets,” a spokesperson said in a statement.
+
+BookMyShow said it was not associated with reselling platforms such as Viagogo, adding, “Scalping and black marketing of tickets is strictly condemned and punishable by law in India and BookMyShow vehemently opposes this practice.”
+
+The company said it had filed a police complaint and warned the public against buying tickets that might be fraudulent.
+
+Coldplay was initially scheduled to play just two Mumbai concerts, on Jan. 18 and 19, at DY Patil Stadium, which has a capacity of 45,000. A third show for Jan. 21 was added the day tickets went on sale because of “unprecedented demand,” BookMyShow said.
+
+Maheshwari said she logged on to the app as soon as the third show was announced.
+
+“We were very sure that we were going to get the tickets this time,” she said. “But when we again got in the queue, we were still unable to get it.”
+
+“There were friends who joined the queue after because we told them about the show. And somehow they got it, but not us,” she added.
+
+Tickets are now available only at prices far out of her reach, Maheshwari said.
+
+“These websites are selling tickets for 20, 30, 40 times more,” she said. “That is just impossible for us to buy.”
+{'id': 'gen-1728553308-KLIjO7nWP8C2FJzw4YWP', 'provider': 'OpenAI', 'model': 'openai/gpt-4o-mini', 'object': 'chat.completion', 'created': 1728553308, 'choices': [{'logprobs': None, 'finish_reason': 'stop', 'index': 0, 'message': {'role': 'assistant', 'content': '### Summary 1: Israel\'s Actions in Lebanon\n\nIsrael recently conducted military operations in southern Lebanon, claiming to have killed two commanders from Hezbollah, a militant group based in Lebanon. The United Nations reported that Israel has issued military displacement orders affecting about a quarter of Lebanese territory, impacting more than 100 villages and urban areas. Over 1.2 million people in Lebanon have been forced to leave their homes, with many individuals displaced multiple times due to ongoing violence.\n\nThe situation worsened as thousands of displaced people were seen sleeping in parks, streets, and car parks, as shelters became overcrowded. Amid escalating tensions, Israeli Prime Minister Benjamin Netanyahu warned Lebanese civilians that they could face destruction similar to what has occurred in Gaza if they do not oppose Hezbollah. He urged the Lebanese population to rise up against Hezbollah to avoid long-term suffering and potential civil war.\n\nInternational observers have expressed concern regarding the ambiguous military objectives of Israel in Lebanon, questioning whether the operations are genuinely limited as claimed. Netanyahu\'s comments have provoked further anxiety, painting a troubling picture of Lebanon\'s future. Analysts worry that these actions may lead to intensified conflict in the region, as both local civilian and military groups grapple with the shifting power dynamics and ongoing violence in Gaza and Lebanon.\n\nAs Israel prepares to escalate its military involvement, U.S. State Department officials criticized the raising of Israeli flags in captured territories, labeling it "inappropriate." Meanwhile, humanitarian groups continue to advocate for the displaced Lebanese population, stressing that urgent assistance is needed to alleviate the suffering caused by this conflict.\n\n### Summary 2: Trump and Putin\'s Relationship\n\nFormer President Donald Trump has claimed that he never sent coronavirus testing devices to Russian President Vladimir Putin, despite a new book suggesting that he did. According to journalist Bob Woodward’s upcoming book "War," Trump allegedly sent testing equipment to help during a critical time in the pandemic when such supplies were scarce. The Kremlin confirmed this event, while Trump labeled Woodward as a "storyteller" and accused him of being misleading.\n\nThe book also claims that Trump has had several private phone calls with Putin since leaving office, which has raised questions about their ongoing relationship amid the war in Ukraine. Trump\'s team responded emphatically, denying Woodward\'s assertions and dismissing the book as filled with "made-up stories."\n\nCritics point to Trump\'s favorable rhetoric towards Putin, questioning his approach to international relations and the implications for U.S. support regarding Ukraine. Trump continues to suggest that if elected, he could settle the conflict in Ukraine quickly, but skepticism remains about the feasibility of such claims. The book’s revelations come just weeks before the U.S. elections, stirring discussions about Trump\'s past conduct and future policies if he were to regain the presidency.\n\nAs the political landscape shifts, the broader implications of Trump\'s relationship with Putin could affect U.S. foreign policy not only toward Ukraine but also concerning Iran, particularly in light of recent escalations in conflicts involving Israel and Iranian proxies. Concerns about how Trump might navigate these complexities if re-elected remain at the forefront of political discourse.', 'refusal': ''}}], 'system_fingerprint': 'fp_8552ec53e1', 'usage': {'prompt_tokens': 11580, 'completion_tokens': 611, 'total_tokens': 12191}}
+### Summary 1: Israel's Actions in Lebanon
+
+Israel recently conducted military operations in southern Lebanon, claiming to have killed two commanders from Hezbollah, a militant group based in Lebanon. The United Nations reported that Israel has issued military displacement orders affecting about a quarter of Lebanese territory, impacting more than 100 villages and urban areas. Over 1.2 million people in Lebanon have been forced to leave their homes, with many individuals displaced multiple times due to ongoing violence.
+
+The situation worsened as thousands of displaced people were seen sleeping in parks, streets, and car parks, as shelters became overcrowded. Amid escalating tensions, Israeli Prime Minister Benjamin Netanyahu warned Lebanese civilians that they could face destruction similar to what has occurred in Gaza if they do not oppose Hezbollah. He urged the Lebanese population to rise up against Hezbollah to avoid long-term suffering and potential civil war.
+
+International observers have expressed concern regarding the ambiguous military objectives of Israel in Lebanon, questioning whether the operations are genuinely limited as claimed. Netanyahu's comments have provoked further anxiety, painting a troubling picture of Lebanon's future. Analysts worry that these actions may lead to intensified conflict in the region, as both local civilian and military groups grapple with the shifting power dynamics and ongoing violence in Gaza and Lebanon.
+
+As Israel prepares to escalate its military involvement, U.S. State Department officials criticized the raising of Israeli flags in captured territories, labeling it "inappropriate." Meanwhile, humanitarian groups continue to advocate for the displaced Lebanese population, stressing that urgent assistance is needed to alleviate the suffering caused by this conflict.
+
+### Summary 2: Trump and Putin's Relationship
+
+Former President Donald Trump has claimed that he never sent coronavirus testing devices to Russian President Vladimir Putin, despite a new book suggesting that he did. According to journalist Bob Woodward’s upcoming book "War," Trump allegedly sent testing equipment to help during a critical time in the pandemic when such supplies were scarce. The Kremlin confirmed this event, while Trump labeled Woodward as a "storyteller" and accused him of being misleading.
+
+The book also claims that Trump has had several private phone calls with Putin since leaving office, which has raised questions about their ongoing relationship amid the war in Ukraine. Trump's team responded emphatically, denying Woodward's assertions and dismissing the book as filled with "made-up stories."
+
+Critics point to Trump's favorable rhetoric towards Putin, questioning his approach to international relations and the implications for U.S. support regarding Ukraine. Trump continues to suggest that if elected, he could settle the conflict in Ukraine quickly, but skepticism remains about the feasibility of such claims. The book’s revelations come just weeks before the U.S. elections, stirring discussions about Trump's past conduct and future policies if he were to regain the presidency.
+
+As the political landscape shifts, the broader implications of Trump's relationship with Putin could affect U.S. foreign policy not only toward Ukraine but also concerning Iran, particularly in light of recent escalations in conflicts involving Israel and Iranian proxies. Concerns about how Trump might navigate these complexities if re-elected remain at the forefront of political discourse.
+{'id': 'gen-1728553325-33z3hjEYGOiqQqNQwiX7', 'provider': 'Google', 'model': 'anthropic/claude-3.5-sonnet', 'object': 'chat.completion', 'created': 1728553325, 'choices': [{'logprobs': None, 'finish_reason': 'end_turn', 'index': 0, 'message': {'role': 'assistant', 'content': '我會用好簡單嘅廣東話翻譯呢兩段文字,等8歲小朋友都聽得明:\n\n第一段:\n\n最近以色列喺黎巴嫩南部打仗,話自己殺咗兩個Hezbollah嘅大佬。聯合國話以色列要人離開黎巴嫩四分之一嘅地方,超過100條村同城市受影響。超過120萬人被迫離開屋企,好多人仲要搬好多次。\n\n好多人冇地方住,瞓喺公園、街道同停車場。以色列總理Netanyahu警告黎巴嫩人,如果唔反對Hezbollah,佢哋嘅國家可能會變得好似加沙咁慘。\n\n好多人擔心以色列喺黎巴嫩嘅目的唔清楚,可能會令戰爭變大。而家好多人需要幫助,但係情況越嚟越壞。\n\n第二段:\n\n特朗普話自己冇送過新冠病毒測試嘢畀俄羅斯總統普京,但係有本新書話佢送咗。克里姆林宮話真係有呢件事,但特朗普話個作者講大話。\n\n本書仲話特朗普同普京喺佢唔做總統之後都有傾電話,令人擔心佢哋嘅關係。特朗普嘅人話本書全部都係假嘅。\n\n有啲人話特朗普對普京太好,擔心佢會點樣處理烏克蘭嘅問題。特朗普話如果佢再做總統就可以好快解決烏克蘭嘅戰爭,但係好多人唔信。\n\n呢啲嘢可能會影響美國同其他國家嘅關係,特別係同伊朗同以色列有關嘅事。好多人都擔心如果特朗普再做總統會點樣處理呢啲複雜嘅問題。', 'refusal': ''}}], 'usage': {'prompt_tokens': 744, 'completion_tokens': 612, 'total_tokens': 1356}}
+MP3 file created successfully: spokenarticle_news1728553336.452613_0.mp3
+Live Updates: Israel says it killed two Hezbollah commanders in Lebanon; U.S. calls out 'catastrophic conditions' in Gaza
+At least a quarter of Lebanese territory is now under Israeli “military displacement orders,” according to the United Nations.
+
+The United Nations Office for the Coordination of Humanitarian Affairs said in an update earlier this week that displacement orders had been issued for more than 100 villages and urban neighborhoods across southern Lebanon.
+
+The report cites data from the Office of the High Commissioner for Human Rights showing that more than 1.2 million people have been forced to flee their homes.
+
+Some of those people have been displaced more than once since Israel ramped up its offensive in the country, with a growing number of people sleeping on the streets, in car parks and in playgrounds as shelters continue to fill up.NBC Affiliates
+IE 11 is not supported. For an optimal experience visit our site on another browser.
+
+U.S. news NBC Affiliates NBC's affiliated stations
+
+
+
+
+
+Alabama WVTM Birmingham, AL www.wvtm13.com WAFF Huntsville, AL www.waff.com WPMI Mobile, AL www.local15tv.com WSFA Montgomery, AL www.wsfa.com Alaska KTUU Anchorage, AK www.ktuu.com KTVF Fairbanks, AK www.webcenter11.com KATH Juneau, AK www.kath.tv Arizona KNAZ Flagstaff, AZ www.12news.com KAIT Jonesboro, AZ www.kait8.com KPNX Phoenix, AZ www.12news.com KVOA Tucson, AZ www.kvoa.com KYMA Yuma, AZ www.kyma.com Arkansas KARK Little Rock, AR www.kark.com KNWA Fayetteville, AR www.knwa.com California KGET Bakersfield, CA www.kget.com KNBC Universal City, CA www.nbclosangeles.com KNVN Chico, CA www.actionnewsnow.com/home KIEM Eureka, CA www.kiem-tv.com KSEE Fresno, CA www.ksee24.com KMIR Palm Desert, CA www.nbcpalmsprings.com KCRA Sacramento, CA www.kcra.com KSBW Salinas, CA www.ksbw.com KNSD San Diego, CA 92101 www.nbcsandiego.com KNTV San Francisco Bay Area, CA www.nbcbayarea.com KSBY San Luis Obispo, CA www.ksby.com Colorado KUSA Denver, CO www.9news.com KOAA Colorado Springs, CO www.koaa.com KKCO Grand Junction, CO www.nbc11news.com Connecticut WVIT Hartford, CT www.nbcconnecticut.com Delaware WRDE Lewes, DE www.wrdetv.com District of Columbia WRC Washington, DC www.nbcwashington.com Florida WBBH Fort Myers, FL www.nbc-2.com WNBW Gainesville, FL www.mygtn.tv WTLV Jacksonville, FL www.firstcoastnews.com WTVJ Miramar, FL www.nbc6.com WJHG Panama City, FL www.wjhg.com WTWC Tallahassee, FL www.wtwc40.com WFLA Tampa, FL www.wfla.com WPTV West Palm Beach, FL www.wptv.com WESH Winter Park, FL www.wesh.com Georgia WALB Albany, GA www.walb.com WXIA Atlanta, GA www.11alive.com WAGT Augusta, GA www.wrdw.com/nbc26 WLTZ Columbus, GA www.wltz.com WMGT Macon, GA www.41nbc.com WSAV Savannah, GA www.wsav.com Hawaii KHNL Honolulu, HI www.khnl.com Idaho KTVB Boise, ID www.ktvb.com KPVI Pocatello, ID www.kpvi.com Illinois WMAQ Chicago, IL www.nbcchicago.com WAND Decatur, IL www.wandtv.com WEEK Peoria, IL www.week.com WGEM Quincy, IL www.wgem.com WREX Rockford, IL www.wrex.com Indiana WFIE Evansville, IN www.14wfie.com WPTA Fort Wayne, IN www.fortwaynesnbc.com WTHR Indianapolis, IN www.wthr.com WNDU South Bend, IN www.wndu.com WTWO Terre Haute, IN www.wtwo.com Iowa KWQC Davenport, IA www.kwqc.com WHO Des Moines, IA www.whotv.com KTIV Sioux City, IA www.ktiv.com KWWL Waterloo, IA www.kwwl.com Kansas KSNG Garden City, KS ksn.com KSNC Great Bend, KS ksn.com KSNK Oberlin, KS ksn.com KSNT Topeka, KS www.ksnt.com KSNW Wichita, KS www.ksn.com Kentucky WNKY Bowling Green, KY www.wnky.com WLEX Lexington, KY www.lex18.com WAVE Louisville, KY www.WAVE3.com WPSD Paducah, KY www.wpsdlocal6.com Louisiana KALB Alexandria, LA www.kalb.com WVLA Baton Rouge, LA www.nbc33tv.com KLAF Lafayette, LA www.kadn.com KPLC Lake Charles, LA www.kplctv.com WDSU New Orleans, LA www.wdsu.com KTAL Shreveport, LA arklatexhomepage.com KTVE West Monroe, LA www.myarklamiss.com Maine WLBZ Bangor, ME www.wlbz2.com WCSH Portland, ME www.wcsh6.com Maryland WBAL Baltimore, MD www.thewbalchannel.com WHAG Hagerstown, MD www.nbc25.com Massachusetts WBTS Newton, MA www.nbcboston.com WWLP Springfield, MA www.wwlp.com Michigan WEYI Clio, MI www.minbcnews.com WDIV Detroit, MI www.clickondetroit.com WOOD Grand Rapids, MI www.woodtv.com WILX Lansing, MI www.wilx.com WLUC Marquette, MI www.uppermichigansource.com WPBN Traverse City, MI www.tv7-4.com WTOM Traverse City, MI www.upnorthlive.com Minnesota KBJR Duluth, MN www.kbjr6.com KARE Minneapolis, MN www.kare11.com KTTC Rochester, MN www.kttc.com Mississippi WNBD Greenville, MS www.deltanews.tv WLBT Jackson, MS www.wlbt.com WDAM Moselle, MS www.wdam.com WTVA Tupelo, MS www.wtva.com Missouri KOMU Columbia, MO www.KOMU.com KSNF Joplin, MO www.fourstateshomepage.com KSHB Kansas City, MO www.kshb.com KYTV Springfield, MO www.ky3.com KSDK St. Louis, MO www.ksdk.com Montana KULR Billings, MT www.kulr8.com KTVM Butte, MT www.ktvm.com KTVH Helena, MT www.ktvh.com KCFW Kalispell, MT www.kcfw.com KECI Missoula, MT www.keci.com Nebraska KHAS Hastings, NE www.ksnblocal4.com KSNB Grand Island, NE www.ksnblocal4.com KNOP North Platte, NE www.knopnews2.com WOWT Omaha, NE www.wowt.com Nevada KMCC Las Vegas, NV www.mynews3.com KSNV Las Vegas, NV www.mynews3.com KRNV Reno, NV www.krnv.com New Mexico KOB Albuquerque, NM www.kob.com KOBF Farmington, NM www.kob.com KOBR Roswell, NM www.kob.com New York WNYT Albany, NY www.wnyt.com WBGH Binghamton, NY www.newschannel34.com WGRZ Buffalo, NY www.wgrz.com WETM Elmira, NY www.wetmtv.com WNBC New York, NY www.nbcnewyork.com WPTZ Plattsburgh, NY www.wptz.com WHEC Rochester, NY www.whec.com WSTM Syracuse, NY www.wstm.com WKTV Utica, NY www.wktv.com North Carolina WCNC Charlotte, NC www.wcnc.com WRAL Raleigh, NC www.wral.com WITN Washington, NC www.witntv.com WECT Wilmington, NC www.wect.com WXII Winston-Salem, NC www.wxii.com North Dakota KFYR Bismarck, ND www.kfyrtv.com KQCD Bismarck, ND www.kqcd.com KVLY Fargo, ND www.valleynewslive.com KMOT Minot, ND www.kmot.com KUMV Williston, ND www.kumv.com Ohio WLWT Cincinnati, OH www.wlwt.com WKYC Cleveland, OH www.wkyc.com WCMH Columbus, OH www.nbc4columbus.com WDTN Dayton, OH www.wdtn.com WLIO Lima, OH www.hometownstations.com WTOV Steubenville, OH www.wtov9.com WNWO Toledo, OH www.nbc24.com WFMJ Youngstown, OH www.wfmj.com WHIZ Zanesville, OH www.whizamfmtv.com Oklahoma KFOR Oklahoma City, OK www.kfor.com KJRH Tulsa, OK www.kjrh.com Oregon KTVZ Bend, OR www.ktvz.com KMTR Eugene, OR www.nbc16.com KOTI Klamath Falls, OR www.KOTI2.com KOBI Medford, OR www.kobi5.com KGW Portland, OR www.kgw.com KUCW Ogden, OR www.kgw.com KMTX Springfield, OR www.kmtr.com KMTZ Springfield, OR www.kmtr.com Pennsylvania WCAU Philadelphia, PA www.nbc10.com WICU Erie, PA www.wicu12.com WJAC Johnstown, PA www.wjactv.com WGAL Lancaster, PA www.wgal.com WPXI Pittsburgh, PA www.wpxi.com WBRE Wilkes-Barre, PA www.wbre.com Rhode Island WJAR Cranston, RI www.turnto10.com South Carolina WCBD Charleston, SC www.counton2.com WIS Columbia, SC www.wistv.com WYFF Greenville, SC www.wyff4.com WMBF Myrtle Beach, SC www.wmbfnews.com South Dakota KNBN Rapid City, SD www.newscenter1.tv KDLT Sioux Falls, SD www.kdlt.com KDLV Sioux Falls, SD www.kdlt.com Tennessee WRCB Chattanooga, TN www.wrcbtv.com WBIR Knoxville, TN www.wbir.com WMC Memphis, TN www.wmcstations.com WSMV Nashville, TN www.wsmv.com Texas KRBC Abilene, TX www.bigcountryhomepage.com KAMR Amarillo, TX www.kamr.com KXAN Austin, TX www.kxan.com KBMT Beaumont, TX www.12newsnow.com KVEO Brownsville, TX www.kveo.com KAGS Bryan, TX www.kagstv.com KRIS Corpus Christi, TX www.kristv.com KTEN Denison, TX www.kten.com KCEN Eddy, TX www.kcentv.com KTSM El Paso, TX www.ktsm.com KXAS Fort Worth, TX www.nbcdfw.com KPRC Houston, TX www.kprc.com KGNS Laredo, TX www.kgns.tv KCBD Lubbock, TX www.kcbd.com KWAB Midland, TX www.kwes.com KWES Midland, TX www.kwes.com KLSB Nacogdoches, TX www.nbc56.com KSAN San Angelo, TX conchovalleyhomepage.com WOAI San Antonio, TX www.news4sanantonio.com KETK Tyler, TX www.easttexasmatters.com KMOL Victoria, TX www.crossroadstoday.com KFDX Wichita Falls, TX www.kfdx.com Utah KSL Salt Lake City, UT www.ksl.com Virginia WCYB Bristol, VA www.wcyb.com WVIR Charlottesville, VA www.nbc29.com WAVY Portsmouth, VA www.wavy.com WWBT Richmond, VA www.nbc12.com WSLS Roanoke, VA www.wsls.com Washington KNDU Kennewick, WA kndu.com KING Seattle, WA www.king5.com KHQ Spokane, WA www.khq.com KNDO Yakima, WA www.kndo.com West Virginia WVVA Bluefield, WV www.wvva.com WBOY Clarksburg, WV www.wboy.com WSAZ Huntington, WV www.wsaz.com WTAP Parkersburg, WV www.wtap.com Wisconsin WEAU Claire, WI www.weau.com WGBA Green Bay, WI www.wgba.com WMTV Madison, WI www.nbc15.com WTMJ Milwaukee, WI www.tmj4.com WJFW Rhinelander, WI www.wjfw.com Wyoming KCHY Mills, WY www.kcwy13.com KLK Mills, WY www.kcwy13.com KCWY Mills, WY www.kcwy13.comLatest Weather News: Winter Storm Warnings, Updates, Video, Photos and More
+Hurricane Milton brought torrential rainfall to portions of the north and east of Florida. It is expected to head out to sea again off the east coast early Thursday morning. NBC News meteorologist Michelle Grossman has the very latest details on Early Today.NBC News NOW Live Audio
+NBC News NOW is a streaming network from NBC News. NOW features deep reporting, thoughtful storytelling, and live, breaking news from the global resources of NBC News. Get the latest breaking news and stay on top of the stories that matter most.
+
+Listen to more audio by subscribing to MSNBC and NBC News podcasts.China News: Breaking News, Photos & Videos on China
+The pair, a gift from Beijing, increases the total number of pandas in the Chinese territory to six, while Finland will return its two bears to China more than eight years early.Africa News: Breaking News, Photos & Videos on Africa
+Western partners have promised about 380,000 doses of mpox vaccines — less than 15% of the 3 million doses authorities have said are needed to end the outbreaks in Congo.Asia News: Breaking News, Photos & Videos on Asia
+IE 11 is not supported. For an optimal experience visit our site on another browser.Europe: Breaking News, Photos & Videos on Europe
+“Fenix is a team of trans boys created entirely by trans boys, but I think it’s more than that — a family, a safe space where you can be free and express yourself," one player said.Destruction like Gaza or civil war? Netanyahu's warning adds to questions over Israel's goals in Lebanon
+New divisions sent to join an expanding ground invasion, troops raising a flag outside a border village and an unmistakable warning to Lebanese civilians: Israel is sending increasingly mixed signals about the goals of a military operation it had insisted was limited.
+
+Concerns over the country's plans mounted Wednesday after Israeli Prime Minister Benjamin Netanyahu suggested that Lebanese people either rise up against Hezbollah or face destruction like the Gaza Strip.
+
+For many observers, this amounted to a choice between civil war or the same fate as that of Palestinians in the besieged and bombarded enclave.
+
+"You have an opportunity to save Lebanon before it falls into the abyss of a long war that will lead to destruction and suffering like we see in Gaza," Netanyahu said in a video address Tuesday delivered in English. "It doesn’t have to be that way."
+
+Follow live coverage
+
+His comments came as Israel expanded its invasion into southwestern Lebanon, deploying a fourth division of troops to battle Hezbollah as the military ordered evacuations well beyond a United Nations-declared buffer zone.
+
+This had already raised questions about Israel's stated objectives in its neighbor's territory.
+
+The charred shell of a building after an Israeli airstrike in Beirut on Tuesday. Scott Peterson / Getty Images
+
+Israel has said that what it calls a "limited, localized, targeted" operation against Hezbollah is necessary to ensure the safe return and security of the thousands of people who have been displaced from their homes in northern Israel, after the Iran-backed militant and political group began firing across the border a year ago in solidarity with Hamas and Palestinians in Gaza.
+
+Israeli officials have suggested this would involve Hezbollah retreating north of the Litani River, as outlined in U.N. Security Council Resolution 1701, which laid out the terms for a cease-fire in the 2006 war but has not been fully implemented.
+
+Is that still the case?
+
+Fawaz Gerges, a professor of international relations at the London School of Economics, told NBC News that he believed many were missing the broader picture of the “underlying thinking and plotting by Netanyahu and his war Cabinet.”
+
+Netanyahu appeared to be “trying to incite the Lebanese population against Hezbollah,” using rhetoric that will “pour gasoline on a raging fire," Gerges said in a phone interview Wednesday,
+
+Hezbollah is not just a militant group with thousands of fighters and a powerful arsenal, but also a political organization embedded throughout the institutions of a deeply divided country. To rise up against it would likely mean an armed struggle.
+
+"This is a recipe really for civil strife and civil war," Gerges said.
+
+Netanyahu’s warning “was a direct threat,” Yossi Mekelberg, a senior consulting fellow with Chatham House’s Middle East and North Africa Program, said in a phone interview Wednesday morning.
+
+Noting the rising death toll in Gaza, where more than 42,000 people have now been killed, according to the local Health Ministry, Mekelberg said Netanyahu had intimated that thousands more people could be killed in Lebanon. More than 2,000 people have been killed and more than 1.2 million displaced in the country in the past year, according to Lebanese officials.
+
+Mekelberg said Netanyahu's comments should "really lead the international community to jump and say, 'This is completely unacceptable.'"
+
+"Look at the pictures of Gaza, the images coming out of Gaza," he said.
+
+Israeli soldiers raise their national flag in Lebanon's southern border village of Maroun al-Ras. via AFP - Getty Images
+
+Images have also begun to convey the destruction wrought in Lebanon — from nightly airstrikes on Beirut to the aerial and ground assault in the south. And Wednesday, a video, geolocated by NBC News, stoked outrage: Israeli soldiers raising the country's flag on the outskirts of a border village.
+
+Lebanese people who spoke to NBC News on Wednesday bristled at Netanyahu’s warning, with some also mocking the footage of Israeli soldiers planting the flag in the southern village of Maroun Al-Ras.
+
+“I laughed when I heard about Netanyahu’s threats,” said Hisham Karameh, a salesperson at a local clothing store. “This is not the first time.”
+
+“Israel invaded Lebanon many times,” Karameh, 28, said. Israel’s invasion of Lebanon amid its 1982 civil war resulted in a nearly two-decade occupation of the country’s south.
+
+“They already did destroy the south and Dahieh,” he said, referring to the Beirut suburb and Hezbollah stronghold that has been bombarded for weeks. “Too late now to send more threats. We trust him on that issue.”
+
+Karameh also dismissed video on social media showing Israeli forces planting a flag in southern Lebanon as “a joke.”
+
+“They crossed the border for a few meters, raised their flag, took a picture and withdrew,” he said. “Please don’t insult our intelligence.”
+
+The State Department said Israeli soldiers raising a flag in southern Lebanon was “obviously inappropriate.”
+
+“We would look to them to comply with what they have said, which these are limited incursions, not with the goal of holding territory,” spokesperson Matthew Miller told reporters Tuesday night.Kremlin claims Trump sent Covid test machines to Putin
+Former President Donald Trump sent coronavirus testing devices to Russian President Vladimir Putin at the height of the pandemic, the Kremlin claimed Wednesday in a statement.
+
+Kremlin spokesperson Dmitry Peskov told Bloomberg News in a written statement that “we also sent equipment at the beginning of the pandemic.” The Kremlin did not respond to NBC News' request for comment.
+
+The story was initially reported in “War,” a new book by veteran Washington Post journalist Bob Woodward, which reports on Trump and President Joe Biden’s relationships with foreign leaders.
+
+The book claims that Trump secretly sent Abbott Covid-19 testing devices to Putin when the machines were in short supply. NBC News has not been able to independently verify this.
+
+Peskov also denied Woodward's claim that Trump and Putin have spoken on the telephone several times since Trump left office. “No, that’s not true,” he told Russian outlet RBC.
+
+Trump also denied the reporting in an interview with ABC News’ Jonathan Karl. “He’s a storyteller. A bad one. And he’s lost his marbles,” Trump said of Woodward.
+
+In a separate statement to Bloomberg, Trump's re-election team accused the journalist of bias and said “none of these made up stories by Bob Woodward are true.”
+
+The book, which is set to be published Oct. 15, raises questions about how Trump would handle the war in Ukraine if re-elected and whether he would continue to provide aid to the country.
+
+Trump has repeatedly said he could settle the war between Russia and Ukraine in one day if he’s elected president again. But when he was asked about this claim in July, Russia’s ambassador to the United Nations Vassily Nebenzia told reporters that “the Ukrainian crisis cannot be solved in one day.”
+
+The Republican nominee said last month that his relationship with Putin is “very good.” He said the same of his ties to Ukrainian President Volodymyr Zelenskyy when the two met at Trump Tower last month.
+
+As a private citizen, Trump would need the sitting president’s express permission to negotiate on behalf of the U.S. government.
+
+Woodward says in the book that senior adviser Jason Miller told him in July that he was “not aware” of any conversations between Trump and Putin, but should they wish to speak, “they’d know how to get in touch with each other.”
+
+Trump’s critics have long taken issue with his coziness with authoritarian leaders, including Putin. Trump has referred to Putin as “very savvy” and a “strong man,” and praised Russia’s invasion of Ukraine as “genius.”Trump and Putin have talked as many as 7 times since 2021, new book claims
+Former President Donald Trump has spoken with Russian President Vladimir Putin as many as seven times since he left the White House, including as recently as this year, according to new reporting by journalist Bob Woodward.
+
+Woodward makes the claims in his forthcoming book, “War,” a dramatic account of the White House under Trump and President Joe Biden that details elements of their relationships with foreign leaders. The book is set to be published Oct. 15.
+
+The book details how Trump’s relationship with Putin has continued as he mounts another bid for the White House amid the ongoing war in Ukraine.
+
+In one scene, Woodward recounts that Trump directed a senior aide to leave his private office at Mar-a-Lago this year “so he could have what he said was a private phone call” with the Russian leader. The aide, who loitered in a hallway outside while the two spoke, told Woodward that Trump and Putin have had “maybe as many as seven” phone calls since Trump left office in 2021.
+
+The account is credited to a single anonymous aide and provides no further details. Trump’s campaign did not respond when asked to comment directly on whether Trump has had any conversations with Putin since he left office. Trump’s communications director, Steven Cheung, in an emailed statement attacked Woodward personally and claimed the book is comprised of “made-up stories.”
+
+Trump told ABC News that the Putin report was "false" and that Woodward had "lost his marbles."
+
+Asked about Woodward's claims, Trump's running mate, Sen. JD Vance of Ohio, said Tuesday, “I honestly didn’t know that Bob Woodward was still alive until you asked me that question." He went on to knock Woodward as a “hack” and said that even if the reporting is true, "Look, is there something wrong with speaking to world leaders? No. Is there anything wrong with engaging in diplomacy?”
+
+Woodward also includes an account of Trump’s time in the White House when, at the height of the pandemic, he sent Putin testing equipment for the virus.
+
+The book raises new questions about Trump’s claim that he would end the war in Ukraine if elected, possibly before he even took office. He said last month that his relationship with Putin is “very good,” and he said the same of his ties to Ukrainian President Volodymyr Zelenskyy when the two met at Trump Tower last month. As a private citizen, Trump would need the sitting president's express permission to negotiate on behalf of the U.S. government, and Woodward says he probed the issue with an aide to Trump.
+
+According to Woodward, senior adviser Jason Miller told him in July that he was “not aware” of any conversations between Trump and Putin, but should they wish to speak, “they’d know how to get in touch with each other.”
+
+“[J]ust be very careful that we’re not saying they’re in communication or anything beforehand,” Woodward said Miller told him. “For the purpose of ending a war?” Woodward asked. “But that’s not going to happen, ultimately, not going to happen until President Trump wins on November 5th and it’s clear that he’s coming in,” Miller said, according to the author. “After November 5th, I think President Trump will be able to have it solved or largely solved by the time he gets sworn in.”
+
+The revelations come just weeks before Election Day as Trump mounts a bid for the White House against Vice President Kamala Harris, an election that could determine the future of U.S. support for Ukraine. NBC News obtained a copy of the book.
+
+The book also raises further questions about how Trump would handle the war in Ukraine if he is re-elected and whether he would continue to provide aid to Ukraine, as Harris has said she would. Before his meeting with Zelenskyy last month, Trump told reporters that he would help broker a deal “that’s good for both sides.” Vance has been sharply critical of U.S. funding for Ukraine and of Zelenskyy himself.Critics have long taken issue with Trump's coziness with authoritarian leaders, including Putin. Trump has referred to Putin as "very savvy" and a "strong man," and he praised Russia's invasion of Ukraine as "genius."
+
+In an interview Tuesday on "The Howard Stern Show," Harris reacted to Woodward's reporting on the Covid tests by accusing Trump of "secretly helping out an adversary while Americans are dying by the hundreds every day."
+
+In an interview Tuesday with Ben Shapiro, Trump said it was "a good thing, not a bad thing," that he got along with Putin "very well."
+
+"A lot of people think that’s a bad thing," Trump said. "No, no, that’s a great thing.Israel expands invasion into southwestern Lebanon; Hezbollah fires rockets at Haifa
+Israel’s orders for civilians to evacuate areas along Lebanon’s Mediterranean coast south of the Awali River suggest its navy could soon take a “more prominent role” in Israel’s invasion of Lebanon as fighting between ground troops and Hezbollah members continues in the south, a military expert said.
+
+“So far, the IDF largely relied on its ground and air force,” Michael Horowitz, a geopolitical and security analyst, said in an email this morning. “I doubt this signals difficulties,” he said of the efforts, but he said: “From a military standpoint, this may just be meant to let the navy take on a more prominent role — as it did in Gaza.”
+
+Israel’s expansion of its evacuation orders has spread both confusion and fear among those sheltering near the Mediterranean coast, with many wondering whether they’ll be safe from Israel’s operations in the days ahead.
+
+“The evacuation orders that the IDF has given have sometimes been very general, and hard to follow or understand — though some of them are more specific,” said Horowitz, the head of intelligence at Le Beck International, a security consultancy. “This one I think is also broad.”Israel has not briefed U.S. military officials on its plans for retaliation against Iran, U.S. officials say
+Israeli leaders still have not briefed the United States on specific details of their military response to last week’s ballistic missile attack by Iran, even after American military officials have discussed possibly supporting Israeli retaliation with intelligence or airstrikes of their own, according to two U.S. officials.
+
+Defense Secretary Lloyd Austin spoke with Israeli Defense Minister Yoav Gallant on Sunday evening, and one former and two current officials familiar with the call said the two discussed potential responses but not Israel’s final decision on what it could do and when. Israeli officials had met Sunday morning to discuss response options, according to two U.S. officials.
+
+U.S. officials said they do not believe Israel has made a final decision on the specifics of its response but said it has been narrowing and finalizing its options with additional meetings yesterday and today. The options that remain under consideration are targeting Iranian military and intelligence infrastructure, air defenses and energy facilities, the officials said. Gallant and Austin did not discuss nuclear facilities as possible targets, the officials said.
+
+Gallant was scheduled to meet with Austin in Washington on Wednesday — a trip Gallant initiated — but the trip has now been postponed at the request of Prime Minister Benjamin Netanyahu. Three U.S. officials had said they were concerned that the Israeli response could come while Gallant was meeting with Austin.
+
+After Iran launched approximately 200 ballistic missiles at Israel last week, U.S. military officials discussed options for joining Israel in its retaliation against Iran, according to two U.S. officials familiar with the discussions.
+
+The U.S. has long supported Israel with intelligence and that support could continue during Israel’s retaliatory strikes against Iran, the two officials said. Senior U.S. military officials have also discussed conducting very limited strikes against Iranian targets, the two officials said. Strikes inside Iran have been discussed, as have strikes on targets outside Iran, though strikes of any kind are less likely than intelligence sharing, the officials said.
+
+The U.S. could target Iranian assets at sea, the officials said, or try to disrupt Iran’s military assistance to proxies in the region by hitting Islamic Revolutionary Guards Corps sites that support militia groups in Yemen or Syria. A U.S. strike on an Iranian target could be considered defensive if it eliminates a possible threat to the U.S. or allies, like previous American strikes on Iran-linked targets inside Yemen, Iraq, and Syria.
+
+Administration officials emphasized that while the U.S. intends to support Israel’s right to defend itself, no decision on any U.S. action has been made. Three U.S. officials said they do not expect the U.S. to support the Israeli response directly and instead expect the U.S. to back Israel by issuing strong sanctions against Iran.
+
+The three officials said that Israel’s failure to give the U.S. concrete assurances that it will inform the U.S. of its plans well in advance of acting has made the U.S. less likely to take an active role in Israel’s response.
+
+In a statement, a defense official said, "We continue to consult with the Israelis on their next steps but won’t speculate or get into hypotheticals on a potential response to Iran’s Oct. 1 missile attack.”
+
+Israel did not immediately respond to a request for comment.
+
+Gallant asked to come to the U.S.
+
+As Israel weighs its response, U.S. officials are watching for clues about the timing. Austin was expected to meet Gallant at the Pentagon on Wednesday before his trip was postponed. Gallant is the one who suggested he come to the U.S., according to two U.S. officials familiar with the planning.
+
+Generally, a nation does not conduct a major military action while senior leaders are abroad, but Israel dispelled that notion when it killed Hezbollah leader Hassan Nasrallah in Beirut while Netanyahu was in New York for the United Nations General Assembly. Some U.S. officials believe Israel’s retaliation could come while Gallant is in Washington.
+
+Austin was frustrated and angry that Israel did not inform the U.S. that it intended to target Nasrallah, according to multiple U.S. officials. In recent months, Gallant and Austin have spoken multiple times every week, but Gallant informed Austin of the operation against Nasrallah as it was underway.
+
+At a meeting with reporters Monday morning, Pentagon press secretary Maj. Gen. Pat Ryder did not respond directly when asked whether Israel has assured U.S. officials that it will not surprise them again.
+
+“Secretary Austin and Minister Gallant have very regular touchpoints,” Ryder said. “We’ve been very clear that it’s helpful to have awareness about activities in the region for several reasons … We’ll keep those lines of communication open.”
+
+Senior U.S. leaders usually would not be in Israel when it launches an attack like its expected retaliation against Iran. Commander of U.S. Central Command Gen. Michael “Erik” Kurilla was in Israel over the weekend but has now left the country and is not expected to return immediately, according to U.S. officials familiar with his dynamic travel schedule. And U.S. officials say Israel has made it clear that it is not ruling out a response during the Yom Kippur holiday this week.
+
+Since Oct. 7, the U.S. and Iran have communicated to one another that neither side wants this conflict to escalate, according to the one former and two current U.S. officials. U.S. officials believe that short of a major attack on Iranian nuclear infrastructure that shuts down or sets its program back significantly, Iran is not looking for a direct war with Israel and the U.S.Middle East Conflict
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month.They were Israel's eyes on the border, but their warnings about Hamas went unheard
+TEL AVIV — They were Israel’s eyes on the border with Gaza, but former soldiers from a military observation unit say their warnings about suspicious Hamas activity ahead of the Oct. 7 terror attacks were repeatedly ignored. A year later, they are still seeking answers.
+
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month. “It’s anger and sadness, mainly frustration, because I was there and no one listened to me.”
+
+Lifshitz, 21, was part of the Israel Defense Forces' unit 414 stationed at the Nahal Oz military base on the Gaza border. Soldiers in the all-women field observers team, most just 19 or 20 years old and fulfilling their mandatory military service, would spend hours glued to feeds from surveillance cameras watching for threats.
+
+In the months leading up to Oct. 7, Lifshitz said she started noticing unusual activity. Truckloads of Hamas militants, which appeared to be special forces units because they were all dressed in black, were driving within 300 yards of the fence, in a “combat patrol,” she said. After they stopped, she said they would carefully scan Israeli positions while talking amongst themselves.
+
+Israeli soldier Roni Lifshitz speaking to NBC News' chief foreign correspondent, Richard Engel, in Tel Aviv on Sept. 12. NBC News
+
+On another occasion she said she saw militants using a “model of an Israeli tank they had built to train to kidnap soldiers. They were actually practicing scenarios that happened on Oct. 7,” she said.
+
+Lifshitz said she reported all of these events up the official chain of command, but was met with silence. “No one updated me. No one told me, ‘Roni, what you reported is being handled,’ or ‘Just so you know, they’re doing something about it, they’re dealing with it, they heard about it.’ No one said anything to me,” she said.
+
+On the morning of the attacks, Lifshitz was training in Jerusalem.
+
+Hamas militants stormed the Nahal Oz Base and 15 of Lifshitz’s colleagues — all young women like her —were killed in the assault. Seven more were dragged away into Gaza. Video taken on the day of the attack shows some of the young women covered in blood. Most were wearing sweatpants and the clothes they were sleeping in. Some were later seen in the streets of Gaza being put in jeeps and trucks.
+
+One of Lifshitz’s colleagues, Ori Megidish, was rescued weeks after the attacks, and another, Noa Marciana, was killed at the Al-Shifa Hospital in northern Gaza, according to the Israeli military. Five are still in captivity.
+
+Palestinians break through a fence along the border with Israel from Khan Younis in the southern Gaza Strip on Oct. 7, 2023. APA images via Reuters file
+
+Lifshitz said she was trying to put on a positive front while she worked in a shoe store, but she cried herself to sleep every night, wracked with the ever-present guilt of having survived.
+
+“Everything I do comes with the feeling of, ‘Why me and not them? Why am I different from them? Why were they murdered, and I wasn’t?’”
+
+She and other surviving members of unit 414 are also seeking answers.
+
+“I want an answer to just one question,” she said. “Who received the information and didn’t give the order to do something about it? Who turned a blind eye, and who is responsible for this?”
+
+Asked whether the warnings issued by the observers were acted upon or ignored, the Israeli military told NBC it is currently focused on fighting Hamas and “questions of this kind will be looked into at a later stage.”
+
+After a July meeting between the observers, their families and Israel’s Prime Minister Benjamin Netanyahu, his office said in a statement that he heard their requests for an investigation and promised that “matters would be thoroughly checked and that the lessons would be learned at all levels.”
+
+Speaking Tuesday on a visit to Nahal Oz, Israeli President Isaac Herzog said it was the site of "a terrible massacre."
+
+"I very much hope that the investigation will be published fully and comprehensively, to shed light on everything that happened. It won't change reality, but it's good that we know the truth in order to draw lessons," Herzog said.
+
+But so far, Israel has not launched an official inquiry, despite pleas from the families of observers and other victims of the attacks.
+
+Undeterred, surviving members of unit 414 have been making their concerns public.
+
+In September, Lifshitz and two other former soldiers, Amit Yerushalmi and Margaret Weinstein, took part in an unofficial civil commission of inquiry that has been collecting evidence of intelligence failures around the Hamas attacks, which saw 1,200 people and around 240 people taken hostage, according to Israeli tallies. Israel’s offensive in Gaza since then has killed more than 41,000 people, according to health officials in the enclave.
+
+Weinstein testified to equipment failures on the base, including surveillance cameras that had fallen down or didn’t work properly. Yerushalmi also alleged that the pattern of suspicious Hamas activity was increasing in the weeks leading up to the attack.
+
+Israeli President Isaac Herzog at the Nahal Oz outpost in southern Israel on Tuesday. Amos Ben Gershom / GPO
+
+Both echoed Lifshitz’s allegations that their claims were ignored.
+
+The commission was started by Ofer Rosenbaum and Haim Rubenstein as part of a promise that Rubenstein made to Eyal Eshel, the father of 19-year-old Roni Eshel, an observer from the unit who was killed at the base.
+
+Varda Alshech, a retired judge, leads the commission. Other members include retired Maj. Gen. Eyal Ben-Reuven, retired Brig. Gen.General Yehudit Grisaro and Shlomo Aharonishki, who served as the high commissioner of the Israeli Police between 2001 and 2008. Raphael Ben-Sheetrit, the former mayor of the northern town of Beit She’an, also sits on the commission.
+
+“We’re looking for an answer to the families — what really happened?” said Rubenstein, who, like Rosenbaum, worked in crisis management before the attacks. “If the army failed, I need to understand what’s happened in the army. If the government failed, I need to understand what’s happened over there.”
+
+Despite receiving no support from the government, the commission is pressing on with the investigation and plans to release a preliminary report next month.
+
+“If Israeli citizens will not have these answers, how can we make sure that this will never be happening again,” Rosenbaum said of their mission.
+
+Other former and current soldiers have also testified before their commission, as well as members of the intelligence community, journalists, former prime ministers and other government officials.
+
+In August, opposition leader Yair Lapid testified that, two months before the Oct. 7 attacks, he had taken part in a military intelligence briefing in which Netanyahu received detailed warnings that Hamas had noticed a weakness, division and a loss of military competence in Israel.
+
+Netanyahu appeared “bored and indifferent,” he said.
+
+Israeli soldiers in a new surveillance and situation room in Re’im Camp, built after their previous base at Nahal Oz was overrun and destroyed in the Hamas terrorist attack. via Israel Defense Forces
+
+Danny Yatom, the former head of Israel’s Mossad intelligence agency, also testified on Sept. 10.
+
+Speaking to NBC News at the commission’s offices in Tel Aviv on the day of his testimony, Yatom said he did not have an explanation for Israel’s security failures, but said all the layers of defense in Israel, in his assessment, “collapsed at the same time.”
+
+He added that Netanyahu “is responsible because he got some early warning, even though it was not the exact date, the exact location. He did not pay attention to it the way the prime minister should pay attention to it.”
+
+These days, Lifshitz wears a necklace with a small photo of her friend Shahaf Nissani, a young woman with a big mass of curly, chestnut colored hair spilling out and around her face and across her neck. She was Lifshitz’s best friend, and a fellow observer, who was also killed at the base.
+
+When customers at her shoe store ask her about the necklace, she tells them about her friend and then tries to change the subject.
+
+“People can see I hide my emotions,” she said. “I laugh, joke, and seem happy and go out, but my heart is broken, black. There’s no soul, nothing.”There is no evidence Iran has decided to rush toward building a nuclear weapon, CIA director says
+There is no evidence that Iran has decided to build a nuclear weapon, and if it did, the U.S. and its allies would most likely be able to detect such a step soon after it was taken, CIA Director William Burns said Monday.
+
+As Israel weighs how it will retaliate against Iran after it came under an Iranian ballistic missile barrage last week, speculation has focused on whether it might choose to strike nuclear sites in Iran to try to cut off Tehran’s possible path to a nuclear weapon.
+
+Speaking at the Cipher Brief security conference in Sea Island, Georgia, Burns said Iran has advanced its nuclear program by stockpiling uranium enriched to near weapons-grade levels. As a result, Iran could quickly secure enough fissile material for an atomic bomb if it chose to and there would be less time for the outside world to respond, he said.
+
+CIA Director William Burns during a hearing of the House (Select) Intelligence Committee in Washington, D.C., on March 12, 2024. Anna Moneymaker / Getty Images file
+
+“No, we do not see evidence today that the supreme leader has reversed the decision that he took at the end of 2003 to suspend the weaponization program,” Burns said of Iran’s unelected leader, Ayatollah Ali Khamenei, who holds ultimate authority in the country’s theocratic system. Khamenei issued a fatwa against nuclear weapons in 2003.
+
+Iran has developed the “means of delivery” for a potential nuclear weapon by building up its missile arsenal, he said. And since the U.S. pulled out of the 2015 nuclear agreement between Iran and major powers known as the JCPOA in 2018, Tehran “is in a much closer position to produce a bomb’s worth of ... enriched material for a single weapon,” Burns said.
+
+The JCPOA imposed strict limits on Tehran’s nuclear program while easing economic sanctions on the country. As president, Donald Trump pulled the U.S. out of the deal six years ago, reimposed sanctions and introduced new sanctions. Since the U.S. exit, Iran has steadily blown through the restrictions on its nuclear activities and blocked international inspectors from seeing some nuclear sites.
+
+When the JCPOA was in effect, he said, it would have taken Iran more than a year to amass enough highly enriched uranium for a nuclear bomb.
+
+“Now it’s probably more like a week or a little more to produce one bomb’s worth of weapons-grade material. So the risks have increased,” Burns said.
+
+Estimates vary as to how much time it would take Iran to build a viable nuclear weapon once it has acquired enough fissile material. Some experts say it could take up to a year to produce a warhead.
+
+Burns said the U.S. has closely monitored Iran’s nuclear activity for any sign that the regime is rushing toward a bomb.
+
+“We don’t see evidence today that such a decision has been made. We watch it very carefully,” Burns said.
+
+“I think we are reasonably confident that — working with our friends and allies — we will be able to see it relatively early on. But ... the great danger in a way is that time frame has been compressed in ways which create new challenges for us,” he said.
+
+Israel versus Iranian proxies
+
+Burns said Israel had scored major tactical successes against Iran’s most important proxy force, the Hezbollah militia in Lebanon.
+
+Speaking on the first anniversary of the Oct. 7 Hamas terrorist attack on Israel, Burns said the military strength of Hamas, another major Iranian proxy, had also been severely degraded over the past year.
+
+But he said the difficult task now was to combine those battlefield gains with “smart diplomacy” to halt fighting between Israel and Hezbollah and between Israel and Hamas in the Gaza Strip.
+
+“Now we face the very real danger of a further regional escalation of conflict,” said Burns, a former career diplomat who spent years in the Middle East.
+
+Even though leaders in both Iran and Israel are not necessarily looking for an all-out conflict, “there remains a risk,” Burns said.
+
+Burns said Israel, with excellent air defenses and intelligence, was able to fend off two rounds of Iranian missile attacks on Israel, one in April and again last week.
+
+“I think, in some ways, that did expose some of the limitations in Iranian military capabilities,” he said. “But that’s not to suggest that those capabilities are still not quite potent. And, you know, something that not only Israel but the United States needs to take very seriously, too.”
+
+Burns also touted the CIA’s recent efforts to reach out on social media to disaffected Russians, offering potential informants a way to contact it secretly.
+
+He said the effort is going “pretty well” and has also angered his intelligence counterparts in Russia.
+
+“It has produced results,” Burns said. “And alongside those results, in terms of what the purpose of this is, it has thoroughly pissed off my Russian counterparts, including the head of their services, which in itself is probably worth the effort.”Middle East Conflict
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month.A year from Oct 7, tens of thousands killed and fears of a 'forever war'
+In the dark days after the Oct. 7 terror attack on Israel and the ensuing military assault on Gaza, some dared hope the carnage could, in some way, become a catalyst for peace.
+
+“Crises can create opportunities,” veteran Israeli peace negotiator Yossi Beilin told NBC News last year. The world had given up on the Israel-Palestinian question, he said, but the horror of Oct. 7 and its aftermath “changed everything,” provoking a worldwide cry that this should never happen again.
+
+“There’s definitely room for hope,” Omar Dajani, a former legal adviser to Palestinian negotiation teams, agreed. “So long as we bear in mind that hope and optimism are different things.”
+
+One year later, those glimmers of hope have been shredded.Why Everest, the world's tallest mountain, is growing even taller
+Mount Everest is astoundingly tall at 29,032 feet above sea level, besting its Himalayan neighbors by hundreds of feet.
+
+But the world’s tallest peak is still growing, scientists say, thanks in part to the merger of two nearby river systems tens of thousands of years ago.
+
+An estimated 50 to 160 feet of Everest’s current height can be attributed to that merger, researchers revealed in a study published Monday in the journal Nature Geoscience, which found that in recent years, the annual pace of growth has sped up to fractions of a millimeter.
+
+“Even a feature as seemingly permanent as Mount Everest is subject to ongoing changes driven by various geological forces,” a co-author of the study, Dai Jingen, a geoscientist at China University of Geosciences in Beijing, said in an email Tuesday.
+
+The mountain peak has been steadily gaining height along with the rest of the Himalayas since its birth about 45 million years ago from the collision of the tectonic plates beneath the Indian subcontinent and Eurasia.
+
+But that didn’t fully explain how much Everest was growing. Researchers now say that when the Kosi River took over the Arun River about 89,000 years ago, it gave rise to a combined river of such immense power that it eroded large quantities of rock and soil from the Himalayan base nearly 50 miles away from Everest.
+
+In a geological process known as isostatic rebound, the erosion reduced the weight of the region, allowing the rise of land masses on the Earth’s crust, its outermost layer that floats atop a mantle layer made of hot, semiliquid rock.
+
+“Essentially, as the river carved away more rocks, the Earth’s crust rebounded, rising like a boat when weight is removed,” said Dai, adding that even though the river itself didn’t directly make Everest taller, the erosion and crust movement it caused contributed to the mountain’s elevation.
+
+Scientists estimate the rebound is causing Everest to grow 0.16 to 0.53 millimeters a year, accounting for as much as half of its annual uplift rate. They said Everest had gained as much as 2 millimeters annually in recent years.
+
+Researchers also say that could explain why Everest is unusually tall, reaching nearly 800 feet higher than its neighbors.
+
+Dai said the idea that river capture and erosion-related isostatic rebound play a role in Everest’s elevation adds a “surprising” dimension to the study of mountain formation, which is traditionally explained by tectonic activity.
+
+“While not entirely revolutionary, these findings are certainly surprising,” Dai said, adding that they could lead to a re-examination of current models of Himalayan formation and evolution.
+
+“It also emphasizes the importance of viewing the Earth as an interconnected system, where changes in one area can have surprising and significant impacts elsewhere,” he said.Ticketing platform under fire over scalping of Coldplay tickets
+Authorities in India have summoned executives of a ticketing platform after furious Coldplay fans failed to secure tickets for the British rock band’s coming concerts in Mumbai and complained about unchecked scalping.
+
+It’s the latest in a series of frustrating experiences around the world for fans facing growing competition and rising prices to see their favorite international artists onstage. Many of them are directing their anger at the platforms selling tickets — and calling on officials to act.
+
+Last month, the American company Ticketmaster came under British government scrutiny after Oasis fans complained about its “dynamic pricing” for the band’s reunion tour. The platform was also criticized in the U.S. over its disastrous 2022 sale for Taylor Swift’s Eras Tour, and along with its parent company, Live Nation, it is the subject of an antitrust suit the Justice Department brought this year.
+
+Coldplay fans say they endured long waits and technical glitches on BookMyShow, the official ticketing platform in India for the band’s Music of the Spheres world tour, which is heading to India’s financial capital in January. They were left disappointed, they said, when tickets were snapped up by scalpers who are selling them at several times their original price.
+
+Lavanya Maheshwari said she and five of her friends were ready and waiting when tickets went on sale at noon local time on Sept. 22, each refreshing the concert’s website on their laptops and phones.
+
+“We had 12 devices in the room trying to book the tickets,” said Maheshwari, an accountant based in Gurugram, a city southwest of New Delhi.
+
+But the website crashed even before sales began.
+
+“We kept refreshing for half an hour,” she said.
+
+When they eventually got in, she said, they were placed in a virtual ticketing line with hundreds of thousands of people ahead of them. They spent hours moving up the line, she said, only for the tickets to sell out.
+
+Tickets for the show had been priced from 2,500 rupees ($30) to 35,000 rupees ($415). But within hours, reselling platforms were listing them for thousands of dollars.
+
+On Monday, the website Viagogo showed the lowest-tier tickets available for $1,500 and the highest-tier tickets for as much as $4,000.
+
+“It was the first English band that I ever listened to, and I really wanted to watch them perform on the stage,” said Maheshwari, who turned 23 the day tickets went on sale. “This was definitely not the birthday present I was expecting.”
+
+BookMyShow’s chief executive, Ashish Hemrajani, was summoned before investigators Monday, a spokesperson for Mumbai police told NBC News. It is unclear whether he complied.
+
+The platform said it had experienced a “brief delay.” It said that tickets were limited to four per person and that the virtual line was designed to manage the high demand.
+
+“We’ve worked hard to ensure every fan had a fair chance to secure tickets,” a spokesperson said in a statement.
+
+BookMyShow said it was not associated with reselling platforms such as Viagogo, adding, “Scalping and black marketing of tickets is strictly condemned and punishable by law in India and BookMyShow vehemently opposes this practice.”
+
+The company said it had filed a police complaint and warned the public against buying tickets that might be fraudulent.
+
+Coldplay was initially scheduled to play just two Mumbai concerts, on Jan. 18 and 19, at DY Patil Stadium, which has a capacity of 45,000. A third show for Jan. 21 was added the day tickets went on sale because of “unprecedented demand,” BookMyShow said.
+
+Maheshwari said she logged on to the app as soon as the third show was announced.
+
+“We were very sure that we were going to get the tickets this time,” she said. “But when we again got in the queue, we were still unable to get it.”
+
+“There were friends who joined the queue after because we told them about the show. And somehow they got it, but not us,” she added.
+
+Tickets are now available only at prices far out of her reach, Maheshwari said.
+
+“These websites are selling tickets for 20, 30, 40 times more,” she said. “That is just impossible for us to buy.”
+{'id': 'gen-1728553380-56OswMxjAT63GZCTICfH', 'provider': 'OpenAI', 'model': 'openai/gpt-4o-mini', 'object': 'chat.completion', 'created': 1728553380, 'choices': [{'logprobs': None, 'finish_reason': 'stop', 'index': 0, 'message': {'role': 'assistant', 'content': "**Summary of Israel's Military Actions in Lebanon and the Situation in Gaza**\n\n**Israel's Actions in Lebanon**\n\nIsrael has killed two commanders of Hezbollah, a militant group in Lebanon. The country has expanded its military operations in the southern region, with significant orders for civilians to evacuate certain areas. According to the United Nations, around a quarter of Lebanese territory is affected, with over 1.2 million people forced to leave their homes. Many people are living on the streets or in makeshift shelters due to overcrowded evacuation centers. \n\nIsraeli Prime Minister Benjamin Netanyahu warned the Lebanese population to rise against Hezbollah or face devastation similar to Gaza. This statement has raised concerns about the possibility of civil war within Lebanon. Observers believe that Netanyahu's rhetoric could lead to increased violence against civilians, as it suggests that those opposing Hezbollah should prepare for conflict. \n\nThe fight between Israel and Hezbollah has intensified, with Israel committing more troops and military resources to the region. However, the clarity of Israel's military objectives remains uncertain. Israel claims that its military actions are aimed at securing its border and protecting its citizens after Hezbollah's attacks began in response to the conflict in Gaza. \n\nIn the meantime, the U.S. government has expressed concerns about the humanitarian crisis developing in both Gaza and Lebanon, where thousands of civilians are losing their homes and facing the threat of violence. \n\n**Conditions in Gaza**\n\nIn Gaza, the situation has reached catastrophic levels, with reports stating that over 42,000 people have been killed amid ongoing military operations. The humanitarian conditions are dire, with a shortage of basic necessities like food, water, and medical supplies. The United Nations has raised alarms about the need for urgent humanitarian aid in the region.\n\nThe offensive from Israel on Gaza originated from the conflict escalating in early October 2023. The persistence of violence has led to calls from various governments and organizations worldwide, urging Israel to reconsider its military strategies and ensure the safety and welfare of civilians. \n\nIn summary, the military actions in Lebanon and Gaza highlight an ongoing crisis that endangers countless lives, with international discourse focusing on the human rights implications and the urgent need for humanitarian assistance to affected populations.", 'refusal': ''}}], 'system_fingerprint': 'fp_8552ec53e1', 'usage': {'prompt_tokens': 11580, 'completion_tokens': 434, 'total_tokens': 12014}}
+**Summary of Israel's Military Actions in Lebanon and the Situation in Gaza**
+
+**Israel's Actions in Lebanon**
+
+Israel has killed two commanders of Hezbollah, a militant group in Lebanon. The country has expanded its military operations in the southern region, with significant orders for civilians to evacuate certain areas. According to the United Nations, around a quarter of Lebanese territory is affected, with over 1.2 million people forced to leave their homes. Many people are living on the streets or in makeshift shelters due to overcrowded evacuation centers. 
+
+Israeli Prime Minister Benjamin Netanyahu warned the Lebanese population to rise against Hezbollah or face devastation similar to Gaza. This statement has raised concerns about the possibility of civil war within Lebanon. Observers believe that Netanyahu's rhetoric could lead to increased violence against civilians, as it suggests that those opposing Hezbollah should prepare for conflict. 
+
+The fight between Israel and Hezbollah has intensified, with Israel committing more troops and military resources to the region. However, the clarity of Israel's military objectives remains uncertain. Israel claims that its military actions are aimed at securing its border and protecting its citizens after Hezbollah's attacks began in response to the conflict in Gaza. 
+
+In the meantime, the U.S. government has expressed concerns about the humanitarian crisis developing in both Gaza and Lebanon, where thousands of civilians are losing their homes and facing the threat of violence. 
+
+**Conditions in Gaza**
+
+In Gaza, the situation has reached catastrophic levels, with reports stating that over 42,000 people have been killed amid ongoing military operations. The humanitarian conditions are dire, with a shortage of basic necessities like food, water, and medical supplies. The United Nations has raised alarms about the need for urgent humanitarian aid in the region.
+
+The offensive from Israel on Gaza originated from the conflict escalating in early October 2023. The persistence of violence has led to calls from various governments and organizations worldwide, urging Israel to reconsider its military strategies and ensure the safety and welfare of civilians. 
+
+In summary, the military actions in Lebanon and Gaza highlight an ongoing crisis that endangers countless lives, with international discourse focusing on the human rights implications and the urgent need for humanitarian assistance to affected populations.
+{'id': 'gen-1728553392-MUNZ6JimsOTvnLcK6ka8', 'provider': 'Anthropic', 'model': 'anthropic/claude-3.5-sonnet', 'object': 'chat.completion', 'created': 1728553392, 'choices': [{'logprobs': None, 'finish_reason': 'end_turn', 'index': 0, 'message': {'role': 'assistant', 'content': '我而家用好簡單嘅廣東話講一講以色列喺黎巴嫩同加沙嘅情況，等八歲細路都聽得明：\n\n以色列喺黎巴嫩打死咗兩個 Hezbollah 嘅大佬。佢哋叫好多人離開南面嘅地方。聯合國話有四分一黎巴嫩嘅地方受影響，超過一百二十萬人要搬走。好多人要瞓街或者住喺臨時嘅地方，因為冇地方畀佢哋住。\n\n以色列嘅總理 Netanyahu 警告黎巴嫩嘅人要反對 Hezbollah，否則會變得好似加沙咁慘。有人擔心呢句說話會令黎巴嫩打內戰。\n\n以色列同 Hezbollah 打得越嚟越大。以色列話佢哋咁做係為咗保護自己嘅國家同人民。\n\n美國政府好擔心加沙同黎巴嫩嘅人會冇嘢食冇嘢住。\n\n喺加沙，情況真係好慘。已經有超過四萬二千人死咗。冇食物、水同藥。聯合國話要快啲幫佢哋。\n\n呢場戰爭由2023年10月開始。好多國家同組織叫以色列停手，唔好再傷害平民。\n\n總之呢個情況好危險，好多人嘅生命受威脅。全世界都好關心呢度嘅人權問題，想盡快幫到啲受苦嘅人。', 'refusal': ''}}], 'usage': {'prompt_tokens': 547, 'completion_tokens': 501, 'total_tokens': 1048}}
+MP3 file created successfully: spokenarticle_news1728553400.2580562_0.mp3
+Live Updates: Israel says it killed two Hezbollah commanders in Lebanon; U.S. calls out 'catastrophic conditions' in Gaza
+At least a quarter of Lebanese territory is now under Israeli “military displacement orders,” according to the United Nations.
+
+The United Nations Office for the Coordination of Humanitarian Affairs said in an update earlier this week that displacement orders had been issued for more than 100 villages and urban neighborhoods across southern Lebanon.
+
+The report cites data from the Office of the High Commissioner for Human Rights showing that more than 1.2 million people have been forced to flee their homes.
+
+Some of those people have been displaced more than once since Israel ramped up its offensive in the country, with a growing number of people sleeping on the streets, in car parks and in playgrounds as shelters continue to fill up.NBC Affiliates
+IE 11 is not supported. For an optimal experience visit our site on another browser.
+
+U.S. news NBC Affiliates NBC's affiliated stations
+
+
+
+
+
+Alabama WVTM Birmingham, AL www.wvtm13.com WAFF Huntsville, AL www.waff.com WPMI Mobile, AL www.local15tv.com WSFA Montgomery, AL www.wsfa.com Alaska KTUU Anchorage, AK www.ktuu.com KTVF Fairbanks, AK www.webcenter11.com KATH Juneau, AK www.kath.tv Arizona KNAZ Flagstaff, AZ www.12news.com KAIT Jonesboro, AZ www.kait8.com KPNX Phoenix, AZ www.12news.com KVOA Tucson, AZ www.kvoa.com KYMA Yuma, AZ www.kyma.com Arkansas KARK Little Rock, AR www.kark.com KNWA Fayetteville, AR www.knwa.com California KGET Bakersfield, CA www.kget.com KNBC Universal City, CA www.nbclosangeles.com KNVN Chico, CA www.actionnewsnow.com/home KIEM Eureka, CA www.kiem-tv.com KSEE Fresno, CA www.ksee24.com KMIR Palm Desert, CA www.nbcpalmsprings.com KCRA Sacramento, CA www.kcra.com KSBW Salinas, CA www.ksbw.com KNSD San Diego, CA 92101 www.nbcsandiego.com KNTV San Francisco Bay Area, CA www.nbcbayarea.com KSBY San Luis Obispo, CA www.ksby.com Colorado KUSA Denver, CO www.9news.com KOAA Colorado Springs, CO www.koaa.com KKCO Grand Junction, CO www.nbc11news.com Connecticut WVIT Hartford, CT www.nbcconnecticut.com Delaware WRDE Lewes, DE www.wrdetv.com District of Columbia WRC Washington, DC www.nbcwashington.com Florida WBBH Fort Myers, FL www.nbc-2.com WNBW Gainesville, FL www.mygtn.tv WTLV Jacksonville, FL www.firstcoastnews.com WTVJ Miramar, FL www.nbc6.com WJHG Panama City, FL www.wjhg.com WTWC Tallahassee, FL www.wtwc40.com WFLA Tampa, FL www.wfla.com WPTV West Palm Beach, FL www.wptv.com WESH Winter Park, FL www.wesh.com Georgia WALB Albany, GA www.walb.com WXIA Atlanta, GA www.11alive.com WAGT Augusta, GA www.wrdw.com/nbc26 WLTZ Columbus, GA www.wltz.com WMGT Macon, GA www.41nbc.com WSAV Savannah, GA www.wsav.com Hawaii KHNL Honolulu, HI www.khnl.com Idaho KTVB Boise, ID www.ktvb.com KPVI Pocatello, ID www.kpvi.com Illinois WMAQ Chicago, IL www.nbcchicago.com WAND Decatur, IL www.wandtv.com WEEK Peoria, IL www.week.com WGEM Quincy, IL www.wgem.com WREX Rockford, IL www.wrex.com Indiana WFIE Evansville, IN www.14wfie.com WPTA Fort Wayne, IN www.fortwaynesnbc.com WTHR Indianapolis, IN www.wthr.com WNDU South Bend, IN www.wndu.com WTWO Terre Haute, IN www.wtwo.com Iowa KWQC Davenport, IA www.kwqc.com WHO Des Moines, IA www.whotv.com KTIV Sioux City, IA www.ktiv.com KWWL Waterloo, IA www.kwwl.com Kansas KSNG Garden City, KS ksn.com KSNC Great Bend, KS ksn.com KSNK Oberlin, KS ksn.com KSNT Topeka, KS www.ksnt.com KSNW Wichita, KS www.ksn.com Kentucky WNKY Bowling Green, KY www.wnky.com WLEX Lexington, KY www.lex18.com WAVE Louisville, KY www.WAVE3.com WPSD Paducah, KY www.wpsdlocal6.com Louisiana KALB Alexandria, LA www.kalb.com WVLA Baton Rouge, LA www.nbc33tv.com KLAF Lafayette, LA www.kadn.com KPLC Lake Charles, LA www.kplctv.com WDSU New Orleans, LA www.wdsu.com KTAL Shreveport, LA arklatexhomepage.com KTVE West Monroe, LA www.myarklamiss.com Maine WLBZ Bangor, ME www.wlbz2.com WCSH Portland, ME www.wcsh6.com Maryland WBAL Baltimore, MD www.thewbalchannel.com WHAG Hagerstown, MD www.nbc25.com Massachusetts WBTS Newton, MA www.nbcboston.com WWLP Springfield, MA www.wwlp.com Michigan WEYI Clio, MI www.minbcnews.com WDIV Detroit, MI www.clickondetroit.com WOOD Grand Rapids, MI www.woodtv.com WILX Lansing, MI www.wilx.com WLUC Marquette, MI www.uppermichigansource.com WPBN Traverse City, MI www.tv7-4.com WTOM Traverse City, MI www.upnorthlive.com Minnesota KBJR Duluth, MN www.kbjr6.com KARE Minneapolis, MN www.kare11.com KTTC Rochester, MN www.kttc.com Mississippi WNBD Greenville, MS www.deltanews.tv WLBT Jackson, MS www.wlbt.com WDAM Moselle, MS www.wdam.com WTVA Tupelo, MS www.wtva.com Missouri KOMU Columbia, MO www.KOMU.com KSNF Joplin, MO www.fourstateshomepage.com KSHB Kansas City, MO www.kshb.com KYTV Springfield, MO www.ky3.com KSDK St. Louis, MO www.ksdk.com Montana KULR Billings, MT www.kulr8.com KTVM Butte, MT www.ktvm.com KTVH Helena, MT www.ktvh.com KCFW Kalispell, MT www.kcfw.com KECI Missoula, MT www.keci.com Nebraska KHAS Hastings, NE www.ksnblocal4.com KSNB Grand Island, NE www.ksnblocal4.com KNOP North Platte, NE www.knopnews2.com WOWT Omaha, NE www.wowt.com Nevada KMCC Las Vegas, NV www.mynews3.com KSNV Las Vegas, NV www.mynews3.com KRNV Reno, NV www.krnv.com New Mexico KOB Albuquerque, NM www.kob.com KOBF Farmington, NM www.kob.com KOBR Roswell, NM www.kob.com New York WNYT Albany, NY www.wnyt.com WBGH Binghamton, NY www.newschannel34.com WGRZ Buffalo, NY www.wgrz.com WETM Elmira, NY www.wetmtv.com WNBC New York, NY www.nbcnewyork.com WPTZ Plattsburgh, NY www.wptz.com WHEC Rochester, NY www.whec.com WSTM Syracuse, NY www.wstm.com WKTV Utica, NY www.wktv.com North Carolina WCNC Charlotte, NC www.wcnc.com WRAL Raleigh, NC www.wral.com WITN Washington, NC www.witntv.com WECT Wilmington, NC www.wect.com WXII Winston-Salem, NC www.wxii.com North Dakota KFYR Bismarck, ND www.kfyrtv.com KQCD Bismarck, ND www.kqcd.com KVLY Fargo, ND www.valleynewslive.com KMOT Minot, ND www.kmot.com KUMV Williston, ND www.kumv.com Ohio WLWT Cincinnati, OH www.wlwt.com WKYC Cleveland, OH www.wkyc.com WCMH Columbus, OH www.nbc4columbus.com WDTN Dayton, OH www.wdtn.com WLIO Lima, OH www.hometownstations.com WTOV Steubenville, OH www.wtov9.com WNWO Toledo, OH www.nbc24.com WFMJ Youngstown, OH www.wfmj.com WHIZ Zanesville, OH www.whizamfmtv.com Oklahoma KFOR Oklahoma City, OK www.kfor.com KJRH Tulsa, OK www.kjrh.com Oregon KTVZ Bend, OR www.ktvz.com KMTR Eugene, OR www.nbc16.com KOTI Klamath Falls, OR www.KOTI2.com KOBI Medford, OR www.kobi5.com KGW Portland, OR www.kgw.com KUCW Ogden, OR www.kgw.com KMTX Springfield, OR www.kmtr.com KMTZ Springfield, OR www.kmtr.com Pennsylvania WCAU Philadelphia, PA www.nbc10.com WICU Erie, PA www.wicu12.com WJAC Johnstown, PA www.wjactv.com WGAL Lancaster, PA www.wgal.com WPXI Pittsburgh, PA www.wpxi.com WBRE Wilkes-Barre, PA www.wbre.com Rhode Island WJAR Cranston, RI www.turnto10.com South Carolina WCBD Charleston, SC www.counton2.com WIS Columbia, SC www.wistv.com WYFF Greenville, SC www.wyff4.com WMBF Myrtle Beach, SC www.wmbfnews.com South Dakota KNBN Rapid City, SD www.newscenter1.tv KDLT Sioux Falls, SD www.kdlt.com KDLV Sioux Falls, SD www.kdlt.com Tennessee WRCB Chattanooga, TN www.wrcbtv.com WBIR Knoxville, TN www.wbir.com WMC Memphis, TN www.wmcstations.com WSMV Nashville, TN www.wsmv.com Texas KRBC Abilene, TX www.bigcountryhomepage.com KAMR Amarillo, TX www.kamr.com KXAN Austin, TX www.kxan.com KBMT Beaumont, TX www.12newsnow.com KVEO Brownsville, TX www.kveo.com KAGS Bryan, TX www.kagstv.com KRIS Corpus Christi, TX www.kristv.com KTEN Denison, TX www.kten.com KCEN Eddy, TX www.kcentv.com KTSM El Paso, TX www.ktsm.com KXAS Fort Worth, TX www.nbcdfw.com KPRC Houston, TX www.kprc.com KGNS Laredo, TX www.kgns.tv KCBD Lubbock, TX www.kcbd.com KWAB Midland, TX www.kwes.com KWES Midland, TX www.kwes.com KLSB Nacogdoches, TX www.nbc56.com KSAN San Angelo, TX conchovalleyhomepage.com WOAI San Antonio, TX www.news4sanantonio.com KETK Tyler, TX www.easttexasmatters.com KMOL Victoria, TX www.crossroadstoday.com KFDX Wichita Falls, TX www.kfdx.com Utah KSL Salt Lake City, UT www.ksl.com Virginia WCYB Bristol, VA www.wcyb.com WVIR Charlottesville, VA www.nbc29.com WAVY Portsmouth, VA www.wavy.com WWBT Richmond, VA www.nbc12.com WSLS Roanoke, VA www.wsls.com Washington KNDU Kennewick, WA kndu.com KING Seattle, WA www.king5.com KHQ Spokane, WA www.khq.com KNDO Yakima, WA www.kndo.com West Virginia WVVA Bluefield, WV www.wvva.com WBOY Clarksburg, WV www.wboy.com WSAZ Huntington, WV www.wsaz.com WTAP Parkersburg, WV www.wtap.com Wisconsin WEAU Claire, WI www.weau.com WGBA Green Bay, WI www.wgba.com WMTV Madison, WI www.nbc15.com WTMJ Milwaukee, WI www.tmj4.com WJFW Rhinelander, WI www.wjfw.com Wyoming KCHY Mills, WY www.kcwy13.com KLK Mills, WY www.kcwy13.com KCWY Mills, WY www.kcwy13.comLatest Weather News: Winter Storm Warnings, Updates, Video, Photos and More
+Hurricane Milton brought torrential rainfall to portions of the north and east of Florida. It is expected to head out to sea again off the east coast early Thursday morning. NBC News meteorologist Michelle Grossman has the very latest details on Early Today.NBC News NOW Live Audio
+NBC News NOW is a streaming network from NBC News. NOW features deep reporting, thoughtful storytelling, and live, breaking news from the global resources of NBC News. Get the latest breaking news and stay on top of the stories that matter most.
+
+Listen to more audio by subscribing to MSNBC and NBC News podcasts.China News: Breaking News, Photos & Videos on China
+The pair, a gift from Beijing, increases the total number of pandas in the Chinese territory to six, while Finland will return its two bears to China more than eight years early.Africa News: Breaking News, Photos & Videos on Africa
+Western partners have promised about 380,000 doses of mpox vaccines — less than 15% of the 3 million doses authorities have said are needed to end the outbreaks in Congo.Asia News: Breaking News, Photos & Videos on Asia
+IE 11 is not supported. For an optimal experience visit our site on another browser.Europe: Breaking News, Photos & Videos on Europe
+“Fenix is a team of trans boys created entirely by trans boys, but I think it’s more than that — a family, a safe space where you can be free and express yourself," one player said.Destruction like Gaza or civil war? Netanyahu's warning adds to questions over Israel's goals in Lebanon
+New divisions sent to join an expanding ground invasion, troops raising a flag outside a border village and an unmistakable warning to Lebanese civilians: Israel is sending increasingly mixed signals about the goals of a military operation it had insisted was limited.
+
+Concerns over the country's plans mounted Wednesday after Israeli Prime Minister Benjamin Netanyahu suggested that Lebanese people either rise up against Hezbollah or face destruction like the Gaza Strip.
+
+For many observers, this amounted to a choice between civil war or the same fate as that of Palestinians in the besieged and bombarded enclave.
+
+"You have an opportunity to save Lebanon before it falls into the abyss of a long war that will lead to destruction and suffering like we see in Gaza," Netanyahu said in a video address Tuesday delivered in English. "It doesn’t have to be that way."
+
+Follow live coverage
+
+His comments came as Israel expanded its invasion into southwestern Lebanon, deploying a fourth division of troops to battle Hezbollah as the military ordered evacuations well beyond a United Nations-declared buffer zone.
+
+This had already raised questions about Israel's stated objectives in its neighbor's territory.
+
+The charred shell of a building after an Israeli airstrike in Beirut on Tuesday. Scott Peterson / Getty Images
+
+Israel has said that what it calls a "limited, localized, targeted" operation against Hezbollah is necessary to ensure the safe return and security of the thousands of people who have been displaced from their homes in northern Israel, after the Iran-backed militant and political group began firing across the border a year ago in solidarity with Hamas and Palestinians in Gaza.
+
+Israeli officials have suggested this would involve Hezbollah retreating north of the Litani River, as outlined in U.N. Security Council Resolution 1701, which laid out the terms for a cease-fire in the 2006 war but has not been fully implemented.
+
+Is that still the case?
+
+Fawaz Gerges, a professor of international relations at the London School of Economics, told NBC News that he believed many were missing the broader picture of the “underlying thinking and plotting by Netanyahu and his war Cabinet.”
+
+Netanyahu appeared to be “trying to incite the Lebanese population against Hezbollah,” using rhetoric that will “pour gasoline on a raging fire," Gerges said in a phone interview Wednesday,
+
+Hezbollah is not just a militant group with thousands of fighters and a powerful arsenal, but also a political organization embedded throughout the institutions of a deeply divided country. To rise up against it would likely mean an armed struggle.
+
+"This is a recipe really for civil strife and civil war," Gerges said.
+
+Netanyahu’s warning “was a direct threat,” Yossi Mekelberg, a senior consulting fellow with Chatham House’s Middle East and North Africa Program, said in a phone interview Wednesday morning.
+
+Noting the rising death toll in Gaza, where more than 42,000 people have now been killed, according to the local Health Ministry, Mekelberg said Netanyahu had intimated that thousands more people could be killed in Lebanon. More than 2,000 people have been killed and more than 1.2 million displaced in the country in the past year, according to Lebanese officials.
+
+Mekelberg said Netanyahu's comments should "really lead the international community to jump and say, 'This is completely unacceptable.'"
+
+"Look at the pictures of Gaza, the images coming out of Gaza," he said.
+
+Israeli soldiers raise their national flag in Lebanon's southern border village of Maroun al-Ras. via AFP - Getty Images
+
+Images have also begun to convey the destruction wrought in Lebanon — from nightly airstrikes on Beirut to the aerial and ground assault in the south. And Wednesday, a video, geolocated by NBC News, stoked outrage: Israeli soldiers raising the country's flag on the outskirts of a border village.
+
+Lebanese people who spoke to NBC News on Wednesday bristled at Netanyahu’s warning, with some also mocking the footage of Israeli soldiers planting the flag in the southern village of Maroun Al-Ras.
+
+“I laughed when I heard about Netanyahu’s threats,” said Hisham Karameh, a salesperson at a local clothing store. “This is not the first time.”
+
+“Israel invaded Lebanon many times,” Karameh, 28, said. Israel’s invasion of Lebanon amid its 1982 civil war resulted in a nearly two-decade occupation of the country’s south.
+
+“They already did destroy the south and Dahieh,” he said, referring to the Beirut suburb and Hezbollah stronghold that has been bombarded for weeks. “Too late now to send more threats. We trust him on that issue.”
+
+Karameh also dismissed video on social media showing Israeli forces planting a flag in southern Lebanon as “a joke.”
+
+“They crossed the border for a few meters, raised their flag, took a picture and withdrew,” he said. “Please don’t insult our intelligence.”
+
+The State Department said Israeli soldiers raising a flag in southern Lebanon was “obviously inappropriate.”
+
+“We would look to them to comply with what they have said, which these are limited incursions, not with the goal of holding territory,” spokesperson Matthew Miller told reporters Tuesday night.Kremlin claims Trump sent Covid test machines to Putin
+Former President Donald Trump sent coronavirus testing devices to Russian President Vladimir Putin at the height of the pandemic, the Kremlin claimed Wednesday in a statement.
+
+Kremlin spokesperson Dmitry Peskov told Bloomberg News in a written statement that “we also sent equipment at the beginning of the pandemic.” The Kremlin did not respond to NBC News' request for comment.
+
+The story was initially reported in “War,” a new book by veteran Washington Post journalist Bob Woodward, which reports on Trump and President Joe Biden’s relationships with foreign leaders.
+
+The book claims that Trump secretly sent Abbott Covid-19 testing devices to Putin when the machines were in short supply. NBC News has not been able to independently verify this.
+
+Peskov also denied Woodward's claim that Trump and Putin have spoken on the telephone several times since Trump left office. “No, that’s not true,” he told Russian outlet RBC.
+
+Trump also denied the reporting in an interview with ABC News’ Jonathan Karl. “He’s a storyteller. A bad one. And he’s lost his marbles,” Trump said of Woodward.
+
+In a separate statement to Bloomberg, Trump's re-election team accused the journalist of bias and said “none of these made up stories by Bob Woodward are true.”
+
+The book, which is set to be published Oct. 15, raises questions about how Trump would handle the war in Ukraine if re-elected and whether he would continue to provide aid to the country.
+
+Trump has repeatedly said he could settle the war between Russia and Ukraine in one day if he’s elected president again. But when he was asked about this claim in July, Russia’s ambassador to the United Nations Vassily Nebenzia told reporters that “the Ukrainian crisis cannot be solved in one day.”
+
+The Republican nominee said last month that his relationship with Putin is “very good.” He said the same of his ties to Ukrainian President Volodymyr Zelenskyy when the two met at Trump Tower last month.
+
+As a private citizen, Trump would need the sitting president’s express permission to negotiate on behalf of the U.S. government.
+
+Woodward says in the book that senior adviser Jason Miller told him in July that he was “not aware” of any conversations between Trump and Putin, but should they wish to speak, “they’d know how to get in touch with each other.”
+
+Trump’s critics have long taken issue with his coziness with authoritarian leaders, including Putin. Trump has referred to Putin as “very savvy” and a “strong man,” and praised Russia’s invasion of Ukraine as “genius.”Trump and Putin have talked as many as 7 times since 2021, new book claims
+Former President Donald Trump has spoken with Russian President Vladimir Putin as many as seven times since he left the White House, including as recently as this year, according to new reporting by journalist Bob Woodward.
+
+Woodward makes the claims in his forthcoming book, “War,” a dramatic account of the White House under Trump and President Joe Biden that details elements of their relationships with foreign leaders. The book is set to be published Oct. 15.
+
+The book details how Trump’s relationship with Putin has continued as he mounts another bid for the White House amid the ongoing war in Ukraine.
+
+In one scene, Woodward recounts that Trump directed a senior aide to leave his private office at Mar-a-Lago this year “so he could have what he said was a private phone call” with the Russian leader. The aide, who loitered in a hallway outside while the two spoke, told Woodward that Trump and Putin have had “maybe as many as seven” phone calls since Trump left office in 2021.
+
+The account is credited to a single anonymous aide and provides no further details. Trump’s campaign did not respond when asked to comment directly on whether Trump has had any conversations with Putin since he left office. Trump’s communications director, Steven Cheung, in an emailed statement attacked Woodward personally and claimed the book is comprised of “made-up stories.”
+
+Trump told ABC News that the Putin report was "false" and that Woodward had "lost his marbles."
+
+Asked about Woodward's claims, Trump's running mate, Sen. JD Vance of Ohio, said Tuesday, “I honestly didn’t know that Bob Woodward was still alive until you asked me that question." He went on to knock Woodward as a “hack” and said that even if the reporting is true, "Look, is there something wrong with speaking to world leaders? No. Is there anything wrong with engaging in diplomacy?”
+
+Woodward also includes an account of Trump’s time in the White House when, at the height of the pandemic, he sent Putin testing equipment for the virus.
+
+The book raises new questions about Trump’s claim that he would end the war in Ukraine if elected, possibly before he even took office. He said last month that his relationship with Putin is “very good,” and he said the same of his ties to Ukrainian President Volodymyr Zelenskyy when the two met at Trump Tower last month. As a private citizen, Trump would need the sitting president's express permission to negotiate on behalf of the U.S. government, and Woodward says he probed the issue with an aide to Trump.
+
+According to Woodward, senior adviser Jason Miller told him in July that he was “not aware” of any conversations between Trump and Putin, but should they wish to speak, “they’d know how to get in touch with each other.”
+
+“[J]ust be very careful that we’re not saying they’re in communication or anything beforehand,” Woodward said Miller told him. “For the purpose of ending a war?” Woodward asked. “But that’s not going to happen, ultimately, not going to happen until President Trump wins on November 5th and it’s clear that he’s coming in,” Miller said, according to the author. “After November 5th, I think President Trump will be able to have it solved or largely solved by the time he gets sworn in.”
+
+The revelations come just weeks before Election Day as Trump mounts a bid for the White House against Vice President Kamala Harris, an election that could determine the future of U.S. support for Ukraine. NBC News obtained a copy of the book.
+
+The book also raises further questions about how Trump would handle the war in Ukraine if he is re-elected and whether he would continue to provide aid to Ukraine, as Harris has said she would. Before his meeting with Zelenskyy last month, Trump told reporters that he would help broker a deal “that’s good for both sides.” Vance has been sharply critical of U.S. funding for Ukraine and of Zelenskyy himself.Critics have long taken issue with Trump's coziness with authoritarian leaders, including Putin. Trump has referred to Putin as "very savvy" and a "strong man," and he praised Russia's invasion of Ukraine as "genius."
+
+In an interview Tuesday on "The Howard Stern Show," Harris reacted to Woodward's reporting on the Covid tests by accusing Trump of "secretly helping out an adversary while Americans are dying by the hundreds every day."
+
+In an interview Tuesday with Ben Shapiro, Trump said it was "a good thing, not a bad thing," that he got along with Putin "very well."
+
+"A lot of people think that’s a bad thing," Trump said. "No, no, that’s a great thing.Israel expands invasion into southwestern Lebanon; Hezbollah fires rockets at Haifa
+Israel’s orders for civilians to evacuate areas along Lebanon’s Mediterranean coast south of the Awali River suggest its navy could soon take a “more prominent role” in Israel’s invasion of Lebanon as fighting between ground troops and Hezbollah members continues in the south, a military expert said.
+
+“So far, the IDF largely relied on its ground and air force,” Michael Horowitz, a geopolitical and security analyst, said in an email this morning. “I doubt this signals difficulties,” he said of the efforts, but he said: “From a military standpoint, this may just be meant to let the navy take on a more prominent role — as it did in Gaza.”
+
+Israel’s expansion of its evacuation orders has spread both confusion and fear among those sheltering near the Mediterranean coast, with many wondering whether they’ll be safe from Israel’s operations in the days ahead.
+
+“The evacuation orders that the IDF has given have sometimes been very general, and hard to follow or understand — though some of them are more specific,” said Horowitz, the head of intelligence at Le Beck International, a security consultancy. “This one I think is also broad.”Israel has not briefed U.S. military officials on its plans for retaliation against Iran, U.S. officials say
+Israeli leaders still have not briefed the United States on specific details of their military response to last week’s ballistic missile attack by Iran, even after American military officials have discussed possibly supporting Israeli retaliation with intelligence or airstrikes of their own, according to two U.S. officials.
+
+Defense Secretary Lloyd Austin spoke with Israeli Defense Minister Yoav Gallant on Sunday evening, and one former and two current officials familiar with the call said the two discussed potential responses but not Israel’s final decision on what it could do and when. Israeli officials had met Sunday morning to discuss response options, according to two U.S. officials.
+
+U.S. officials said they do not believe Israel has made a final decision on the specifics of its response but said it has been narrowing and finalizing its options with additional meetings yesterday and today. The options that remain under consideration are targeting Iranian military and intelligence infrastructure, air defenses and energy facilities, the officials said. Gallant and Austin did not discuss nuclear facilities as possible targets, the officials said.
+
+Gallant was scheduled to meet with Austin in Washington on Wednesday — a trip Gallant initiated — but the trip has now been postponed at the request of Prime Minister Benjamin Netanyahu. Three U.S. officials had said they were concerned that the Israeli response could come while Gallant was meeting with Austin.
+
+After Iran launched approximately 200 ballistic missiles at Israel last week, U.S. military officials discussed options for joining Israel in its retaliation against Iran, according to two U.S. officials familiar with the discussions.
+
+The U.S. has long supported Israel with intelligence and that support could continue during Israel’s retaliatory strikes against Iran, the two officials said. Senior U.S. military officials have also discussed conducting very limited strikes against Iranian targets, the two officials said. Strikes inside Iran have been discussed, as have strikes on targets outside Iran, though strikes of any kind are less likely than intelligence sharing, the officials said.
+
+The U.S. could target Iranian assets at sea, the officials said, or try to disrupt Iran’s military assistance to proxies in the region by hitting Islamic Revolutionary Guards Corps sites that support militia groups in Yemen or Syria. A U.S. strike on an Iranian target could be considered defensive if it eliminates a possible threat to the U.S. or allies, like previous American strikes on Iran-linked targets inside Yemen, Iraq, and Syria.
+
+Administration officials emphasized that while the U.S. intends to support Israel’s right to defend itself, no decision on any U.S. action has been made. Three U.S. officials said they do not expect the U.S. to support the Israeli response directly and instead expect the U.S. to back Israel by issuing strong sanctions against Iran.
+
+The three officials said that Israel’s failure to give the U.S. concrete assurances that it will inform the U.S. of its plans well in advance of acting has made the U.S. less likely to take an active role in Israel’s response.
+
+In a statement, a defense official said, "We continue to consult with the Israelis on their next steps but won’t speculate or get into hypotheticals on a potential response to Iran’s Oct. 1 missile attack.”
+
+Israel did not immediately respond to a request for comment.
+
+Gallant asked to come to the U.S.
+
+As Israel weighs its response, U.S. officials are watching for clues about the timing. Austin was expected to meet Gallant at the Pentagon on Wednesday before his trip was postponed. Gallant is the one who suggested he come to the U.S., according to two U.S. officials familiar with the planning.
+
+Generally, a nation does not conduct a major military action while senior leaders are abroad, but Israel dispelled that notion when it killed Hezbollah leader Hassan Nasrallah in Beirut while Netanyahu was in New York for the United Nations General Assembly. Some U.S. officials believe Israel’s retaliation could come while Gallant is in Washington.
+
+Austin was frustrated and angry that Israel did not inform the U.S. that it intended to target Nasrallah, according to multiple U.S. officials. In recent months, Gallant and Austin have spoken multiple times every week, but Gallant informed Austin of the operation against Nasrallah as it was underway.
+
+At a meeting with reporters Monday morning, Pentagon press secretary Maj. Gen. Pat Ryder did not respond directly when asked whether Israel has assured U.S. officials that it will not surprise them again.
+
+“Secretary Austin and Minister Gallant have very regular touchpoints,” Ryder said. “We’ve been very clear that it’s helpful to have awareness about activities in the region for several reasons … We’ll keep those lines of communication open.”
+
+Senior U.S. leaders usually would not be in Israel when it launches an attack like its expected retaliation against Iran. Commander of U.S. Central Command Gen. Michael “Erik” Kurilla was in Israel over the weekend but has now left the country and is not expected to return immediately, according to U.S. officials familiar with his dynamic travel schedule. And U.S. officials say Israel has made it clear that it is not ruling out a response during the Yom Kippur holiday this week.
+
+Since Oct. 7, the U.S. and Iran have communicated to one another that neither side wants this conflict to escalate, according to the one former and two current U.S. officials. U.S. officials believe that short of a major attack on Iranian nuclear infrastructure that shuts down or sets its program back significantly, Iran is not looking for a direct war with Israel and the U.S.Middle East Conflict
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month.They were Israel's eyes on the border, but their warnings about Hamas went unheard
+TEL AVIV — They were Israel’s eyes on the border with Gaza, but former soldiers from a military observation unit say their warnings about suspicious Hamas activity ahead of the Oct. 7 terror attacks were repeatedly ignored. A year later, they are still seeking answers.
+
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month. “It’s anger and sadness, mainly frustration, because I was there and no one listened to me.”
+
+Lifshitz, 21, was part of the Israel Defense Forces' unit 414 stationed at the Nahal Oz military base on the Gaza border. Soldiers in the all-women field observers team, most just 19 or 20 years old and fulfilling their mandatory military service, would spend hours glued to feeds from surveillance cameras watching for threats.
+
+In the months leading up to Oct. 7, Lifshitz said she started noticing unusual activity. Truckloads of Hamas militants, which appeared to be special forces units because they were all dressed in black, were driving within 300 yards of the fence, in a “combat patrol,” she said. After they stopped, she said they would carefully scan Israeli positions while talking amongst themselves.
+
+Israeli soldier Roni Lifshitz speaking to NBC News' chief foreign correspondent, Richard Engel, in Tel Aviv on Sept. 12. NBC News
+
+On another occasion she said she saw militants using a “model of an Israeli tank they had built to train to kidnap soldiers. They were actually practicing scenarios that happened on Oct. 7,” she said.
+
+Lifshitz said she reported all of these events up the official chain of command, but was met with silence. “No one updated me. No one told me, ‘Roni, what you reported is being handled,’ or ‘Just so you know, they’re doing something about it, they’re dealing with it, they heard about it.’ No one said anything to me,” she said.
+
+On the morning of the attacks, Lifshitz was training in Jerusalem.
+
+Hamas militants stormed the Nahal Oz Base and 15 of Lifshitz’s colleagues — all young women like her —were killed in the assault. Seven more were dragged away into Gaza. Video taken on the day of the attack shows some of the young women covered in blood. Most were wearing sweatpants and the clothes they were sleeping in. Some were later seen in the streets of Gaza being put in jeeps and trucks.
+
+One of Lifshitz’s colleagues, Ori Megidish, was rescued weeks after the attacks, and another, Noa Marciana, was killed at the Al-Shifa Hospital in northern Gaza, according to the Israeli military. Five are still in captivity.
+
+Palestinians break through a fence along the border with Israel from Khan Younis in the southern Gaza Strip on Oct. 7, 2023. APA images via Reuters file
+
+Lifshitz said she was trying to put on a positive front while she worked in a shoe store, but she cried herself to sleep every night, wracked with the ever-present guilt of having survived.
+
+“Everything I do comes with the feeling of, ‘Why me and not them? Why am I different from them? Why were they murdered, and I wasn’t?’”
+
+She and other surviving members of unit 414 are also seeking answers.
+
+“I want an answer to just one question,” she said. “Who received the information and didn’t give the order to do something about it? Who turned a blind eye, and who is responsible for this?”
+
+Asked whether the warnings issued by the observers were acted upon or ignored, the Israeli military told NBC it is currently focused on fighting Hamas and “questions of this kind will be looked into at a later stage.”
+
+After a July meeting between the observers, their families and Israel’s Prime Minister Benjamin Netanyahu, his office said in a statement that he heard their requests for an investigation and promised that “matters would be thoroughly checked and that the lessons would be learned at all levels.”
+
+Speaking Tuesday on a visit to Nahal Oz, Israeli President Isaac Herzog said it was the site of "a terrible massacre."
+
+"I very much hope that the investigation will be published fully and comprehensively, to shed light on everything that happened. It won't change reality, but it's good that we know the truth in order to draw lessons," Herzog said.
+
+But so far, Israel has not launched an official inquiry, despite pleas from the families of observers and other victims of the attacks.
+
+Undeterred, surviving members of unit 414 have been making their concerns public.
+
+In September, Lifshitz and two other former soldiers, Amit Yerushalmi and Margaret Weinstein, took part in an unofficial civil commission of inquiry that has been collecting evidence of intelligence failures around the Hamas attacks, which saw 1,200 people and around 240 people taken hostage, according to Israeli tallies. Israel’s offensive in Gaza since then has killed more than 41,000 people, according to health officials in the enclave.
+
+Weinstein testified to equipment failures on the base, including surveillance cameras that had fallen down or didn’t work properly. Yerushalmi also alleged that the pattern of suspicious Hamas activity was increasing in the weeks leading up to the attack.
+
+Israeli President Isaac Herzog at the Nahal Oz outpost in southern Israel on Tuesday. Amos Ben Gershom / GPO
+
+Both echoed Lifshitz’s allegations that their claims were ignored.
+
+The commission was started by Ofer Rosenbaum and Haim Rubenstein as part of a promise that Rubenstein made to Eyal Eshel, the father of 19-year-old Roni Eshel, an observer from the unit who was killed at the base.
+
+Varda Alshech, a retired judge, leads the commission. Other members include retired Maj. Gen. Eyal Ben-Reuven, retired Brig. Gen.General Yehudit Grisaro and Shlomo Aharonishki, who served as the high commissioner of the Israeli Police between 2001 and 2008. Raphael Ben-Sheetrit, the former mayor of the northern town of Beit She’an, also sits on the commission.
+
+“We’re looking for an answer to the families — what really happened?” said Rubenstein, who, like Rosenbaum, worked in crisis management before the attacks. “If the army failed, I need to understand what’s happened in the army. If the government failed, I need to understand what’s happened over there.”
+
+Despite receiving no support from the government, the commission is pressing on with the investigation and plans to release a preliminary report next month.
+
+“If Israeli citizens will not have these answers, how can we make sure that this will never be happening again,” Rosenbaum said of their mission.
+
+Other former and current soldiers have also testified before their commission, as well as members of the intelligence community, journalists, former prime ministers and other government officials.
+
+In August, opposition leader Yair Lapid testified that, two months before the Oct. 7 attacks, he had taken part in a military intelligence briefing in which Netanyahu received detailed warnings that Hamas had noticed a weakness, division and a loss of military competence in Israel.
+
+Netanyahu appeared “bored and indifferent,” he said.
+
+Israeli soldiers in a new surveillance and situation room in Re’im Camp, built after their previous base at Nahal Oz was overrun and destroyed in the Hamas terrorist attack. via Israel Defense Forces
+
+Danny Yatom, the former head of Israel’s Mossad intelligence agency, also testified on Sept. 10.
+
+Speaking to NBC News at the commission’s offices in Tel Aviv on the day of his testimony, Yatom said he did not have an explanation for Israel’s security failures, but said all the layers of defense in Israel, in his assessment, “collapsed at the same time.”
+
+He added that Netanyahu “is responsible because he got some early warning, even though it was not the exact date, the exact location. He did not pay attention to it the way the prime minister should pay attention to it.”
+
+These days, Lifshitz wears a necklace with a small photo of her friend Shahaf Nissani, a young woman with a big mass of curly, chestnut colored hair spilling out and around her face and across her neck. She was Lifshitz’s best friend, and a fellow observer, who was also killed at the base.
+
+When customers at her shoe store ask her about the necklace, she tells them about her friend and then tries to change the subject.
+
+“People can see I hide my emotions,” she said. “I laugh, joke, and seem happy and go out, but my heart is broken, black. There’s no soul, nothing.”There is no evidence Iran has decided to rush toward building a nuclear weapon, CIA director says
+There is no evidence that Iran has decided to build a nuclear weapon, and if it did, the U.S. and its allies would most likely be able to detect such a step soon after it was taken, CIA Director William Burns said Monday.
+
+As Israel weighs how it will retaliate against Iran after it came under an Iranian ballistic missile barrage last week, speculation has focused on whether it might choose to strike nuclear sites in Iran to try to cut off Tehran’s possible path to a nuclear weapon.
+
+Speaking at the Cipher Brief security conference in Sea Island, Georgia, Burns said Iran has advanced its nuclear program by stockpiling uranium enriched to near weapons-grade levels. As a result, Iran could quickly secure enough fissile material for an atomic bomb if it chose to and there would be less time for the outside world to respond, he said.
+
+CIA Director William Burns during a hearing of the House (Select) Intelligence Committee in Washington, D.C., on March 12, 2024. Anna Moneymaker / Getty Images file
+
+“No, we do not see evidence today that the supreme leader has reversed the decision that he took at the end of 2003 to suspend the weaponization program,” Burns said of Iran’s unelected leader, Ayatollah Ali Khamenei, who holds ultimate authority in the country’s theocratic system. Khamenei issued a fatwa against nuclear weapons in 2003.
+
+Iran has developed the “means of delivery” for a potential nuclear weapon by building up its missile arsenal, he said. And since the U.S. pulled out of the 2015 nuclear agreement between Iran and major powers known as the JCPOA in 2018, Tehran “is in a much closer position to produce a bomb’s worth of ... enriched material for a single weapon,” Burns said.
+
+The JCPOA imposed strict limits on Tehran’s nuclear program while easing economic sanctions on the country. As president, Donald Trump pulled the U.S. out of the deal six years ago, reimposed sanctions and introduced new sanctions. Since the U.S. exit, Iran has steadily blown through the restrictions on its nuclear activities and blocked international inspectors from seeing some nuclear sites.
+
+When the JCPOA was in effect, he said, it would have taken Iran more than a year to amass enough highly enriched uranium for a nuclear bomb.
+
+“Now it’s probably more like a week or a little more to produce one bomb’s worth of weapons-grade material. So the risks have increased,” Burns said.
+
+Estimates vary as to how much time it would take Iran to build a viable nuclear weapon once it has acquired enough fissile material. Some experts say it could take up to a year to produce a warhead.
+
+Burns said the U.S. has closely monitored Iran’s nuclear activity for any sign that the regime is rushing toward a bomb.
+
+“We don’t see evidence today that such a decision has been made. We watch it very carefully,” Burns said.
+
+“I think we are reasonably confident that — working with our friends and allies — we will be able to see it relatively early on. But ... the great danger in a way is that time frame has been compressed in ways which create new challenges for us,” he said.
+
+Israel versus Iranian proxies
+
+Burns said Israel had scored major tactical successes against Iran’s most important proxy force, the Hezbollah militia in Lebanon.
+
+Speaking on the first anniversary of the Oct. 7 Hamas terrorist attack on Israel, Burns said the military strength of Hamas, another major Iranian proxy, had also been severely degraded over the past year.
+
+But he said the difficult task now was to combine those battlefield gains with “smart diplomacy” to halt fighting between Israel and Hezbollah and between Israel and Hamas in the Gaza Strip.
+
+“Now we face the very real danger of a further regional escalation of conflict,” said Burns, a former career diplomat who spent years in the Middle East.
+
+Even though leaders in both Iran and Israel are not necessarily looking for an all-out conflict, “there remains a risk,” Burns said.
+
+Burns said Israel, with excellent air defenses and intelligence, was able to fend off two rounds of Iranian missile attacks on Israel, one in April and again last week.
+
+“I think, in some ways, that did expose some of the limitations in Iranian military capabilities,” he said. “But that’s not to suggest that those capabilities are still not quite potent. And, you know, something that not only Israel but the United States needs to take very seriously, too.”
+
+Burns also touted the CIA’s recent efforts to reach out on social media to disaffected Russians, offering potential informants a way to contact it secretly.
+
+He said the effort is going “pretty well” and has also angered his intelligence counterparts in Russia.
+
+“It has produced results,” Burns said. “And alongside those results, in terms of what the purpose of this is, it has thoroughly pissed off my Russian counterparts, including the head of their services, which in itself is probably worth the effort.”Middle East Conflict
+“If I had been valued a little more — not much, just a little — maybe it could have ended differently,” Roni Lifshitz, one of the former observers, told NBC News last month.A year from Oct 7, tens of thousands killed and fears of a 'forever war'
+In the dark days after the Oct. 7 terror attack on Israel and the ensuing military assault on Gaza, some dared hope the carnage could, in some way, become a catalyst for peace.
+
+“Crises can create opportunities,” veteran Israeli peace negotiator Yossi Beilin told NBC News last year. The world had given up on the Israel-Palestinian question, he said, but the horror of Oct. 7 and its aftermath “changed everything,” provoking a worldwide cry that this should never happen again.
+
+“There’s definitely room for hope,” Omar Dajani, a former legal adviser to Palestinian negotiation teams, agreed. “So long as we bear in mind that hope and optimism are different things.”
+
+One year later, those glimmers of hope have been shredded.Why Everest, the world's tallest mountain, is growing even taller
+Mount Everest is astoundingly tall at 29,032 feet above sea level, besting its Himalayan neighbors by hundreds of feet.
+
+But the world’s tallest peak is still growing, scientists say, thanks in part to the merger of two nearby river systems tens of thousands of years ago.
+
+An estimated 50 to 160 feet of Everest’s current height can be attributed to that merger, researchers revealed in a study published Monday in the journal Nature Geoscience, which found that in recent years, the annual pace of growth has sped up to fractions of a millimeter.
+
+“Even a feature as seemingly permanent as Mount Everest is subject to ongoing changes driven by various geological forces,” a co-author of the study, Dai Jingen, a geoscientist at China University of Geosciences in Beijing, said in an email Tuesday.
+
+The mountain peak has been steadily gaining height along with the rest of the Himalayas since its birth about 45 million years ago from the collision of the tectonic plates beneath the Indian subcontinent and Eurasia.
+
+But that didn’t fully explain how much Everest was growing. Researchers now say that when the Kosi River took over the Arun River about 89,000 years ago, it gave rise to a combined river of such immense power that it eroded large quantities of rock and soil from the Himalayan base nearly 50 miles away from Everest.
+
+In a geological process known as isostatic rebound, the erosion reduced the weight of the region, allowing the rise of land masses on the Earth’s crust, its outermost layer that floats atop a mantle layer made of hot, semiliquid rock.
+
+“Essentially, as the river carved away more rocks, the Earth’s crust rebounded, rising like a boat when weight is removed,” said Dai, adding that even though the river itself didn’t directly make Everest taller, the erosion and crust movement it caused contributed to the mountain’s elevation.
+
+Scientists estimate the rebound is causing Everest to grow 0.16 to 0.53 millimeters a year, accounting for as much as half of its annual uplift rate. They said Everest had gained as much as 2 millimeters annually in recent years.
+
+Researchers also say that could explain why Everest is unusually tall, reaching nearly 800 feet higher than its neighbors.
+
+Dai said the idea that river capture and erosion-related isostatic rebound play a role in Everest’s elevation adds a “surprising” dimension to the study of mountain formation, which is traditionally explained by tectonic activity.
+
+“While not entirely revolutionary, these findings are certainly surprising,” Dai said, adding that they could lead to a re-examination of current models of Himalayan formation and evolution.
+
+“It also emphasizes the importance of viewing the Earth as an interconnected system, where changes in one area can have surprising and significant impacts elsewhere,” he said.Ticketing platform under fire over scalping of Coldplay tickets
+Authorities in India have summoned executives of a ticketing platform after furious Coldplay fans failed to secure tickets for the British rock band’s coming concerts in Mumbai and complained about unchecked scalping.
+
+It’s the latest in a series of frustrating experiences around the world for fans facing growing competition and rising prices to see their favorite international artists onstage. Many of them are directing their anger at the platforms selling tickets — and calling on officials to act.
+
+Last month, the American company Ticketmaster came under British government scrutiny after Oasis fans complained about its “dynamic pricing” for the band’s reunion tour. The platform was also criticized in the U.S. over its disastrous 2022 sale for Taylor Swift’s Eras Tour, and along with its parent company, Live Nation, it is the subject of an antitrust suit the Justice Department brought this year.
+
+Coldplay fans say they endured long waits and technical glitches on BookMyShow, the official ticketing platform in India for the band’s Music of the Spheres world tour, which is heading to India’s financial capital in January. They were left disappointed, they said, when tickets were snapped up by scalpers who are selling them at several times their original price.
+
+Lavanya Maheshwari said she and five of her friends were ready and waiting when tickets went on sale at noon local time on Sept. 22, each refreshing the concert’s website on their laptops and phones.
+
+“We had 12 devices in the room trying to book the tickets,” said Maheshwari, an accountant based in Gurugram, a city southwest of New Delhi.
+
+But the website crashed even before sales began.
+
+“We kept refreshing for half an hour,” she said.
+
+When they eventually got in, she said, they were placed in a virtual ticketing line with hundreds of thousands of people ahead of them. They spent hours moving up the line, she said, only for the tickets to sell out.
+
+Tickets for the show had been priced from 2,500 rupees ($30) to 35,000 rupees ($415). But within hours, reselling platforms were listing them for thousands of dollars.
+
+On Monday, the website Viagogo showed the lowest-tier tickets available for $1,500 and the highest-tier tickets for as much as $4,000.
+
+“It was the first English band that I ever listened to, and I really wanted to watch them perform on the stage,” said Maheshwari, who turned 23 the day tickets went on sale. “This was definitely not the birthday present I was expecting.”
+
+BookMyShow’s chief executive, Ashish Hemrajani, was summoned before investigators Monday, a spokesperson for Mumbai police told NBC News. It is unclear whether he complied.
+
+The platform said it had experienced a “brief delay.” It said that tickets were limited to four per person and that the virtual line was designed to manage the high demand.
+
+“We’ve worked hard to ensure every fan had a fair chance to secure tickets,” a spokesperson said in a statement.
+
+BookMyShow said it was not associated with reselling platforms such as Viagogo, adding, “Scalping and black marketing of tickets is strictly condemned and punishable by law in India and BookMyShow vehemently opposes this practice.”
+
+The company said it had filed a police complaint and warned the public against buying tickets that might be fraudulent.
+
+Coldplay was initially scheduled to play just two Mumbai concerts, on Jan. 18 and 19, at DY Patil Stadium, which has a capacity of 45,000. A third show for Jan. 21 was added the day tickets went on sale because of “unprecedented demand,” BookMyShow said.
+
+Maheshwari said she logged on to the app as soon as the third show was announced.
+
+“We were very sure that we were going to get the tickets this time,” she said. “But when we again got in the queue, we were still unable to get it.”
+
+“There were friends who joined the queue after because we told them about the show. And somehow they got it, but not us,” she added.
+
+Tickets are now available only at prices far out of her reach, Maheshwari said.
+
+“These websites are selling tickets for 20, 30, 40 times more,” she said. “That is just impossible for us to buy.”
+{'id': 'gen-1728553454-IofAjkSEjmatz7v1XQzK', 'provider': 'OpenAI', 'model': 'openai/gpt-4o-mini', 'object': 'chat.completion', 'created': 1728553454, 'choices': [{'logprobs': None, 'finish_reason': 'stop', 'index': 0, 'message': {'role': 'assistant', 'content': "### Summary of News from Israel and Lebanon Conflict\n\nIn recent developments, Israel has intensified its military actions in southwestern Lebanon, which has raised concerns among Lebanese civilians. The Israeli military has launched its invasion against Hezbollah, declaring evacuation orders for areas along the Mediterranean coast. This suggests that Israel's navy may soon play a more active role in the ongoing conflict. Many people living near the Lebanese coast are confused and scared about whether they will be safe, as the evacuation orders from the Israeli Defense Forces (IDF) have been broad and sometimes unclear.\n\nOn another front, a significant increase in tensions has arisen from Israeli Prime Minister Benjamin Netanyahu's comments to the Lebanese people. He urged them to rise up against Hezbollah or risk facing destruction similar to that currently experienced in Gaza. This statement has been interpreted as a dire warning, making it seem like there could be a choice between a civil war or widespread devastation. Israel claims that its operations are targeted and limited, meant to ensure the safety of displaced people. However, critics argue that Netanyahu's approach may incite further violence and suffering in Lebanon.\n\nThe war in Gaza, ongoing for a year, has reportedly resulted in over 42,000 deaths, with more than 1.2 million people displaced. In Lebanon, the figures are similarly alarming, with around 2,000 people reported dead and vast numbers displaced. Some Lebanese citizens, expressing frustration, have commented on Netanyahu’s threats, stating that previous Israeli invasions had already devastated the country. There are growing calls from the international community for a reevaluation of Israel’s military strategy, especially as images of destruction in Lebanon circulate. \n\nThe situation continues to escalate as the world watches closely, with fears that what is currently happening in Lebanon could lead to even wider conflicts in the region. The lack of clear communication from Israeli officials regarding military decisions has further complicated matters, leaving many questioning the future of safety for civilians in both Lebanon and Israel.\n\n### Summary of Trump and Putin Relations\n\nIn surprising revelations, it has come to light that former President Donald Trump allegedly sent coronavirus testing devices to Russian President Vladimir Putin during the height of the pandemic. This claim comes from a new book by journalist Bob Woodward, which discusses Trump's foreign relations. The Kremlin has reportedly confirmed that some testing equipment was exchanged, but it did not provide details on the extent of the transfers. Trump has denied the allegations, calling the claims both false and a product of Woodward's imagination.\n\nThe book also suggests that Trump spoke with Putin numerous times since leaving office, including this year. However, Trump and his team have dismissed these reports as made-up stories. Critics have long been wary of Trump's friendly relationship with leaders like Putin, fueling concerns about how such dynamics could change U.S. foreign policy if Trump were to return to office.\n\nThe discussion around Trump’s ties to Putin arises amid ongoing conflicts, particularly with Ukraine. As Trump campaigns for re-election, questions remain about how he would handle international issues, particularly regarding military aid to Ukraine. Some aspects of the book might provoke debates, especially as it raises the issue of whether Trump would act differently from current policies. The potential implications of Trump’s relationships with foreign leaders have led to fears about U.S. strategy and support in global conflicts if he were re-elected.\n\nThese developments show the growing scrutiny over Trump's past actions and relationships with foreign powers, highlighting the ongoing intrigue as the 2024 election approaches.", 'refusal': ''}}], 'system_fingerprint': 'fp_8552ec53e1', 'usage': {'prompt_tokens': 11580, 'completion_tokens': 683, 'total_tokens': 12263}}
+### Summary of News from Israel and Lebanon Conflict
+
+In recent developments, Israel has intensified its military actions in southwestern Lebanon, which has raised concerns among Lebanese civilians. The Israeli military has launched its invasion against Hezbollah, declaring evacuation orders for areas along the Mediterranean coast. This suggests that Israel's navy may soon play a more active role in the ongoing conflict. Many people living near the Lebanese coast are confused and scared about whether they will be safe, as the evacuation orders from the Israeli Defense Forces (IDF) have been broad and sometimes unclear.
+
+On another front, a significant increase in tensions has arisen from Israeli Prime Minister Benjamin Netanyahu's comments to the Lebanese people. He urged them to rise up against Hezbollah or risk facing destruction similar to that currently experienced in Gaza. This statement has been interpreted as a dire warning, making it seem like there could be a choice between a civil war or widespread devastation. Israel claims that its operations are targeted and limited, meant to ensure the safety of displaced people. However, critics argue that Netanyahu's approach may incite further violence and suffering in Lebanon.
+
+The war in Gaza, ongoing for a year, has reportedly resulted in over 42,000 deaths, with more than 1.2 million people displaced. In Lebanon, the figures are similarly alarming, with around 2,000 people reported dead and vast numbers displaced. Some Lebanese citizens, expressing frustration, have commented on Netanyahu’s threats, stating that previous Israeli invasions had already devastated the country. There are growing calls from the international community for a reevaluation of Israel’s military strategy, especially as images of destruction in Lebanon circulate. 
+
+The situation continues to escalate as the world watches closely, with fears that what is currently happening in Lebanon could lead to even wider conflicts in the region. The lack of clear communication from Israeli officials regarding military decisions has further complicated matters, leaving many questioning the future of safety for civilians in both Lebanon and Israel.
+
+### Summary of Trump and Putin Relations
+
+In surprising revelations, it has come to light that former President Donald Trump allegedly sent coronavirus testing devices to Russian President Vladimir Putin during the height of the pandemic. This claim comes from a new book by journalist Bob Woodward, which discusses Trump's foreign relations. The Kremlin has reportedly confirmed that some testing equipment was exchanged, but it did not provide details on the extent of the transfers. Trump has denied the allegations, calling the claims both false and a product of Woodward's imagination.
+
+The book also suggests that Trump spoke with Putin numerous times since leaving office, including this year. However, Trump and his team have dismissed these reports as made-up stories. Critics have long been wary of Trump's friendly relationship with leaders like Putin, fueling concerns about how such dynamics could change U.S. foreign policy if Trump were to return to office.
+
+The discussion around Trump’s ties to Putin arises amid ongoing conflicts, particularly with Ukraine. As Trump campaigns for re-election, questions remain about how he would handle international issues, particularly regarding military aid to Ukraine. Some aspects of the book might provoke debates, especially as it raises the issue of whether Trump would act differently from current policies. The potential implications of Trump’s relationships with foreign leaders have led to fears about U.S. strategy and support in global conflicts if he were re-elected.
+
+These developments show the growing scrutiny over Trump's past actions and relationships with foreign powers, highlighting the ongoing intrigue as the 2024 election approaches.
+{'id': 'gen-1728553472-7Mk0o6SBYxBndMQ20jxH', 'provider': 'Google', 'model': 'anthropic/claude-3.5-sonnet', 'object': 'chat.completion', 'created': 1728553472, 'choices': [{'logprobs': None, 'finish_reason': 'end_turn', 'index': 0, 'message': {'role': 'assistant', 'content': '我會用好簡單嘅廣東話翻譯呢個新聞摘要,等8歲小朋友都聽得明:\n\n以色列同黎巴嫩打仗嘅新聞\n\n最近以色列喺黎巴嫩西南面打得好勁,令到當地平民好驚。以色列軍隊叫沿海嘅居民快啲走,可能佢哋嘅海軍就嚟打過去。好多住喺黎巴嫩海邊嘅人都唔知自己安唔安全,因為以色列軍隊畀嘅指示好含糊。\n\n以色列總理Netanyahu同黎巴嫩人講,要佢哋反抗Hezbollah,唔係就會變到好似Gaza咁慘。有人覺得呢個警告好嚴重,好似要黎巴嫩人揀打內戰定係俾人蕩平。以色列話佢哋只係想保護啲難民,但有人話Netanyahu嘅做法會令到更多人受苦。\n\nGaza打咗成年,死咗超過42,000人,超過120萬人無家可歸。黎巴嫩都有大約2,000人死咗,仲有好多人要逃難。有啲黎巴嫩人話以前以色列入侵已經搞到佢哋國家好慘。而家全世界都叫以色列唔好再咁樣打。\n\n大家都好擔心呢場仗會越打越大。以色列軍隊又唔講清楚佢哋嘅計劃,令到黎巴嫩同以色列嘅平民都唔知幾時先至安全。\n\nTrump同Putin嘅關係\n\n有本新書話以前美國總統Trump喺疫情最嚴重嗰陣送咗啲新冠病毒檢測器材俾俄羅斯總統Putin。俄羅斯承認收到啲設備,但冇講收到幾多。Trump話呢啲都係假嘅,係作者亂諗。\n\n本書仲話Trump退咗休之後都成日同Putin傾偈,連今年都有。但Trump同佢班人話呢啲都係假嘅。有啲人擔心Trump同Putin咁friend,如果佢再做總統會影響美國外交政策。\n\n而家Ukraine同俄羅斯打緊,有人擔心如果Trump再做總統會唔會唔再幫Ukraine。呢啲嘢令到大家都好緊張,驚美國喺世界打仗嗰陣會改變立場。\n\n大家而家都好留意Trump以前做過啲乜,同埋佢同其他國家老細嘅關係。2024年大選就嚟到,呢啲嘢會好受人關注。', 'refusal': ''}}], 'usage': {'prompt_tokens': 803, 'completion_tokens': 844, 'total_tokens': 1647}}
+MP3 file created successfully: spokenarticle_news1728553488.1369267_0.mp3
