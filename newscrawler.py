@@ -10,7 +10,28 @@ from newspaper import Article, build
 import openrouter
 import textprocessing
 
-# ... (previous functions remain the same)
+
+def split_long_text(text: str, max_length: int = 3000) -> List[str]:
+    """
+    Split a long text into chunks of approximately max_length characters,
+    breaking at sentence boundaries.
+    """
+    sentences = re.split(r'(?<=\.) ', text)
+    chunks = []
+    current_chunk = ""
+
+    for sentence in sentences:
+        if len(current_chunk) + len(sentence) <= max_length:
+            current_chunk += sentence + " "
+        else:
+            chunks.append(current_chunk.strip())
+            current_chunk = sentence + " "
+
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+
+    return chunks
+
 
 def split_text(text: str, max_length: int = 1500) -> List[str]:
     """Split text into manageable chunks."""
