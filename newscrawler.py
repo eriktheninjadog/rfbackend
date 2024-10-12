@@ -12,6 +12,115 @@ import textprocessing
 
 # ... (previous functions remain the same)
 
+def split_text(text: str, max_length: int = 1500) -> List[str]:
+    """Split text into manageable chunks."""
+    sentences = re.split(r'(?<=[。]) +', text)
+    chunks = []
+    current_chunk = ""
+
+    for sentence in sentences:
+        if len(current_chunk) + len(sentence) <= max_length:
+            current_chunk += sentence + " "
+        else:
+            chunks.append(current_chunk.strip())
+            current_chunk = sentence + " "
+
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+
+    return chunks
+
+
+def cantonese_text_to_mp3(text: str, output_file: str) -> None:
+    """Convert a string of text to an MP3 file using AWS Polly."""
+    session = boto3.Session(region_name='us-east-1')
+    polly_client = session.client('polly')
+
+    try:
+        response = polly_client.synthesize_speech(
+            Text=text,
+            OutputFormat='mp3',
+            VoiceId='Hiujin',
+            Engine='neural'
+        )
+
+        with open(output_file, 'wb') as file:
+            file.write(response['AudioStream'].read())
+
+        print(f"MP3 file created successfully: {output_file}")
+    except Exception as e:
+        print(f"An error occurred while creating MP3: {e}")
+
+
+
+def create_and_upload_files(chunk: str, index: int) -> None:
+    """Create MP3 and hint files, then upload them."""
+    splits = textprocessing.split_text(chunk)
+    filename = f"spokenarticle_news{time.time()}_{index}.mp3"
+    hint_filename = f"{filename}.hint.json"
+
+    cantonese_text_to_mp3(chunk, filename)
+
+    with open(hint_filename, "w") as f:
+        json.dump(splits, f)
+
+    for file in [filename, hint_filename]:
+        scp_command = f"scp {file} chinese.eriktamm.com:/var/www/html/mp3"
+        result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Error uploading {file}: {result.stderr}")
+
+
+
+def get_top_news(url: str, num_articles: int = 20) -> List[Dict[str, str]]:
+    """Get top news articles from a given URL."""
+    source = build(url, memoize_articles=False)
+    top_news = []
+
+    articles = source.articles
+    random.shuffle(articles)
+
+    for article in articles[:num_articles]:
+        try:
+            article.download()
+            article.parse()
+            top_news.append({
+                'title': article.title,
+                'url': article.source_url,
+                'text': article.text
+            })
+        except Exception as e:
+            print(f"Error processing article: {e}")
+
+    return top_news
+
+def summarize_news(news_text: str) -> str:
+    """Summarize the news text using OpenRouter."""
+    try:
+        summary = openrouter.open_router_chatgpt_4o_mini(
+            "You are an assistant who summarizes large amounts of texts that include news.",
+            f"Pick out the news from the following text, write a summary of 400 words of each news in simple English that someone with a B1 level can understand.\n{news_text}"
+        )
+        return summary
+    except Exception as e:
+        print(f"Error summarizing news: {e}")
+        return ""
+
+def translate_to_cantonese(text: str) -> str:
+    """Translate the text to spoken Cantonese using OpenRouter."""
+    try:
+        translated = openrouter.do_open_opus_questions(
+            "Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. "
+            "Make it so simple that an 8-year-old can understand it. Personal Names, place names (Toponyms), "
+            f"Brand names, organization names and product names in English. Here is the text:\n{text}"
+        )
+        return translated
+    except Exception as e:
+        print(f"Error translating to Cantonese: {e}")
+        return ""
+
+
+
 def translate_simplify_and_create_mp3(text: str) -> None:
     """
     Translate the given text to Cantonese, simplify it, create an MP3, and upload it.
