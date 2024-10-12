@@ -199,8 +199,8 @@ def main():
         process_news(url)
 
     # Example usage of the new function with a file
-    file_path = "sample_text.txt"
-    process_file_content(file_path)
+    #file_path = "sample_text.txt"
+    #process_file_content(file_path)
 
 if __name__ == "__main__":
     main()
