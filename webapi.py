@@ -1126,7 +1126,7 @@ def get_next_spoken_article(mp3_file):
     if idx != -1:
         return files[idx+1]
     else:
-        random.choice(files)
+        return files[random.randint(nrfiles)]
     
 @app.route('/getspokenarticle',methods=['POST'])
 def getspokenarticle():    
