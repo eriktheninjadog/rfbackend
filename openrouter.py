@@ -21,7 +21,7 @@ def pick_random_sentences_from_cache(nr):
         if sentence != None:
             ret.append(sentence)
     return ret
-
+    
 def read_bearer_key():
     f = open('/var/www/html/api/rfbackend/routerkey.txt','r')
     bearer = f.readline()

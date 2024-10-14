@@ -212,6 +212,7 @@ def process_news(url: str) -> None:
 
 def main():
     urls = [
+        'https://news.rthk.hk/rthk/en/',
         'https://www.bbc.com/',
         'https://www.nbcnews.com/',
     ] * 11  # Repeated 11 times to match the original list
