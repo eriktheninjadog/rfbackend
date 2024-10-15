@@ -132,7 +132,7 @@ def translate_to_cantonese(text: str) -> str:
     try:
         translated = openrouter.do_open_opus_questions(
             "Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. "
-            "Make it so simple that an 8-year-old can understand it. Personal Names, place names (Toponyms), "
+            "Make it so simple that a 6-year-old can understand it. Personal Names, place names (Toponyms), "
             f"Brand names, organization names and product names in English. Here is the text:\n{text}"
         )
         return translated
