@@ -120,7 +120,7 @@ def summarize_news(news_text: str) -> str:
     try:
         summary = openrouter.open_router_chatgpt_4o_mini(
             "You are an assistant who summarizes large amounts of texts that include news.",
-            f"Pick out the news from the following text, write a summary of 400 words of each news in simple English that someone with a B1 level can understand.\n{news_text}"
+            f"Pick out the news from the following text, write a summary of 400 words of each news in simple English that someone with a B1 level can understand. Ignore any news related to sports.\n{news_text}"
         )
         return summary
     except Exception as e:
