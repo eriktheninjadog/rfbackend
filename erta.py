@@ -129,6 +129,15 @@ def call_api(base_url, endpoint, data):
 
 import constants
 
+#    term = data.get(constants.PARAMETER_TERM)
+#    jyutping = data.get(constants.PARAMETER_JYUTPING)
+#    definition = data.get(constants.PARAMETER_DEFINITION)
+
+def update_remote_directory(word,jyutping,english):
+    data = {constants.PARAMETER_TERM:word, constants.PARAMETER_JYUTPING:jyutping,constants.PARAMETER_DEFINITION:english}    
+    ret = call_api("https://chinese.eriktamm.com/api","update_dictionary",data)
+    return ret
+
 def remote_dictionary(word):
     data = {constants.PARAMETER_SEARCH_WORD:word }
     ret = call_api("https://chinese.eriktamm.com/api","dictionarylookup",data)
@@ -163,10 +172,16 @@ if __name__ == "__main__":
         
     ret = chinese_ai_lookup(pop.get_undefined_words())
             
-    for i in ret:
+    for i in ret: 
+        word = i[0]
+        jyutping = i[1]
+        english = i[2]
+        update_remote_directory(word,jyutping,english)
+        pop.add_word_to_dictionary(word,jyutping,english)
         print(str(i))
 
 
+    None
     """
     
     def simple_splitter(text: str) -> List[str]:

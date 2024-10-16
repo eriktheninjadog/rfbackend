@@ -1106,10 +1106,16 @@ def gooutrouter():
     result = openrouter.do_open_opus_questions(question)
     return jsonify({'result':result})
 
+import mp3helper
+
 @app.route('/getspokenarticles',methods=['POST'])
 def getspokenarticles():
     files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3') and file.find('spoken')!=-1]    
     files = sorted(files, key=lambda f: os.path.getctime(os.path.join('/var/www/html/mp3', f)))
+    timefiles = []
+    for f in files:
+        timefiles.append('/var/www/html/mp3/'+f)
+    files.append(mp3helper.format_duration(mp3helper.get_total_mp3_duration(timefiles)))
     return jsonify({'result':files})
     
     
