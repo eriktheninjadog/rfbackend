@@ -62,7 +62,8 @@ def cantonese_text_to_mp3(text: str, output_file: str) -> None:
             Text=text,
             OutputFormat='mp3',
             VoiceId='Hiujin',
-            Engine='neural'
+            Engine='neural',
+            TextType='ssml'            
         )
 
         with open(output_file, 'wb') as file:
@@ -133,7 +134,7 @@ def translate_to_cantonese(text: str) -> str:
         translated = openrouter.do_open_opus_questions(
             "Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. "
             "Make it so simple that a 6-year-old can understand it. Personal Names, place names (Toponyms), "
-            f"Brand names, organization names and product names in English. Here is the text:\n{text}"
+            f"Brand names, organization names and product names in English. Do not include pronouncation guide. Here is the text:\n{text}"
         )
         return translated
     except Exception as e:
@@ -141,6 +142,31 @@ def translate_to_cantonese(text: str) -> str:
         return ""
 
 
+
+def keywords(text: str) -> str:
+    """Translate the text to spoken Cantonese using OpenRouter."""
+    try:
+        translated = openrouter.do_open_opus_questions(
+            f"Extract keywords to understand this text. Make a list of the keywords, repear each keywords three times, tab and then the  definition in simple Cantonese that a child can understand. Like this keyword,keyword,keyword\tdefinition\nkeyword,keyword,keyword\tdefinition\n  Here is the text:\n{text}"
+        )
+        return translated
+    except Exception as e:
+        print(f"Error translating to Cantonese: {e}")
+        return ""
+
+
+def wrap_in_ssml(text: str) -> str:
+    """Translate the text to spoken Cantonese using OpenRouter."""
+    try:
+        translated = openrouter.do_open_opus_questions(
+            f"Convert this text into SSML format. Use pauses to make it more suitable for listening. Only return the SSML. Here is the text:\n{text}"
+        )
+        idx = translated.find('<speak>')
+        translated = translated[idx:]        
+        return translated
+    except Exception as e:
+        print(f"Error translating to Cantonese: {e}")
+        return ""
 
 def translate_simplify_and_create_mp3(text: str) -> None:
     """
@@ -166,7 +192,10 @@ def translate_simplify_and_create_mp3(text: str) -> None:
 
             # Create MP3 and upload for each chunk
             for i, mp3_chunk in enumerate(mp3_chunks):
-                create_and_upload_files(mp3_chunk, f"{chunk_index}_{i}")
+                akeywords = keywords(mp3_chunk)
+                fulltext = akeywords + "\n\n" + mp3_chunk
+                ssml_text = wrap_in_ssml(fulltext)
+                create_and_upload_files(ssml_text, f"{chunk_index}_{i}")
 
             print(f"Successfully processed chunk {chunk_index + 1} with {len(mp3_chunks)} MP3 parts.")
 
