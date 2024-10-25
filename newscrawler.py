@@ -75,9 +75,9 @@ def cantonese_text_to_mp3(text: str, output_file: str) -> None:
 
 
 
-def create_and_upload_files(chunk: str, index: int) -> None:
+def create_and_upload_files(normal_text,chunk: str, index: int) -> None:
     """Create MP3 and hint files, then upload them."""
-    splits = textprocessing.split_text(chunk)
+    splits = textprocessing.split_text(normal_text)
     filename = f"spokenarticle_news{time.time()}_{index}.mp3"
     hint_filename = f"{filename}.hint.json"
 
@@ -119,8 +119,11 @@ def get_top_news(url: str, num_articles: int = 20) -> List[Dict[str, str]]:
 def summarize_news(news_text: str) -> str:
     """Summarize the news text using OpenRouter."""
     try:
-        summary = openrouter.open_router_chatgpt_4o_mini(
+        """        summary = openrouter.open_router_chatgpt_4o_mini(
             "You are an assistant who summarizes large amounts of texts that include news.",
+            f"Pick out the news from the following text, write a summary of 400 words of each news in simple English that someone with a B1 level can understand. Ignore any news related to sports.\n{news_text}"
+        )"""
+        summary = openrouter.open_router_nemotron_70b(
             f"Pick out the news from the following text, write a summary of 400 words of each news in simple English that someone with a B1 level can understand. Ignore any news related to sports.\n{news_text}"
         )
         return summary
@@ -195,7 +198,7 @@ def translate_simplify_and_create_mp3(text: str) -> None:
                 akeywords = keywords(mp3_chunk)
                 fulltext = akeywords + "\n\n" + mp3_chunk
                 ssml_text = wrap_in_ssml(fulltext)
-                create_and_upload_files(ssml_text, f"{chunk_index}_{i}")
+                create_and_upload_files(fulltext,ssml_text, f"{chunk_index}_{i}")
 
             print(f"Successfully processed chunk {chunk_index + 1} with {len(mp3_chunks)} MP3 parts.")
 
