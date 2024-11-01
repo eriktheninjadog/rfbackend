@@ -74,7 +74,7 @@ def make_stories():
                 text = text + txt
         # great now we hve the text
 
-        story = openrouter.do_open_opus_questions("Pick out the 20 most difficult words in this text and create a 500 word story in spoken Cantonese suitable for a 6 year old child that contains most of them. Start with the words and a explanation of the meaning suitable for a 6 year old in Cantonese but do not include pronounciation. Here is the text\n" + text)         
+        story = openrouter.do_open_opus_questions("Pick out the 20 most difficult words in this text and create a 500 word story in spoken Cantonese suitable for a 6 year old child that contains most of them. Start with the words and a explanation of the meaning suitable for a 7 year old in Cantonese but do not include pronounciation. Here is the text\n" + text)         
         splits = textprocessing.split_text(story)
         filename = f"spokenarticle_story{time.time()}_{0}.mp3"
 
