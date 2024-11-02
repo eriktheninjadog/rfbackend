@@ -134,7 +134,7 @@ def summarize_news(news_text: str) -> str:
 def translate_to_cantonese(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.do_open_opus_questions(
+        translated = openrouter.open_router_nemotron_70b(
             "Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. "
             "Make it so simple that a 7-year-old can understand it. Personal Names, place names (Toponyms), "
             f"Brand names, organization names and product names in English. Do not include pronouncation guide. Here is the text:\n{text}"
@@ -149,7 +149,7 @@ def translate_to_cantonese(text: str) -> str:
 def keywords(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.do_open_opus_questions(
+        translated = openrouter.open_router_nemotron_70b(
             f"Extract keywords to understand this text. Make a list of the keywords, repear each keywords three times, tab and then the  definition in simple Cantonese that a child can understand. Like this keyword,keyword,keyword\tdefinition\nkeyword,keyword,keyword\tdefinition\n  Here is the text:\n{text}"
         )
         return translated
@@ -161,7 +161,7 @@ def keywords(text: str) -> str:
 def wrap_in_ssml(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.do_open_opus_questions(
+        translated = openrouter.open_router_nemotron_70b(
             f"Convert this text into SSML format. Use pauses to make it more suitable for listening. Only return the SSML. Here is the text:\n{text}"
         )
         idx = translated.find('<speak>')
