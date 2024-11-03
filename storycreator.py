@@ -13,7 +13,7 @@ import subprocess
 
 payload = {
     "onlyFailed": True,
-    "number": 40,
+    "number": 100,
     "level": "A1",
     "language": "hi",
     "store": False,
