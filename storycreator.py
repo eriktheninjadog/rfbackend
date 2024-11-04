@@ -170,6 +170,50 @@ def make_wordlists():
         result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)        
         return story
     
+    
+def make_wordlists_from_list(alist):
+    url = "https://chinese.eriktamm.com/api/poeexamples"
+    # Send the JSON request
+    totalstr = ''
+    random.shuffle(alist)
+    words = ''
+    for i in range(20):
+        words = words + alist[i] + '\n'
 
+    story = openrouter.do_open_opus_questions("A list of Cantonese terms and words is provided. Return a json-array (and no other text but json) looking like this [[word 1,explanation of word 1 in Cantonese suitable for a 7 year old, first example sentence containing word 1, second example sentence containing word 1],...]    ]  For each word in the list:  Here is the list\n\n" + words)
+    print(story)
+    thestuff = json.loads(story)
+    filename = f"spokenarticle_list{time.time()}_{0}.mp3"
+    thetotalssml = "<speak>"
+    for word in thestuff:   
+        for i in range(2):
+            thetotalssml += word[0] + "<break time=\"0.2s\"/>"
+            thetotalssml += word[1] + "<break time=\"0.5s\"/>"
+        thetotalssml += word[2] + "<break time=\"0.5s\"/>"
+        thetotalssml += word[2] + "<break time=\"0.5s\"/>"
+        thetotalssml += word[3] + "<break time=\"0.5s\"/>"
+        thetotalssml += word[3] + "<break time=\"0.5s\"/>"
+    
+    random.shuffle(thestuff)
+    for word in thestuff:   
+        thetotalssml += word[2] + "<break time=\"0.5s\"/>"
+        thetotalssml += word[3] + "<break time=\"0.5s\"/>"
+
+    thetotalssml += "</speak>"
+    splits = textprocessing.split_text(strip_ssml_tags(thetotalssml))
+    cantonese_text_to_mp3(thetotalssml,filename)
+    hint_filename = filename + ".hint.json"
+    with open(hint_filename, "w") as f:
+        json.dump(splits, f)
+    scp_command = f"scp "+ filename +"* chinese.eriktamm.com:/var/www/html/mp3"
+    result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)        
+    return story
+    
+f = open('/home/erik/Downloads/2500tradhsk.txt','r',encoding='utf-8')
+lines = f.readlines()
+f.close()
 for i in range(10):
-    make_wordlists()
+    make_wordlists_from_list(lines)
+    
+#for i in range(10):
+#    make_wordlists()
