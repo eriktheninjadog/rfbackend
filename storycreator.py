@@ -13,7 +13,7 @@ import subprocess
 
 payload = {
     "onlyFailed": True,
-    "number": 40,
+    "number": 100,
     "level": "A1",
     "language": "hi",
     "store": False,
@@ -129,7 +129,11 @@ def make_wordlists():
         totalseconds = 0
         random.shuffle(result)
         timesignatures = []
+        cnt=0
         for i in result:
+            cnt=cnt+1
+            if cnt > 20:
+                break
             #english = i['english']
             tok = i['chinese']
             txt = ''
