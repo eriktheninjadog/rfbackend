@@ -144,16 +144,28 @@ def make_wordlists():
                 hints.append(chinese)
                 text = text + txt
         # great now we hve the text
-
-        story = openrouter.do_open_opus_questions("Pick out the 20 most difficult words into a list. Return a json-array (and no other text but json) looking like this [[word 1,explanation of word 1 in Cantonese suitable for a 7 year old, first example sentence containing word 1, second example sentence containing word 1],...]    ]  For each word in the list:  Here is the text\n" + text)
+        return make_wordlists_from_text(text)
+    
+    
+def make_wordlists_from_text_file(filename):
+    f = open(filename,'r',encoding='utf-8')
+    text = f.read()
+    f.close()
+    return make_wordlists_from_text(text)
+    
+    
+def make_wordlists_from_text(text):
+        story = openrouter.do_open_opus_questions("Pick out 20 random difficult words into a list. Return a json-array (and no other text but json) looking like this [[word 1,explanation of word 1 in Cantonese suitable for a 7 year old, first example sentence containing word 1, second example sentence containing word 1],...]    ]  For each word in the list:  Here is the text\n" + text)
         print(story)
         thestuff = json.loads(story)
         filename = f"spokenarticle_list{time.time()}_{0}.mp3"
         thetotalssml = "<speak>"
+        cleantext = ''
         for word in thestuff:   
             for i in range(2):
                 thetotalssml += word[0] + "<break time=\"0.2s\"/>"
                 thetotalssml += word[1] + "<break time=\"0.5s\"/>"
+            cleantext += word[0] + " : " + word[1] + '\n'
             thetotalssml += word[2] + "<break time=\"0.5s\"/>"
             thetotalssml += word[2] + "<break time=\"0.5s\"/>"
             thetotalssml += word[3] + "<break time=\"0.5s\"/>"
@@ -165,7 +177,7 @@ def make_wordlists():
             thetotalssml += word[3] + "<break time=\"0.5s\"/>"
 
         thetotalssml += "</speak>"
-        splits = textprocessing.split_text(strip_ssml_tags(thetotalssml))
+        splits = textprocessing.split_text(cleantext)
         cantonese_text_to_mp3(thetotalssml,filename)
         hint_filename = filename + ".hint.json"
         with open(hint_filename, "w") as f:
@@ -217,7 +229,7 @@ f = open('/home/erik/Downloads/2500tradhsk.txt','r',encoding='utf-8')
 lines = f.readlines()
 f.close()
 for i in range(10):
-    make_wordlists_from_list(lines)
+    make_wordlists_from_text_file('/home/erik/Downloads/kungfu.txt')
     
 #for i in range(10):
 #    make_wordlists()

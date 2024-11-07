@@ -63,7 +63,7 @@ def cantonese_text_to_mp3(text: str, output_file: str) -> None:
             OutputFormat='mp3',
             VoiceId='Hiujin',
             Engine='neural',
-            TextType='ssml'            
+            #TextType='ssml'            
         )
 
         with open(output_file, 'wb') as file:
@@ -134,10 +134,8 @@ def summarize_news(news_text: str) -> str:
 def translate_to_cantonese(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.open_router_nemotron_70b(
-            "Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. "
-            "Make it so simple that a 7-year-old can understand it. Personal Names, place names (Toponyms), "
-            f"Brand names, organization names and product names in English. Do not include pronouncation guide. Here is the text:\n{text}"
+        translated = openrouter.open_router_chatgpt_4o_mini("You are a Cantonese translator",
+            f"Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. Make it so simple that a 7-year-old can understand it. Personal Names, place names (Toponyms), Brand names, organization names and product names in English. Do not include pronouncation guide. Here is the text:\n{text}"
         )
         return translated
     except Exception as e:
@@ -161,7 +159,7 @@ def keywords(text: str) -> str:
 def wrap_in_ssml(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.open_router_nemotron_70b(
+        translated = openrouter.open_router_chatgpt_4o_mini("You are an SSML assistant, formating text to SSML trying to make a text sound natural",
             f"Convert this text into SSML format. Use pauses to make it more suitable for listening. Only return the SSML. Here is the text:\n{text}"
         )
         idx = translated.find('<speak>')
@@ -198,7 +196,7 @@ def translate_simplify_and_create_mp3(text: str) -> None:
                 akeywords = keywords(mp3_chunk)
                 fulltext = akeywords + "\n\n" + mp3_chunk
                 ssml_text = wrap_in_ssml(fulltext)
-                create_and_upload_files(fulltext,ssml_text, f"{chunk_index}_{i}")
+                create_and_upload_files(fulltext,fulltext, f"{chunk_index}_{i}")
 
             print(f"Successfully processed chunk {chunk_index + 1} with {len(mp3_chunks)} MP3 parts.")
 
@@ -244,9 +242,9 @@ def process_news(url: str) -> None:
 
 def main():
     urls = [
-        'https://news.rthk.hk/rthk/en/',
         'https://www.bbc.com/',
         'https://www.nbcnews.com/',
+        'https://news.rthk.hk/rthk/en/'
     ] * 11  # Repeated 11 times to match the original list
 
     for url in urls:
