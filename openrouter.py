@@ -176,6 +176,34 @@ def open_router_nemotron_70b(user_content):
 
 
 
+def open_router_meta_llama_llama_3_1_8b_instruct(user_content):
+    response = requests.post(
+    url="https://openrouter.ai/api/v1/chat/completions",
+    headers={
+        "Authorization": read_bearer_key(),
+        "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
+        "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
+    },
+    data=json.dumps({
+        "model": "meta-llama/llama-3.1-8b-instruct", # Optional
+        "messages": [
+        {"role": "user", "content": user_content},
+        {"role": "system", "content": "You are an assistant"}        
+        ],
+        
+        })
+    )
+    responsejson = response.json()
+    print(responsejson)
+    choices = responsejson['choices']
+    message = choices[0]['message']
+    content = message['content']
+    return content
+
+
+
+    
+
 def open_router_chatgpt_4o(system_content,user_content):
     response = requests.post(
   url="https://openrouter.ai/api/v1/chat/completions",
@@ -229,6 +257,29 @@ def open_router_chatgpt_4o_mini(system_content,user_content):
     print(content)
     return content
 
+
+def open_router_meta_llama_llama_3_2_3b_instruct_free(text):
+    response = requests.post(
+  url="https://openrouter.ai/api/v1/chat/completions",
+  headers={
+        "Authorization": read_bearer_key(),
+        "HTTP-Referer": f"chinese.eriktamm.com", # Optional, for including your app on openrouter.ai rankings.
+        "X-Title": f"chinese_app", # Optional. Shows in rankings on openrouter.ai.
+  },
+  data=json.dumps({
+    "model": "meta-llama/llama-3.2-3b-instruct:free", # Optional
+        "messages": [
+        {"role": "user", "content": text}
+        ],
+        
+    }))
+    responsejson = response.json()
+    print(responsejson)
+    choices = responsejson['choices']
+    message = choices[0]['message']
+    content = message['content']
+    print(content)
+    return content
 
 
 def open_router_qwen(system_content,user_content):

@@ -46,7 +46,7 @@ def split_text_parts(text):
     return ret
 
 def zng(paragraph):
-    for sent in re.findall(u'[^「」!?。\.\!\?]+[」「!?。\.\!\?]?', paragraph, flags=re.U):
+    for sent in re.findall(u'[  ]+[」「!?。\.\!\?]?', paragraph, flags=re.U):
         yield sent
 
 def split_text_sentences(text):
@@ -88,3 +88,27 @@ def find_start_end_of_parts(text,parts):
 # this only converts if the text is in simplified
 def make_sure_traditional(text):
     return zhconv.convert(text,'zh-hk')
+
+import re
+
+
+def split_chinese_text_into_sentences(text):
+    """
+    Split Chinese text into sentences.
+    
+    Args:
+        text (str): The Chinese text to split.
+
+    Returns:
+        list: A list of sentences.
+    """
+    # Define sentence-ending punctuation
+    sentence_endings = r'[。！？；]'
+    
+    # Use regex to split the text on the defined punctuation
+    sentences = re.split(sentence_endings, text)
+    
+    # Strip whitespace and filter out any empty strings
+    sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
+    
+    return sentences

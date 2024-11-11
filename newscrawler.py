@@ -9,6 +9,10 @@ import boto3
 from newspaper import Article, build
 import openrouter
 import textprocessing
+import ssml
+import os
+
+
 
 
 def split_long_text(text: str, max_length: int = 3000) -> List[str]:
@@ -29,7 +33,6 @@ def split_long_text(text: str, max_length: int = 3000) -> List[str]:
 
     if current_chunk:
         chunks.append(current_chunk.strip())
-
     return chunks
 
 
@@ -48,8 +51,92 @@ def split_text(text: str, max_length: int = 1500) -> List[str]:
 
     if current_chunk:
         chunks.append(current_chunk.strip())
-
     return chunks
+
+def split_ssml_among_tags(text:str):
+    firstparts=text.split('>')
+    l = []
+    for pi in firstparts:
+        l.append(pi+'>')
+    return l
+
+import urllib.parse
+
+import hashlib
+
+def md5_signature(input_string):
+    """
+    Generate an MD5 signature for the given string.
+
+    Args:
+        input_string (str): The string to hash.
+
+    Returns:
+        str: The MD5 hash of the string in hexadecimal format.
+    """
+    # Create an MD5 hash object
+    md5_hash = hashlib.md5()
+    
+    # Update the hash object with the bytes of the string
+    md5_hash.update(input_string.encode('utf-8'))
+    
+    # Return the hexadecimal representation of the hash
+    return md5_hash.hexdigest()
+
+
+def filename_from_string(astr):        
+    path = md5_signature(astr) + ".mp3"
+    return path
+
+def build_audio_compose(text:str):
+    parts = split_ssml_among_tags(text)
+    dictionary = {}
+    dd = []
+    for p in parts:
+        stringkey = filename_from_string(p)
+        if not stringkey in dictionary.keys():
+            dictionary[stringkey] = p
+    for p in parts:
+        dd.append( filename_from_string(p) )
+    print("Unique strings " + str(len(dictionary.keys())) + "\n")
+    return [dd,dictionary]
+
+
+mp3cachedirectory = '/home/erik/mp3cache'
+
+def create_files_in_audio_compose(compose):
+    session = boto3.Session(region_name='us-east-1')
+    polly_client = session.client('polly')
+
+    for i in compose[1].keys():
+        file_path = mp3cachedirectory + '/' + i
+        if  os.path.isfile(file_path) == False:
+            text =  '<speak>' + compose[1][i] + '</speak>'
+            response = polly_client.synthesize_speech(
+                Text=text,
+                OutputFormat='mp3',
+                VoiceId='Hiujin',
+                Engine='neural',
+                TextType='ssml'            
+            )
+            with open(file_path, 'wb') as file:
+                file.write(response['AudioStream'].read())    
+    return None
+
+from pydub import AudioSegment
+
+def assemble_audio_files(filename,compose):
+    audio_segments = []
+
+    for i in compose[0]:
+        temp_file =  mp3cachedirectory + '/' + i
+        audio_segments.append(AudioSegment.from_mp3(temp_file))
+
+    combined = sum(audio_segments)
+    combined.export(filename, format='mp3')
+    print(f"MP3 file created successfully: {filename}")
+
+    
 
 
 def cantonese_text_to_mp3(text: str, output_file: str) -> None:
@@ -74,7 +161,6 @@ def cantonese_text_to_mp3(text: str, output_file: str) -> None:
         print(f"An error occurred while creating MP3: {e}")
 
 
-
 def create_and_upload_files(normal_text,chunk: str, index: int) -> None:
     """Create MP3 and hint files, then upload them."""
     splits = textprocessing.split_text(normal_text)
@@ -91,7 +177,6 @@ def create_and_upload_files(normal_text,chunk: str, index: int) -> None:
         result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
         if result.returncode != 0:
             print(f"Error uploading {file}: {result.stderr}")
-
 
 
 def get_top_news(url: str, num_articles: int = 20) -> List[Dict[str, str]]:
@@ -113,29 +198,39 @@ def get_top_news(url: str, num_articles: int = 20) -> List[Dict[str, str]]:
             })
         except Exception as e:
             print(f"Error processing article: {e}")
-
     return top_news
+
 
 def summarize_news(news_text: str) -> str:
     """Summarize the news text using OpenRouter."""
     try:
         """        summary = openrouter.open_router_chatgpt_4o_mini(
             "You are an assistant who summarizes large amounts of texts that include news.",
-            f"Pick out the news from the following text, write a summary of 400 words of each news in simple English that someone with a B2 level can understand. Ignore any news related to sports.\n{news_text}"
+            f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Ignore any news related to sports.\n{news_text}"
         )"""
-        summary = openrouter.open_router_nemotron_70b(
-            f"Pick out the news from the following text, write a summary of 400 words of each news in simple English that someone with a B2 level can understand. Ignore any news related to sports.\n{news_text}"
+        summary = openrouter.do_open_opus_questions(
+            f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Avoid using subordinate clauses or dependent clauses. Ignore any news related to sports. return the news in json format like this [[title1,summary1],[title2,summary2],...]. Only return json, no other text. \n{news_text}"
         )
-        return summary
+        
+        bsummary = summary.replace('[[title1,summary1],[title2,summary2],...]','')
+        bsummary = bsummary[bsummary.find('['):]
+        ar = json.loads(bsummary)
+        if len(ar) == 1:
+            ar = ar[0]
+        rr = []
+        for r in ar:
+            rr.append(r[0] + '\n' + r[1])
+        return rr
     except Exception as e:
         print(f"Error summarizing news: {e}")
         return ""
+
 
 def translate_to_cantonese(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
         translated = openrouter.open_router_chatgpt_4o_mini("You are a Cantonese translator",
-            f"Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. Make it so simple that a 7-year-old can understand it. Personal Names, place names (Toponyms), Brand names, organization names and product names in English. Do not include pronouncation guide. Here is the text:\n{text}"
+            f"Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. Make it so simple that a 8-year-old can understand it. Personal Names, place names (Toponyms), Brand names, organization names and product names in English. Do not include pronouncation guide. Here is the text:\n{text}"
         )
         return translated
     except Exception as e:
@@ -143,14 +238,41 @@ def translate_to_cantonese(text: str) -> str:
         return ""
 
 
+def shorten_sentences(text):
+    task = """Please revise this text by:
+        Breaking compound sentences into simple ones
+        Replacing comma-separated clauses (，) with separate sentences (。) where meaning permits
+        Using active voice where possible
+        Removing redundant connecting words like 因為、所以、由於
+        Stating the main point first, then supporting details
+        Removing repeated ideas
+        Using direct verb-object structure instead of descriptive clauses
+        Keep core meaning and key information intact. \n\nHere is the text: """ + text
+    try:
+        shortened = openrouter.open_router_chatgpt_4o_mini("You are a Cantonese translator and writer",
+                                                           task
+        )
+        return shortened
+    except Exception as e:
+        print(f"Error translating to Cantonese: {e}")
+        return ""
 
-def keywords(text: str) -> str:
+
+def extract_keywords_from_sentence(sentence):
+    extr = "Extract the words from this sentence together with translation as a json-array: " + sentence
+    result = openrouter.open_router_meta_llama_llama_3_2_3b_instruct_free(extr)
+    result = result[result.find('['):]
+    result = result[:result.find(']')]+']'
+    
+    return json.loads(result)
+    
+def extract_keywords(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.open_router_nemotron_70b(
-            f"Extract keywords to understand this text. Make a list of the keywords, repear each keywords three times, tab and then the  definition in simple Cantonese that a child can understand. Like this keyword,keyword,keyword\tdefinition\nkeyword,keyword,keyword\tdefinition\n  Here is the text:\n{text}"
+        translated = openrouter.do_open_opus_questions(
+            f"Extract 20 keywords and difficult words necessary to understand this text. Return a list of those words in this json format [[keyword1,explanation in Cantonese that a child can understand,english translation],...]. Return only the json, no other text. Here is the text:\n{text}"
         )
-        return translated
+        return json.loads(translated)
     except Exception as e:
         print(f"Error translating to Cantonese: {e}")
         return ""
@@ -159,7 +281,7 @@ def keywords(text: str) -> str:
 def wrap_in_ssml(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.open_router_chatgpt_4o_mini("You are an SSML assistant, formating text to SSML trying to make a text sound natural",
+        translated = openrouter.open_router_meta_llama_llama_3_1_8b_instruct(
             f"Convert this text into SSML format. Use pauses to make it more suitable for listening. Only return the SSML. Here is the text:\n{text}"
         )
         idx = translated.find('<speak>')
@@ -169,40 +291,78 @@ def wrap_in_ssml(text: str) -> str:
         print(f"Error translating to Cantonese: {e}")
         return ""
 
-def translate_simplify_and_create_mp3(text: str) -> None:
+
+def findsentence_containing_word(word,sentences):
+    try:
+        result = []
+        for s in sentences:
+            if s.find(word) != -1:
+                result.append(s)
+        return random.choice(result)
+    except Exception as e:
+        print(str(e))
+        return ""
+
+def translate_simplify_and_create_mp3(news:List) -> None:
     """
     Translate the given text to Cantonese, simplify it, create an MP3, and upload it.
     If the text is longer than 3000 characters, it's split into smaller parts and
     processed in series.
-    """
-    try:
-        # Split the text into chunks if it's longer than 3000 characters
-        text_chunks = split_long_text(text) if len(text) > 3000 else [text]
+    """    
+    clean_text = ''
+    sml_text = ''
+    for n in news:
+        try:
+            translated = shorten_sentences(translate_to_cantonese(n))
+            sentences = textprocessing.split_chinese_text_into_sentences(translated)
+            for s in sentences:
+                sml_text += s + "<break time=\"1.0s\"/>"
+                clean_text += s + '\n'
+            sml_text += "<break time=\"1.0s\"/>"
+            """
+            keywords = extract_keywords(translated)
+            for k in keywords:
+                try:
+                    clean_text += k[0] + '\n' 
+                    sml_text+= k[0]+'" <break time=\"0.5s\"/>'+k[0]+'" <break time=\"0.5s\"/>'+k[0]+'" <break time=\"1.0s\"/>'+ k[1] + '" <break time=\"0.5s\"/>'+  k[2] + '<break time=\"0.5s\"/>' +k[0] + '<break time=\"1.0s\"/>' + findsentence_containing_word(k[0],sentences) +"<break time=\"1.0s\"/>" 
+                    sml_text += ' <break time=\"1.0s\"/>'
+                except Exception as ee:
+                    print((str(ee)))
+            """
+            for s in sentences:
+                sml_text += s + "<break time=\"1.0s\"/>"
+                kson = extract_keywords_from_sentence(s)
+                for k in kson:
+                    word = k['word']
+                    translation = k['translation']
+                    sml_text += word + "<break time=\"1.0s\"/>" + translation + "<break time=\"1.0s\"/>"
+                    sml_text += s + "<break time=\"1.0s\"/>"    
+                clean_text += s + '\n'
+                            
+            for s in sentences:
+                sml_text += s + "<break time=\"1.0s\"/>"
+                clean_text += s + '\n'
+            sml_text += ' <break time=\"1.0s\"/>'
+        except Exception as e:
+            print(str(e))
+    audio_compose = build_audio_compose(sml_text)
+    create_files_in_audio_compose(audio_compose)
+    filename = f"spokenarticle_news{time.time()}_0.mp3"
+    splits = textprocessing.split_text(clean_text)
+    print(clean_text)
+    hint_filename = f"{filename}.hint.json"
+    assemble_audio_files(filename,audio_compose)
+    #ssml.synthesize_ssml_to_mp3(sml_text,filename)
+    
+    with open(hint_filename, "w") as f:
+        json.dump(splits, f)
 
-        for chunk_index, text_chunk in enumerate(text_chunks):
-            print(f"Processing chunk {chunk_index + 1} of {len(text_chunks)}...")
-
-            # Translate and simplify the text chunk
-            translated_text = translate_to_cantonese(text_chunk)
-            if not translated_text:
-                print(f"Translation failed for chunk {chunk_index + 1}. Skipping this chunk.")
-                continue
-
-            # Split the translated text into smaller chunks for MP3 creation
-            mp3_chunks = split_text(translated_text)
-
-            # Create MP3 and upload for each chunk
-            for i, mp3_chunk in enumerate(mp3_chunks):
-                akeywords = keywords(mp3_chunk)
-                fulltext = akeywords + "\n\n" + mp3_chunk
-                ssml_text = wrap_in_ssml(fulltext)
-                create_and_upload_files(fulltext,fulltext, f"{chunk_index}_{i}")
-
-            print(f"Successfully processed chunk {chunk_index + 1} with {len(mp3_chunks)} MP3 parts.")
-
-        print(f"Finished processing all {len(text_chunks)} chunks of the original text.")
-    except Exception as e:
-        print(f"Error in translate_simplify_and_create_mp3: {e}")
+    for file in [filename, hint_filename]:
+        scp_command = f"scp {file} chinese.eriktamm.com:/var/www/html/mp3"
+        result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Error uploading {file}: {result.stderr}")
+        return None
 
 def process_file_content(file_path: str) -> None:
     """
@@ -242,10 +402,11 @@ def process_news(url: str) -> None:
 
 def main():
     urls = [
+        'https://www.taiwannews.com.tw/',
+        'https://www.cnn.com/',        
         'https://www.bbc.com/',
-        'https://www.nbcnews.com/',
-        'https://news.rthk.hk/rthk/en/'
-    ] * 11  # Repeated 11 times to match the original list
+        'https://www.nbcnews.com/'
+    ]  # Repeated 11 times to match the original list
 
     for url in urls:
         process_news(url)
