@@ -1312,5 +1312,5 @@ def explain_sentence_free():
         api = openrouter.OpenRouterAPI()
         result = api.open_router_meta_llama_3_2_3b_free("Explain the words and grammar of this sentence: " + sentence)        
         return jsonify({'result':result})
-    except:
-        return jsonify({'result':None})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
