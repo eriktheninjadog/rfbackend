@@ -21,13 +21,13 @@ class PersistentStack:
         self.stack.append(value)
         self.save()
 
-        def pop(self):
-            if not self.stack:
-                raise IndexError("pop from empty stack")
-            value = self.stack[-1]
-            del self.stack[-1]
-            self.save()
-            return value
+    def pop(self):
+        if not self.stack:
+            raise IndexError("pop from empty stack")
+        value = self.stack[-1]
+        del self.stack[-1]
+        self.save()
+        return value
 
     def peek(self):
         if not self.stack:

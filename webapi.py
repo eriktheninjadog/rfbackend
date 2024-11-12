@@ -1281,3 +1281,25 @@ def import_mp3():
 def explode_mp3():   
     audioimport.explode_file(request.args.get('filename'))
     return {}, 200
+
+
+import stringstack
+
+@app.route('/add_background_work', methods=['POST'])
+def add_background_work():
+    processor   = request.json['processor']
+    workstring  = request.json['workstring']
+    stack = stringstack.PersistentStack('/var/www/html/scenes/' + processor + '.stack')    
+    stack.push(workstring)
+    return {}, 200
+
+
+@app.route('/get_background_work', methods=['POST'])
+def add_background_work():
+    processor   = request.json['processor']
+    stack = stringstack.PersistentStack('/var/www/html/scenes/' + processor + '.stack')    
+    if stack.size() == 0:        
+        return jsonify({'result':None})
+    else:
+        astr = stack.pop()
+        return jsonify({'result':astr})

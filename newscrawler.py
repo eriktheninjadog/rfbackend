@@ -324,6 +324,40 @@ def findsentence_containing_word(word,sentences):
     except Exception as e:
         print(str(e))
         return ""
+    
+
+def is_extended_ascii(s):
+    """
+    Check if the given string contains only extended ASCII characters (0-255).
+
+    Args:
+        s (str): The string to check.
+
+    Returns:
+        bool: True if the string contains only extended ASCII characters, False otherwise.
+    """
+    try:
+        s.encode('latin-1')  # Latin-1 includes extended ASCII (0-255)
+        return True
+    except UnicodeEncodeError:
+        return False
+
+
+
+too_common_words = ['美國人','佢哋','佢','但係']
+
+def should_word_be_learned(word,translation,previous_words):
+    if word in too_common_words:
+        return False
+    if is_extended_ascii(word):
+        return False
+    if word == translation:
+        return False
+    
+    if word in previous_words:
+        return False
+    
+    return True
 
 def translate_simplify_and_create_mp3(news:List) -> None:
     """
@@ -333,6 +367,7 @@ def translate_simplify_and_create_mp3(news:List) -> None:
     """    
     clean_text = ''
     sml_text = ''
+    words_thats_been_given = []
     for n in news:
         try:
             translated = shorten_sentences(translate_to_cantonese(n))
@@ -370,11 +405,13 @@ def translate_simplify_and_create_mp3(news:List) -> None:
                         if 'text' in k.keys():
                             word = k['text']
                         translation = k['translation']
-                        sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + 'shortbreak' +word +'shortbreak' + translation +'shortbreak' + word +'shortbreak' + translation +"<break time=\"0.1s\"/>"
-                        cnt += 1
-                        if cnt > 3:
-                            sml_text += 'shortbreak'+s
-                            cnt = 0
+                        if should_word_be_learned(word,translation,words_thats_been_given):
+                            words_thats_been_given.append(word)
+                            sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + 'shortbreak' +word +'shortbreak' + translation +'shortbreak' + word +'shortbreak' + translation +"<break time=\"0.1s\"/>"
+                            cnt += 1
+                            if cnt > 3:
+                                sml_text += 'shortbreak'+s
+                                cnt = 0
                 except Exception as e:
                     print(str(e))
                 clean_text +=  s + '\n'
