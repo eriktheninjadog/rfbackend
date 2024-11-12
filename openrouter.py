@@ -119,7 +119,7 @@ class OpenRouterAPI:
             system_content
         )
 
-    def open_router_meta_llama_3_2_3b(self, text: str) -> str:
+    def open_router_meta_llama_3_2_3b_free(self, text: str) -> str:
         return self.get_completion(
             "meta-llama/llama-3.2-3b-instruct:free",
             text

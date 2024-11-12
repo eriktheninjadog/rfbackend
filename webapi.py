@@ -1303,3 +1303,14 @@ def get_background_work():
     else:
         astr = stack.pop()
         return jsonify({'result':astr})
+
+
+@app.route('/explain_sentence_free', methods=['POST'])
+def explain_sentence_free():
+    try:
+        sentence   = request.json['sentence']
+        api = openrouter.OpenRouterAPI()
+        result = api.open_router_meta_llama_3_2_3b_free("Explain the words and grammar of this sentence: " + sentence)        
+        return jsonify({'result':result})
+    except:
+        return jsonify({'result':None})
