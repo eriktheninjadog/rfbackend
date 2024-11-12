@@ -1289,7 +1289,7 @@ import stringstack
 def add_background_work():
     processor   = request.json['processor']
     workstring  = request.json['workstring']
-    stack = stringstack.PersistentStack('/var/www/html/scenes/' + processor + '.stack')    
+    stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
     stack.push(workstring)
     return {}, 200
 
@@ -1297,7 +1297,7 @@ def add_background_work():
 @app.route('/get_background_work', methods=['POST'])
 def add_background_work():
     processor   = request.json['processor']
-    stack = stringstack.PersistentStack('/var/www/html/scenes/' + processor + '.stack')    
+    stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
     if stack.size() == 0:        
         return jsonify({'result':None})
     else:
