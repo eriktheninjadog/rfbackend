@@ -111,16 +111,21 @@ def create_files_in_audio_compose(compose):
     for i in compose[1].keys():
         file_path = mp3cachedirectory + '/' + i
         if  os.path.isfile(file_path) == False:
-            text =  '<speak>' + compose[1][i] + '</speak>'
-            response = polly_client.synthesize_speech(
-                Text=text,
-                OutputFormat='mp3',
-                VoiceId='Hiujin',
-                Engine='neural',
-                TextType='ssml'            
-            )
-            with open(file_path, 'wb') as file:
-                file.write(response['AudioStream'].read())    
+            try:
+                text =  '<speak><break time=\"0.5s\"/>' + compose[1][i] + '</speak>'
+                text =text.replace('shortbreak','<break time=\"0.2s\"/>')
+                response = polly_client.synthesize_speech(
+                    Text=text,
+                    OutputFormat='mp3',
+                    VoiceId='Hiujin',
+                    Engine='neural',
+                    TextType='ssml'            
+                )
+                with open(file_path, 'wb') as file:
+                    file.write(response['AudioStream'].read())    
+            except Exception as e:
+                print(str(e))
+                print("SSML " + text)
     return None
 
 from pydub import AudioSegment
@@ -129,8 +134,11 @@ def assemble_audio_files(filename,compose):
     audio_segments = []
 
     for i in compose[0]:
-        temp_file =  mp3cachedirectory + '/' + i
-        audio_segments.append(AudioSegment.from_mp3(temp_file))
+        try:
+            temp_file =  mp3cachedirectory + '/' + i
+            audio_segments.append(AudioSegment.from_mp3(temp_file))
+        except Exception as e:
+            print(str(e))
 
     combined = sum(audio_segments)
     combined.export(filename, format='mp3')
@@ -207,14 +215,23 @@ def summarize_news(news_text: str) -> str:
         """        summary = openrouter.open_router_chatgpt_4o_mini(
             "You are an assistant who summarizes large amounts of texts that include news.",
             f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Ignore any news related to sports.\n{news_text}"
-        )"""
-        summary = openrouter.do_open_opus_questions(
-            f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Avoid using subordinate clauses or dependent clauses. Ignore any news related to sports. return the news in json format like this [[title1,summary1],[title2,summary2],...]. Only return json, no other text. \n{news_text}"
-        )
-        
-        bsummary = summary.replace('[[title1,summary1],[title2,summary2],...]','')
-        bsummary = bsummary[bsummary.find('['):]
-        ar = json.loads(bsummary)
+        )"""      
+        api = openrouter.OpenRouterAPI()  
+        count = 0
+        ar = []
+        while count < 3:
+            try:
+                summary = api.do_open_opus_questions(
+                    f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Avoid using subordinate clauses or dependent clauses. Ignore any news related to sports. return the news in json format like this [[title1,summary1],[title2,summary2],...]. Only return json, no other text. \n{news_text}"
+                )        
+                bsummary = summary.replace('[[title1,summary1],[title2,summary2],...]','')
+                bsummary = bsummary[bsummary.find('['):]
+                ar = json.loads(bsummary)
+                count = 10
+            except Exception as e:
+                print(str(e))
+                count+=1
+                                
         if len(ar) == 1:
             ar = ar[0]
         rr = []
@@ -229,8 +246,9 @@ def summarize_news(news_text: str) -> str:
 def translate_to_cantonese(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.open_router_chatgpt_4o_mini("You are a Cantonese translator",
-            f"Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. Make it so simple that a 8-year-old can understand it. Personal Names, place names (Toponyms), Brand names, organization names and product names in English. Do not include pronouncation guide. Here is the text:\n{text}"
+        api = openrouter.OpenRouterAPI()          
+        translated = api.do_open_opus_questions(
+            f"Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. Make it so simple that a 8-year-old can understand it. Personal Names, place names (Toponyms), Brand names, organization names and product names in English. Do not include pronouncation guide. Only return the text, do not add comments. Here is the text:\n{text}"
         )
         return translated
     except Exception as e:
@@ -247,9 +265,10 @@ def shorten_sentences(text):
         Stating the main point first, then supporting details
         Removing repeated ideas
         Using direct verb-object structure instead of descriptive clauses
-        Keep core meaning and key information intact. \n\nHere is the text: """ + text
+        Keep core meaning and key information intact. Do not add any comment, just respond with the rewritten text.\n\nHere is the text: """ + text
     try:
-        shortened = openrouter.open_router_chatgpt_4o_mini("You are a Cantonese translator and writer",
+        api = openrouter.OpenRouterAPI()                  
+        shortened = api.do_open_opus_questions(
                                                            task
         )
         return shortened
@@ -259,17 +278,19 @@ def shorten_sentences(text):
 
 
 def extract_keywords_from_sentence(sentence):
-    extr = "Extract the words from this sentence together with translation as a json-array: " + sentence
-    result = openrouter.open_router_meta_llama_llama_3_2_3b_instruct_free(extr)
+    extr = "Make a list of words in the sentence provided and return a json-array in the following format [ {\"word\":word,\"translation\":english translation},...]. Here is the sentence: " + sentence
+    api = openrouter.OpenRouterAPI()          
+    # select free sometimes        
+    result = api.open_router_qwen_25_72b(extr)
     result = result[result.find('['):]
-    result = result[:result.find(']')]+']'
-    
+    result = result[:result.find(']')]+']'    
     return json.loads(result)
     
 def extract_keywords(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.do_open_opus_questions(
+        api = openrouter.OpenRouterAPI()                  
+        translated = api.do_open_opus_questions(
             f"Extract 20 keywords and difficult words necessary to understand this text. Return a list of those words in this json format [[keyword1,explanation in Cantonese that a child can understand,english translation],...]. Return only the json, no other text. Here is the text:\n{text}"
         )
         return json.loads(translated)
@@ -281,7 +302,8 @@ def extract_keywords(text: str) -> str:
 def wrap_in_ssml(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
-        translated = openrouter.open_router_meta_llama_llama_3_1_8b_instruct(
+        api = openrouter.OpenRouterAPI()                  
+        translated = api.open_router_meta_llama_llama_3_1_8b_instruct(
             f"Convert this text into SSML format. Use pauses to make it more suitable for listening. Only return the SSML. Here is the text:\n{text}"
         )
         idx = translated.find('<speak>')
@@ -316,8 +338,8 @@ def translate_simplify_and_create_mp3(news:List) -> None:
             translated = shorten_sentences(translate_to_cantonese(n))
             sentences = textprocessing.split_chinese_text_into_sentences(translated)
             for s in sentences:
-                sml_text += s + "<break time=\"1.0s\"/>"
-                clean_text += s + '\n'
+                sml_text += s 
+                clean_text += 'shortbreak' + s + '\n'
             sml_text += "<break time=\"1.0s\"/>"
             """
             keywords = extract_keywords(translated)
@@ -331,17 +353,35 @@ def translate_simplify_and_create_mp3(news:List) -> None:
             """
             for s in sentences:
                 sml_text += s + "<break time=\"1.0s\"/>"
-                kson = extract_keywords_from_sentence(s)
-                for k in kson:
-                    word = k['word']
-                    translation = k['translation']
-                    sml_text += word + "<break time=\"1.0s\"/>" + translation + "<break time=\"1.0s\"/>"
-                    sml_text += s + "<break time=\"1.0s\"/>"    
-                clean_text += s + '\n'
+                try:
+                    trycount = 0
+                    kson = []
+                    while trycount < 3:
+                        try:                         
+                            kson = extract_keywords_from_sentence(s)
+                            trycount=10
+                        except:
+                            trycount+=1                    
+                    cnt = 0
+                    for k in kson:
+                        word = ''
+                        if 'word' in k.keys():
+                            word = k['word']
+                        if 'text' in k.keys():
+                            word = k['text']
+                        translation = k['translation']
+                        sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + 'shortbreak' +word +'shortbreak' + translation +'shortbreak' + word +'shortbreak' + translation +"<break time=\"0.1s\"/>"
+                        cnt += 1
+                        if cnt > 3:
+                            sml_text += 'shortbreak'+s
+                            cnt = 0
+                except Exception as e:
+                    print(str(e))
+                clean_text +=  s + '\n'
                             
             for s in sentences:
                 sml_text += s + "<break time=\"1.0s\"/>"
-                clean_text += s + '\n'
+                clean_text += 'shortbreak'+ s + '\n'
             sml_text += ' <break time=\"1.0s\"/>'
         except Exception as e:
             print(str(e))
@@ -358,7 +398,7 @@ def translate_simplify_and_create_mp3(news:List) -> None:
         json.dump(splits, f)
 
     for file in [filename, hint_filename]:
-        scp_command = f"scp {file} chinese.eriktamm.com:/var/www/html/mp3"
+        scp_command = f"scp {file}* chinese.eriktamm.com:/var/www/html/mp3"
         result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
         if result.returncode != 0:
             print(f"Error uploading {file}: {result.stderr}")
@@ -402,10 +442,11 @@ def process_news(url: str) -> None:
 
 def main():
     urls = [
-        'https://www.taiwannews.com.tw/',
-        'https://www.cnn.com/',        
+        'https://www.nbcnews.com/',
         'https://www.bbc.com/',
-        'https://www.nbcnews.com/'
+        'https://www.taiwannews.com.tw/',
+        'https://www.cnn.com/',
+                
     ]  # Repeated 11 times to match the original list
 
     for url in urls:
