@@ -1295,7 +1295,7 @@ def add_background_work():
 
 
 @app.route('/get_background_work', methods=['POST'])
-def add_background_work():
+def get_background_work():
     processor   = request.json['processor']
     stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
     if stack.size() == 0:        
