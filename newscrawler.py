@@ -359,6 +359,25 @@ def should_word_be_learned(word,translation,previous_words):
     
     return True
 
+
+import requests
+
+def add_sentence_to_translated( sentence):
+    
+    url = f"https://chinese.eriktamm.com/api/add_background_work"
+    call = {
+        "processor":"sentencetranslator",
+        "workstring": sentence
+    }
+    response = requests.post(url, json=call)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(str(response))
+        return None
+
+
+import stringstack
 def translate_simplify_and_create_mp3(news:List) -> None:
     """
     Translate the given text to Cantonese, simplify it, create an MP3, and upload it.
@@ -372,9 +391,13 @@ def translate_simplify_and_create_mp3(news:List) -> None:
         try:
             translated = shorten_sentences(translate_to_cantonese(n))
             sentences = textprocessing.split_chinese_text_into_sentences(translated)
+            # add to explanation work
             for s in sentences:
-                sml_text += s 
-                clean_text += 'shortbreak' + s + '\n'
+                add_sentence_to_translated(s)
+
+            for s in sentences:
+                sml_text += 'shortbreak'+s+'shortbreak' 
+                clean_text +=  s + '\n'
             sml_text += "<break time=\"1.0s\"/>"
             """
             keywords = extract_keywords(translated)

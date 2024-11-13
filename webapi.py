@@ -1225,7 +1225,7 @@ from datetime import datetime
 @app.route('/makeexamples', methods=['GET'])
 def makeexamples():
     chinese = request.args['chinese']
-    aiquestion = 'Create 3 sentences in B1 level Cantonese containing this chunk: ' + chinese + ". Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
+    aiquestion = 'Create 3 sentences in B2 level Cantonese containing this chunk: ' + chinese + ". Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
     ret = openrouter.do_open_opus_questions('Explain this cantonese sentence using English:' + aiquestion)
     print("makeexamples"  + ret)
     parsedret = json.loads(ret)
@@ -1307,7 +1307,7 @@ def get_background_work():
 
 @app.route('/explain_sentence_free', methods=['POST'])
 def explain_sentence_free():
-    try:
+    try:        
         sentence   = request.json['sentence']
         api = openrouter.OpenRouterAPI()
         result = api.open_router_meta_llama_3_2_3b_free("Explain the words and grammar of this sentence: " + sentence)        
