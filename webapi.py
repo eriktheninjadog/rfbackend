@@ -1314,3 +1314,36 @@ def explain_sentence_free():
         return jsonify({'result':result})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
+
+
+import persistentdict
+
+@app.route('/set_dictionary_value', methods=['POST'])
+def set_dictionary_value():
+    try:
+        dictname   = request.json['dictionary']
+        keyvalue = request.json['key']
+        value = request.json['value']
+        d = persistentdict.PersistentDict(dictname)
+        d[keyvalue] = value
+        return jsonify({'result':'ok'})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
+@app.route('/get_dictionary_value', methods=['POST'])
+def get_dictionary_value():
+    try:
+        dictname   = request.json['dictionary']
+        keyvalue = request.json['key']
+        d = persistentdict.PersistentDict(dictname)
+        if keyvalue in d:
+            return jsonify({'result':[keyvalue,d[keyvalue]]})
+        else:
+            return jsonify({'result':[keyvalue,None]})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
+
+
+
+#PersistentDict
