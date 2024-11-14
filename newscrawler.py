@@ -285,6 +285,21 @@ def extract_keywords_from_sentence(sentence):
     result = result[result.find('['):]
     result = result[:result.find(']')]+']'    
     return json.loads(result)
+
+
+def extract_phrases_from_sentence(sentence):
+    extr = "Break this sentence into reusable phrases and idioms for a Cantonese learner. Make a list and return as a in the following format [ {\"phrase\":phrase,\"translation\":english translation},...]. Here is the sentence: " + sentence
+    api = openrouter.OpenRouterAPI()          
+    # select free sometimes        
+    result = api.open_router_qwen_25_72b(extr)
+    result = result[result.find('['):]
+    result = result[:result.find(']')]+']'
+    result = json.loads(result)
+    all = []
+    for r in result:
+        all.append({'word':r['phrase'],'translation':r['translation']})
+    return all
+
     
 def extract_keywords(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
@@ -415,8 +430,9 @@ def translate_simplify_and_create_mp3(news:List) -> None:
                     trycount = 0
                     kson = []
                     while trycount < 3:
-                        try:                         
-                            kson = extract_keywords_from_sentence(s)
+                        try:
+                            #kson = extract_keywords_from_sentence(s)
+                            kson = extract_phrases_from_sentence(s)
                             trycount=10
                         except:
                             trycount+=1                    
@@ -432,16 +448,18 @@ def translate_simplify_and_create_mp3(news:List) -> None:
                             words_thats_been_given.append(word)
                             sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + 'shortbreak' +word +'shortbreak' + translation +'shortbreak' + word +'shortbreak' + translation +"<break time=\"0.1s\"/>"
                             cnt += 1
-                            if cnt > 3:
+                            if cnt > 2:
                                 sml_text += 'shortbreak'+s
                                 cnt = 0
+                    sml_text += 'shortbreak'+ s + "<break time=\"0.2s\"/>"
+                    sml_text += 'shortbreak'+ s + "<break time=\"0.2s\"/>"                    
                 except Exception as e:
                     print(str(e))
                 clean_text +=  s + '\n'
                             
             for s in sentences:
-                sml_text += s + "<break time=\"1.0s\"/>"
-                clean_text += 'shortbreak'+ s + '\n'
+                sml_text += 'shortbreak'+ s + "<break time=\"1.0s\"/>"
+                clean_text +=  s + '\n'
             sml_text += ' <break time=\"1.0s\"/>'
         except Exception as e:
             print(str(e))
