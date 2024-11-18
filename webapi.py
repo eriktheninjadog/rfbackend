@@ -1305,7 +1305,8 @@ def get_background_work():
         return jsonify({'result':astr})
 
 
-@app.route('/explain_sentence_free', methods=['POST'])
+
+@app.route('/explain_sentence_cheao', methods=['POST'])
 def explain_sentence_free():
     try:        
         sentence   = request.json['sentence']
@@ -1315,6 +1316,16 @@ def explain_sentence_free():
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
 
+
+@app.route('/explain_sentence_free', methods=['POST'])
+def explain_sentence_free():
+    try:        
+        sentence   = request.json['sentence']
+        api = openrouter.OpenRouterAPI()
+        result = api.open_router_meta_llama_3_2_3b_free("Explain the words and grammar of this sentence: " + sentence)        
+        return jsonify({'result':result})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
 
 import persistentdict
 
@@ -1329,6 +1340,7 @@ def set_dictionary_value():
         return jsonify({'result':'ok'})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
+
 
 @app.route('/get_dictionary_value', methods=['POST'])
 def get_dictionary_value():

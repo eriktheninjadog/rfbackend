@@ -36,7 +36,7 @@ def clean_subtextline(line):
     return [realparts[1],realparts[2]]
 
 
-f = open('/home/erik/Downloads/kungfudjungle.txt')
+f = open('/home/erik/Downloads/import.txt')
 all = f.readlines()
 f.close()
 
@@ -44,8 +44,8 @@ b = all[1].split('\t')
 kok = []
 for p in all[1:]:
     o = clean_subtextline(p)
-    english = o[0]
-    chinese = textprocessing.split_text(o[1])
+    english = o[1]
+    chinese = textprocessing.split_text(o[0])
     kok.append({"chinese":chinese,"english":english})
 
 url = 'https://chinese.eriktamm.com/api/add_examples_to_cache'

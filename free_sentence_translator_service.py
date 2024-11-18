@@ -41,6 +41,7 @@ if __name__ == "__main__":
                     translation = js['result']
                     
                     if translation == None:
+                        print("TRNSLATION is none")                        
                         time.sleep(3600)
                     else:
                         newpayload = {
@@ -53,9 +54,10 @@ if __name__ == "__main__":
                         js = response.json()        
                         result = js['result']
                         time.sleep(120)
-                except:
+                except Exception as e:
                     time.sleep(3600)                
             else:
+                print("workstring is none")
                 time.sleep(3600)
             
         else:

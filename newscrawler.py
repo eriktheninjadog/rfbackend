@@ -88,19 +88,28 @@ def filename_from_string(astr):
     path = md5_signature(astr) + ".mp3"
     return path
 
+def remove_ssml_from_text(txt):
+    clean = txt.replace('shortbreak','')
+    clean = clean.replace("<break time=\"0.2s\"/>","")
+    clean = clean.replace("<break time=\"0.1s\"/>","")
+    clean = clean.replace("<break time=\"0.5s\"/>","")
+    clean = clean.replace("<break time=\"1.0s\"/>","")
+    return clean
+
 def build_audio_compose(text:str):
     parts = split_ssml_among_tags(text)
     dictionary = {}
     dd = []
+    textparts = []
     for p in parts:
         stringkey = filename_from_string(p)
         if not stringkey in dictionary.keys():
             dictionary[stringkey] = p
     for p in parts:
+        textparts.append(remove_ssml_from_text(p))
         dd.append( filename_from_string(p) )
     print("Unique strings " + str(len(dictionary.keys())) + "\n")
-    return [dd,dictionary]
-
+    return [dd,dictionary,textparts]
 
 mp3cachedirectory = '/home/erik/mp3cache'
 
@@ -132,21 +141,29 @@ from pydub import AudioSegment
 
 def assemble_audio_files(filename,compose):
     audio_segments = []
-
+    textsegments = []
+    cnt = 0
+    timecount = 0
     for i in compose[0]:
         try:
             temp_file =  mp3cachedirectory + '/' + i
-            audio_segments.append(AudioSegment.from_mp3(temp_file))
+            texttxt = textprocessing.split_text(compose[2][cnt])
+            mp3audio = AudioSegment.from_mp3(temp_file)
+            textsegments.append([timecount,texttxt])
+            timecount+=mp3audio.duration_seconds
+            audio_segments.append(mp3audio)
         except Exception as e:
             print(str(e))
-
+        cnt+=1
+    
     combined = sum(audio_segments)
     combined.export(filename, format='mp3')
+    f = open(filename+".subtitle",'w',encoding='utf-8')
+    f.write(json.dumps(textsegments))
+    f.close()
     print(f"MP3 file created successfully: {filename}")
 
     
-
-
 def cantonese_text_to_mp3(text: str, output_file: str) -> None:
     """Convert a string of text to an MP3 file using AWS Polly."""
     session = boto3.Session(region_name='us-east-1')
@@ -356,10 +373,12 @@ def is_extended_ascii(s):
         return True
     except UnicodeEncodeError:
         return False
+    
+    
 
 
 
-too_common_words = ['美國人','佢哋','佢','但係']
+too_common_words = ['美國人','佢哋','佢','但係','電話','同','人','佢','面對','包括','政府','的','來','包括','政府','係','佢','社交媒體','生意','食','三','多','明白','今','美國','喺','唔','老公','淨係','生活']
 
 def should_word_be_learned(word,translation,previous_words):
     if word in too_common_words:
@@ -393,6 +412,7 @@ def add_sentence_to_translated( sentence):
 
 
 import stringstack
+import frequencytools
 def translate_simplify_and_create_mp3(news:List) -> None:
     """
     Translate the given text to Cantonese, simplify it, create an MP3, and upload it.
@@ -443,6 +463,7 @@ def translate_simplify_and_create_mp3(news:List) -> None:
                             word = k['word']
                         if 'text' in k.keys():
                             word = k['text']
+                        frequencytools.add_frequency(word)
                         translation = k['translation']
                         if should_word_be_learned(word,translation,words_thats_been_given):
                             words_thats_been_given.append(word)
