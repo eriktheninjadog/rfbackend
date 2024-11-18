@@ -1327,6 +1327,18 @@ def explain_sentence_free():
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
 
+
+@app.route('/explain_sentence_cheap', methods=['POST'])
+def explain_sentence_free():
+    try:        
+        sentence   = request.json['sentence']
+        api = openrouter.OpenRouterAPI()
+        result = api.open_router_meta_llama_3_2_3b("Explain the words and grammar of this sentence: " + sentence)        
+        return jsonify({'result':result})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
+
 import persistentdict
 
 @app.route('/set_dictionary_value', methods=['POST'])
