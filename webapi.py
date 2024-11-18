@@ -1329,7 +1329,7 @@ def explain_sentence_free():
 
 
 @app.route('/explain_sentence_cheap', methods=['POST'])
-def explain_sentence_free():
+def explain_sentence_cheap():
     try:        
         sentence   = request.json['sentence']
         api = openrouter.OpenRouterAPI()
