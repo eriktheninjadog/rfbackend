@@ -130,6 +130,15 @@ class OpenRouterAPI:
             "meta-llama/llama-3.2-3b-instruct",
             text
         )
+        
+    def open_router_mistral_7b_instruct(self, text: str) -> str:
+        return self.get_completion(
+            "mistralai/mistral-7b-instruct-v0.3",
+            text
+        )
+        
+        
+        
 
 
     def open_router_qwen(self, system_content: str, user_content: str) -> str:
