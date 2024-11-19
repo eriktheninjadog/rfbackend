@@ -1320,7 +1320,7 @@ def explain_sentence_cheap():
     try:        
         sentence   = request.json['sentence']
         api = openrouter.OpenRouterAPI()
-        result = api.open_router_mistral_7b_instruct("Translate this sentence and explain the words:" + sentence)        
+        result = api.open_router_mistral_7b_instruct("Translate this sentence and return the answer in this json-format: [translation,[[word1,definition in english],[word2,definition in english],... ] ]" + sentence)        
         return jsonify({'result':result})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
