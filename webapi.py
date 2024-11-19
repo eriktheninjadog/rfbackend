@@ -1362,8 +1362,7 @@ def make_examples_from_chunk():
     api=openrouter.OpenRouterAPI()
     result = api.open_router_chatgpt_4o_mini("You are a Cantonese expert teaching foreigners.",
     "Create 3 sentences in B2 level Cantonese containing this chunk: " + chunk+ " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
-    parsedret = result
-    print(str(parsedret))
+    parsedret = json.loads(result)
     cachedresult = []
     for r in parsedret:
         english = r['english']
