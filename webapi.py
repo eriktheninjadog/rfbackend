@@ -1356,6 +1356,25 @@ def get_dictionary_value():
         return jsonify({'result':None,"reason":str(e)})
 
 
-
+@app.route('/make_examples_from_chunk', methods=['GET'])
+def make_examples_from_chunk():
+    chunk = request.args.get('chunk')
+    api=openrouter.OpenRouterAPI()
+    result = api.open_router_chatgpt_4o_mini("You are a Cantonese expert teaching foreigners.",
+    "Create 3 sentences in B2 level Cantonese containing this chunk: " + chunk+ " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
+    print(str(result))
+    parsedret = result['result']
+    print(str(parsedret))
+    cachedresult = []
+    for r in parsedret:
+        english = r['english']
+        chinese = r['chinese']
+        # lets make tokens out of chinese
+        tradchinese = textprocessing.make_sure_traditional(chinese)        
+        chinesetokens = textprocessing.split_text(tradchinese)
+        cachedresult.append({'chinese':chinesetokens,'english':english})
+        database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+    cachemanagement.add_examples_to_cache(cachedresult)
+    return jsonify({'result':'ok'})
 
 #PersistentDict
