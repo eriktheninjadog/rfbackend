@@ -1326,6 +1326,7 @@ def explain_sentence_cheap():
         result = result[:end+1]
         start = result.find('{')
         result = result[start:]
+        result = result.replace('\n','')
         return jsonify({'result':result})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
