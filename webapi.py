@@ -1327,6 +1327,10 @@ def explain_sentence_cheap():
         start = result.find('{')
         result = result[start:]
         result = result.replace('\n','')
+        dop = json.loads(result)
+        translation = dop['translation']
+        splt = textprocessing.split_text(sentence)
+        cachemanagement.add_example_to_cache({'english':translation,'chinese':splt})
         return jsonify({'result':result})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
