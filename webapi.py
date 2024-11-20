@@ -1323,7 +1323,7 @@ def explain_sentence_cheap():
         # keep trying this
         result = api.open_router_mistral_7b_instruct("Translate this sentence and return the answer in this json-format: {\"translation\":english translation,\"words\":[[word1,definition in english],[word2,definition in english]] }. Only return the json." + sentence)
         end = result.find('}')
-        result = result[:end]
+        result = result[:end+1]
         start = result.find('{')
         result = result[start:]
         return jsonify({'result':result})
