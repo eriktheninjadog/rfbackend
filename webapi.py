@@ -720,22 +720,10 @@ def create_proper_cantonese_questions(level,number_of_sentences):
     print("Here are the cantonese " + whole)
     return whole
 
-def create_pattern_example_question(level,number_of_sentences):
-    text = "Create "+ str(number_of_sentences) +" examples in Cantonese using the following sentence pattern: " + wordlists.pick_sample_sentence__pattern() + ". Return these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
-    return text
-
 def create_poe_example_question(level,number_of_sentences):
     #text = "Write " + str(number_of_sentences) + " example sentences in English at a " + level + " level of difficulty, along with their Cantonese translation, in a dictionary in JSON format without any other text."
-    text = "Create "+ str(number_of_sentences) +" sentences at B2 level including some the following words: " + wordlists.get_sample_A2_wordlist(30)+ ". Return these together with translation into common spoken Cantonese (use traditional characters and use Cantonese grammar) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
-    #text = "Create "+ str(number_of_sentences) +" sentences at A1 level including some the following words: " + wordlists.get_sample_first_wordlist(30)+ ". Return these together with vernacular cantonese translation (use traditional charactters) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
-    
-#   
-# if random.randint(0,10) > 7:
-#        text = "Create "+ str(number_of_sentences) +" sentences at A1 level including some the following words: " + wordlists.get_sample_A1_wordlist(30)+ ". Return these together with a simple, spoken cantonese equivalent (use traditional charactters) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."        
-    if random.randint(0,10) > 7:
-        text = create_pattern_example_question(level,number_of_sentences)
-    #if random.randint(0,10) > 7:        
-    #    text = create_proper_cantonese_questions(level,number_of_sentences)    
+    text = "Create "+ str(number_of_sentences) +" sentences at B2 level. Return these together with translation into common spoken Cantonese (use traditional characters and use Cantonese grammar) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."
+    #text = "Create "+ str(number_of_sentences) +" sentences at A1 level including some the following words: " + wordlists.get_sample_first_wordlist(30)+ ". Return these together with vernacular cantonese translation (use traditional charactters) in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure."    
     return text
 
 def is_list(obj):
