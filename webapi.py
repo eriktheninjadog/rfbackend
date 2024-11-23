@@ -1307,9 +1307,9 @@ def explain_sentence_free():
 def explain_sentence_cheap():
     try:        
         sentence   = request.json['sentence']
-        api = openrouter.OpenRouterAPI()
+        aiapi = openrouter.OpenRouterAPI()
         # keep trying this
-        result = api.open_router_mistral_7b_instruct("Translate this sentence and return the answer in this json-format: {\"translation\":english translation,\"words\":[[word1,definition in english],[word2,definition in english]] }. Only return the json." + sentence)
+        result = aiapi.open_router_mistral_7b_instruct("Translate this sentence and return the answer in this json-format: {\"translation\":english translation,\"words\":[[word1,definition in english],[word2,definition in english]] }. Only return the json." + sentence)
         end = result.find('}')
         result = result[:end+1]
         start = result.find('{')
@@ -1317,7 +1317,14 @@ def explain_sentence_cheap():
         result = result.replace('\n','')
         dop = json.loads(result)
         translation = dop['translation']
+        soundlookup = {}
+        for c in sentence:
+            cchar = ''+c
+            aresult = api.dictionary_lookup(cchar)
+            soundlookup[cchar] = aresult
         splt = textprocessing.split_text(sentence)
+        dop['soundlookup'] = soundlookup
+        result = json.dumps(dop)
         cachemanagement.add_example_to_cache({'english':translation,'chinese':splt})
         return jsonify({'result':result})
     except Exception as e:

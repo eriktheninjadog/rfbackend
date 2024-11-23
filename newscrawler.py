@@ -419,71 +419,87 @@ def translate_simplify_and_create_mp3(news:List) -> None:
     If the text is longer than 3000 characters, it's split into smaller parts and
     processed in series.
     """    
-    clean_text = ''
-    sml_text = ''
     words_thats_been_given = []
     for n in news:
         try:
-            translated = shorten_sentences(translate_to_cantonese(n))
-            sentences = textprocessing.split_chinese_text_into_sentences(translated)
-            # add to explanation work
-            for s in sentences:
-                add_sentence_to_translated(s)
-
-            for s in sentences:
-                sml_text += 'shortbreak'+s+'shortbreak' 
-                clean_text +=  s + '\n'
-            sml_text += "<break time=\"1.0s\"/>"
-            """
-            keywords = extract_keywords(translated)
-            for k in keywords:
-                try:
-                    clean_text += k[0] + '\n' 
-                    sml_text+= k[0]+'" <break time=\"0.5s\"/>'+k[0]+'" <break time=\"0.5s\"/>'+k[0]+'" <break time=\"1.0s\"/>'+ k[1] + '" <break time=\"0.5s\"/>'+  k[2] + '<break time=\"0.5s\"/>' +k[0] + '<break time=\"1.0s\"/>' + findsentence_containing_word(k[0],sentences) +"<break time=\"1.0s\"/>" 
-                    sml_text += ' <break time=\"1.0s\"/>'
-                except Exception as ee:
-                    print((str(ee)))
-            """
-            for s in sentences:
-                sml_text += s + "<break time=\"1.0s\"/>"
-                try:
-                    trycount = 0
-                    kson = []
-                    while trycount < 3:
-                        try:
-                            #kson = extract_keywords_from_sentence(s)
-                            kson = extract_phrases_from_sentence(s)
-                            trycount=10
-                        except:
-                            trycount+=1                    
-                    cnt = 0
-                    for k in kson:
-                        word = ''
-                        if 'word' in k.keys():
-                            word = k['word']
-                        if 'text' in k.keys():
-                            word = k['text']
-                        frequencytools.add_frequency(word)
-                        translation = k['translation']
-                        if should_word_be_learned(word,translation,words_thats_been_given):
-                            words_thats_been_given.append(word)
-                            sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + 'shortbreak' +word +'shortbreak' + translation +'shortbreak' + word +'shortbreak' + translation +"<break time=\"0.1s\"/>"
-                            cnt += 1
-                            if cnt > 2:
-                                sml_text += 'shortbreak'+s
-                                cnt = 0
-                    sml_text += 'shortbreak'+ s + "<break time=\"0.2s\"/>"
-                    sml_text += 'shortbreak'+ s + "<break time=\"0.2s\"/>"                    
-                except Exception as e:
-                    print(str(e))
-                clean_text +=  s + '\n'
-                            
-            for s in sentences:
-                sml_text += 'shortbreak'+ s + "<break time=\"1.0s\"/>"
-                clean_text +=  s + '\n'
-            sml_text += ' <break time=\"1.0s\"/>'
+            render_to_cantonese_audio_and_upload(words_thats_been_given, n)
         except Exception as e:
             print(str(e))
+    return None
+
+def render_to_cantonese_audio_and_upload(words_thats_been_given, n):
+    clean_text, sml_text = make_sml_from_english_text(words_thats_been_given, n)
+    make_and_upload_audio_from_sml(clean_text, sml_text)
+
+
+def render_from_chinese_to_audio_and_upload(words_thats_been_given, n):
+    clean_text, sml_text = make_sml_from_chinese_text(words_thats_been_given, n)
+    make_and_upload_audio_from_sml(clean_text, sml_text)
+
+
+def make_sml_from_english_text(words_thats_been_given, n):
+    clean_text = ''
+    sml_text = ''
+    translated = shorten_sentences(translate_to_cantonese(n))
+    return make_sml_from_chinese_text(words_thats_been_given, clean_text, sml_text, translated)
+
+def make_sml_from_chinese_text(words_thats_been_given, clean_text, sml_text, translated):
+    sentences = textprocessing.split_chinese_text_into_sentences(translated)
+    # add to explanation work
+    for s in sentences:
+        add_sentence_to_translated(s)
+
+    for s in sentences:
+        sml_text += 'shortbreak'+s+'shortbreak' 
+        clean_text +=  s + '\n'
+    sml_text += "<break time=\"1.0s\"/>"
+    for s in sentences:
+        sml_text += s + "<break time=\"1.0s\"/>"
+        try:
+            trycount = 0
+            kson = []
+            while trycount < 3:
+                try:
+                            #kson = extract_keywords_from_sentence(s)
+                    kson = extract_phrases_from_sentence(s)
+                    trycount=10
+                except:
+                    trycount+=1                    
+            cnt = 0
+            for k in kson:
+                word = ''
+                if 'word' in k.keys():
+                    word = k['word']
+                if 'text' in k.keys():
+                    word = k['text']
+                freq = frequencytools.add_frequency(word)
+                translation = k['translation']
+                if should_word_be_learned(word,translation,words_thats_been_given) and freq < 30:
+                    words_thats_been_given.append(word)
+                    if freq < 10:
+                        sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + 'shortbreak' +word +'shortbreak' + translation +'shortbreak' + word +'shortbreak' + translation +"<break time=\"0.1s\"/>"
+                    else:
+                        if freq < 15:
+                            sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + 'shortbreak' +word +'shortbreak' + translation +"<break time=\"0.1s\"/>"
+                        else:
+                            sml_text += "<break time=\"0.1s\"/>shortbreak" + word + 'shortbreak' + translation + "<break time=\"0.1s\"/>"                                
+                    cnt += 1
+                    if cnt > 2:
+                        sml_text += 'shortbreak'+s
+                        cnt = 0
+            sml_text += 'shortbreak'+ s + "<break time=\"0.2s\"/>"
+            sml_text += 'shortbreak'+ s + "<break time=\"0.2s\"/>"                    
+        except Exception as e:
+            print(str(e))
+        clean_text +=  s + '\n'
+                            
+    for s in sentences:
+        sml_text += 'shortbreak'+ s + "<break time=\"1.0s\"/>"
+        clean_text +=  s + '\n'
+    sml_text += ' <break time=\"1.0s\"/>'
+    return clean_text,sml_text
+
+def make_and_upload_audio_from_sml(clean_text, sml_text):
     audio_compose = build_audio_compose(sml_text)
     create_files_in_audio_compose(audio_compose)
     filename = f"spokenarticle_news{time.time()}_0.mp3"
@@ -491,8 +507,8 @@ def translate_simplify_and_create_mp3(news:List) -> None:
     print(clean_text)
     hint_filename = f"{filename}.hint.json"
     assemble_audio_files(filename,audio_compose)
-    #ssml.synthesize_ssml_to_mp3(sml_text,filename)
-    
+        #ssml.synthesize_ssml_to_mp3(sml_text,filename)
+        
     with open(hint_filename, "w") as f:
         json.dump(splits, f)
 
@@ -501,7 +517,6 @@ def translate_simplify_and_create_mp3(news:List) -> None:
         result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
         if result.returncode != 0:
             print(f"Error uploading {file}: {result.stderr}")
-        return None
 
 def process_file_content(file_path: str) -> None:
     """
@@ -556,4 +571,6 @@ def main():
     #process_file_content(file_path)
 
 if __name__ == "__main__":
-    main()
+    lol = []
+    render_to_cantonese_audio_and_upload(lol,"""When I looked into myself, Seneca, some of my vices appeared clearly on the surface, so that I could lay my hand on them; some were more hidden away in the depths; some were not there all the time but return at intervals. These last I would say are the most troublesome: they are like prowling enemies who pounce on you when occasion offers, and allow you neither to be at the ready as in war nor at ease as in peace. However, the state I most find myself in (for why should I not admit the truth to you as to a doctor?) is that I am not really free of the vices which I feared and hated, though not, on the other hand, subject to them: this puts me in a condition which is not the worst, but an extremely peevish and quarrelsome one – I am neither ill nor well. There is no need for you to say that all virtues are fragile to start with and acquire firmness and strength with time. I know too that those which toil to make a good impression, seeking high rank, for example, and a reputation for eloquence, and whatever depends on the approval of others, take time to mature – both those which offer real strength and those which are tricked out in some sort of dye aimed at popularity have to wait years until the passage of time gradually produces their colour. But I’m afraid that habit, which induces firmness in things, may drive this fault more deeply into me: long association brings love of evil as well as good.""")
+    #main()
