@@ -1380,3 +1380,14 @@ def make_examples_from_chunk():
     return jsonify({'result':'ok'})
 
 #PersistentDict
+
+import homecommand
+@app.route('/executehomecommand', methods=['POST'])
+def executehomecommand():
+    command   = request.json['command']
+    directory = request.json['directory']
+    if command.indexOf(os.getenv('HOMECOMMANDSECRET')) == -1:
+        return jsonify({'result':'error'})
+    command = command.replace(os.getenv('HOMECOMMANDSECRET'),'')
+    homecommand.run_command_on_remote(command,directory);
+    return jsonify({'result':'ok'})
