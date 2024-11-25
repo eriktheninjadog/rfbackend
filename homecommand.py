@@ -3,7 +3,7 @@ import paramiko
 
 import os
 
-def run_command_on_remote( command, remote_dir='.'):
+def run_command_on_remote( command, remote_dir):
     # create an SSH client with the given credentials
     try:
         ssh =  paramiko.SSHClient()
@@ -34,4 +34,4 @@ def run_command_on_remote( command, remote_dir='.'):
         ssh.close()
 
 # use the function with specified port
-run_command_on_remote( 'touch hithere.txt', directory='/home/erik')
+run_command_on_remote( 'touch hithere.txt', '/home/erik')
