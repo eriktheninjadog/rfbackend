@@ -10,15 +10,12 @@ def run_command_on_remote( command, remote_dir):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect('localhost', 9001, username=os.getenv('HOMEUSERNAME'), password=os.getenv('HOMEPASSWORD'))
         full_command = f"cd {remote_dir} && nohup {command} > /dev/null 2>&1 &"
-        ssh.exec_command(full_command)
+        stdin, stdout, stderr = ssh.exec_command(full_command)
 
-        output = stdout.read().decode().strip()
-        error = stderr.read().decode().strip()
-
-        if output:
-            print(f"Output: {output}")
-        if error:
-            print(f"Error: {error}")
+        if stdout:
+            print(f"Output: {stdout}")
+        if stderr:
+            print(f"Error: {stderr}")
 
         print("Command sent to remote server.")
     except paramiko.AuthenticationException:
