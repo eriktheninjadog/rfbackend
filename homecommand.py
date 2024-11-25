@@ -3,15 +3,16 @@ import paramiko
 
 import os
 
+import config
 def run_command_on_remote( command, remote_dir):
     # create an SSH client with the given credentials
     try:
         ssh =  paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect('localhost', 9001, username=os.getenv('HOMEUSERNAME'), password=os.getenv('HOMEPASSWORD'))
+        ssh.connect('localhost', 9001, username=config.get_config_value('HOMEUSERNAME'), password=config.get_config_value('HOMEPASSWORD'))
         full_command = f"cd {remote_dir} && nohup {command} > /dev/null 2>&1 &"
         stdin, stdout, stderr = ssh.exec_command(full_command)
-    
+
         if stdout:
             print(f"Output: {stdout}")
         if stderr:

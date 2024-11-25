@@ -1382,14 +1382,14 @@ def make_examples_from_chunk():
 #PersistentDict
 
 import homecommand
+import config
 @app.route('/executehomecommand', methods=['POST'])
 def executehomecommand():
     command   = request.json['command']
     directory = request.json['directory']
-    print("Home user : " + os.getenv('HOMEUSERNAME'))
-    print("Home command secret : " + os.getenv('HOMECOMMANDSECRET'))
-    if command.find(os.getenv('HOMECOMMANDSECRET')) == -1:
+    secret = config.get_config_value('HOMECOMMANDSECRET')
+    if command.find(secret) == -1:
         return jsonify({'result':'error'})
-    command.replace(os.getenv('HOMECOMMANDSECRET'),'')
+    command.replace(secret,'')
     homecommand.run_command_on_remote(command,directory);
     return jsonify({'result':'ok'})
