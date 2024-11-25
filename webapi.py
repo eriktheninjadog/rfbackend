@@ -1386,6 +1386,7 @@ import homecommand
 def executehomecommand():
     command   = request.json['command']
     directory = request.json['directory']
+    print("Home user : " + os.getenv('HOMEUSERNAME'))
     print("Home command secret : " + os.getenv('HOMECOMMANDSECRET'))
     if command.find(os.getenv('HOMECOMMANDSECRET')) == -1:
         return jsonify({'result':'error'})
