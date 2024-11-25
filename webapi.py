@@ -1390,6 +1390,6 @@ def executehomecommand():
     secret = config.get_config_value('HOMECOMMANDSECRET')
     if command.find(secret) == -1:
         return jsonify({'result':'error'})
-    command.replace(secret,'')
+    command = command.replace(secret,'')
     homecommand.run_command_on_remote(command,directory);
     return jsonify({'result':'ok'})
