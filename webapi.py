@@ -1388,6 +1388,6 @@ def executehomecommand():
     directory = request.json['directory']
     if command.find(os.getenv('HOMECOMMANDSECRET')) == -1:
         return jsonify({'result':'error'})
-    command = command.replace(os.getenv('HOMECOMMANDSECRET'),'')
+    command.replace(os.getenv('HOMECOMMANDSECRET'),'')
     homecommand.run_command_on_remote(command,directory);
     return jsonify({'result':'ok'})
