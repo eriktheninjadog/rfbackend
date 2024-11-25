@@ -11,7 +11,7 @@ def run_command_on_remote( command, remote_dir):
         ssh.connect('localhost', 9001, username=os.getenv('HOMEUSERNAME'), password=os.getenv('HOMEPASSWORD'))
         full_command = f"cd {remote_dir} && nohup {command} > /dev/null 2>&1 &"
         stdin, stdout, stderr = ssh.exec_command(full_command)
-
+    
         if stdout:
             print(f"Output: {stdout}")
         if stderr:
