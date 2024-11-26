@@ -18,6 +18,9 @@ class PersistentDict:
     def save(self):
         with open(self.filename, 'w') as f:
             json.dump(self.data, f)
+    
+    def data(self):
+        return self.data
 
     def __getitem__(self, key):
         return self.data[key]

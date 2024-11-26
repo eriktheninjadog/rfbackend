@@ -1,21 +1,32 @@
 #frequencytools.py
 import dictionaryclient
 
+
+cached_dict = None
+changes = 0
+
 def get_frequency(astr):
-    dc = dictionaryclient.DictionaryClient()    
-    val = dc.get_dictionary_value("frequency",astr)
-    if val == None:
+    if cached_dict == None:
+        dc = dictionaryclient.DictionaryClient()
+        cached_dict = dc.get_values('frequency')
+    if not astr in cached_dict:
         return 0
     else:
-        return int(val)
+        return int( cached_dict[astr])
     
 def add_frequency(astr):
-    dc = dictionaryclient.DictionaryClient()    
-    val = dc.get_dictionary_value("frequency",astr)
-    val = val['result']
-    if val[1] == None:
-        dc.set_dictionary_value("frequency",astr,"1")
-        return 1
+    if cached_dict == None:
+        dc = dictionaryclient.DictionaryClient()
+        cached_dict = dc.get_values('frequency')
+    if not astr in cached_dict:
+        cached_dict[astr] = "1"
+        ret = 1
     else:
-        dc.set_dictionary_value("frequency",astr,str(int(val[1]) + 1))
-        return int(val[1]) + 1
+        cached_dict[astr] = str(int(cached_dict[astr]) + 1)
+        ret = int(cached_dict[astr])
+    changes =+ 1
+    if changes > 20:
+        dc = dictionaryclient.DictionaryClient()
+        dc.set_values('frequency',cached_dict)
+    return ret
+    

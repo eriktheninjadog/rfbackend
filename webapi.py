@@ -1346,6 +1346,31 @@ def set_dictionary_value():
         return jsonify({'result':None,"reason":str(e)})
 
 
+@app.route('/download_dictionary', methods=['POST'])
+def set_dictionary_value():
+    try:
+        dictname   = request.json['dictionary']
+        d = persistentdict.PersistentDict(dictname)
+        return jsonify({'result':d.data()})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
+
+
+@app.route('/upload_dictionary', methods=['POST'])
+def set_dictionary_value():
+    try:
+        dictname   = request.json['dictionary']
+        values = request.json['values']
+        d = persistentdict.PersistentDict(dictname)
+        for i in values.keys():
+            d[i] = values[i]
+        return jsonify({'result':'ok'})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
+
+
 @app.route('/get_dictionary_value', methods=['POST'])
 def get_dictionary_value():
     try:

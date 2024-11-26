@@ -23,3 +23,19 @@ class DictionaryClient:
         response = requests.post(url, json=data)
         return response.json()
 
+    def get_values(self,dictname):
+        url = f"{self.base_url}/download_dictionary"
+        data = {
+            'dictionary': dictname
+        }
+        response = requests.post(url, json=data)
+        return response.json()
+
+    def set_values(self,dictname,new_dict):
+        url = f"{self.base_url}/upload_dictionary"
+        data = {
+            'dictionary': dictname,
+            'values':new_dict
+        }
+        response = requests.post(url, json=data)
+        return response.json()

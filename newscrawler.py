@@ -231,7 +231,7 @@ def summarize_news(news_text: str) -> str:
     try:
         """        summary = openrouter.open_router_chatgpt_4o_mini(
             "You are an assistant who summarizes large amounts of texts that include news.",
-            f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Ignore any news related to sports.\n{news_text}"
+            f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B1 level can understand. Ignore any news related to sports.\n{news_text}"
         )"""      
         api = openrouter.OpenRouterAPI()  
         count = 0
@@ -239,7 +239,7 @@ def summarize_news(news_text: str) -> str:
         while count < 3:
             try:
                 summary = api.do_open_opus_questions(
-                    f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Avoid using subordinate clauses or dependent clauses. Ignore any news related to sports. return the news in json format like this [[title1,summary1],[title2,summary2],...]. Only return json, no other text. \n{news_text}"
+                    f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B1 level can understand. Avoid using subordinate clauses or dependent clauses. Ignore any news related to sports. return the news in json format like this [[title1,summary1],[title2,summary2],...]. Only return json, no other text. \n{news_text}"
                 )        
                 bsummary = summary.replace('[[title1,summary1],[title2,summary2],...]','')
                 bsummary = bsummary[bsummary.find('['):]
@@ -265,7 +265,7 @@ def translate_to_cantonese(text: str) -> str:
     try:
         api = openrouter.OpenRouterAPI()          
         translated = api.do_open_opus_questions(
-            f"Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. Make it so simple that a 8-year-old can understand it. Personal Names, place names (Toponyms), Brand names, organization names and product names in English. Do not include pronouncation guide. Only return the text, do not add comments. Here is the text:\n{text}"
+            f"Translate the following text to spoken Cantonese, like how people actually speak in Hong Kong. Make it so simple that a 7-year-old can understand it. Personal Names, place names (Toponyms), Brand names, organization names and product names in English. Do not include pronouncation guide. Only return the text, do not add comments. Here is the text:\n{text}"
         )
         return translated
     except Exception as e:
@@ -452,7 +452,7 @@ def make_sml_from_chinese_text(words_thats_been_given, clean_text, sml_text, tra
     for s in sentences:
         sml_text += 'shortbreak'+s+'shortbreak' 
         clean_text +=  s + '\n'
-    sml_text += "<break time=\"1.0s\"/>"
+    sml_text += "<break time=\"1.0s\"/>"    
     for s in sentences:
         sml_text += s + "<break time=\"1.0s\"/>"
         try:
