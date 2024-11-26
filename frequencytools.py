@@ -26,6 +26,7 @@ def add_frequency(astr):
         ret = int(cached_dict[astr])
     changes =+ 1
     if changes > 20:
+        changes = 0
         dc = dictionaryclient.DictionaryClient()
         dc.set_values('frequency',cached_dict)
     return ret
