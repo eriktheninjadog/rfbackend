@@ -6,6 +6,8 @@ cached_dict = None
 changes = 0
 
 def get_frequency(astr):
+    global changes
+    global cached_dict
     if cached_dict == None:
         dc = dictionaryclient.DictionaryClient()
         cached_dict = dc.get_values('frequency')
@@ -15,6 +17,8 @@ def get_frequency(astr):
         return int( cached_dict[astr])
     
 def add_frequency(astr):
+    global changes
+    global cached_dict
     if cached_dict == None:
         dc = dictionaryclient.DictionaryClient()
         cached_dict = dc.get_values('frequency')

@@ -1347,7 +1347,7 @@ def set_dictionary_value():
 
 
 @app.route('/download_dictionary', methods=['POST'])
-def set_dictionary_value():
+def download_dictionary():
     try:
         dictname   = request.json['dictionary']
         d = persistentdict.PersistentDict(dictname)
@@ -1358,7 +1358,7 @@ def set_dictionary_value():
 
 
 @app.route('/upload_dictionary', methods=['POST'])
-def set_dictionary_value():
+def upload_dictionary():
     try:
         dictname   = request.json['dictionary']
         values = request.json['values']

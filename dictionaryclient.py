@@ -29,7 +29,7 @@ class DictionaryClient:
             'dictionary': dictname
         }
         response = requests.post(url, json=data)
-        return response.json()
+        return response.json()['result']
 
     def set_values(self,dictname,new_dict):
         url = f"{self.base_url}/upload_dictionary"
