@@ -1351,7 +1351,7 @@ def download_dictionary():
     try:
         dictname   = request.json['dictionary']
         d = persistentdict.PersistentDict(dictname)
-        return jsonify({'result':d.data()})
+        return jsonify({'result':d.get_raw_data()})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
 
