@@ -2,36 +2,35 @@
 import dictionaryclient
 
 
-cached_dict = None
-changes = 0
+class FrequencyCounter:
+    def __init__(self):
+        self.cached_dict = None
+        self.dict_changes = 0
+        self.dictionary_client = dictionaryclient.DictionaryClient()
 
-def get_frequency(astr):
-    global changes
-    global cached_dict
-    if cached_dict == None:
-        dc = dictionaryclient.DictionaryClient()
-        cached_dict = dc.get_values('frequency')
-    if not astr in cached_dict:
-        return 0
-    else:
-        return int( cached_dict[astr])
+    def _load_dict(self):
+        if self.cached_dict is None:
+            self.cached_dict = self.dictionary_client.get_values('frequency')
+
+    def get_frequency(self, astr):
+        self._load_dict()
+        return int(self.cached_dict.get(astr, 0))
     
-def add_frequency(astr):
-    global changes
-    global cached_dict
-    if cached_dict == None:
-        dc = dictionaryclient.DictionaryClient()
-        cached_dict = dc.get_values('frequency')
-    if not astr in cached_dict:
-        cached_dict[astr] = "1"
-        ret = 1
-    else:
-        cached_dict[astr] = str(int(cached_dict[astr]) + 1)
-        ret = int(cached_dict[astr])
-    changes =+ 1
-    if changes > 20:
-        changes = 0
-        dc = dictionaryclient.DictionaryClient()
-        dc.set_values('frequency',cached_dict)
-    return ret
-    
+    def save_changes(self):
+        self.dictionary_client.set_values('frequency', self.cached_dict)
+        
+
+    def add_frequency(self, astr):
+        self._load_dict()
+        if astr not in self.cached_dict:
+            self.cached_dict[astr] = "1"
+            ret = 1
+        else:
+            self.cached_dict[astr] = str(int(self.cached_dict[astr]) + 1)
+            ret = int(self.cached_dict[astr])
+        
+        self.dict_changes += 1
+        if self.dict_changes > 20:
+            self.dict_changes = 0
+            self.dictionary_client.set_values('frequency', self.cached_dict)
+        return ret
