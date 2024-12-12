@@ -2,6 +2,28 @@
 
 import os
 from mutagen.mp3 import MP3
+from pydub import AudioSegment
+
+def extract_audio_segment(mp3_filename, start_timepoint, end_timepoint, outfilename):
+    # Load the original MP3 file
+    audio = AudioSegment.from_mp3(mp3_filename)
+    
+    # Convert start and end timepoints from seconds to milliseconds
+    start_time_ms = start_timepoint * 1000
+    end_time_ms = end_timepoint * 1000
+    
+    # Extract the segment
+    audio_segment = audio[start_time_ms:end_time_ms]
+    
+    # Export the segment to a new MP3 file
+    audio_segment.export(outfilename, format="mp3")
+    
+    print(f"Segment extracted and saved to {outfilename}")
+
+# Example usage:
+# extract_audio_segment("input.mp3", 10, 20, "output.mp3")
+
+
 
 def get_total_mp3_duration(mp3_files):
     """
@@ -38,6 +60,8 @@ def format_duration(seconds):
     minutes = int((seconds % 3600) // 60)
     seconds = int(seconds % 60)
     return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+
+
 
 # Example usage:
 if __name__ == "__main__":

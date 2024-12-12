@@ -30,7 +30,8 @@ class FrequencyCounter:
             ret = int(self.cached_dict[astr])
         
         self.dict_changes += 1
-        if self.dict_changes > 20:
+        if self.dict_changes > 200:
             self.dict_changes = 0
             self.dictionary_client.set_values('frequency', self.cached_dict)
         return ret
+
