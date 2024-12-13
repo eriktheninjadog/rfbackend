@@ -60,10 +60,26 @@ class StockManager:
             A list of tuples containing (stock_code, price, rating, update_datetime).
         """
         query = """
-        SELECT stock_code, position, price, rating, update_datetime
-        FROM stock_data
-        ORDER BY update_datetime DESC;
-        """
+        WITH RankedStockData AS (
+            SELECT 
+                stock_code, 
+                price, 
+                rating, 
+                update_datetime,
+                ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY update_datetime DESC) AS rn
+            FROM 
+                stock_data
+            )
+            SELECT 
+                stock_code, 
+                price, 
+                rating, 
+                update_datetime
+            FROM 
+                RankedStockData
+            WHERE 
+            rn = 1;
+            """
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
