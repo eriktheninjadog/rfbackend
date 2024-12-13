@@ -1431,7 +1431,7 @@ def stockupdate():
             dbconfig.get_db_password(),
             "language"
         )
-        stmgr.add_price_to_stock(stockblock)
+        stmgr.parse_block(stockblock)
         return jsonify({'result':'ok'})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
