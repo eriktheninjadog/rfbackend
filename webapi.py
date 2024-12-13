@@ -1420,6 +1420,7 @@ def executehomecommand():
 
 
 import stockmanager
+import dbconfig
 @app.route('/stockupdate', methods=['POST'])
 def stockupdate():
     try:
@@ -1427,7 +1428,7 @@ def stockupdate():
         stmgr = stockmanager.StockManager(
             "localhost",
             "erik",
-            os.getenv("DBPASSWORD"),
+            dbconfig.get_db_password(),
             "language"
         )
         stmgr.add_price_to_stock(stockblock)
