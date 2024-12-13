@@ -21,14 +21,14 @@ class StockManager:
             A list of tuples containing (stock_code, price, rating, update_datetime).
         """
         query = """
-        SELECT stock_code, price, rating, update_datetime
+        SELECT stock_code, position, price, rating, update_datetime
         FROM stock_data
         ORDER BY update_datetime DESC;
         """
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
-    def add_price_to_stock(self, stock_code, price, rating):
+    def add_price_to_stock(self, stock_code, position,price, rating):
         """
         Add a new price and rating to a stock.
         Args:
@@ -37,10 +37,10 @@ class StockManager:
             rating (str): The rating of the stock ('Buy', 'Hold', 'Sell').
         """
         query = """
-        INSERT INTO stock_data (stock_code, price, rating)
+        INSERT INTO stock_data (stock_code, position,price, rating)
         VALUES (%s, %s, %s);
         """
-        self.cursor.execute(query, (stock_code, price, rating))
+        self.cursor.execute(query, (stock_code, position,price, rating))
         self.connection.commit()
 
     def get_stocks_with_rating_change(self):
@@ -70,6 +70,34 @@ class StockManager:
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+
+    def get_stocks_with_position_change(self):
+        """
+        Get a list of stocks whose rating has changed between the last update.
+        Returns:
+            A list of tuples containing (stock_code, old_rating, new_rating, update_datetime).
+        """
+        query = """
+        SELECT 
+            a.stock_code, 
+            a.position AS old_position, 
+            b.position AS new_position, 
+            b.update_datetime
+        FROM 
+            stock_data a
+        JOIN 
+            stock_data b
+        ON 
+            a.stock_code = b.stock_code
+            AND a.update_datetime < b.update_datetime
+        WHERE 
+            a.position != b.position
+        ORDER BY 
+            b.update_datetime DESC;
+        """
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
     def close(self):
         """
         Close the database connection.
@@ -77,13 +105,15 @@ class StockManager:
         self.cursor.close()
         self.connection.close()
 
+    
+    
 import os
 # Example Usage
 if __name__ == "__main__":
     # Database connection details
     host = "localhost"
     user = "erik"
-    password = os.getenv("dbpassword")
+    password = os.getenv( "DBPASSWORD" )
     database = "language"
 
     # Create an instance of StockManager
@@ -104,6 +134,13 @@ if __name__ == "__main__":
     print("Stocks with Rating Changes:")
     for stock in rating_changes:
         print(stock)
+
+   # Example 4: Get stocks with position changes
+    rating_changes = stock_manager.get_stocks_with_rating_change()
+    print("Stocks with Rating Changes:")
+    for stock in rating_changes:
+        print(stock)
+
 
     # Close the connection
     stock_manager.close()

@@ -1369,8 +1369,6 @@ def upload_dictionary():
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
 
-
-
 @app.route('/get_dictionary_value', methods=['POST'])
 def get_dictionary_value():
     try:
@@ -1418,3 +1416,12 @@ def executehomecommand():
     command = command.replace(secret,'')
     homecommand.run_command_on_remote(command,directory);
     return jsonify({'result':'ok'})
+
+
+@app.route('/stockupdate', methods=['POST'])
+def stockupdate     ():
+    try:
+        stockcodes = request.json['stockcodes']
+        return jsonify({'result':'ok'})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
