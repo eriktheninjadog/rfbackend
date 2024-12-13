@@ -1424,7 +1424,12 @@ import stockmanager
 def stockupdate():
     try:
         stockblock = request.json['stockblock']
-        stmgr = stockmanager.StockManager()
+        stmgr = stockmanager.StockManager(
+            "localhost",
+            "erik",
+            os.getenv("DBPASSWORD"),
+            "language"
+        )
         stmgr.add_price_to_stock(stockblock)
         return jsonify({'result':'ok'})
     except Exception as e:
