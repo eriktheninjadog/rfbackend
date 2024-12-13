@@ -77,7 +77,7 @@ class StockManager:
         """
         query = """
         INSERT INTO stock_data (stock_code, position,price, rating)
-        VALUES (%s, %s, %s);
+        VALUES (%s, %s don,%s, %s);
         """
         self.cursor.execute(query, (stock_code, position,price, rating))
         self.connection.commit()
