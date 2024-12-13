@@ -140,7 +140,7 @@ class StockManager:
     def parse_block(self,block):
         stocks = parse_stock_block(block)
         for s in stocks:
-            self.add_price_to_stock(s['code',int(s['position']),float(s['price']),s['rating']])
+            self.add_price_to_stock(s['code'],int(s['position']),float(s['price']),s['rating'])
         return None
         
 
