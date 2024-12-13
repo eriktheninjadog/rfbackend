@@ -1436,22 +1436,22 @@ def stockupdate():
         
         ret = '<html><head/><body><table>'
         for stock in bop:
-            ret += '<tr><td>' + stock[0] + '</td><td>' + stock[1] + '</td><td>' + stock[2] + '</td><td>' + stock[3] + + '</td></tr>'
-        ret = '</table><br/><br/>'
+            ret += '<tr><td>' + stock[0] + '</td><td>' + stock[1] + '</td><td>' + stock[2] + '</td><td>' + stock[3] + '</td></tr>'
+        ret += '</table><br/><br/>'
         
         bop = stmgr.get_stocks_with_rating_change()
         
-        ret = '<table>'
+        ret += '<table>'
         for stock in bop:
             ret += '<tr><td>' + stock[0] + '</td><td>' + stock[1] + '</td><td>' + stock[2] + '</td><td></tr>'
-        ret = '</table></body></html>'
+        ret += '</table></body></html>'
         
+        print(ret)
         f = open('/var/www/html/stocks/stocks.html','w')
         f.write(ret)
         f.close()
         stmgr.close()
-        
-        
         return jsonify({'result':'ok'})
     except Exception as e:
+        print(str(e))
         return jsonify({'result':None,"reason":str(e)})
