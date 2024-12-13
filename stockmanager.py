@@ -955,7 +955,6 @@ import os
 # Example Usage
 if __name__ == "__main__":
     
-    parse_stock_block(stockblock)
     
     # Database connection details
     host = "localhost"
@@ -968,26 +967,5 @@ if __name__ == "__main__":
     stock_manager.parse_block(stockblock)
     # Example 1: Get the latest stock prices
     latest_prices = stock_manager.get_latest_stock_prices()
-    print("Latest Stock Prices:")
-    for stock in latest_prices:
-        print(stock)
-
-    # Example 2: Add a new price to a stock
-    stock_manager.add_price_to_stock("GOOGL", 2800.50, "Buy")
-    print("Added new price for GOOGL.")
-
-    # Example 3: Get stocks with rating changes
-    rating_changes = stock_manager.get_stocks_with_rating_change()
-    print("Stocks with Rating Changes:")
-    for stock in rating_changes:
-        print(stock)
-
-   # Example 4: Get stocks with position changes
-    rating_changes = stock_manager.get_stocks_with_rating_change()
-    print("Stocks with Rating Changes:")
-    for stock in rating_changes:
-        print(stock)
-
-
     # Close the connection
     stock_manager.close()
