@@ -169,15 +169,8 @@ class StockManager:
         """
         self.cursor.close()
         self.connection.close()
-
-    
-    
     
 import re
-
-
-
-    
 import os
 # Example Usage
 if __name__ == "__main__":
