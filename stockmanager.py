@@ -138,6 +138,8 @@ class StockManager:
         return self.cursor.fetchall()
     
     def parse_block(self,block):
+        print("parsing block")
+        print(block)
         stocks = parse_stock_block(block)
         for s in stocks:
             print(str(s))
