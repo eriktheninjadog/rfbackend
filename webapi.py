@@ -1436,7 +1436,7 @@ def stockupdate():
         
         ret = '<html><head/><body><table>'
         for stock in bop:
-            ret += '<tr><td>' + stock[0] + '</td><td>' + stock[1] + '</td><td>' + stock[2] + '</td><td>' + stock[3] + + '</td><td></tr>'
+            ret += '<tr><td>' + stock[0] + '</td><td>' + stock[1] + '</td><td>' + stock[2] + '</td><td>' + stock[3] + + '</td></tr>'
         ret = '</table><br/><br/>'
         
         bop = stmgr.get_stocks_with_rating_change()
