@@ -1418,10 +1418,14 @@ def executehomecommand():
     return jsonify({'result':'ok'})
 
 
+
+import stockmanager
 @app.route('/stockupdate', methods=['POST'])
-def stockupdate     ():
+def stockupdate():
     try:
-        stockcodes = request.json['stockcodes']
+        stockblock = request.json['stockblock']
+        stmgr = stockmanager.StockManager()
+        stmgr.add_price_to_stock(stockblock)
         return jsonify({'result':'ok'})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
