@@ -2,7 +2,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-def send_email(sender_email, sender_password, receiver_email, subject, message):
+import dbconfig
+
+def send_email(sender_email, receiver_email, subject, message):
     """
     Sends an email using SMTP.
 
@@ -32,7 +34,7 @@ def send_email(sender_email, sender_password, receiver_email, subject, message):
         server.starttls()  # Upgrade the connection to secure
 
         # Login to the sender's email account
-        server.login(sender_email, sender_password)
+        server.login(sender_email, dbconfig.get_email_password())
 
         # Send the email
         server.sendmail(sender_email, receiver_email, msg.as_string())
@@ -48,15 +50,14 @@ def send_email(sender_email, sender_password, receiver_email, subject, message):
 # Example Usage
 if __name__ == "__main__":
     # Sender's email credentials
-    sender_email = "your_email@gmail.com"  # Replace with your email
-    sender_password = "your_password"      # Replace with your email password
+    sender_email = "erik.tamm@eriktamm.com"  # Replace with your email
 
     # Recipient's email
-    receiver_email = "recipient_email@example.com"  # Replace with the recipient's email
+    receiver_email = "erik.tamm@eriktamm.com"  # Replace with the recipient's email
 
     # Email content
     subject = "Test Email from Python Script"
     message = "This is a test email sent from a Python script."
 
     # Send the email
-    send_email(sender_email, sender_password, receiver_email, subject, message)
+    send_email(sender_email,receiver_email, subject, message)
