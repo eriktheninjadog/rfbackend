@@ -1433,7 +1433,6 @@ def stockupdate():
         )
         stmgr.parse_block(stockblock)
         bop = stmgr.get_latest_stock_prices()
-        stmgr.close()
         
         ret = '<html><head/><body><table>'
         for stock in bop:
@@ -1450,6 +1449,7 @@ def stockupdate():
         f = open('/var/www/html/stocks/stocks.html','w')
         f.write(ret)
         f.close()
+        stmgr.close()
         
         
         return jsonify({'result':'ok'})
