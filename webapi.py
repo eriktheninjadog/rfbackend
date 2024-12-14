@@ -1421,9 +1421,11 @@ def executehomecommand():
 
 import stockmanager
 import dbconfig
+import os
 @app.route('/stockupdate', methods=['POST'])
 def stockupdate():
     try:
+        
         stockblock = request.json['stockblock']
         stmgr = stockmanager.StockManager(
             "localhost",
@@ -1447,7 +1449,7 @@ def stockupdate():
         ret += '</table></body></html>'
         
         print(ret)
-        f = open('/var/www/html/stocks/stocks.html','w')
+        f = open('/var/www/html/mp3/stocks.html','w')
         f.write(ret)
         f.close()
         stmgr.close()
