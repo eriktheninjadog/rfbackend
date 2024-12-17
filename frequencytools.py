@@ -35,3 +35,7 @@ class FrequencyCounter:
             self.dictionary_client.set_values('frequency', self.cached_dict)
         return ret
 
+
+if __name__ == "__main__":
+    f = FrequencyCounter()
+    f.add_frequency("apple")

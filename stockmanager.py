@@ -35,7 +35,7 @@ def parse_stock_block(stock_block):
         if len(lines) >= 4:
             position = lines[0].strip()
             stock_code = lines[2].strip()
-            rating = lines[5].strip().replace('RATING:','').strip()
+            rating = lines[6].strip().replace('RATING:','').strip()
             price = lines[4].strip()
             ret.append({"code":stock_code, "name":"doesntmatter", "position":position, "rating":rating, "price":00.0})    
     return ret
