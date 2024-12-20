@@ -1463,7 +1463,7 @@ def stockupdate():
 def getfailedreadingtests():
     try:
         days   = request.json['days']
-        result = database.get_failed_outputs(days)
+        result = database.get_failed_reading_tests(days)
         return jsonify({'result':result})
     except Exception as e:
         print(str(e))
