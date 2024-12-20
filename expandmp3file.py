@@ -69,9 +69,9 @@ def process_mp3_file(file_path):
         end_time = bagofsentences[1]
         mp3helper.extract_audio_segment(file_path,start_time,end_time,str(cnt) + "prepostfixtmp.mp3")
         clean_text, sml_text = texttoaudio.make_sml_from_chinese_sentences(words_thats_been_given,bagofsentences[2],include_prepostfix=False)
-        newscrawler.make_and_upload_audio_from_sml(clean_text, sml_text,"orgmp3_"+str(cnt),postprefixaudio=str(cnt) + "prepostfixtmp.mp3")
+        newscrawler.make_and_upload_audio_from_sml(clean_text, sml_text,"ukwork_orgmp3_"+str(cnt),postprefixaudio=str(cnt) + "prepostfixtmp.mp3")
         cnt+=1
     
     
 if __name__ == "__main__":
-    process_mp3_file("/home/erik/Downloads/horror1.mp3")
+    process_mp3_file("/home/erik/Downloads/ukwork.mp3")

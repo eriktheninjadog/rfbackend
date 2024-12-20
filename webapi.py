@@ -1457,3 +1457,14 @@ def stockupdate():
     except Exception as e:
         print(str(e))
         return jsonify({'result':None,"reason":str(e)})
+
+
+@app.route('/getfailedreadingtests', methods=['POST'])
+def getfailedreadingtests():
+    try:
+        days   = request.json['days']
+        result = database.get_failed_outputs(days)
+        return jsonify({'result':result})
+    except Exception as e:
+        print(str(e))
+        return jsonify({'result':None,"reason":str(e)})

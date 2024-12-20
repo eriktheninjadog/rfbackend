@@ -486,7 +486,7 @@ def add_listening_sentence(sentence,tokens,result):
     mydb.close()
 
 
-def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+def     add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
     mydb = get_connection()
     mycursor = mydb.cursor()
     sql = "insert into output_exercise(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds) values ('"+escape_sql_string(english)+"','"+escape_sql_string(chinesetokens)+"','" +escape_sql_string(mp3name) +"',"+str(type)+","+str(result)+","+str(milliseconds)+","+str(whenutcmilliseconds)+")"
@@ -619,3 +619,21 @@ def get_outputs(nr):
     mycursor.close()
     mydb.close()
     return result
+
+
+def get_failed_reading_tests(days):
+    # def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    result = []
+    sql = f"SELECT english,chinesetokens FROM output_exercise WHERE whenutcmilliseconds > (UNIX_TIMESTAMP() * 1000) - ({days} * 60 * 60 * 1000) and result = 1"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for (english,chinesetokens) in myresult:
+        result.append((english," ".join(json.loads(chinesetokens))))
+    mycursor.close()
+    mydb.close()
+    return result
+
+
+

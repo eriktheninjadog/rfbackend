@@ -242,7 +242,7 @@ def summarize_news(news_text: str) -> str:
         while count < 3:
             try:
                 summary = api.do_open_opus_questions(
-                    f"Pick out the news from the following text, write a summary of 600 words of each news in simple English that someone with a B2 level can understand. Avoid using subordinate clauses or dependent clauses. Ignore any news related to sports. return the news in json format like this [[title1,summary1],[title2,summary2],...]. Only return json, no other text. \n{news_text}"
+                    f"Pick out the political news from the following text, write a summary of 600 words of each news in English that someone with a B2 level can understand. Avoid using subordinate clauses or dependent clauses. Ignore any news related to sports. return the news in json format like this [[title1,summary1],[title2,summary2],...]. Only return json, no other text. \n{news_text}"
                 )        
                 bsummary = summary.replace('[[title1,summary1],[title2,summary2],...]','')
                 bsummary = bsummary[bsummary.find('['):]

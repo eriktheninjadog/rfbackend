@@ -11,19 +11,20 @@ mp3cachedirectory = '/home/erik/mp3cache'
 
 
 def add_sentence_to_translated( sentence):
-    
-    url = f"https://chinese.eriktamm.com/api/add_background_work"
-    call = {
-        "processor":"sentencetranslator",
-        "workstring": sentence
-    }
-    response = requests.post(url, json=call)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(str(response))
+    try:
+        url = f"https://chinese.eriktamm.com/api/add_background_work"
+        call = {
+            "processor":"sentencetranslator",
+            "workstring": sentence
+        }
+        response = requests.post(url, json=call)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(str(response))
+            return None
+    except:
         return None
-
 
 
 def get_pause_as_ssml_tag():
