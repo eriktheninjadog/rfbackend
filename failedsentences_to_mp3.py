@@ -1,8 +1,7 @@
-failedsentences.mp3
-
 import boto3
 from pydub import AudioSegment
 from io import BytesIO
+import subprocess
 
 def synthesize_speech(text, voice_id, language_code):
     """
@@ -17,13 +16,13 @@ def synthesize_speech(text, voice_id, language_code):
     - audio_segment: A Pydub AudioSegment of the synthesized speech.
     """
     polly = boto3.client('polly', region_name='us-east-1')
-    
+                
     try:
         response = polly.synthesize_speech(
             Text=text,
             OutputFormat='mp3',
             VoiceId=voice_id,
-            LanguageCode=language_code
+            Engine='neural'  
         )
         
         # Load the response stream into an AudioSegment
@@ -44,14 +43,14 @@ def generate_audio_from_tuples(sentences, output_filename):
     - output_filename: The name of the output mp3 file.
     """
     # Silence for 4 seconds
-    silence = AudioSegment.silent(duration=4000)
+    silence = AudioSegment.silent(duration=2000)
     
     # Initialize final combined audio
     combined_audio = AudioSegment.empty()
     
     # Voice IDs
-    english_voice_id = 'Joanna'  # You can choose another English voice
-    cantonese_voice_id = 'Zhiyu'  # Adjust to the correct Cantonese voice if available
+    english_voice_id = 'Danielle'  # You can choose another English voice
+    cantonese_voice_id = 'Hiujin'  # Adjust to the correct Cantonese voice if available
     
     for english, cantonese in sentences:
         # Synthesize English speech
@@ -61,16 +60,19 @@ def generate_audio_from_tuples(sentences, output_filename):
         cantonese_audio = synthesize_speech(cantonese, cantonese_voice_id, 'cmn-CN') # Use correct language code
         
         # Concatenate: English, silence, and Cantonese
-        combined_audio += english_audio + silence + cantonese_audio
+        combined_audio += english_audio + silence + cantonese_audio + silence + cantonese_audio +  silence + cantonese_audio + silence
     
     # Export the final audio to an mp3 file
     combined_audio.export(output_filename, format="mp3")
     print(f"Audio file saved as: {output_filename}")
+    scp_command = f"scp {output_filename}* chinese.eriktamm.com:/var/www/html/mp3"
+    result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"Error uploading {output_filename}: {result.stderr}")
 
-# Example usage
-sentences = [
-    ("Hello", "你好"),
-    ("How are you?", "你怎麼樣?")
-]
+import remotechineseclient
 
-generate_audio_from_tuples(sentences, "output.mp3")
+# Example Usage
+if __name__ == "__main__":
+    sentences = remotechineseclient.access_remote_client("getfailedreadingtests",{"days":48})
+    generate_audio_from_tuples(sentences, "spokenarticle_news_failed.mp3")
