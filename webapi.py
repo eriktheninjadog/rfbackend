@@ -1303,6 +1303,18 @@ def explain_sentence_free():
         return jsonify({'result':None,"reason":str(e)})
 
 
+
+
+@app.route('/add_subtitle_chunk', methods=['POST'])
+def add_subtitle_chunk():
+    sentence   = request.json['sentence']
+    tradchinese = textprocessing.make_sure_traditional(sentence)        
+    chinesetokens = textprocessing.split_text(tradchinese)
+    database.add_output_exercise(sentence,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+    cachemanagement.add_examples_to_cache({'chinese':chinesetokens,'english':sentence} )
+    return jsonify({'result':'ok'})
+
+
 @app.route('/explain_sentence_cheap', methods=['POST'])
 def explain_sentence_cheap():
     try:        
@@ -1401,6 +1413,10 @@ def make_examples_from_chunk():
         database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
     cachemanagement.add_examples_to_cache(cachedresult)
     return jsonify({'result':'ok'})
+
+
+
+
 
 #PersistentDict
 
