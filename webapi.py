@@ -1322,7 +1322,7 @@ def long_running_adding_subtitle_chunk(sentence):
 @app.route('/add_subtitle_chunk', methods=['POST'])
 def add_subtitle_chunk():
     sentence   = request.json['sentence']
-    long_running_adding_subtitle_chunk.send(sentence)
+    long_running_adding_subtitle_chunk.message(sentence)
     return jsonify({'result':'ok'})
 
 
