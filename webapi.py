@@ -1304,14 +1304,25 @@ def explain_sentence_free():
 
 
 
+from dramatiq import actor, set_broker
+from dramatiq.brokers.stub import StubBroker
 
-@app.route('/add_subtitle_chunk', methods=['POST'])
-def add_subtitle_chunk():
-    sentence   = request.json['sentence']
+broker = StubBroker()
+set_broker(broker)
+
+@actor
+def long_running_adding_subtitle_chunk(sentence):
+    # Task logic here
     tradchinese = textprocessing.make_sure_traditional(sentence)        
     chinesetokens = textprocessing.split_text(tradchinese)
     chsize = cachemanagement.add_examples_to_cache({'chinese':chinesetokens,'english':sentence} )
     print('/add_subtitle_chunk' + sentence + "  tokens " + str(chinesetokens) + "\n" + str(chsize))
+    pass
+
+@app.route('/add_subtitle_chunk', methods=['POST'])
+def add_subtitle_chunk():
+    sentence   = request.json['sentence']
+    long_running_adding_subtitle_chunk.send(sentence)
     return jsonify({'result':'ok'})
 
 
