@@ -119,7 +119,7 @@ def create_files_in_audio_compose(compose):
             try:
                 text =  '<speak><break time=\"0.5s\"/>' + compose[1][i] + '</speak>'
                 text =text.replace('shortbreak','<break time=\"0.2s\"/>')
-                response = polly_client.synthesize_speech(
+                response = polly_client.synthesize_speech(  
                     Text=text,
                     OutputFormat='mp3',
                     VoiceId='Hiujin',

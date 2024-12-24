@@ -7,6 +7,8 @@ import requests
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from pydub import AudioSegment
+import expandmp3file
+
 
 
 def get_links_with_a(url, max_retries=3, delay=1):
@@ -323,11 +325,29 @@ def get_sbs_cantonese():
     expandmp3file.process_mp3_file(files[0],filename_addon="sbs"+datetime.now().strftime("%Y%m%d")
 )        
     
-    
-import expandmp3file
+import streamlink
+
+import ffmpeg
+
+
+def get_rhk_news():
+    datepart = datetime.now().strftime("%Y%m%d")
+    streams = streamlink.streams("https://rthkaod2022.akamaized.net/m4a/radio/archive/radio1/newspaper/m4a/"+datepart+".m4a/master.m3u8")
+    stream = streams['best']
+    with stream.open() as out:
+        with open('output.mp4', 'wb') as out_file:
+            while True:
+                data = out.read(1024)
+                if not data:
+                    break
+                out_file.write(data)
+    ffmpeg.input('output.mp4').output("output.mp3", format='mp3', acodec='libmp3lame').run()
+    expandmp3file.process_mp3_file("output.mp3",filename_addon="rthk"+datetime.now().strftime("%Y%m%d"))
+
 
 def main():
-    get_sbs_cantonese()
+    get_rhk_news()
+    #get_sbs_cantonese()
     return None
     files = downloadfirstpagenews()
     parts = split_mp3(files[0])
