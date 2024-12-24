@@ -1312,6 +1312,7 @@ def add_subtitle_chunk():
     chinesetokens = textprocessing.split_text(tradchinese)
     database.add_output_exercise(sentence,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
     cachemanagement.add_examples_to_cache({'chinese':chinesetokens,'english':sentence} )
+    print('/add_subtitle_chunk' + sentence)
     return jsonify({'result':'ok'})
 
 
