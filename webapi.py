@@ -1308,8 +1308,8 @@ def long_running_adding_subtitle_chunk(sentence):
     # Task logic here
     #tradchinese = textprocessing.make_sure_traditional(sentence)        
     #chinesetokens = textprocessing.split_text(tradchinese)
-    chinesetokens = [sentence]
-    chsize = cachemanagement.add_examples_to_cache({'chinese':chinesetokens,'english':sentence} )
+    chinesetokens = [sentence]  
+    chsize = cachemanagement.add_example_to_cache({'chinese':chinesetokens,'english':sentence} )
     print('/add_subtitle_chunk' + sentence + "  tokens " + str(chinesetokens) + "\n" + str(chsize))
     pass
 

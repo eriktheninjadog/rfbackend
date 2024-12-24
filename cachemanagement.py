@@ -45,8 +45,10 @@ def add_examples_to_cache(examples):
     
 def add_example_to_cache(example):
     cache = read_cache_from_file()
+    l = len(cache)    
     cache.append([example])
     save_cache_to_file(cache)
+    return l
     
 def import_examples_file(filename):
     f = open(filename,'r',encoding='utf-8')
