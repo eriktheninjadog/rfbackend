@@ -39,7 +39,9 @@ def read_cache_from_file():
 def add_examples_to_cache(examples):
     cache = read_cache_from_file()
     cache.append(examples)
+    l = len(cache)    
     save_cache_to_file(cache)
+    return l
     
 def add_example_to_cache(example):
     cache = read_cache_from_file()
