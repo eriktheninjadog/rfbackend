@@ -345,7 +345,86 @@ def get_rhk_news():
     expandmp3file.process_mp3_file("output.mp3",filename_addon="rthk"+datetime.now().strftime("%Y%m%d"))
 
 
+
+
+import yt_dlp
+
+def get_latest_video_url(channel_url):
+    ydl_opts = {
+        'quiet': True,  # Suppress output
+        'extract_flat': 'first',  # Extract only metadata, do not download
+        'skip_download': True  # Do not download the video
+    }
+
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            result = ydl.extract_info(channel_url, download=False)
+            
+            # Check if the result contains the 'entries'
+            if 'entries' in result:
+                # Get the first video entry
+                latest_video = result['entries'][0]
+                latest_video_url = f"https://www.youtube.com/watch?v={latest_video['id']}"
+                return latest_video_url
+            else:
+                return "No videos found."
+
+    except yt_dlp.DownloadError as e:
+        return f"An error occurred: {e}"
+
+
+def progress_hook(d):
+    if d['status'] == 'finished':
+        print('Done downloading, now converting ...')
+
+
+def get_video_info(url):
+    ydl_opts = {
+        'quiet': True,
+        'no_warnings': True,
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=False)
+        return info.get('title', None), info.get('id', None)
+
+
+def download_youtube_audio_as_mp3(youtube_url, output_file='output.mp3'):
+    output_path = '/tmp'
+    title, video_id = get_video_info(youtube_url)
+    try:
+        ydl_opts = {
+                'format': 'bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+                'outtmpl': output_path + '/%(id)s.%(ext)s',
+                'progress_hooks': [progress_hook],
+            }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([youtube_url])
+        print(f"Download completed successfully: {title}")
+        mp3_file_path = os.path.join(output_path, f"{video_id}.mp3")
+        os.rename(mp3_file_path, output_file)
+
+    except Exception as e:
+        print(f'An error occurred: {e}')
+
+def make_mp3_file_from_youtube(youtube_url,extra_filename_addon="youtube"):
+    download_youtube_audio_as_mp3(youtube_url)
+    expandmp3file.process_mp3_file("output.mp3",filename_addon=extra_filename_addon+datetime.now().strftime("%Y%m%d"))
+
+
+def get_lastest_robot():
+    make_mp3_file_from_youtube("https://www.youtube.com/watch?v=78F6jmM0-TQ",extra_filename_addon="dasrobot")
+
+
+
+
 def main():
+    get_lastest_robot()
+    return None
     get_rhk_news()
     #get_sbs_cantonese()
     return None

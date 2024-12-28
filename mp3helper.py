@@ -1,6 +1,7 @@
 #mp3helper.py
 
 import os
+import boto3
 from mutagen.mp3 import MP3
 from pydub import AudioSegment
 
@@ -61,6 +62,28 @@ def format_duration(seconds):
     seconds = int(seconds % 60)
     return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
+
+
+def cantonese_text_to_mp3(text: str, output_file: str) -> None:
+    """Convert a string of text to an MP3 file using AWS Polly."""
+    session = boto3.Session(region_name='us-east-1')
+    polly_client = session.client('polly')
+
+    try:
+        response = polly_client.synthesize_speech(
+            Text=text,
+            OutputFormat='mp3',
+            VoiceId='Hiujin',
+            Engine='neural',
+            #TextType='ssml'            
+        )
+
+        with open(output_file, 'wb') as file:
+            file.write(response['AudioStream'].read())
+
+        print(f"MP3 file created successfully: {output_file}")
+    except Exception as e:
+        print(f"An error occurred while creating MP3: {e}")
 
 
 # Example usage:

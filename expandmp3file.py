@@ -16,22 +16,39 @@ def combined_length(lines):
         cnt +=len(l)
     return cnt
 
-def process_mp3_file(file_path,filename_addon="work"):
+def process_mp3_file(file_path,filename_addon="work",minlength=10):
     # get the transcription
     transcription = deepinfra.transcribe_audio(file_path)
     sentences = []
     timepoints = []
+    current_sentence = ""
+    start_time = 0
+    end_time = 0
     for segment in transcription:
         text = segment['text']
-        start_time = segment['start_time']
+        current_sentence = current_sentence + text
+        if start_time == 0:
+            start_time = segment['start_time']
         end_time = segment['end_time']
+        if (len(current_sentence) > minlength):        
+            timepoints.append([start_time,end_time])
+            print(f"Segment: {text} (Start: {start_time}, End: {end_time})")
+            sentences.append(current_sentence)
+            filename = create_filename_for_segment(text)
+            part_file_path = texttoaudio.mp3cachedirectory + '/' + filename
+            if  os.path.isfile(part_file_path) == False:
+                mp3helper.extract_audio_segment(file_path, segment['start_time'], segment['end_time'], part_file_path)
+            current_sentence = ""
+            start_time = 0
+            end_time = 0
+
+    if len(current_sentence) > 0:
         timepoints.append([start_time,end_time])
         print(f"Segment: {text} (Start: {start_time}, End: {end_time})")
-        sentences.append(text)
+        sentences.append(current_sentence)
         filename = create_filename_for_segment(text)
         part_file_path = texttoaudio.mp3cachedirectory + '/' + filename
-        if  os.path.isfile(part_file_path) == False:
-            mp3helper.extract_audio_segment(file_path, segment['start_time'], segment['end_time'], part_file_path)
+
     #done with the mp3 partswords_thats_been_given
     currentpod = []
     pods = []

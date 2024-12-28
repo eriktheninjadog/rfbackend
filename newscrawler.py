@@ -166,28 +166,8 @@ def assemble_audio_files(filename,compose,postprefixaudio = None):
     f.close()
     print(f"MP3 file created successfully: {filename}")
 
-    
-def cantonese_text_to_mp3(text: str, output_file: str) -> None:
-    """Convert a string of text to an MP3 file using AWS Polly."""
-    session = boto3.Session(region_name='us-east-1')
-    polly_client = session.client('polly')
 
-    try:
-        response = polly_client.synthesize_speech(
-            Text=text,
-            OutputFormat='mp3',
-            VoiceId='Hiujin',
-            Engine='neural',
-            #TextType='ssml'            
-        )
-
-        with open(output_file, 'wb') as file:
-            file.write(response['AudioStream'].read())
-
-        print(f"MP3 file created successfully: {output_file}")
-    except Exception as e:
-        print(f"An error occurred while creating MP3: {e}")
-
+import mp3helper
 
 def create_and_upload_files(normal_text,chunk: str, index: int) -> None:
     """Create MP3 and hint files, then upload them."""
@@ -195,7 +175,7 @@ def create_and_upload_files(normal_text,chunk: str, index: int) -> None:
     filename = f"spokenarticle_news{time.time()}_{index}.mp3"
     hint_filename = f"{filename}.hint.json"
 
-    cantonese_text_to_mp3(chunk, filename)
+    mp3helper.cantonese_text_to_mp3(chunk, filename)
 
     with open(hint_filename, "w") as f:
         json.dump(splits, f)
@@ -301,9 +281,6 @@ def extract_keywords_from_sentence(sentence):
     result = result[:result.find(']')]+']'    
     return json.loads(result)
 
-
-
-    
 def extract_keywords(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:
