@@ -177,13 +177,19 @@ class OpenRouterAPI:
 
     def get_completion(self, model: str, user_content: str, system_content: Optional[str] = None) -> str:
         messages = [{"role": "user", "content": user_content}]
-        if system_content:
-            messages.append({"role": "system", "content": system_content})
+        try:
+            if system_content:
+                messages.append({"role": "system", "content": system_content})
+            
+            self.logger.info(f"Getting completion from {model}")
+            response = self._make_request(model, messages)
+            return response['choices'][0]['message']['content']
+        except Exception as e:
+            error_msg = f"Error getting completion: {str(e)}"
+            self.logger.error(error_msg)
+            print("error: " + error_msg)
+            return "AI Error"
         
-        self.logger.info(f"Getting completion from {model}")
-        response = self._make_request(model, messages)
-        return response['choices'][0]['message']['content']
-
     def parse_router_json(self, response_dict: Dict) -> None:
         try:
             choices = response_dict['choices']

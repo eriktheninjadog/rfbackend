@@ -59,5 +59,6 @@ if __name__ == "__main__":
         text = i[1]
         try:
             explaintext_in_simple_cantonese.explain_and_render_text(title+"。\n" + text)
+            print("Calling explain text " + title)
         except:
             print("Something went wrong but never mind that")

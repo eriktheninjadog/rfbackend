@@ -7,7 +7,7 @@ def explain_text(txt):
     sentences = txt.split('。')
     totalText = txt
     api = openrouter.OpenRouterAPI()
-
+    print("eplain text ")
     totalText += " full text for a 5 year old   "
     explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this text in simple spoken cantonese that a 5 year old can understand:" + txt)
     totalText += '\n' + explain
@@ -102,6 +102,7 @@ def explain_and_render_text(text,filename="spokenarticle_news_exp"+str(random.ra
     #split the text into 
     text_to_combined_mp3(fulltext, filename, mp3helper.cantonese_text_to_mp3)
     scp_command = f"scp {filename} chinese.eriktamm.com:/var/www/html/mp3"
+    print(scp_command)
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 
 
