@@ -1,0 +1,741 @@
+Building prefix dict from /var/www/html/api/rfbackend/dict.txt.big ...
+Loading model from cache /tmp/jieba.u4aea97e3b8f247643cfbc8e5aa52d0bf.cache
+Loading model cost 0.702 seconds.
+Prefix dict has been built successfully.
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2mT-CpD7Jec
+[youtube] 2mT-CpD7Jec: Downloading webpage
+[youtube] 2mT-CpD7Jec: Downloading ios player API JSON
+[youtube] 2mT-CpD7Jec: Downloading mweb player API JSON
+[youtube] 2mT-CpD7Jec: Downloading m3u8 information
+[info] 2mT-CpD7Jec: Downloading 1 format(s): 251
+[download] Destination: /tmp/2mT-CpD7Jec.webm
+[download]   0.0% of    7.38MiB at  238.73KiB/s ETA 00:31[download]   0.0% of    7.38MiB at  539.69KiB/s ETA 00:14[download]   0.1% of    7.38MiB at    1.08MiB/s ETA 00:06[download]   0.2% of    7.38MiB at    2.07MiB/s ETA 00:03[download]   0.4% of    7.38MiB at  108.12KiB/s ETA 01:09[download]   0.8% of    7.38MiB at  205.85KiB/s ETA 00:36[download]   1.7% of    7.38MiB at  374.75KiB/s ETA 00:19[download]   3.4% of    7.38MiB at  621.28KiB/s ETA 00:11[download]   6.8% of    7.38MiB at  939.08KiB/s ETA 00:07[download]  13.5% of    7.38MiB at    1.19MiB/s ETA 00:05[download]  27.1% of    7.38MiB at    1.43MiB/s ETA 00:03[download]  51.7% of    7.38MiB at    1.59MiB/s ETA 00:02[download]  76.1% of    7.38MiB at    1.64MiB/s ETA 00:01[download] 100.0% of    7.38MiB at    1.68MiB/s ETA 00:00[download] 100% of    7.38MiB in 00:00:04 at 1.64MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/2mT-CpD7Jec.mp3
+Deleting original file /tmp/2mT-CpD7Jec.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2mT-CpD7Jec
+Download completed successfully: 🔴慘無人道！發生在澳門最猛屋苑的男童綁架案！案件始作俑者最後竟無罪釋放？｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] 2mT-CpD7Jec: Downloading webpage
+[youtube] 2mT-CpD7Jec: Downloading ios player API JSON
+[youtube] 2mT-CpD7Jec: Downloading mweb player API JSON
+[youtube] 2mT-CpD7Jec: Downloading m3u8 information
+[info] 2mT-CpD7Jec: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] 2mT-CpD7Jec: Downloading 1 format(s): 303+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.75MiB/s (00:00:00)[download]    7.00KiB at  905.48KiB/s (00:00:00)[download]   15.00KiB at  436.79KiB/s (00:00:00)[download]   16.47KiB at  429.09KiB/s (00:00:00)[download] 100% of   16.47KiB in 00:00:00 at 73.93KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=oG1fcKrA_x8
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2692.mp3
+scp spokenarticle_news_u2692.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] oG1fcKrA_x8: Downloading webpage
+[youtube] oG1fcKrA_x8: Downloading ios player API JSON
+[youtube] oG1fcKrA_x8: Downloading mweb player API JSON
+[youtube] oG1fcKrA_x8: Downloading m3u8 information
+[info] oG1fcKrA_x8: Downloading 1 format(s): 251
+[download] Destination: /tmp/oG1fcKrA_x8.webm
+[download]   0.0% of    8.61MiB at   98.87KiB/s ETA 01:29[download]   0.0% of    8.61MiB at  267.54KiB/s ETA 00:32[download]   0.1% of    8.61MiB at  585.56KiB/s ETA 00:15[download]   0.2% of    8.61MiB at    1.15MiB/s ETA 00:07[download]   0.4% of    8.61MiB at    1.53MiB/s ETA 00:05[download]   0.7% of    8.61MiB at   64.61KiB/s ETA 02:15[download]   1.1% of    8.61MiB at   95.25KiB/s ETA 01:31[download]   1.9% of    8.61MiB at  129.01KiB/s ETA 01:07[download]   3.4% of    8.61MiB at  222.11KiB/s ETA 00:38[download]   6.4% of    8.61MiB at  379.88KiB/s ETA 00:21[download]  12.5% of    8.61MiB at  613.38KiB/s ETA 00:12[download]  24.6% of    8.61MiB at  918.05KiB/s ETA 00:07[download]  45.9% of    8.61MiB at    1.16MiB/s ETA 00:04[download]  66.4% of    8.61MiB at    1.31MiB/s ETA 00:02[download]  87.5% of    8.61MiB at    1.35MiB/s ETA 00:00[download] 100.0% of    8.61MiB at    1.40MiB/s ETA 00:00[download] 100% of    8.61MiB in 00:00:06 at 1.36MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/oG1fcKrA_x8.mp3
+Deleting original file /tmp/oG1fcKrA_x8.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=oG1fcKrA_x8
+Download completed successfully: 🔴幼稚園女教師 土木工程男博士生！聖誕入境香港檢獲毒品阿媽教落：去旅行千祈唔好幫人攞嘢！隨時要踎監留案底！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] oG1fcKrA_x8: Downloading webpage
+[youtube] oG1fcKrA_x8: Downloading ios player API JSON
+[youtube] oG1fcKrA_x8: Downloading mweb player API JSON
+[youtube] oG1fcKrA_x8: Downloading m3u8 information
+[info] oG1fcKrA_x8: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] oG1fcKrA_x8: Downloading 1 format(s): 616+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.46MiB/s (00:00:00)[download]    7.00KiB at    2.32MiB/s (00:00:00)[download]   13.81KiB at    2.62MiB/s (00:00:00)[download] 100% of   13.81KiB in 00:00:00 at 106.70KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=-gJSq0Cb5tE
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2129.mp3
+scp spokenarticle_news_u2129.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] -gJSq0Cb5tE: Downloading webpage
+[youtube] -gJSq0Cb5tE: Downloading ios player API JSON
+[youtube] -gJSq0Cb5tE: Downloading mweb player API JSON
+[youtube] -gJSq0Cb5tE: Downloading m3u8 information
+[info] -gJSq0Cb5tE: Downloading 1 format(s): 251
+[download] Destination: /tmp/-gJSq0Cb5tE.webm
+[download]   0.0% of    6.96MiB at  175.74KiB/s ETA 00:40[download]   0.0% of    6.96MiB at  449.84KiB/s ETA 00:15[download]   0.1% of    6.96MiB at  944.27KiB/s ETA 00:07[download]   0.2% of    6.96MiB at    1.80MiB/s ETA 00:03[download]   0.4% of    6.96MiB at   90.05KiB/s ETA 01:18[download]   0.9% of    6.96MiB at  169.50KiB/s ETA 00:41[download]   1.8% of    6.96MiB at  313.60KiB/s ETA 00:22[download]   3.6% of    6.96MiB at  540.01KiB/s ETA 00:12[download]   7.2% of    6.96MiB at  837.86KiB/s ETA 00:07[download]  14.4% of    6.96MiB at    1.12MiB/s ETA 00:05[download]  28.7% of    6.96MiB at    1.14MiB/s ETA 00:04[download]  45.3% of    6.96MiB at    1.32MiB/s ETA 00:02[download]  71.3% of    6.96MiB at    1.42MiB/s ETA 00:01[download]  94.9% of    6.96MiB at    1.53MiB/s ETA 00:00[download] 100.0% of    6.96MiB at    1.55MiB/s ETA 00:00[download] 100% of    6.96MiB in 00:00:04 at 1.49MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/-gJSq0Cb5tE.mp3
+Deleting original file /tmp/-gJSq0Cb5tE.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=-gJSq0Cb5tE
+Download completed successfully: 🔴4.9元就可以解決一餐!?美團拼好飯究竟係窮人恩物定係加速惡性競爭嘅產物?｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] -gJSq0Cb5tE: Downloading webpage
+[youtube] -gJSq0Cb5tE: Downloading ios player API JSON
+[youtube] -gJSq0Cb5tE: Downloading mweb player API JSON
+[youtube] -gJSq0Cb5tE: Downloading m3u8 information
+[info] -gJSq0Cb5tE: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] Testing format 616
+[info] -gJSq0Cb5tE: Downloading 1 format(s): 616+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.03MiB/s (00:00:00)[download]    7.00KiB at    3.14MiB/s (00:00:00)[download]   12.61KiB at    3.94MiB/s (00:00:00)[download] 100% of   12.61KiB in 00:00:00 at 82.99KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=BGaLe57qq4A
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2114.mp3
+scp spokenarticle_news_u2114.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] BGaLe57qq4A: Downloading webpage
+[youtube] BGaLe57qq4A: Downloading ios player API JSON
+[youtube] BGaLe57qq4A: Downloading mweb player API JSON
+[youtube] BGaLe57qq4A: Downloading m3u8 information
+[info] BGaLe57qq4A: Downloading 1 format(s): 251
+[download] Destination: /tmp/BGaLe57qq4A.webm
+[download]   0.0% of    7.04MiB at  462.08KiB/s ETA 00:15[download]   0.0% of    7.04MiB at  948.01KiB/s ETA 00:07[download]   0.1% of    7.04MiB at    1.79MiB/s ETA 00:03[download]   0.2% of    7.04MiB at    3.29MiB/s ETA 00:02[download]   0.4% of    7.04MiB at    2.50MiB/s ETA 00:02[download]   0.9% of    7.04MiB at    1.32MiB/s ETA 00:05[download]   1.8% of    7.04MiB at    1.18MiB/s ETA 00:05[download]   3.5% of    7.04MiB at    1.46MiB/s ETA 00:04[download]   7.1% of    7.04MiB at  951.89KiB/s ETA 00:07[download]  14.2% of    7.04MiB at    1.07MiB/s ETA 00:05[download]  28.4% of    7.04MiB at    1.29MiB/s ETA 00:03[download]  51.2% of    7.04MiB at    1.45MiB/s ETA 00:02[download]  75.5% of    7.04MiB at    1.43MiB/s ETA 00:01[download]  95.3% of    7.04MiB at    1.49MiB/s ETA 00:00[download] 100.0% of    7.04MiB at    1.50MiB/s ETA 00:00[download] 100% of    7.04MiB in 00:00:04 at 1.45MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/BGaLe57qq4A.mp3
+Deleting original file /tmp/BGaLe57qq4A.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=BGaLe57qq4A
+Download completed successfully: 🔴今年香港倒數活動交通安排成點?有旅客趕尾班車形容似走難，認為羅湖關口要24小時開通!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] BGaLe57qq4A: Downloading webpage
+[youtube] BGaLe57qq4A: Downloading ios player API JSON
+[youtube] BGaLe57qq4A: Downloading mweb player API JSON
+[youtube] BGaLe57qq4A: Downloading m3u8 information
+[info] BGaLe57qq4A: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] BGaLe57qq4A: Downloading 1 format(s): 248+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.73MiB/s (00:00:00)[download]    7.00KiB at    1.15MiB/s (00:00:00)[download]   12.51KiB at    1.13MiB/s (00:00:00)[download] 100% of   12.51KiB in 00:00:00 at 98.62KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=QSBAohphxWw
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2345.mp3
+scp spokenarticle_news_u2345.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] QSBAohphxWw: Downloading webpage
+[youtube] QSBAohphxWw: Downloading ios player API JSON
+[youtube] QSBAohphxWw: Downloading mweb player API JSON
+[youtube] QSBAohphxWw: Downloading m3u8 information
+[info] QSBAohphxWw: Downloading 1 format(s): 251
+[download] Destination: /tmp/QSBAohphxWw.webm
+[download]   0.0% of    6.93MiB at   75.09KiB/s ETA 01:34[download]   0.0% of    6.93MiB at  218.44KiB/s ETA 00:32[download]   0.1% of    6.93MiB at  499.14KiB/s ETA 00:14[download]   0.2% of    6.93MiB at    1.02MiB/s ETA 00:06[download]   0.4% of    6.93MiB at    1.83MiB/s ETA 00:03[download]   0.9% of    6.93MiB at 1013.07KiB/s ETA 00:06[download]   1.8% of    6.93MiB at    1.36MiB/s ETA 00:04[download]   3.6% of    6.93MiB at    1.51MiB/s ETA 00:04[download]   7.2% of    6.93MiB at    1.63MiB/s ETA 00:03[download]  14.4% of    6.93MiB at    1.74MiB/s ETA 00:03[download]  28.9% of    6.93MiB at    1.77MiB/s ETA 00:02[download]  55.0% of    6.93MiB at    1.79MiB/s ETA 00:01[download]  81.2% of    6.93MiB at    1.76MiB/s ETA 00:00[download] 100.0% of    6.93MiB at    1.77MiB/s ETA 00:00[download] 100% of    6.93MiB in 00:00:04 at 1.72MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/QSBAohphxWw.mp3
+Deleting original file /tmp/QSBAohphxWw.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=QSBAohphxWw
+Download completed successfully: 🔴畀澳門日報跣穫甘!?澳日錯誤報導指除夕旅遊塔有煙花，有市民信以為真走晒去食西北風!!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] QSBAohphxWw: Downloading webpage
+[youtube] QSBAohphxWw: Downloading ios player API JSON
+[youtube] QSBAohphxWw: Downloading mweb player API JSON
+[youtube] QSBAohphxWw: Downloading m3u8 information
+[info] QSBAohphxWw: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] Testing format 616
+[info] QSBAohphxWw: Downloading 1 format(s): 616+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.71MiB/s (00:00:00)[download]    7.00KiB at    2.58MiB/s (00:00:00)[download]   12.29KiB at    1.01MiB/s (00:00:00)[download] 100% of   12.29KiB in 00:00:00 at 77.07KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=rDfzVyzKmUA
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2989.mp3
+scp spokenarticle_news_u2989.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] rDfzVyzKmUA: Downloading webpage
+[youtube] rDfzVyzKmUA: Downloading ios player API JSON
+[youtube] rDfzVyzKmUA: Downloading mweb player API JSON
+[youtube] rDfzVyzKmUA: Downloading m3u8 information
+[info] rDfzVyzKmUA: Downloading 1 format(s): 251
+[download] Destination: /tmp/rDfzVyzKmUA.webm
+[download]   0.0% of   10.16MiB at   90.82KiB/s ETA 01:54[download]   0.0% of   10.16MiB at  247.66KiB/s ETA 00:42[download]   0.1% of   10.16MiB at  545.93KiB/s ETA 00:19[download]   0.1% of   10.16MiB at    1.08MiB/s ETA 00:09[download]   0.3% of   10.16MiB at  143.36KiB/s ETA 01:12[download]   0.6% of   10.16MiB at  245.70KiB/s ETA 00:42[download]   1.2% of   10.16MiB at  436.33KiB/s ETA 00:23[download]   2.5% of   10.16MiB at  710.34KiB/s ETA 00:14[download]   4.9% of   10.16MiB at    1.01MiB/s ETA 00:09[download]   9.8% of   10.16MiB at    1.30MiB/s ETA 00:07[download]  19.7% of   10.16MiB at    1.51MiB/s ETA 00:05[download]  37.5% of   10.16MiB at    1.50MiB/s ETA 00:04[download]  52.1% of   10.16MiB at    1.57MiB/s ETA 00:03[download]  69.8% of   10.16MiB at    1.62MiB/s ETA 00:01[download]  87.5% of   10.16MiB at    1.61MiB/s ETA 00:00[download]  96.7% of   10.16MiB at    1.63MiB/s ETA 00:00[download]  96.7% of   10.16MiB at  129.36KiB/s ETA 00:02[download]  96.8% of   10.16MiB at  338.27KiB/s ETA 00:00[download]  96.8% of   10.16MiB at  727.64KiB/s ETA 00:00[download]  96.9% of   10.16MiB at    1.41MiB/s ETA 00:00[download]  97.0% of   10.16MiB at    2.66MiB/s ETA 00:00[download]  97.3% of   10.16MiB at 1016.50KiB/s ETA 00:00[download]  98.0% of   10.16MiB at    1.35MiB/s ETA 00:00[download]  99.2% of   10.16MiB at    1.32MiB/s ETA 00:00[download] 100.0% of   10.16MiB at    1.45MiB/s ETA 00:00[download] 100% of   10.16MiB in 00:00:06 at 1.57MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/rDfzVyzKmUA.mp3
+Deleting original file /tmp/rDfzVyzKmUA.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=rDfzVyzKmUA
+Download completed successfully: iPhone 17 世紀大改款｜最新爆料與上市日期
+[youtube] rDfzVyzKmUA: Downloading webpage
+[youtube] rDfzVyzKmUA: Downloading ios player API JSON
+[youtube] rDfzVyzKmUA: Downloading mweb player API JSON
+[youtube] rDfzVyzKmUA: Downloading m3u8 information
+[info] rDfzVyzKmUA: Downloading subtitles: yue-HK
+WARNING: No subtitle format found matching "srt" for language yue-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] rDfzVyzKmUA: Downloading 1 format(s): 401+251
+Deleting existing file tmp.yue-HK.vtt
+[info] Writing video subtitles to: tmp.yue-HK.vtt
+[download] Destination: tmp.yue-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.17MiB/s (00:00:00)[download]    7.00KiB at    3.32MiB/s (00:00:00)[download]   15.00KiB at    1.50MiB/s (00:00:00)[download]   22.61KiB at  768.70KiB/s (00:00:00)[download] 100% of   22.61KiB in 00:00:00 at 151.87KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=jfnuyDYpUvA
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2936.mp3
+scp spokenarticle_news_u2936.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] jfnuyDYpUvA: Downloading webpage
+[youtube] jfnuyDYpUvA: Downloading ios player API JSON
+[youtube] jfnuyDYpUvA: Downloading mweb player API JSON
+[youtube] jfnuyDYpUvA: Downloading m3u8 information
+[info] jfnuyDYpUvA: Downloading 1 format(s): 251
+[download] Destination: /tmp/jfnuyDYpUvA.webm
+[download]   0.0% of   12.71MiB at  178.53KiB/s ETA 01:13[download]   0.0% of   12.71MiB at  457.44KiB/s ETA 00:28[download]   0.1% of   12.71MiB at  963.64KiB/s ETA 00:13[download]   0.1% of   12.71MiB at    1.84MiB/s ETA 00:06[download]   0.2% of   12.71MiB at    1.64MiB/s ETA 00:07[download]   0.5% of   12.71MiB at  257.71KiB/s ETA 00:50[download]   1.0% of   12.71MiB at  421.71KiB/s ETA 00:30[download]   2.0% of   12.71MiB at  698.91KiB/s ETA 00:18[download]   3.9% of   12.71MiB at 1016.58KiB/s ETA 00:12[download]   7.9% of   12.71MiB at    1.24MiB/s ETA 00:09[download]  15.7% of   12.71MiB at    1.50MiB/s ETA 00:07[download]  30.5% of   12.71MiB at    1.19MiB/s ETA 00:07[download]  38.1% of   12.71MiB at    1.23MiB/s ETA 00:06[download]  49.4% of   12.71MiB at    1.32MiB/s ETA 00:04[download]  63.5% of   12.71MiB at    1.36MiB/s ETA 00:03[download]  75.4% of   12.71MiB at    1.41MiB/s ETA 00:02[download]  77.5% of   12.71MiB at    1.42MiB/s ETA 00:02[download]  77.5% of   12.71MiB at   83.28KiB/s ETA 00:35[download]  77.5% of   12.71MiB at  229.52KiB/s ETA 00:12[download]  77.5% of   12.71MiB at  507.52KiB/s ETA 00:05[download]  77.6% of   12.71MiB at    1.00MiB/s ETA 00:02[download]  77.7% of   12.71MiB at    1.64MiB/s ETA 00:01[download]  77.9% of   12.71MiB at    1.77MiB/s ETA 00:01[download]  78.4% of   12.71MiB at    1.71MiB/s ETA 00:01[download]  79.4% of   12.71MiB at    1.52MiB/s ETA 00:01[download]  81.4% of   12.71MiB at    1.73MiB/s ETA 00:01[download]  85.3% of   12.71MiB at    1.73MiB/s ETA 00:01[download]  93.2% of   12.71MiB at    1.38MiB/s ETA 00:00[download] 100.0% of   12.71MiB at    1.35MiB/s ETA 00:00[download] 100% of   12.71MiB in 00:00:09 at 1.36MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/jfnuyDYpUvA.mp3
+Deleting original file /tmp/jfnuyDYpUvA.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=jfnuyDYpUvA
+Download completed successfully: 日本女生愛基隆❤️ Google評價4.5顆星美食真的好吃嗎?
+[youtube] jfnuyDYpUvA: Downloading webpage
+[youtube] jfnuyDYpUvA: Downloading ios player API JSON
+[youtube] jfnuyDYpUvA: Downloading mweb player API JSON
+[youtube] jfnuyDYpUvA: Downloading m3u8 information
+[info] jfnuyDYpUvA: Downloading subtitles: yue-HK
+WARNING: No subtitle format found matching "srt" for language yue-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] Testing format 616
+[info] jfnuyDYpUvA: Downloading 1 format(s): 616+251
+Deleting existing file tmp.yue-HK.vtt
+[info] Writing video subtitles to: tmp.yue-HK.vtt
+[download] Destination: tmp.yue-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.37MiB/s (00:00:00)[download]    7.00KiB at    1.58MiB/s (00:00:00)[download]   15.00KiB at    1.39MiB/s (00:00:00)[download]   25.50KiB at  838.57KiB/s (00:00:00)[download] 100% of   25.50KiB in 00:00:00 at 157.87KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=C9GbAOg9zqk
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2262.mp3
+scp spokenarticle_news_u2262.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] C9GbAOg9zqk: Downloading webpage
+[youtube] C9GbAOg9zqk: Downloading ios player API JSON
+[youtube] C9GbAOg9zqk: Downloading mweb player API JSON
+[youtube] C9GbAOg9zqk: Downloading m3u8 information
+[info] C9GbAOg9zqk: Downloading 1 format(s): 251
+[download] Destination: /tmp/C9GbAOg9zqk.webm
+[download]   0.0% of    6.86MiB at  Unknown B/s ETA Unknown[download]   0.0% of    6.86MiB at    1.96MiB/s ETA 00:03  [download]   0.1% of    6.86MiB at    3.03MiB/s ETA 00:02[download]   0.2% of    6.86MiB at    4.90MiB/s ETA 00:01[download]   0.4% of    6.86MiB at    1.54MiB/s ETA 00:04[download]   0.9% of    6.86MiB at  444.49KiB/s ETA 00:15[download]   1.8% of    6.86MiB at  723.37KiB/s ETA 00:09[download]   3.6% of    6.86MiB at    1.02MiB/s ETA 00:06[download]   7.3% of    6.86MiB at    1.31MiB/s ETA 00:04[download]  14.6% of    6.86MiB at    1.51MiB/s ETA 00:03[download]  29.1% of    6.86MiB at    1.60MiB/s ETA 00:03[download]  53.8% of    6.86MiB at    1.68MiB/s ETA 00:01[download]  79.9% of    6.86MiB at    1.70MiB/s ETA 00:00[download] 100.0% of    6.86MiB at    1.75MiB/s ETA 00:00[download] 100% of    6.86MiB in 00:00:04 at 1.71MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/C9GbAOg9zqk.mp3
+Deleting original file /tmp/C9GbAOg9zqk.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=C9GbAOg9zqk
+Download completed successfully: 🔴大陸除夕夜竟出現氣球爆燃驚魂！市民自帶氣球變火球！武漢鬧市跨年民眾放飛氣球觸電爆燃！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] C9GbAOg9zqk: Downloading webpage
+[youtube] C9GbAOg9zqk: Downloading ios player API JSON
+[youtube] C9GbAOg9zqk: Downloading mweb player API JSON
+[youtube] C9GbAOg9zqk: Downloading m3u8 information
+[info] C9GbAOg9zqk: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] C9GbAOg9zqk: Downloading 1 format(s): 303+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.62MiB/s (00:00:00)[download]    7.00KiB at    1.22MiB/s (00:00:00)[download]   10.52KiB at    1.03MiB/s (00:00:00)[download] 100% of   10.52KiB in 00:00:00 at 59.95KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=6ohmirCuT2A
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2732.mp3
+scp spokenarticle_news_u2732.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] 6ohmirCuT2A: Downloading webpage
+[youtube] 6ohmirCuT2A: Downloading ios player API JSON
+[youtube] 6ohmirCuT2A: Downloading mweb player API JSON
+[youtube] 6ohmirCuT2A: Downloading m3u8 information
+[info] 6ohmirCuT2A: Downloading 1 format(s): 251
+[download] Destination: /tmp/6ohmirCuT2A.webm
+[download]   0.0% of    8.37MiB at   85.04KiB/s ETA 01:40[download]   0.0% of    8.37MiB at  236.68KiB/s ETA 00:36[download]   0.1% of    8.37MiB at  523.12KiB/s ETA 00:16[download]   0.2% of    8.37MiB at    1.05MiB/s ETA 00:07[download]   0.4% of    8.37MiB at    2.01MiB/s ETA 00:04[download]   0.7% of    8.37MiB at    1.11MiB/s ETA 00:07[download]   1.5% of    8.37MiB at 1004.64KiB/s ETA 00:08[download]   3.0% of    8.37MiB at    1.34MiB/s ETA 00:06[download]   6.0% of    8.37MiB at    1.32MiB/s ETA 00:05[download]  11.9% of    8.37MiB at    1.43MiB/s ETA 00:05[download]  23.9% of    8.37MiB at    1.51MiB/s ETA 00:04[download]  42.9% of    8.37MiB at    1.63MiB/s ETA 00:02[download]  64.4% of    8.37MiB at    1.69MiB/s ETA 00:01[download]  86.1% of    8.37MiB at    1.69MiB/s ETA 00:00[download] 100.0% of    8.37MiB at    1.71MiB/s ETA 00:00[download] 100% of    8.37MiB in 00:00:05 at 1.66MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/6ohmirCuT2A.mp3
+Deleting original file /tmp/6ohmirCuT2A.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=6ohmirCuT2A
+Download completed successfully: 🔴大陸人販子團伙用刀捉小朋友？父親俾人搶仔還拖竟判終身監禁！法律保護誰？還手就是不對？｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] 6ohmirCuT2A: Downloading webpage
+[youtube] 6ohmirCuT2A: Downloading ios player API JSON
+[youtube] 6ohmirCuT2A: Downloading mweb player API JSON
+[youtube] 6ohmirCuT2A: Downloading m3u8 information
+[info] 6ohmirCuT2A: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] 6ohmirCuT2A: Downloading 1 format(s): 247+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.43MiB/s (00:00:00)[download]    7.00KiB at    3.44MiB/s (00:00:00)[download]   15.00KiB at    5.29MiB/s (00:00:00)[download]   15.32KiB at    3.93MiB/s (00:00:00)[download] 100% of   15.32KiB in 00:00:00 at 102.11KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yAzZyFeqqoc
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2339.mp3
+scp spokenarticle_news_u2339.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] yAzZyFeqqoc: Downloading webpage
+[youtube] yAzZyFeqqoc: Downloading ios player API JSON
+[youtube] yAzZyFeqqoc: Downloading mweb player API JSON
+[youtube] yAzZyFeqqoc: Downloading m3u8 information
+[info] yAzZyFeqqoc: Downloading 1 format(s): 251
+[download] Destination: /tmp/yAzZyFeqqoc.webm
+[download]   0.0% of   17.46MiB at   47.27KiB/s ETA 06:18[download]   0.0% of   17.46MiB at  135.34KiB/s ETA 02:12[download]   0.0% of   17.46MiB at  306.27KiB/s ETA 00:58[download]   0.1% of   17.46MiB at  636.57KiB/s ETA 00:28[download]   0.2% of   17.46MiB at  628.68KiB/s ETA 00:28[download]   0.4% of   17.46MiB at  517.93KiB/s ETA 00:34[download]   0.7% of   17.46MiB at  683.79KiB/s ETA 00:25[download]   1.4% of   17.46MiB at  943.57KiB/s ETA 00:18[download]   2.9% of   17.46MiB at  698.44KiB/s ETA 00:24[download]   5.7% of   17.46MiB at  713.68KiB/s ETA 00:23[download]   9.8% of   17.46MiB at  862.10KiB/s ETA 00:18[download]  16.6% of   17.46MiB at    1.02MiB/s ETA 00:14[download]  24.9% of   17.46MiB at    1.06MiB/s ETA 00:12[download]  31.5% of   17.46MiB at    1.13MiB/s ETA 00:10[download]  40.2% of   17.46MiB at    1.20MiB/s ETA 00:08[download]  49.2% of   17.46MiB at    1.22MiB/s ETA 00:07[download]  56.6% of   17.46MiB at    1.22MiB/s ETA 00:06[download]  56.7% of   17.46MiB at    1.22MiB/s ETA 00:06[download]  56.7% of   17.46MiB at   84.36KiB/s ETA 01:31[download]  56.7% of   17.46MiB at  244.18KiB/s ETA 00:31[download]  56.7% of   17.46MiB at  557.83KiB/s ETA 00:13[download]  56.8% of   17.46MiB at    1.14MiB/s ETA 00:06[download]  56.9% of   17.46MiB at  880.76KiB/s ETA 00:08[download]  57.0% of   17.46MiB at  728.39KiB/s ETA 00:10[download]  57.4% of   17.46MiB at    1.06MiB/s ETA 00:07[download]  58.1% of   17.46MiB at    1.26MiB/s ETA 00:05[download]  59.5% of   17.46MiB at    1.36MiB/s ETA 00:05[download]  62.4% of   17.46MiB at    1.39MiB/s ETA 00:04[download]  68.1% of   17.46MiB at    1.42MiB/s ETA 00:03[download]  76.4% of   17.46MiB at    1.42MiB/s ETA 00:02[download]  84.6% of   17.46MiB at    1.32MiB/s ETA 00:02[download]  91.0% of   17.46MiB at    1.33MiB/s ETA 00:01[download]  98.9% of   17.46MiB at    1.35MiB/s ETA 00:00[download] 100.0% of   17.46MiB at    1.36MiB/s ETA 00:00[download] 100% of   17.46MiB in 00:00:13 at 1.26MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/yAzZyFeqqoc.mp3
+Deleting original file /tmp/yAzZyFeqqoc.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yAzZyFeqqoc
+Download completed successfully: Hea 住華欣🌤️4間高CP值酒店比拼～人均 $200 Resort 房間直落泳池🤤泰好Hea系列 CC 中文字幕
+[youtube] yAzZyFeqqoc: Downloading webpage
+[youtube] yAzZyFeqqoc: Downloading ios player API JSON
+[youtube] yAzZyFeqqoc: Downloading mweb player API JSON
+[youtube] yAzZyFeqqoc: Downloading m3u8 information
+[info] yAzZyFeqqoc: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] Testing format 616
+[info] yAzZyFeqqoc: Downloading 1 format(s): 616+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.75MiB/s (00:00:00)[download]    7.00KiB at    2.71MiB/s (00:00:00)[download]   15.00KiB at  682.44KiB/s (00:00:00)[download]   23.45KiB at  521.12KiB/s (00:00:00)[download] 100% of   23.45KiB in 00:00:00 at 115.11KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=sQMUIDNV4Z0
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2496.mp3
+scp spokenarticle_news_u2496.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] sQMUIDNV4Z0: Downloading webpage
+[youtube] sQMUIDNV4Z0: Downloading ios player API JSON
+[youtube] sQMUIDNV4Z0: Downloading mweb player API JSON
+[youtube] sQMUIDNV4Z0: Downloading m3u8 information
+[info] sQMUIDNV4Z0: Downloading 1 format(s): 251
+[download] Destination: /tmp/sQMUIDNV4Z0.webm
+[download]   0.0% of   15.22MiB at   75.06KiB/s ETA 03:27[download]   0.0% of   15.22MiB at  218.27KiB/s ETA 01:11[download]   0.0% of   15.22MiB at  500.08KiB/s ETA 00:31[download]   0.1% of   15.22MiB at    1.03MiB/s ETA 00:14[download]   0.2% of   15.22MiB at  790.07KiB/s ETA 00:19[download]   0.4% of   15.22MiB at  821.71KiB/s ETA 00:18[download]   0.8% of   15.22MiB at  979.05KiB/s ETA 00:15[download]   1.6% of   15.22MiB at    1.09MiB/s ETA 00:13[download]   3.3% of   15.22MiB at    1.28MiB/s ETA 00:11[download]   6.6% of   15.22MiB at    1.35MiB/s ETA 00:10[download]  13.1% of   15.22MiB at    1.56MiB/s ETA 00:08[download]  25.3% of   15.22MiB at    1.64MiB/s ETA 00:06[download]  36.7% of   15.22MiB at    1.67MiB/s ETA 00:05[download]  48.1% of   15.22MiB at    1.65MiB/s ETA 00:04[download]  58.4% of   15.22MiB at    1.66MiB/s ETA 00:03[download]  64.2% of   15.22MiB at    1.67MiB/s ETA 00:03[download]  64.3% of   15.22MiB at  186.26KiB/s ETA 00:30[download]  64.3% of   15.22MiB at  459.40KiB/s ETA 00:12[download]  64.3% of   15.22MiB at  963.04KiB/s ETA 00:05[download]  64.3% of   15.22MiB at    1.85MiB/s ETA 00:02[download]  64.4% of   15.22MiB at  587.56KiB/s ETA 00:09[download]  64.7% of   15.22MiB at  824.78KiB/s ETA 00:06[download]  65.1% of   15.22MiB at    1.07MiB/s ETA 00:04[download]  65.9% of   15.22MiB at    1.32MiB/s ETA 00:03[download]  67.5% of   15.22MiB at    1.37MiB/s ETA 00:03[download]  70.8% of   15.22MiB at    1.60MiB/s ETA 00:02[download]  77.4% of   15.22MiB at    1.66MiB/s ETA 00:02[download]  88.7% of   15.22MiB at    1.70MiB/s ETA 00:01[download] 100.0% of   15.22MiB at    1.60MiB/s ETA 00:00[download] 100% of   15.22MiB in 00:00:09 at 1.59MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/sQMUIDNV4Z0.mp3
+Deleting original file /tmp/sQMUIDNV4Z0.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=sQMUIDNV4Z0
+Download completed successfully: 🔴河北十三歲初中生遭霸凌殺害案！連眼珠都被打甩！兇手父母包庇仔女？三名兇手同學分別判無期及12年及不予刑罰！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] sQMUIDNV4Z0: Downloading webpage
+[youtube] sQMUIDNV4Z0: Downloading ios player API JSON
+[youtube] sQMUIDNV4Z0: Downloading mweb player API JSON
+[youtube] sQMUIDNV4Z0: Downloading m3u8 information
+[info] sQMUIDNV4Z0: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] sQMUIDNV4Z0: Downloading 1 format(s): 303+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.24MiB/s (00:00:00)[download]    7.00KiB at  504.60KiB/s (00:00:00)[download]   15.00KiB at  904.84KiB/s (00:00:00)[download]   27.16KiB at  548.01KiB/s (00:00:00)[download] 100% of   27.16KiB in 00:00:00 at 152.24KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yrhdYy3IydI
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2108.mp3
+scp spokenarticle_news_u2108.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] yrhdYy3IydI: Downloading webpage
+[youtube] yrhdYy3IydI: Downloading ios player API JSON
+[youtube] yrhdYy3IydI: Downloading mweb player API JSON
+[youtube] yrhdYy3IydI: Downloading m3u8 information
+[info] yrhdYy3IydI: Downloading 1 format(s): 251
+[download] Destination: /tmp/yrhdYy3IydI.webm
+[download]   0.0% of   12.96MiB at  183.89KiB/s ETA 01:12[download]   0.0% of   12.96MiB at  470.93KiB/s ETA 00:28[download]   0.1% of   12.96MiB at  935.96KiB/s ETA 00:14[download]   0.1% of   12.96MiB at    1.76MiB/s ETA 00:07[download]   0.2% of   12.96MiB at    1.12MiB/s ETA 00:11[download]   0.5% of   12.96MiB at    1.08MiB/s ETA 00:11[download]   1.0% of   12.96MiB at    1.22MiB/s ETA 00:10[download]   1.9% of   12.96MiB at    1.22MiB/s ETA 00:10[download]   3.9% of   12.96MiB at    1.30MiB/s ETA 00:09[download]   7.7% of   12.96MiB at    1.32MiB/s ETA 00:09[download]  15.4% of   12.96MiB at  870.63KiB/s ETA 00:12[download]  20.3% of   12.96MiB at  849.30KiB/s ETA 00:12[download]  26.2% of   12.96MiB at  871.69KiB/s ETA 00:11[download]  33.4% of   12.96MiB at  908.65KiB/s ETA 00:09[download]  41.5% of   12.96MiB at  926.14KiB/s ETA 00:08[download]  49.1% of   12.96MiB at  926.57KiB/s ETA 00:07[download]  56.1% of   12.96MiB at  935.19KiB/s ETA 00:06[download]  63.6% of   12.96MiB at  983.29KiB/s ETA 00:04[download]  74.0% of   12.96MiB at 1010.05KiB/s ETA 00:03[download]  74.0% of   12.96MiB at   61.71KiB/s ETA 00:55[download]  74.1% of   12.96MiB at  172.52KiB/s ETA 00:19[download]  74.1% of   12.96MiB at  383.13KiB/s ETA 00:08[download]  74.1% of   12.96MiB at  780.61KiB/s ETA 00:04[download]  74.3% of   12.96MiB at    1.15MiB/s ETA 00:02[download]  74.5% of   12.96MiB at  944.32KiB/s ETA 00:03[download]  75.0% of   12.96MiB at  983.30KiB/s ETA 00:03[download]  76.0% of   12.96MiB at    1.31MiB/s ETA 00:02[download]  77.9% of   12.96MiB at    1.38MiB/s ETA 00:02[download]  81.7% of   12.96MiB at    1.44MiB/s ETA 00:01[download]  89.5% of   12.96MiB at    1.36MiB/s ETA 00:01[download]  99.4% of   12.96MiB at    1.43MiB/s ETA 00:00[download] 100.0% of   12.96MiB at    1.45MiB/s ETA 00:00[download] 100% of   12.96MiB in 00:00:12 at 1.04MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/yrhdYy3IydI.mp3
+Deleting original file /tmp/yrhdYy3IydI.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yrhdYy3IydI
+Download completed successfully: 🔴緬北園區臥虎山莊慘案釀百傷亡！傳四名中國公安被活埋！官方公布真相！超過一萬宗涉及賭詐資金近百億！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] yrhdYy3IydI: Downloading webpage
+[youtube] yrhdYy3IydI: Downloading ios player API JSON
+[youtube] yrhdYy3IydI: Downloading mweb player API JSON
+[youtube] yrhdYy3IydI: Downloading m3u8 information
+[info] yrhdYy3IydI: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] yrhdYy3IydI: Downloading 1 format(s): 399+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  205.80KiB/s (00:00:00)[download]    3.00KiB at  273.60KiB/s (00:00:00)[download]    7.00KiB at  390.44KiB/s (00:00:00)[download]   15.00KiB at  201.70KiB/s (00:00:00)[download]   23.82KiB at  140.98KiB/s (00:00:00)[download] 100% of   23.82KiB in 00:00:00 at 60.06KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=qa4GaOX_cAg
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u273.mp3
+scp spokenarticle_news_u273.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] qa4GaOX_cAg: Downloading webpage
+[youtube] qa4GaOX_cAg: Downloading ios player API JSON
+[youtube] qa4GaOX_cAg: Downloading mweb player API JSON
+[youtube] qa4GaOX_cAg: Downloading m3u8 information
+[info] qa4GaOX_cAg: Downloading 1 format(s): 251
+[download] Destination: /tmp/qa4GaOX_cAg.webm
+[download]   0.0% of    6.78MiB at   28.43KiB/s ETA 04:04[download]   0.0% of    6.78MiB at   82.61KiB/s ETA 01:23[download]   0.1% of    6.78MiB at  188.02KiB/s ETA 00:36[download]   0.2% of    6.78MiB at  395.49KiB/s ETA 00:17[download]   0.4% of    6.78MiB at  774.62KiB/s ETA 00:08[download]   0.9% of    6.78MiB at  244.51KiB/s ETA 00:28[download]   1.8% of    6.78MiB at  394.72KiB/s ETA 00:17[download]   3.7% of    6.78MiB at  675.63KiB/s ETA 00:09[download]   7.4% of    6.78MiB at  947.10KiB/s ETA 00:06[download]  14.7% of    6.78MiB at  959.39KiB/s ETA 00:06[download]  28.8% of    6.78MiB at  661.69KiB/s ETA 00:07[download]  35.9% of    6.78MiB at  770.72KiB/s ETA 00:05[download]  50.3% of    6.78MiB at  885.65KiB/s ETA 00:03[download]  70.7% of    6.78MiB at 1006.09KiB/s ETA 00:02[download]  92.5% of    6.78MiB at    1.09MiB/s ETA 00:00[download] 100.0% of    6.78MiB at    1.13MiB/s ETA 00:00[download] 100% of    6.78MiB in 00:00:06 at 1.09MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/qa4GaOX_cAg.mp3
+Deleting original file /tmp/qa4GaOX_cAg.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=qa4GaOX_cAg
+Download completed successfully: 🔴艾澤拉斯勇士的熱情!!果農唔想畀中間商壓價導致滯，魔獸玩家集體幫手買橙!24日清晒6000斤橙!!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] qa4GaOX_cAg: Downloading webpage
+[youtube] qa4GaOX_cAg: Downloading ios player API JSON
+[youtube] qa4GaOX_cAg: Downloading mweb player API JSON
+[youtube] qa4GaOX_cAg: Downloading m3u8 information
+[info] qa4GaOX_cAg: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] qa4GaOX_cAg: Downloading 1 format(s): 248+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  822.52KiB/s (00:00:00)[download]    7.00KiB at    1.49MiB/s (00:00:00)[download]   12.55KiB at    1.14MiB/s (00:00:00)[download] 100% of   12.55KiB in 00:00:00 at 79.56KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=uWS1JlbIh1k
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2613.mp3
+scp spokenarticle_news_u2613.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] uWS1JlbIh1k: Downloading webpage
+[youtube] uWS1JlbIh1k: Downloading ios player API JSON
+[youtube] uWS1JlbIh1k: Downloading mweb player API JSON
+[youtube] uWS1JlbIh1k: Downloading m3u8 information
+[info] uWS1JlbIh1k: Downloading 1 format(s): 251
+[download] Destination: /tmp/uWS1JlbIh1k.webm
+[download]   0.0% of   16.03MiB at  197.15KiB/s ETA 01:23[download]   0.0% of   16.03MiB at  496.88KiB/s ETA 00:33[download]   0.0% of   16.03MiB at    1.01MiB/s ETA 00:15[download]   0.1% of   16.03MiB at    1.97MiB/s ETA 00:08[download]   0.2% of   16.03MiB at    1.98MiB/s ETA 00:08[download]   0.4% of   16.03MiB at    1.25MiB/s ETA 00:12[download]   0.8% of   16.03MiB at    1.20MiB/s ETA 00:13[download]   1.6% of   16.03MiB at    1.47MiB/s ETA 00:10[download]   3.1% of   16.03MiB at    1.62MiB/s ETA 00:09[download]   6.2% of   16.03MiB at    1.60MiB/s ETA 00:09[download]  12.5% of   16.03MiB at    1.65MiB/s ETA 00:08[download]  23.0% of   16.03MiB at    1.69MiB/s ETA 00:07[download]  34.0% of   16.03MiB at    1.65MiB/s ETA 00:06[download]  43.7% of   16.03MiB at    1.64MiB/s ETA 00:05[download]  53.9% of   16.03MiB at    1.67MiB/s ETA 00:04[download]  62.3% of   16.03MiB at    1.68MiB/s ETA 00:03[download]  62.3% of   16.03MiB at  Unknown B/s ETA Unknown[download]  62.3% of   16.03MiB at    1.69MiB/s ETA 00:03  [download]  62.3% of   16.03MiB at    2.68MiB/s ETA 00:02[download]  62.3% of   16.03MiB at    4.38MiB/s ETA 00:01[download]  62.4% of   16.03MiB at    2.02MiB/s ETA 00:02[download]  62.6% of   16.03MiB at    1.34MiB/s ETA 00:04[download]  63.0% of   16.03MiB at    1.57MiB/s ETA 00:03[download]  63.8% of   16.03MiB at    1.59MiB/s ETA 00:03[download]  65.4% of   16.03MiB at    1.61MiB/s ETA 00:03[download]  68.5% of   16.03MiB at    1.73MiB/s ETA 00:02[download]  74.7% of   16.03MiB at    1.76MiB/s ETA 00:02[download]  86.0% of   16.03MiB at    1.80MiB/s ETA 00:01[download]  97.4% of   16.03MiB at    1.80MiB/s ETA 00:00[download] 100.0% of   16.03MiB at    1.81MiB/s ETA 00:00[download] 100% of   16.03MiB in 00:00:09 at 1.65MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/uWS1JlbIh1k.mp3
+Deleting original file /tmp/uWS1JlbIh1k.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=uWS1JlbIh1k
+Download completed successfully: 🔴盤點2024香港零售餐飲結業潮本地老店過江龍無一幸免電影票房破紀錄 戲院卻一年執8間？兩餸飯逆市增長 『執一開二』！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] uWS1JlbIh1k: Downloading webpage
+[youtube] uWS1JlbIh1k: Downloading ios player API JSON
+[youtube] uWS1JlbIh1k: Downloading mweb player API JSON
+[youtube] uWS1JlbIh1k: Downloading m3u8 information
+[info] uWS1JlbIh1k: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] uWS1JlbIh1k: Downloading 1 format(s): 248+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  927.74KiB/s (00:00:00)[download]    7.00KiB at    1.61MiB/s (00:00:00)[download]   15.00KiB at    2.10MiB/s (00:00:00)[download]   27.00KiB at  671.01KiB/s (00:00:00)[download] 100% of   27.00KiB in 00:00:00 at 126.83KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=J50SdnU6kyI
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2580.mp3
+scp spokenarticle_news_u2580.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] J50SdnU6kyI: Downloading webpage
+[youtube] J50SdnU6kyI: Downloading ios player API JSON
+[youtube] J50SdnU6kyI: Downloading mweb player API JSON
+[youtube] J50SdnU6kyI: Downloading m3u8 information
+[info] J50SdnU6kyI: Downloading 1 format(s): 251
+[download] Destination: /tmp/J50SdnU6kyI.webm
+[download]   0.0% of    9.46MiB at  112.40KiB/s ETA 01:26[download]   0.0% of    9.46MiB at  318.47KiB/s ETA 00:30[download]   0.1% of    9.46MiB at  718.38KiB/s ETA 00:13[download]   0.2% of    9.46MiB at    1.45MiB/s ETA 00:06[download]   0.3% of    9.46MiB at    1.77MiB/s ETA 00:05[download]   0.7% of    9.46MiB at  593.08KiB/s ETA 00:16[download]   1.3% of    9.46MiB at  792.28KiB/s ETA 00:12[download]   2.6% of    9.46MiB at  952.36KiB/s ETA 00:09[download]   5.3% of    9.46MiB at    1.23MiB/s ETA 00:07[download]  10.6% of    9.46MiB at    1.20MiB/s ETA 00:07[download]  21.1% of    9.46MiB at    1.39MiB/s ETA 00:05[download]  38.8% of    9.46MiB at    1.44MiB/s ETA 00:04[download]  54.7% of    9.46MiB at    1.46MiB/s ETA 00:02[download]  70.8% of    9.46MiB at    1.52MiB/s ETA 00:01[download]  89.3% of    9.46MiB at    1.58MiB/s ETA 00:00[download] 100.0% of    9.46MiB at    1.60MiB/s ETA 00:00[download] 100% of    9.46MiB in 00:00:06 at 1.46MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/J50SdnU6kyI.mp3
+Deleting original file /tmp/J50SdnU6kyI.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=J50SdnU6kyI
+Download completed successfully: 🥞 بانكيك 🥞
+[youtube] J50SdnU6kyI: Downloading webpage
+[youtube] J50SdnU6kyI: Downloading ios player API JSON
+[youtube] J50SdnU6kyI: Downloading mweb player API JSON
+[youtube] J50SdnU6kyI: Downloading m3u8 information
+[info] J50SdnU6kyI: Downloading subtitles: yue-HK
+WARNING: No subtitle format found matching "srt" for language yue-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] J50SdnU6kyI: Downloading 1 format(s): 313+251
+Deleting existing file tmp.yue-HK.vtt
+[info] Writing video subtitles to: tmp.yue-HK.vtt
+[download] Destination: tmp.yue-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.30MiB/s (00:00:00)[download]    7.00KiB at    3.78MiB/s (00:00:00)[download]    7.13KiB at    1.43MiB/s (00:00:00)[download] 100% of    7.13KiB in 00:00:00 at 48.56KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=J50SdnU6kyI
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2145.mp3
+scp spokenarticle_news_u2145.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] J50SdnU6kyI: Downloading webpage
+[youtube] J50SdnU6kyI: Downloading ios player API JSON
+[youtube] J50SdnU6kyI: Downloading mweb player API JSON
+[youtube] J50SdnU6kyI: Downloading m3u8 information
+[info] J50SdnU6kyI: Downloading 1 format(s): 251
+[download] Destination: /tmp/J50SdnU6kyI.webm
+[download]   0.0% of    9.46MiB at  164.97KiB/s ETA 00:58[download]   0.0% of    9.46MiB at  449.66KiB/s ETA 00:21[download]   0.1% of    9.46MiB at  989.42KiB/s ETA 00:09[download]   0.2% of    9.46MiB at    1.97MiB/s ETA 00:04[download]   0.3% of    9.46MiB at   43.37KiB/s ETA 03:42[download]   0.6% of    9.46MiB at   68.94KiB/s ETA 02:19[download]   1.0% of    9.46MiB at   96.14KiB/s ETA 01:39[download]   2.0% of    9.46MiB at  171.19KiB/s ETA 00:55[download]   3.8% of    9.46MiB at  313.43KiB/s ETA 00:29[download]   7.6% of    9.46MiB at  492.25KiB/s ETA 00:18[download]  15.0% of    9.46MiB at  829.08KiB/s ETA 00:09[download]  30.0% of    9.46MiB at    1.11MiB/s ETA 00:05[download]  48.8% of    9.46MiB at    1.31MiB/s ETA 00:03[download]  68.3% of    9.46MiB at    1.43MiB/s ETA 00:02[download]  87.5% of    9.46MiB at    1.50MiB/s ETA 00:00[download] 100.0% of    9.46MiB at    1.53MiB/s ETA 00:00[download] 100% of    9.46MiB in 00:00:06 at 1.46MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/J50SdnU6kyI.mp3
+Deleting original file /tmp/J50SdnU6kyI.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=J50SdnU6kyI
+Download completed successfully: 🥞 بانكيك 🥞
+[youtube] J50SdnU6kyI: Downloading webpage
+[youtube] J50SdnU6kyI: Downloading ios player API JSON
+[youtube] J50SdnU6kyI: Downloading mweb player API JSON
+[youtube] J50SdnU6kyI: Downloading m3u8 information
+[info] J50SdnU6kyI: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] J50SdnU6kyI: Downloading 1 format(s): 313+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    6.63KiB at  456.31KiB/s (00:00:00)[download] 100% of    6.63KiB in 00:00:00 at 35.82KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=LXgEZyhnQ54
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2353.mp3
+scp spokenarticle_news_u2353.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] LXgEZyhnQ54: Downloading webpage
+[youtube] LXgEZyhnQ54: Downloading ios player API JSON
+[youtube] LXgEZyhnQ54: Downloading mweb player API JSON
+[youtube] LXgEZyhnQ54: Downloading m3u8 information
+[info] LXgEZyhnQ54: Downloading 1 format(s): 251
+[download] Destination: /tmp/LXgEZyhnQ54.webm
+[download]   0.0% of    7.37MiB at   70.68KiB/s ETA 01:47[download]   0.0% of    7.37MiB at  198.68KiB/s ETA 00:38[download]   0.1% of    7.37MiB at  443.36KiB/s ETA 00:17[download]   0.2% of    7.37MiB at  910.97KiB/s ETA 00:08[download]   0.4% of    7.37MiB at   57.85KiB/s ETA 02:10[download]   0.8% of    7.37MiB at  108.33KiB/s ETA 01:09[download]   1.6% of    7.37MiB at  202.48KiB/s ETA 00:36[download]   3.3% of    7.37MiB at  361.07KiB/s ETA 00:20[download]   6.5% of    7.37MiB at  576.18KiB/s ETA 00:12[download]  13.1% of    7.37MiB at  876.92KiB/s ETA 00:07[download]  26.1% of    7.37MiB at    1.14MiB/s ETA 00:04[download]  49.2% of    7.37MiB at    1.36MiB/s ETA 00:02[download]  73.0% of    7.37MiB at    1.46MiB/s ETA 00:01[download]  96.3% of    7.37MiB at    1.53MiB/s ETA 00:00[download] 100.0% of    7.37MiB at    1.55MiB/s ETA 00:00[download] 100% of    7.37MiB in 00:00:05 at 1.47MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/LXgEZyhnQ54.mp3
+Deleting original file /tmp/LXgEZyhnQ54.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=LXgEZyhnQ54
+Download completed successfully: 🔴抓著飛機起落架的14歲男孩梁攀龍！從昆明飛到重慶！萬米高空驚魂！親眼看著伙伴被甩飛直接歸西！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] LXgEZyhnQ54: Downloading webpage
+[youtube] LXgEZyhnQ54: Downloading ios player API JSON
+[youtube] LXgEZyhnQ54: Downloading mweb player API JSON
+[youtube] LXgEZyhnQ54: Downloading m3u8 information
+[info] LXgEZyhnQ54: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] LXgEZyhnQ54: Downloading 1 format(s): 616+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  115.22KiB/s (00:00:00)[download]    3.00KiB at  304.47KiB/s (00:00:00)[download]    7.00KiB at  645.39KiB/s (00:00:00)[download]   13.54KiB at    1.07MiB/s (00:00:00)[download] 100% of   13.54KiB in 00:00:00 at 60.43KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=RkBi610lkvQ
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2268.mp3
+scp spokenarticle_news_u2268.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] RkBi610lkvQ: Downloading webpage
+[youtube] RkBi610lkvQ: Downloading ios player API JSON
+[youtube] RkBi610lkvQ: Downloading mweb player API JSON
+[youtube] RkBi610lkvQ: Downloading m3u8 information
+[info] RkBi610lkvQ: Downloading 1 format(s): 251
+[download] Destination: /tmp/RkBi610lkvQ.webm
+[download]   0.0% of   15.63MiB at   69.15KiB/s ETA 03:51[download]   0.0% of   15.63MiB at  197.75KiB/s ETA 01:20[download]   0.0% of   15.63MiB at  448.31KiB/s ETA 00:35[download]   0.1% of   15.63MiB at  919.96KiB/s ETA 00:17[download]   0.2% of   15.63MiB at  109.40KiB/s ETA 02:26[download]   0.4% of   15.63MiB at  200.72KiB/s ETA 01:19[download]   0.8% of   15.63MiB at  345.69KiB/s ETA 00:45[download]   1.6% of   15.63MiB at  587.21KiB/s ETA 00:26[download]   3.2% of   15.63MiB at  895.60KiB/s ETA 00:17[download]   6.4% of   15.63MiB at    1.06MiB/s ETA 00:13[download]  12.8% of   15.63MiB at    1.15MiB/s ETA 00:11[download]  20.9% of   15.63MiB at    1.31MiB/s ETA 00:09[download]  31.5% of   15.63MiB at    1.40MiB/s ETA 00:07[download]  42.0% of   15.63MiB at    1.49MiB/s ETA 00:06[download]  53.7% of   15.63MiB at    1.55MiB/s ETA 00:04[download]  62.0% of   15.63MiB at    1.53MiB/s ETA 00:03[download]  62.0% of   15.63MiB at  471.96KiB/s ETA 00:13[download]  62.0% of   15.63MiB at    1.02MiB/s ETA 00:05[download]  62.0% of   15.63MiB at    1.87MiB/s ETA 00:03[download]  62.1% of   15.63MiB at    3.43MiB/s ETA 00:01[download]  62.2% of   15.63MiB at    2.88MiB/s ETA 00:02[download]  62.4% of   15.63MiB at    1.35MiB/s ETA 00:04[download]  62.8% of   15.63MiB at    1.23MiB/s ETA 00:04[download]  63.6% of   15.63MiB at    1.48MiB/s ETA 00:03[download]  65.2% of   15.63MiB at    1.61MiB/s ETA 00:03[download]  68.4% of   15.63MiB at    1.70MiB/s ETA 00:02[download]  74.8% of   15.63MiB at    1.68MiB/s ETA 00:02[download]  85.4% of   15.63MiB at    1.64MiB/s ETA 00:01[download]  95.6% of   15.63MiB at    1.67MiB/s ETA 00:00[download] 100.0% of   15.63MiB at    1.68MiB/s ETA 00:00[download] 100% of   15.63MiB in 00:00:10 at 1.53MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/RkBi610lkvQ.mp3
+Deleting original file /tmp/RkBi610lkvQ.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=RkBi610lkvQ
+Download completed successfully: 🔴韓國空難消防員指遺體碎到拼不了！消防員忍痛挖屍！恐嚇信聲稱對空難負責！警告除夕夜南韓各城炸彈爆炸！空難班機事發前48小時飛13次！｜CC字幕｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] RkBi610lkvQ: Downloading webpage
+[youtube] RkBi610lkvQ: Downloading ios player API JSON
+[youtube] RkBi610lkvQ: Downloading mweb player API JSON
+[youtube] RkBi610lkvQ: Downloading m3u8 information
+[info] RkBi610lkvQ: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] RkBi610lkvQ: Downloading 1 format(s): 399+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  484.89KiB/s (00:00:00)[download]    3.00KiB at    1.09MiB/s (00:00:00)[download]    7.00KiB at    1.87MiB/s (00:00:00)[download]   15.00KiB at    2.16MiB/s (00:00:00)[download]   25.25KiB at  376.75KiB/s (00:00:00)[download] 100% of   25.25KiB in 00:00:00 at 117.37KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=UHK_fG5UrYY
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u26.mp3
+scp spokenarticle_news_u26.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] UHK_fG5UrYY: Downloading webpage
+[youtube] UHK_fG5UrYY: Downloading ios player API JSON
+[youtube] UHK_fG5UrYY: Downloading mweb player API JSON
+[youtube] UHK_fG5UrYY: Downloading m3u8 information
+[info] UHK_fG5UrYY: Downloading 1 format(s): 251
+[download] Destination: /tmp/UHK_fG5UrYY.webm
+[download]   0.0% of    7.07MiB at  106.40KiB/s ETA 01:08[download]   0.0% of    7.07MiB at  301.50KiB/s ETA 00:24[download]   0.1% of    7.07MiB at  680.07KiB/s ETA 00:10[download]   0.2% of    7.07MiB at    1.38MiB/s ETA 00:05[download]   0.4% of    7.07MiB at    1.83MiB/s ETA 00:03[download]   0.9% of    7.07MiB at    1.24MiB/s ETA 00:05[download]   1.8% of    7.07MiB at    1.26MiB/s ETA 00:05[download]   3.5% of    7.07MiB at    1.47MiB/s ETA 00:04[download]   7.1% of    7.07MiB at    1.02MiB/s ETA 00:06[download]  14.1% of    7.07MiB at    1.54MiB/s ETA 00:03[download]  28.3% of    7.07MiB at    1.67MiB/s ETA 00:03[download]  54.0% of    7.07MiB at    1.73MiB/s ETA 00:01[download]  79.5% of    7.07MiB at    1.76MiB/s ETA 00:00[download] 100.0% of    7.07MiB at    1.78MiB/s ETA 00:00[download] 100% of    7.07MiB in 00:00:04 at 1.69MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/UHK_fG5UrYY.mp3
+Deleting original file /tmp/UHK_fG5UrYY.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=UHK_fG5UrYY
+Download completed successfully: 🔴聽韓文多過聽上海話!?中國放寬簽證後韓國旅客激增!周五收工去上海成韓國人熱潮!!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] UHK_fG5UrYY: Downloading webpage
+[youtube] UHK_fG5UrYY: Downloading ios player API JSON
+[youtube] UHK_fG5UrYY: Downloading mweb player API JSON
+[youtube] UHK_fG5UrYY: Downloading m3u8 information
+[info] UHK_fG5UrYY: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] UHK_fG5UrYY: Downloading 1 format(s): 248+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    1.64MiB/s (00:00:00)[download]   12.53KiB at    1.20MiB/s (00:00:00)[download] 100% of   12.53KiB in 00:00:00 at 83.49KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gGeSyyz9pcY
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2759.mp3
+scp spokenarticle_news_u2759.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] gGeSyyz9pcY: Downloading webpage
+[youtube] gGeSyyz9pcY: Downloading ios player API JSON
+[youtube] gGeSyyz9pcY: Downloading mweb player API JSON
+[youtube] gGeSyyz9pcY: Downloading m3u8 information
+[info] gGeSyyz9pcY: Downloading 1 format(s): 251
+[download] Destination: /tmp/gGeSyyz9pcY.webm
+[download]   0.0% of    7.18MiB at  273.40KiB/s ETA 00:27[download]   0.0% of    7.18MiB at  688.98KiB/s ETA 00:10[download]   0.1% of    7.18MiB at    1.41MiB/s ETA 00:05[download]   0.2% of    7.18MiB at    2.75MiB/s ETA 00:02[download]   0.4% of    7.18MiB at    3.62MiB/s ETA 00:01[download]   0.9% of    7.18MiB at    1.69MiB/s ETA 00:04[download]   1.7% of    7.18MiB at    1.14MiB/s ETA 00:06[download]   3.5% of    7.18MiB at    1.41MiB/s ETA 00:04[download]   6.9% of    7.18MiB at    1.59MiB/s ETA 00:04[download]  13.9% of    7.18MiB at    1.60MiB/s ETA 00:03[download]  27.8% of    7.18MiB at    1.45MiB/s ETA 00:03[download]  46.2% of    7.18MiB at    1.74MiB/s ETA 00:02[download]  81.5% of    7.18MiB at    1.77MiB/s ETA 00:00[download] 100.0% of    7.18MiB at    1.78MiB/s ETA 00:00[download] 100% of    7.18MiB in 00:00:04 at 1.67MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/gGeSyyz9pcY.mp3
+Deleting original file /tmp/gGeSyyz9pcY.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gGeSyyz9pcY
+Download completed successfully: 🔴中國最新熱門職業-職業陪診師，幫你預約掛號拎藥攞報告陪睇症，低門檻時間自由而且收入高?｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] gGeSyyz9pcY: Downloading webpage
+[youtube] gGeSyyz9pcY: Downloading ios player API JSON
+[youtube] gGeSyyz9pcY: Downloading mweb player API JSON
+[youtube] gGeSyyz9pcY: Downloading m3u8 information
+[info] gGeSyyz9pcY: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] gGeSyyz9pcY: Downloading 1 format(s): 248+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    5.92MiB/s (00:00:00)[download]   12.86KiB at    1.78MiB/s (00:00:00)[download] 100% of   12.86KiB in 00:00:00 at 64.79KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2EP3AvV41fQ
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2346.mp3
+scp spokenarticle_news_u2346.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] 2EP3AvV41fQ: Downloading webpage
+[youtube] 2EP3AvV41fQ: Downloading ios player API JSON
+[youtube] 2EP3AvV41fQ: Downloading mweb player API JSON
+[youtube] 2EP3AvV41fQ: Downloading m3u8 information
+[info] 2EP3AvV41fQ: Downloading 1 format(s): 251
+[download] Destination: /tmp/2EP3AvV41fQ.webm
+[download]   0.0% of    7.15MiB at  420.95KiB/s ETA 00:17[download]   0.0% of    7.15MiB at    1.01MiB/s ETA 00:07[download]   0.1% of    7.15MiB at    2.08MiB/s ETA 00:03[download]   0.2% of    7.15MiB at    4.04MiB/s ETA 00:01[download]   0.4% of    7.15MiB at    1.60MiB/s ETA 00:04[download]   0.9% of    7.15MiB at  619.21KiB/s ETA 00:11[download]   1.7% of    7.15MiB at  803.22KiB/s ETA 00:08[download]   3.5% of    7.15MiB at    1.09MiB/s ETA 00:06[download]   7.0% of    7.15MiB at    1.25MiB/s ETA 00:05[download]  14.0% of    7.15MiB at    1.06MiB/s ETA 00:05[download]  26.8% of    7.15MiB at    1.45MiB/s ETA 00:03[download]  52.5% of    7.15MiB at    1.60MiB/s ETA 00:02[download]  77.8% of    7.15MiB at    1.63MiB/s ETA 00:00[download] 100.0% of    7.15MiB at    1.68MiB/s ETA 00:00[download] 100% of    7.15MiB in 00:00:04 at 1.60MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/2EP3AvV41fQ.mp3
+Deleting original file /tmp/2EP3AvV41fQ.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2EP3AvV41fQ
+Download completed successfully: 🔴20億打造拍烏蠅古城，由大量增殖到成批執笠，中國彷古城景區是否玩完?｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] 2EP3AvV41fQ: Downloading webpage
+[youtube] 2EP3AvV41fQ: Downloading ios player API JSON
+[youtube] 2EP3AvV41fQ: Downloading mweb player API JSON
+[youtube] 2EP3AvV41fQ: Downloading m3u8 information
+[info] 2EP3AvV41fQ: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] 2EP3AvV41fQ: Downloading 1 format(s): 616+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    1.15MiB/s (00:00:00)[download]   12.70KiB at    1.20MiB/s (00:00:00)[download] 100% of   12.70KiB in 00:00:00 at 79.46KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nVfXeVsmJB4
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u272.mp3
+scp spokenarticle_news_u272.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] nVfXeVsmJB4: Downloading webpage
+[youtube] nVfXeVsmJB4: Downloading ios player API JSON
+[youtube] nVfXeVsmJB4: Downloading mweb player API JSON
+[youtube] nVfXeVsmJB4: Downloading m3u8 information
+[info] nVfXeVsmJB4: Downloading 1 format(s): 251
+[download] Destination: /tmp/nVfXeVsmJB4.webm
+[download]   0.0% of   13.73MiB at  102.19KiB/s ETA 02:17[download]   0.0% of   13.73MiB at  285.88KiB/s ETA 00:49[download]   0.0% of   13.73MiB at  640.14KiB/s ETA 00:21[download]   0.1% of   13.73MiB at    1.26MiB/s ETA 00:10[download]   0.2% of   13.73MiB at    1.92MiB/s ETA 00:07[download]   0.4% of   13.73MiB at    1.03MiB/s ETA 00:13[download]   0.9% of   13.73MiB at    1.26MiB/s ETA 00:10[download]   1.8% of   13.73MiB at    1.14MiB/s ETA 00:11[download]   3.6% of   13.73MiB at    1.38MiB/s ETA 00:09[download]   7.3% of   13.73MiB at    1.49MiB/s ETA 00:08[download]  14.6% of   13.73MiB at    1.65MiB/s ETA 00:07[download]  28.0% of   13.73MiB at    1.72MiB/s ETA 00:05[download]  41.1% of   13.73MiB at    1.75MiB/s ETA 00:04[download]  54.5% of   13.73MiB at    1.77MiB/s ETA 00:03[download]  67.7% of   13.73MiB at    1.71MiB/s ETA 00:02[download]  71.2% of   13.73MiB at    1.72MiB/s ETA 00:02[download]  71.2% of   13.73MiB at  Unknown B/s ETA Unknown[download]  71.2% of   13.73MiB at  Unknown B/s ETA Unknown[download]  71.2% of   13.73MiB at    5.48MiB/s ETA 00:00  [download]  71.3% of   13.73MiB at    9.00MiB/s ETA 00:00[download]  71.4% of   13.73MiB at    5.07MiB/s ETA 00:00[download]  71.6% of   13.73MiB at    1.51MiB/s ETA 00:02[download]  72.1% of   13.73MiB at    1.33MiB/s ETA 00:02[download]  73.0% of   13.73MiB at    1.53MiB/s ETA 00:02[download]  74.8% of   13.73MiB at    1.63MiB/s ETA 00:02[download]  78.5% of   13.73MiB at    1.70MiB/s ETA 00:01[download]  85.7% of   13.73MiB at    1.59MiB/s ETA 00:01[download]  96.6% of   13.73MiB at    1.70MiB/s ETA 00:00[download] 100.0% of   13.73MiB at    1.71MiB/s ETA 00:00[download] 100% of   13.73MiB in 00:00:08 at 1.67MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/nVfXeVsmJB4.mp3
+Deleting original file /tmp/nVfXeVsmJB4.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nVfXeVsmJB4
+Download completed successfully: #MM｜帶你睇香港樓梯種類 鉸剪梯、旋轉梯有咩功能？港式樓梯舖連街市都有 行港大古堡旋轉梯 須男先女後 原為戰爭而設？中上環邊行樓梯邊拜神？｜#旅遊止癮 #4K
+[youtube] nVfXeVsmJB4: Downloading webpage
+[youtube] nVfXeVsmJB4: Downloading ios player API JSON
+[youtube] nVfXeVsmJB4: Downloading mweb player API JSON
+[youtube] nVfXeVsmJB4: Downloading m3u8 information
+[info] nVfXeVsmJB4: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] nVfXeVsmJB4: Downloading 1 format(s): 401+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    5.19MiB/s (00:00:00)[download]   15.00KiB at    1.52MiB/s (00:00:00)[download]   22.68KiB at  585.15KiB/s (00:00:00)[download] 100% of   22.68KiB in 00:00:00 at 131.44KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=EkKKg-h6_3Q
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2761.mp3
+scp spokenarticle_news_u2761.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] EkKKg-h6_3Q: Downloading webpage
+[youtube] EkKKg-h6_3Q: Downloading ios player API JSON
+[youtube] EkKKg-h6_3Q: Downloading mweb player API JSON
+[youtube] EkKKg-h6_3Q: Downloading m3u8 information
+[info] EkKKg-h6_3Q: Downloading 1 format(s): 251
+[download] Destination: /tmp/EkKKg-h6_3Q.webm
+[download]   0.0% of    6.87MiB at  244.59KiB/s ETA 00:31[download]   0.0% of    6.87MiB at  577.01KiB/s ETA 00:12[download]   0.1% of    6.87MiB at    1.20MiB/s ETA 00:05[download]   0.2% of    6.87MiB at    2.32MiB/s ETA 00:02[download]   0.4% of    6.87MiB at  152.00KiB/s ETA 00:46[download]   0.9% of    6.87MiB at  242.13KiB/s ETA 00:28[download]   1.8% of    6.87MiB at  414.76KiB/s ETA 00:16[download]   3.6% of    6.87MiB at  688.82KiB/s ETA 00:09[download]   7.3% of    6.87MiB at  996.15KiB/s ETA 00:06[download]  14.5% of    6.87MiB at    1.26MiB/s ETA 00:04[download]  29.1% of    6.87MiB at    1.49MiB/s ETA 00:03[download]  55.6% of    6.87MiB at    1.62MiB/s ETA 00:01[download]  81.7% of    6.87MiB at    1.41MiB/s ETA 00:00[download]  97.7% of    6.87MiB at    1.37MiB/s ETA 00:00[download] 100.0% of    6.87MiB at    1.37MiB/s ETA 00:00[download] 100% of    6.87MiB in 00:00:05 at 1.23MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/EkKKg-h6_3Q.mp3
+Deleting original file /tmp/EkKKg-h6_3Q.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=EkKKg-h6_3Q
+Download completed successfully: ▶️✅ MENYINGKAP [RUANG GELAP] KEMENTERIAN AGAMA🔥❗
+[youtube] EkKKg-h6_3Q: Downloading webpage
+[youtube] EkKKg-h6_3Q: Downloading ios player API JSON
+[youtube] EkKKg-h6_3Q: Downloading mweb player API JSON
+[youtube] EkKKg-h6_3Q: Downloading m3u8 information
+[info] EkKKg-h6_3Q: Downloading subtitles: yue-HK
+WARNING: No subtitle format found matching "srt" for language yue-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] EkKKg-h6_3Q: Downloading 1 format(s): 137+251
+Deleting existing file tmp.yue-HK.vtt
+[info] Writing video subtitles to: tmp.yue-HK.vtt
+[download] Destination: tmp.yue-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    4.80MiB/s (00:00:00)[download]    7.91KiB at    3.99MiB/s (00:00:00)[download] 100% of    7.91KiB in 00:00:00 at 54.13KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=XukYN194ob0
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2646.mp3
+scp spokenarticle_news_u2646.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] XukYN194ob0: Downloading webpage
+[youtube] XukYN194ob0: Downloading ios player API JSON
+[youtube] XukYN194ob0: Downloading mweb player API JSON
+[youtube] XukYN194ob0: Downloading m3u8 information
+[info] XukYN194ob0: Downloading 1 format(s): 251
+[download] Destination: /tmp/XukYN194ob0.webm
+[download]   0.0% of    7.82MiB at   55.63KiB/s ETA 02:24[download]   0.0% of    7.82MiB at  161.19KiB/s ETA 00:49[download]   0.1% of    7.82MiB at  367.39KiB/s ETA 00:21[download]   0.2% of    7.82MiB at  770.02KiB/s ETA 00:10[download]   0.4% of    7.82MiB at    1.52MiB/s ETA 00:05[download]   0.8% of    7.82MiB at  753.24KiB/s ETA 00:10[download]   1.6% of    7.82MiB at 1004.68KiB/s ETA 00:07[download]   3.2% of    7.82MiB at    1.25MiB/s ETA 00:06[download]   6.4% of    7.82MiB at    1.45MiB/s ETA 00:05[download]  12.8% of    7.82MiB at    1.53MiB/s ETA 00:04[download]  25.6% of    7.82MiB at    1.71MiB/s ETA 00:03[download]  50.4% of    7.82MiB at    1.53MiB/s ETA 00:02[download]  68.0% of    7.82MiB at    1.68MiB/s ETA 00:01[download]  97.9% of    7.82MiB at    1.71MiB/s ETA 00:00[download] 100.0% of    7.82MiB at    1.72MiB/s ETA 00:00[download] 100% of    7.82MiB in 00:00:04 at 1.64MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/XukYN194ob0.mp3
+Deleting original file /tmp/XukYN194ob0.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=XukYN194ob0
+Download completed successfully: ❄️ New Year's Moscow 2025 Right Now 🥳 Fabulous Winter Russian Streets! 4K HDR
+[youtube] XukYN194ob0: Downloading webpage
+[youtube] XukYN194ob0: Downloading ios player API JSON
+[youtube] XukYN194ob0: Downloading mweb player API JSON
+[youtube] XukYN194ob0: Downloading m3u8 information
+[info] XukYN194ob0: Downloading subtitles: yue-HK
+WARNING: No subtitle format found matching "srt" for language yue-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] XukYN194ob0: Downloading 1 format(s): 337+251
+Deleting existing file tmp.yue-HK.vtt
+[info] Writing video subtitles to: tmp.yue-HK.vtt
+[download] Destination: tmp.yue-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    1.09KiB at    1.05MiB/s (00:00:00)[download] 100% of    1.09KiB in 00:00:00 at 8.84KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=XukYN194ob0
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2514.mp3
+scp spokenarticle_news_u2514.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] XukYN194ob0: Downloading webpage
+[youtube] XukYN194ob0: Downloading ios player API JSON
+[youtube] XukYN194ob0: Downloading mweb player API JSON
+[youtube] XukYN194ob0: Downloading m3u8 information
+[info] XukYN194ob0: Downloading 1 format(s): 251
+[download] Destination: /tmp/XukYN194ob0.webm
+[download]   0.0% of    7.82MiB at   36.30KiB/s ETA 03:40[download]   0.0% of    7.82MiB at  107.04KiB/s ETA 01:14[download]   0.1% of    7.82MiB at  247.00KiB/s ETA 00:32[download]   0.2% of    7.82MiB at  521.81KiB/s ETA 00:15[download]   0.4% of    7.82MiB at    1.04MiB/s ETA 00:07[download]   0.8% of    7.82MiB at  909.07KiB/s ETA 00:08[download]   1.6% of    7.82MiB at    1.32MiB/s ETA 00:05[download]   3.2% of    7.82MiB at    1.51MiB/s ETA 00:05[download]   6.4% of    7.82MiB at    1.42MiB/s ETA 00:05[download]  12.8% of    7.82MiB at    1.63MiB/s ETA 00:04[download]  25.6% of    7.82MiB at    1.70MiB/s ETA 00:03[download]  48.4% of    7.82MiB at    1.75MiB/s ETA 00:02[download]  71.3% of    7.82MiB at    1.74MiB/s ETA 00:01[download]  93.5% of    7.82MiB at    1.75MiB/s ETA 00:00[download] 100.0% of    7.82MiB at    1.76MiB/s ETA 00:00[download] 100% of    7.82MiB in 00:00:04 at 1.70MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/XukYN194ob0.mp3
+Deleting original file /tmp/XukYN194ob0.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=XukYN194ob0
+Download completed successfully: ❄️ New Year's Moscow 2025 Right Now 🥳 Fabulous Winter Russian Streets! 4K HDR
+[youtube] XukYN194ob0: Downloading webpage
+[youtube] XukYN194ob0: Downloading ios player API JSON
+[youtube] XukYN194ob0: Downloading mweb player API JSON
+[youtube] XukYN194ob0: Downloading m3u8 information
+[info] XukYN194ob0: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] XukYN194ob0: Downloading 1 format(s): 337+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    1.30KiB at  Unknown B/s (00:00:00)[download] 100% of    1.30KiB in 00:00:00 at 10.17KiB/s
+[youtube] Extracting URL: https://www.youtube.com/watch?v=G_pXwc3XnPY
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u215.mp3
+scp spokenarticle_news_u215.mp3* chinese.eriktamm.com:/var/www/html/mp3
+[youtube] G_pXwc3XnPY: Downloading webpage
+[youtube] G_pXwc3XnPY: Downloading ios player API JSON
+[youtube] G_pXwc3XnPY: Downloading mweb player API JSON
+[youtube] G_pXwc3XnPY: Downloading m3u8 information
+[info] G_pXwc3XnPY: Downloading 1 format(s): 251
+[download] Destination: /tmp/G_pXwc3XnPY.webm
+[download]   0.0% of    9.24MiB at  448.21KiB/s ETA 00:21[download]   0.0% of    9.24MiB at    1.05MiB/s ETA 00:08[download]   0.1% of    9.24MiB at    2.18MiB/s ETA 00:04[download]   0.2% of    9.24MiB at    4.21MiB/s ETA 00:02[download]   0.3% of    9.24MiB at    2.96MiB/s ETA 00:03[download]   0.7% of    9.24MiB at  919.87KiB/s ETA 00:10[download]   1.3% of    9.24MiB at    1.08MiB/s ETA 00:08[download]   2.7% of    9.24MiB at    1.42MiB/s ETA 00:06[download]   5.4% of    9.24MiB at    1.61MiB/s ETA 00:05[download]  10.8% of    9.24MiB at    1.69MiB/s ETA 00:04[download]  21.6% of    9.24MiB at    1.75MiB/s ETA 00:04[download]  41.2% of    9.24MiB at    1.60MiB/s ETA 00:03[download]  57.0% of    9.24MiB at    1.66MiB/s ETA 00:02[download]  76.7% of    9.24MiB at    1.69MiB/s ETA 00:01[download]  96.3% of    9.24MiB at    1.71MiB/s ETA 00:00[download] 100.0% of    9.24MiB at    1.71MiB/s ETA 00:00[download] 100% of    9.24MiB in 00:00:05 at 1.63MiB/s   
+Done downloading, now converting ...
+[ExtractAudio] Destination: /tmp/G_pXwc3XnPY.mp3
+Deleting original file /tmp/G_pXwc3XnPY.webm (pass -k to keep)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=G_pXwc3XnPY
+Download completed successfully: 🔴太凍唔肯起身？大陸家長竟然下單騎手送小孩上學！竟然有家長包月2500蚊一個月！送小朋友一程賺12蚊？｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基
+[youtube] G_pXwc3XnPY: Downloading webpage
+[youtube] G_pXwc3XnPY: Downloading ios player API JSON
+[youtube] G_pXwc3XnPY: Downloading mweb player API JSON
+[youtube] G_pXwc3XnPY: Downloading m3u8 information
+[info] G_pXwc3XnPY: Downloading subtitles: zh-HK
+WARNING: No subtitle format found matching "srt" for language zh-HK, using vtt. Use --list-subs for a list of available subtitles
+[info] G_pXwc3XnPY: Downloading 1 format(s): 616+251
+Deleting existing file tmp.zh-HK.vtt
+[info] Writing video subtitles to: tmp.zh-HK.vtt
+[download] Destination: tmp.zh-HK.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.44MiB/s (00:00:00)[download]    7.00KiB at    1.08MiB/s (00:00:00)[download]   15.00KiB at    1.32MiB/s (00:00:00)[download]   17.33KiB at    1.42MiB/s (00:00:00)[download] 100% of   17.33KiB in 00:00:00 at 127.20KiB/s
+Subtitles downloaded successfully as tmp.srt
+File renamed from tmp.mp3 to spokenarticle_news_u2923.mp3
+scp spokenarticle_news_u2923.mp3* chinese.eriktamm.com:/var/www/html/mp3
+{'videoId': '2mT-CpD7Jec', 'title': '🔴慘無人道！發生在澳門最猛屋苑的男童綁架案！案件始作俑者最後竟無罪釋放？｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'oG1fcKrA_x8', 'title': '🔴幼稚園女教師 土木工程男博士生！聖誕入境香港檢獲毒品阿媽教落：去旅行千祈唔好幫人攞嘢！隨時要踎監留案底！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': '-gJSq0Cb5tE', 'title': '🔴4.9元就可以解決一餐!?美團拼好飯究竟係窮人恩物定係加速惡性競爭嘅產物?｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'BGaLe57qq4A', 'title': '🔴今年香港倒數活動交通安排成點?有旅客趕尾班車形容似走難，認為羅湖關口要24小時開通!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'QSBAohphxWw', 'title': '🔴畀澳門日報跣穫甘!?澳日錯誤報導指除夕旅遊塔有煙花，有市民信以為真走晒去食西北風!!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'rDfzVyzKmUA', 'title': 'iPhone 17 世紀大改款｜最新爆料與上市日期', 'language': 'yue-HK'}
+{'videoId': 'jfnuyDYpUvA', 'title': '日本女生愛基隆❤️ Google評價4.5顆星美食真的好吃嗎?', 'language': 'yue-HK'}
+{'videoId': 'C9GbAOg9zqk', 'title': '🔴大陸除夕夜竟出現氣球爆燃驚魂！市民自帶氣球變火球！武漢鬧市跨年民眾放飛氣球觸電爆燃！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': '6ohmirCuT2A', 'title': '🔴大陸人販子團伙用刀捉小朋友？父親俾人搶仔還拖竟判終身監禁！法律保護誰？還手就是不對？｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'yAzZyFeqqoc', 'title': 'Hea 住華欣🌤️4間高CP值酒店比拼～人均 $200 Resort 房間直落泳池🤤泰好Hea系列 CC 中文字幕', 'language': 'zh-HK'}
+{'videoId': 'sQMUIDNV4Z0', 'title': '🔴河北十三歲初中生遭霸凌殺害案！連眼珠都被打甩！兇手父母包庇仔女？三名兇手同學分別判無期及12年及不予刑罰！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'yrhdYy3IydI', 'title': '🔴緬北園區臥虎山莊慘案釀百傷亡！傳四名中國公安被活埋！官方公布真相！超過一萬宗涉及賭詐資金近百億！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'qa4GaOX_cAg', 'title': '🔴艾澤拉斯勇士的熱情!!果農唔想畀中間商壓價導致滯，魔獸玩家集體幫手買橙!24日清晒6000斤橙!!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'uWS1JlbIh1k', 'title': '🔴盤點2024香港零售餐飲結業潮本地老店過江龍無一幸免電影票房破紀錄 戲院卻一年執8間？兩餸飯逆市增長 『執一開二』！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'J50SdnU6kyI', 'title': '🥞 بانكيك 🥞', 'language': 'yue-HK'}
+{'videoId': 'J50SdnU6kyI', 'title': '🥞 بانكيك 🥞', 'language': 'zh-HK'}
+{'videoId': 'LXgEZyhnQ54', 'title': '🔴抓著飛機起落架的14歲男孩梁攀龍！從昆明飛到重慶！萬米高空驚魂！親眼看著伙伴被甩飛直接歸西！｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'RkBi610lkvQ', 'title': '🔴韓國空難消防員指遺體碎到拼不了！消防員忍痛挖屍！恐嚇信聲稱對空難負責！警告除夕夜南韓各城炸彈爆炸！空難班機事發前48小時飛13次！｜CC字幕｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'UHK_fG5UrYY', 'title': '🔴聽韓文多過聽上海話!?中國放寬簽證後韓國旅客激增!周五收工去上海成韓國人熱潮!!｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'gGeSyyz9pcY', 'title': '🔴中國最新熱門職業-職業陪診師，幫你預約掛號拎藥攞報告陪睇症，低門檻時間自由而且收入高?｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': '2EP3AvV41fQ', 'title': '🔴20億打造拍烏蠅古城，由大量增殖到成批執笠，中國彷古城景區是否玩完?｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+{'videoId': 'nVfXeVsmJB4', 'title': '#MM｜帶你睇香港樓梯種類 鉸剪梯、旋轉梯有咩功能？港式樓梯舖連街市都有 行港大古堡旋轉梯 須男先女後 原為戰爭而設？中上環邊行樓梯邊拜神？｜#旅遊止癮 #4K', 'language': 'zh-HK'}
+{'videoId': 'EkKKg-h6_3Q', 'title': '▶️✅ MENYINGKAP [RUANG GELAP] KEMENTERIAN AGAMA🔥❗', 'language': 'yue-HK'}
+{'videoId': 'XukYN194ob0', 'title': '❄️ New Year&#39;s Moscow 2025 Right Now 🥳 Fabulous Winter Russian Streets! 4K HDR', 'language': 'yue-HK'}
+{'videoId': 'XukYN194ob0', 'title': '❄️ New Year&#39;s Moscow 2025 Right Now 🥳 Fabulous Winter Russian Streets! 4K HDR', 'language': 'zh-HK'}
+{'videoId': 'G_pXwc3XnPY', 'title': '🔴太凍唔肯起身？大陸家長竟然下單騎手送小孩上學！竟然有家長包月2500蚊一個月！送小朋友一程賺12蚊？｜CC字幕｜Podcast｜日更頻道 #東張西望 #何太 #何伯 #李龍基', 'language': 'zh-HK'}
+Title: 1989年跨年夜，李嘉誠帶住港姐偷偷返屋企，三個鍾之後，原配莊月明忽然離世，到底發生咩事？
+Description: 
+(False, None)
+Title: 1989年跨年夜，李嘉誠帶住港姐偷偷返屋企，三個鍾之後，原配莊月明忽然離世，到底發生咩事？
+Description: 

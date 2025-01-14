@@ -417,12 +417,18 @@ def make_mp3_file_from_youtube(youtube_url,extra_filename_addon="youtube"):
 
 
 def get_lastest_robot():
-    make_mp3_file_from_youtube("https://www.youtube.com/watch?v=78F6jmM0-TQ",extra_filename_addon="dasrobot")
+    make_mp3_file_from_youtube("https://www.youtube.com/watch?v=dtx2PaQgL5E",extra_filename_addon="dasrobot")
 
+
+import youtubesearcher
 
 
 
 def main():
+    u = youtubesearcher.YouTubeSearcher()
+    results = u.search("鄺俊宇")
+    print(results)
+    return None
     get_lastest_robot()
     return None
     get_rhk_news()

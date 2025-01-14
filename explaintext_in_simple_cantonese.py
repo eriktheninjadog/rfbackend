@@ -8,11 +8,11 @@ def explain_text(txt):
     totalText = txt
     api = openrouter.OpenRouterAPI()
     print("eplain text ")
-    totalText += " full text for a 5 year old   "
-    explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this text in simple spoken cantonese that a 5 year old can understand:" + txt)
-    totalText += '\n' + explain
     totalText += " full text for a 7 year old   "
     explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this text in simple spoken cantonese that a 7 year old can understand:" + txt)
+    totalText += '\n' + explain
+    totalText += " full text for a 10 year old   "
+    explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this text in simple spoken cantonese that a 10 year old can understand:" + txt)
     totalText += '\n' + explain
     #totalText += " full text for a 10 year old   "  
 #    explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this text in simple spoken cantonese that a 10 year old can understand:" + txt)
@@ -25,9 +25,9 @@ def explain_text(txt):
 
             totalText += " 5 year old   "
             explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this sentence in simple spoken cantonese that a 5 year old can understand:" + sentence)
-            
-            totalText += " 7 year old   "
-            explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this sentence in simple spoken cantonese that a 7 year old can understand:" + sentence)
+            totalText += '\n' + explain
+            totalText += " 8 year old   "
+            explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this sentence in simple spoken cantonese that a 8 year old can understand:" + sentence)
             totalText += '\n' + explain
  #           totalText += " 10 year old   "
   #          explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the content of this sentence in simple spoken cantonese that a 10 year old can understand:" + sentence)
@@ -37,8 +37,9 @@ def explain_text(txt):
             totalText += " original sentence  concepts "
             explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the important terms in sentence in simple spoken cantonese that a 5 year old can understand:" + sentence)
             totalText += " 5 year old   "
-            explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the important terms in sentence in simple spoken cantonese that a 7 year old can understand:" + sentence)
-            totalText += " 7 year old   "
+            totalText += '\n' + explain
+            explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the important terms in sentence in simple spoken cantonese that a 8 year old can understand:" + sentence)
+            totalText += " 8 year old   "
             totalText += '\n' + explain   
      #       explain = api.open_router_chatgpt_4o("You are a cantonese speaker helping foreigners learning Cantonese. Only respond using Cantonese written with Traditional Chinese","Explain the important terms in the sentence in simple spoken cantonese that a 10 year old can understand:" + sentence)
       #      totalText += " 10 year old   "
@@ -97,7 +98,9 @@ def text_to_combined_mp3(text, output_filename, cantonese_text_to_mp3):
 
 import random
 import subprocess
-def explain_and_render_text(text,filename="spokenarticle_news_exp"+str(random.randint(1,1000))+".mp3"):
+def explain_and_render_text(text,filename=None):
+    if filename == None:
+        filename = "spokenarticle_news_exp"+ str(random.randint(100,999))+".mp3"
     fulltext = explain_text(text)
     #split the text into 
     text_to_combined_mp3(fulltext, filename, mp3helper.cantonese_text_to_mp3)

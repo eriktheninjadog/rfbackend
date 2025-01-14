@@ -53,7 +53,7 @@ if __name__ == "__main__":
             fullfilled.append((title,text))
             if len(fullfilled) > 10:
                 break
-     
+                    
     for i in fullfilled:
         title = i[0]
         text = i[1]

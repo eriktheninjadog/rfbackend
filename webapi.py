@@ -1488,3 +1488,33 @@ def getfailedreadingtests():
     except Exception as e:
         print(str(e))
         return jsonify({'result':None,"reason":str(e)})
+
+
+
+import base64
+
+import subprocess
+
+def convert_webm_to_mp3(input_file, output_file):
+    command = ['ffmpeg', '-i', input_file, '-codec:a', 'libmp3lame', output_file]
+    subprocess.run(command, check=True)
+
+convert_webm_to_mp3('input.webm', 'output.mp3')
+
+
+@app.route('/movieaudio', methods=['POST'])
+def getfailedreadingtests():
+    try:
+        base64audiodata   = request.json['audio']
+        audiobinary = base64.b64decode(base64audiodata)
+        f = open('audio.webm','b+w')
+        f.write(audiobinary)
+        f.close()
+        convert_webm_to_mp3('audio.webm', '/var/www/html/mp3saudio.mp3')
+        f = open('audio.mp3','b+r')
+        audiobinary = f.read()
+        f.close()
+        return jsonify({'result':"ok"})
+    except Exception as e:
+        print(str(e))
+        return jsonify({'result':None,"reason":str(e)})
