@@ -1503,6 +1503,7 @@ def convert_webm_to_mp3(input_file, output_file):
 @app.route('/movieaudio', methods=['POST'])
 def movieaudio():
     try:
+        print("movieaudio")
         base64audiodata   = request.json['audio']
         audiobinary = base64.b64decode(base64audiodata)
         f = open('audio.webm','b+w')
