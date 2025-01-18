@@ -1419,8 +1419,24 @@ def make_examples_from_chunk():
     return jsonify({'result':'ok'})
 
 
-
-
+@app.route('/make_grammar_examples', methods=['GET'])
+def make_grammar_examples():
+    grammar_pattern = request.args.get('grammar_pattern')
+    api=openrouter.OpenRouterAPI()
+    result = api.open_router_chatgpt_4o_mini("You are a Cantonese language expert.",
+    "Create 10 sentences in C1 level Cantonese with this meta-structure: " + + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
+    parsedret = json.loads(result)
+    cachedresult = []
+    for r in parsedret:
+        english = r['english']
+        chinese = r['chinese']
+        # lets make tokens out of chinese
+        tradchinese = textprocessing.make_sure_traditional(chinese)        
+        chinesetokens = textprocessing.split_text(tradchinese)
+        cachedresult.append({'chinese':chinesetokens,'english':english})
+        database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+    cachemanagement.add_examples_to_cache(cachedresult)
+    return jsonify({'result':'ok'})
 
 #PersistentDict
 

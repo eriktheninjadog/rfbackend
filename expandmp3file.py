@@ -80,4 +80,6 @@ def process_mp3_file(file_path,filename_addon="work",minlength=10):
     
     
 if __name__ == "__main__":
-    process_mp3_file("/home/erik/Downloads/ukwork.mp3")
+    process_mp3_file("/home/erik/Downloads/efly5.mp3",filename_addon="fly5")
+    process_mp3_file("/home/erik/Downloads/efly6.mp3",filename_addon="fly6")
+    process_mp3_file("/home/erik/Downloads/efly7.mp3",filename_addon="fly7")

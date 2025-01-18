@@ -93,16 +93,19 @@ class OpenRouterAPI:
             "qwen/qwen-2.5-72b-instruct",
             user_content,
             "You are an assistant"
-        )
-        
-
-
-        
+        )        
     
     def open_router_meta_llama_3_1_8b(self, user_content: str) -> str:
         return self.get_completion(
             "meta-llama/llama-3.1-8b-instruct",
             user_content
+        )
+
+    def open_router_chatgpt_4o1_preview(self, system_content: str, user_content: str) -> str:
+        return self.get_completion(
+            "openai/o1-preview",
+            user_content,
+            system_content
         )
 
     def open_router_chatgpt_4o(self, system_content: str, user_content: str) -> str:
@@ -136,10 +139,6 @@ class OpenRouterAPI:
             "mistralai/mistral-7b-instruct-v0.3",
             text
         )
-        
-        
-        
-
 
     def open_router_qwen(self, system_content: str, user_content: str) -> str:
         return self.get_completion(

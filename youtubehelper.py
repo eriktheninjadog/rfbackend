@@ -312,18 +312,31 @@ def downloadanduploadvideo(video_id, thelanguage):
     print(scp_command)
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 
-import youtubesearcher
+import expandmp3file
 
+def download_explain_uploadvideo(video_id):
+    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,"tmp.mp3")
+    expandmp3file.process_mp3_file("tmp.mp3","youtube_"+video_id)
+    
+
+
+import youtubesearcher
+import sys
 if __name__ == "__main__":
     # Example usage
     #machine
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
     
+    if (len(sys.argv)> 1):
+        videoid =  sys.argv[1]   
+        download_explain_uploadvideo(videoid)
+        exit(0)
+    
     channels = ["檔案","內地傳媒","報道","指出","核心變化"]
-    download_video_from_ids(your_api_key,youtubesearcher.get_sloppy_match_list(),["yue-HK","zh-HK"])
+    download_video_from_ids(your_api_key,youtubesearcher.get_sloppy_match_list(),["yue-HK","zh-HK","zh-Hant","zh-TW"])
     
     searchterm = random.choice(channels)
-    results = search_videos_with_subtitles(your_api_key,searchterm,["yue-HK","zh-HK"])
+    results = search_videos_with_subtitles(your_api_key,searchterm,["yue-HK","zh-HK","zh-Hant","zh-TW"])
     for i in results:
         print(str(i))
     exit(0)
