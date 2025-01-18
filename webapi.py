@@ -1428,7 +1428,7 @@ def make_grammar_examples():
     i = result.find("[")
     result = result[i:]
     i = result.find("]")
-    result = result[:i]
+    result = result[:i+1]
     print(result)
 
     parsedret = json.loads(result)
