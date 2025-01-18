@@ -1434,15 +1434,16 @@ def make_grammar_examples():
     parsedret = json.loads(result)
     cachedresult = []
     for r in parsedret:
-        english = r['english']
-        chinese = r['chinese']
-        # lets make tokens out of chinese
-        print(english)
-        print(chinese)
-        tradchinese = textprocessing.make_sure_traditional(chinese)        
-        chinesetokens = textprocessing.split_text(tradchinese)
-        cachedresult.append({'chinese':chinesetokens,'english':english})
-        database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+        if "english" in r and "chinese" in r:
+            english = r['english']
+            chinese = r['chinese']
+            # lets make tokens out of chinese
+            print(english)
+            print(chinese)
+            tradchinese = textprocessing.make_sure_traditional(chinese)        
+            chinesetokens = textprocessing.split_text(tradchinese)
+            cachedresult.append({'chinese':chinesetokens,'english':english})
+            database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
     cachemanagement.add_examples_to_cache(cachedresult)
     return jsonify({'result':'ok'})
 
