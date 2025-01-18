@@ -1425,6 +1425,7 @@ def make_grammar_examples():
     api=openrouter.OpenRouterAPI()
     result = api.open_router_chatgpt_4o1_preview("You are a Cantonese language expert.",
     "Create 10 sentences in C1 level Cantonese with this meta-structure: " + grammar_pattern + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
+    print(result)
     parsedret = json.loads(result)
     cachedresult = []
     for r in parsedret:
