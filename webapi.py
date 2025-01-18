@@ -1421,7 +1421,7 @@ def make_examples_from_chunk():
 
 @app.route('/make_grammar_examples', methods=['POST'])
 def make_grammar_examples():
-    grammar_pattern = request.json['key']
+    grammar_pattern = request.json['grammar_pattern']
     api=openrouter.OpenRouterAPI()
     result = api.open_router_chatgpt_4o_mini("You are a Cantonese language expert.",
     "Create 10 sentences in C1 level Cantonese with this meta-structure: " + grammar_pattern + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
