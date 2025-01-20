@@ -59,8 +59,13 @@ def process_mp3_file(file_path,filename_addon="work",minlength=10):
             if start_time == 0:                
                 start_time = timepoints[cnt][0]
             end_time = timepoints[cnt][1]
+            if end_time == 0:
+                end_time = start_time + 1
             currentpod.append(s)
         else:
+            if end_time == 0:
+                end_time = start_time + 1
+
             pods.append([start_time,end_time,currentpod])
             currentpod = []
             currentpod.append(s)
@@ -80,6 +85,6 @@ def process_mp3_file(file_path,filename_addon="work",minlength=10):
     
     
 if __name__ == "__main__":
-    process_mp3_file("/home/erik/Downloads/efly5.mp3",filename_addon="fly5")
-    process_mp3_file("/home/erik/Downloads/efly6.mp3",filename_addon="fly6")
-    process_mp3_file("/home/erik/Downloads/efly7.mp3",filename_addon="fly7")
+#    process_mp3_file("/home/erik/Downloads/ethree1.mp3",filename_addon="three1")
+#process_mp3_file("/home/erik/Downloads/three2.mp3",filename_addon="three2")
+    process_mp3_file("/home/erik/Downloads/egut4.mp3",filename_addon="gut4")

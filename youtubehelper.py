@@ -327,11 +327,12 @@ if __name__ == "__main__":
     #machine
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
     
+    """
     if (len(sys.argv)> 1):
         videoid =  sys.argv[1]   
         download_explain_uploadvideo(videoid)
         exit(0)
-    
+    """
     channels = ["檔案","內地傳媒","報道","指出","核心變化"]
     download_video_from_ids(your_api_key,youtubesearcher.get_sloppy_match_list(),["yue-HK","zh-HK","zh-Hant","zh-TW"])
     

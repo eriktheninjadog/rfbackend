@@ -1372,6 +1372,16 @@ def download_dictionary():
         return jsonify({'result':None,"reason":str(e)})
 
 
+@app.route('/explain_sentence', methods=['POST'])
+def explain_sentence():
+    try:
+        sentence = request.json['sentence']
+        api = openrouter.OpenRouterAPI()
+        explain = api.open_router_qwen("你是粵語專家，分析文本。","解釋呢句嘅意思、詞彙同語法：" + sentence)
+        return jsonify({'result': explain})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+        
 
 @app.route('/upload_dictionary', methods=['POST'])
 def upload_dictionary():
@@ -1403,7 +1413,7 @@ def get_dictionary_value():
 def make_examples_from_chunk():
     chunk = request.args.get('chunk')
     api=openrouter.OpenRouterAPI()
-    result = api.open_router_chatgpt_4o_mini("You are a Cantonese expert teaching foreigners.",
+    result = api.open_router_claude_3_5_sonnet("You are a Cantonese expert teaching foreigners.",
     "Create 3 sentences in B2 level Cantonese containing this chunk: " + chunk+ " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
     parsedret = json.loads(result)
     cachedresult = []
@@ -1423,7 +1433,7 @@ def make_examples_from_chunk():
 def make_grammar_examples():
     grammar_pattern = request.json['grammar_pattern']
     api=openrouter.OpenRouterAPI()
-    result = api.open_router_chatgpt_4o1_preview("You are a Cantonese language expert.",
+    result = api.open_router_claude_3_5_sonnet("You are a Cantonese language expert.",
     "Create 10 sentences in C1 level Cantonese with this meta-structure: " + grammar_pattern + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
     i = result.find("[")
     result = result[i:]
@@ -1525,17 +1535,159 @@ def convert_webm_to_mp3(input_file, output_file):
     subprocess.run(command, check=True)
 
 
-@app.route('/movieaudio', methods=['POST'])
-def movieaudio():
+
+import os
+from werkzeug.utils import secure_filename
+import uuid
+
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm'}
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB limit
+
+# Ensure upload directory exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Basic file upload
+@app.route('/audio_upload', methods=['POST'])
+def upload_file():
     try:
-        print("movieaudio")
-        base64audiodata   = request.json['audio']
-        audiobinary = base64.b64decode(base64audiodata)
-        f = open('audio.webm','b+w')
-        f.write(audiobinary)
-        f.close()
-        convert_webm_to_mp3('audio.webm', '/var/www/html/mp3saudio.mp3')
-        return jsonify({'result':"ok"})
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 400
+        
+        file = request.files['file']
+        
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+
+        if file and allowed_file(file.filename):
+            # Generate unique filename
+            original_filename = secure_filename(file.filename)
+            filename = f"{uuid.uuid4()}_{original_filename}"
+            filepath = os.path.join(UPLOAD_FOLDER, filename)
+            
+            # Save the file
+            file.save(filepath)
+            
+            return jsonify({
+                'message': 'File uploaded successfully',
+                'filename': filename,
+                'path': filepath
+            }), 200
+        else:
+            return jsonify({'error': 'File type not allowed'}), 400
+
     except Exception as e:
-        print(str(e))
-        return jsonify({'result':None,"reason":str(e)})
+        return jsonify({'error': str(e)}), 500
+
+# Chunked upload handling
+@app.route('/audio_upload/chunk', methods=['POST'])
+def upload_chunk():
+    try:
+        if 'chunk' not in request.files:
+            return jsonify({'error': 'No chunk part'}), 400
+
+        chunk = request.files['chunk']
+        chunk_index = int(request.form.get('chunkIndex', 0))
+        total_chunks = int(request.form.get('totalChunks', 1))
+        file_id = request.form.get('fileId', str(uuid.uuid4()))
+        
+        # Create temporary directory for chunks if it doesn't exist
+        temp_dir = os.path.join(UPLOAD_FOLDER, 'temp', file_id)
+        os.makedirs(temp_dir, exist_ok=True)
+        
+        # Save chunk
+        chunk_path = os.path.join(temp_dir, f'chunk_{chunk_index}')
+        chunk.save(chunk_path)
+        
+        # Check if all chunks are uploaded
+        existing_chunks = os.listdir(temp_dir)
+        if len(existing_chunks) == total_chunks:
+            # Combine chunks
+            final_filename = f"{file_id}_complete.file"
+            final_path = os.path.join(UPLOAD_FOLDER, final_filename)
+            
+            with open(final_path, 'wb') as outfile:
+                for i in range(total_chunks):
+                    chunk_path = os.path.join(temp_dir, f'chunk_{i}')
+                    with open(chunk_path, 'rb') as infile:
+                        outfile.write(infile.read())
+            
+            # Clean up chunk directory
+            for chunk_file in existing_chunks:
+                os.remove(os.path.join(temp_dir, chunk_file))
+            os.rmdir(temp_dir)
+            
+            return jsonify({
+                'message': 'File upload completed',
+                'filename': final_filename,
+                'path': final_path
+            }), 200
+        
+        return jsonify({
+            'message': f'Chunk {chunk_index + 1}/{total_chunks} received',
+            'chunkIndex': chunk_index,
+            'totalChunks': total_chunks
+        }), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Resume upload support
+@app.route('/audio_upload/status', methods=['GET'])
+def check_upload_status():
+    try:
+        file_id = request.args.get('fileId')
+        if not file_id:
+            return jsonify({'error': 'No fileId provided'}), 400
+        
+        temp_dir = os.path.join(UPLOAD_FOLDER, 'temp', file_id)
+        if not os.path.exists(temp_dir):
+            return jsonify({
+                'status': 'new',
+                'uploadedChunks': []
+            }), 200
+        
+        uploaded_chunks = os.listdir(temp_dir)
+        chunk_indices = [
+            int(chunk.split('_')[1])
+            for chunk in uploaded_chunks
+        ]
+        
+        return jsonify({
+            'status': 'in_progress',
+            'uploadedChunks': chunk_indices
+        }), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Error handling
+@app.errorhandler(413)
+def too_large(e):
+    return jsonify({'error': 'File too large'}), 413
+
+@app.errorhandler(500)
+def server_error(e):
+    return jsonify({'error': 'Internal server error'}), 500
+
+# Optional: Cleanup utility
+def cleanup_temporary_files():
+    temp_dir = os.path.join(UPLOAD_FOLDER, 'temp')
+    if os.path.exists(temp_dir):
+        for root, dirs, files in os.walk(temp_dir, topdown=False):
+            for name in files:
+                os.remove(os.path.join(root, name))
+            for name in dirs:
+                os.rmdir(os.path.join(root, name))
+
+# Additional utility functions
+def get_file_size(file_path):
+    return os.path.getsize(file_path)
+
+def validate_mime_type(file):
+    # Add more sophisticated MIME type validation if needed
+    return True

@@ -122,6 +122,14 @@ class OpenRouterAPI:
             system_content
         )
 
+    def open_router_claude_3_5_sonnet(self, system_content: str,text: str) -> str:
+        return self.get_completion(
+            "anthropic/claude-3.5-sonnet",
+            text,
+            system_content=system_content
+        )
+        
+
     def open_router_meta_llama_3_2_3b_free(self, text: str) -> str:
         return self.get_completion(
             "meta-llama/llama-3.2-3b-instruct:free",
