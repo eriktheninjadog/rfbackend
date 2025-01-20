@@ -1535,7 +1535,7 @@ def convert_webm_to_mp3(input_file, output_file):
     subprocess.run(command, check=True)
 
 
-
+"""
 import os
 from werkzeug.utils import secure_filename
 import uuid
@@ -1691,3 +1691,4 @@ def get_file_size(file_path):
 def validate_mime_type(file):
     # Add more sophisticated MIME type validation if needed
     return True
+"""
