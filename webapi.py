@@ -1378,7 +1378,8 @@ def explain_sentence():
         sentence = request.json['sentence']
         api = openrouter.OpenRouterAPI()
         explain = api.open_router_qwen("你是粵語專家，分析文本。","解釋呢句嘅意思、詞彙同語法：" + sentence)
-        return jsonify({'result': explain})
+        result = textprocessing.split_text(explain)
+        return jsonify({'result': result})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
         
