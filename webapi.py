@@ -1417,6 +1417,8 @@ def text2mp3():
                 file.write(response['AudioStream'].read())    
         with open(file_path+".hint", 'w', encoding='utf-8') as file:
                 file.write(text)    
+        return jsonify({'result':text})
+                
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
 
