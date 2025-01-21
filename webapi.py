@@ -1397,6 +1397,30 @@ def ai_anything():
         return jsonify({'result':None,"reason":str(e)})
 
 
+
+@app.route('/text2mp3', methods=['POST'])
+def text2mp3():
+    try:
+        text = request.json['text']
+        file_path = "/var/www/html/mp3/spokenarticl_news"+ str(random.randint(1000,2000))+".mp3"
+        os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
+        session = boto3.Session(region_name='us-east-1')
+        polly_client = session.client('polly')
+        response = polly_client.synthesize_speech(  
+                    Text=text,
+                    OutputFormat='mp3',
+                    VoiceId='Hiujin',
+                    Engine='neural',
+                    TextType='text'            
+                )
+        with open(file_path, 'wb') as file:
+                file.write(response['AudioStream'].read())    
+        with open(file_path+".hint", 'w', encoding='utf-8') as file:
+                file.write(text)    
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
+
 @app.route('/upload_dictionary', methods=['POST'])
 def upload_dictionary():
     try:
@@ -1547,6 +1571,9 @@ import subprocess
 def convert_webm_to_mp3(input_file, output_file):
     command = ['ffmpeg', '-i', input_file, '-codec:a', 'libmp3lame', output_file]
     subprocess.run(command, check=True)
+
+
+
 
 
 """

@@ -87,4 +87,4 @@ def process_mp3_file(file_path,filename_addon="work",minlength=10):
 if __name__ == "__main__":
 #    process_mp3_file("/home/erik/Downloads/ethree1.mp3",filename_addon="three1")
 #process_mp3_file("/home/erik/Downloads/three2.mp3",filename_addon="three2")
-    process_mp3_file("/home/erik/Downloads/egut4.mp3",filename_addon="gut4")
+    process_mp3_file("/home/erik/Downloads/ememehk1.mp3",filename_addon="memehk1")
