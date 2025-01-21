@@ -1389,8 +1389,8 @@ def ai_anything():
     try:
         question = request.json['question']
         api = openrouter.OpenRouterAPI()
-        question_in_chinese = api.open_router_qwen("你是粵語專家，分析文本。","Translate this to traditional Chinese:" + question)        
-        explain = api.open_router_qwen("你是粵語專家，分析文本。",question_in_chinese)
+        question_in_chinese = api.open_router_qwen("你是粵語專家。","Translate this to traditional Chinese:" + question)        
+        explain = api.open_router_qwen("你是粵語專家。",question_in_chinese)
         result = textprocessing.split_text(explain)
         return jsonify({'result': result})
     except Exception as e:
