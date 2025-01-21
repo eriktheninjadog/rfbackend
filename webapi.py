@@ -1415,8 +1415,9 @@ def text2mp3():
                 )
         with open(file_path, 'wb') as file:
                 file.write(response['AudioStream'].read())    
-        with open(file_path+".hint", 'w', encoding='utf-8') as file:
-                file.write(text)    
+        with open(file_path+".hint.json", 'w', encoding='utf-8') as file:
+                jsonpart = textprocessing.split_text(text)
+                file.write(json.dumps(jsonpart))    
         return jsonify({'result':text})
                 
     except Exception as e:
