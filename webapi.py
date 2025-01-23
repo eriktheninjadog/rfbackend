@@ -1506,7 +1506,7 @@ import texttoaudio
 def make_c1_examples():
     pattern = request.json['pattern']
     api=openrouter.OpenRouterAPI()
-    result = api.open_router_deepseek_r1("You are a Cantonese language expert.",
+    result = api.open_router_deepseek_r1(
     "Create 15 sentences in C1 level spoken Cantonese " + pattern + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
     i = result.find("[")
     result = result[i:]
