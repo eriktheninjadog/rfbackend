@@ -1515,6 +1515,7 @@ def make_long_time_c1_examples(pattern):
     txt = '<speak>'
     parsedret = json.loads(result)
     cachedresult = []
+    hinttxt = ''
     for r in parsedret:
         if "english" in r and "chinese" in r:
             english = r['english']
@@ -1524,11 +1525,12 @@ def make_long_time_c1_examples(pattern):
             print(chinese)
             tradchinese = textprocessing.make_sure_traditional(chinese) + texttoaudio.get_pause_as_ssml_tag()
             txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
+            hinttxt += tradchinese + "\n"
             chinesetokens = textprocessing.split_text(tradchinese)
             cachedresult.append({'chinese':chinesetokens,'english':english})
             #database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
     txt+='</speak>'
-    
+    hinttxt+='\n'
     cachemanagement.add_examples_to_cache(cachedresult)
     file_path = "/var/www/html/mp3/spokenarticl_news_c1_"+ str(random.randint(1000,2000))+".mp3"
     os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
@@ -1544,7 +1546,7 @@ def make_long_time_c1_examples(pattern):
     with open(file_path, 'wb') as file:
             file.write(response['AudioStream'].read())    
     with open(file_path+".hint.json", 'w', encoding='utf-8') as file:
-            jsonpart = textprocessing.split_text(txt)
+            jsonpart = textprocessing.split_text(hinttxt)
             file.write(json.dumps(jsonpart))    
 
 from threading import Thread
