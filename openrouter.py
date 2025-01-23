@@ -198,6 +198,7 @@ class OpenRouterAPI:
             
             self.logger.info(f"Getting completion from {model}")
             response = self._make_request(model, messages)
+            print(str(response))
             return response['choices'][0]['message']['content']
         except Exception as e:
             error_msg = f"Error getting completion: {str(e)}"
