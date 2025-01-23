@@ -1500,6 +1500,35 @@ def make_grammar_examples():
 
 #PersistentDict
 
+@app.route('/make_c1_examples', methods=['POST'])
+def make_c1_examples():
+    pattern = request.json['pattern']
+    api=openrouter.OpenRouterAPI()
+    result = api.open_router_deepseek_r1("You are a Cantonese language expert.",
+    "Create 15 sentences in C1 level spoken Cantonese " + pattern + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
+    i = result.find("[")
+    result = result[i:]
+    i = result.find("]")
+    result = result[:i+1]
+    print(result)
+
+    parsedret = json.loads(result)
+    cachedresult = []
+    for r in parsedret:
+        if "english" in r and "chinese" in r:
+            english = r['english']
+            chinese = r['chinese']
+            # lets make tokens out of chinese
+            print(english)
+            print(chinese)
+            tradchinese = textprocessing.make_sure_traditional(chinese)        
+            chinesetokens = textprocessing.split_text(tradchinese)
+            cachedresult.append({'chinese':chinesetokens,'english':english})
+            database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+    cachemanagement.add_examples_to_cache(cachedresult)
+    return jsonify({'result':'ok'})
+
+
 import homecommand
 import config
 @app.route('/executehomecommand', methods=['POST'])

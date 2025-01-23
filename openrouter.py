@@ -148,6 +148,14 @@ class OpenRouterAPI:
             text
         )
 
+
+    def open_router_deepseek_r1(self, system_content: str, user_content: str) -> str:
+        return self.get_completion(
+            "deepseek/deepseek-r1",
+            user_content,
+            system_content
+        )
+
     def open_router_qwen(self, system_content: str, user_content: str) -> str:
         return self.get_completion(
             "qwen/qwen-2.5-72b-instruct",
