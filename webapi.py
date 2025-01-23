@@ -1526,7 +1526,7 @@ def make_long_time_c1_examples(pattern):
             txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
             chinesetokens = textprocessing.split_text(tradchinese)
             cachedresult.append({'chinese':chinesetokens,'english':english})
-            database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+            #database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
     txt+='</speak>'
     
     cachemanagement.add_examples_to_cache(cachedresult)
