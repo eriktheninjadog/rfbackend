@@ -1500,6 +1500,8 @@ def make_grammar_examples():
 
 #PersistentDict
 
+import texttoaudio
+
 @app.route('/make_c1_examples', methods=['POST'])
 def make_c1_examples():
     pattern = request.json['pattern']
@@ -1511,7 +1513,7 @@ def make_c1_examples():
     i = result.find("]")
     result = result[:i+1]
     print(result)
-    txt = ''
+    txt = '<speak>'
     parsedret = json.loads(result)
     cachedresult = []
     for r in parsedret:
@@ -1521,11 +1523,13 @@ def make_c1_examples():
             # lets make tokens out of chinese
             print(english)
             print(chinese)
-            txt+=chinese
-            tradchinese = textprocessing.make_sure_traditional(chinese)        
+            tradchinese = textprocessing.make_sure_traditional(chinese) + texttoaudio.get_pause_as_ssml_tag()
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
             chinesetokens = textprocessing.split_text(tradchinese)
             cachedresult.append({'chinese':chinesetokens,'english':english})
             database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
+    txt+='</speak>'
+    
     cachemanagement.add_examples_to_cache(cachedresult)
     file_path = "/var/www/html/mp3/spokenarticl_news_c1_"+ str(random.randint(1000,2000))+".mp3"
     os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
@@ -1536,12 +1540,12 @@ def make_c1_examples():
                 OutputFormat='mp3',
                 VoiceId='Hiujin',
                 Engine='neural',
-                TextType='text'            
+                TextType='ssml'            
             )
     with open(file_path, 'wb') as file:
             file.write(response['AudioStream'].read())    
     with open(file_path+".hint.json", 'w', encoding='utf-8') as file:
-            jsonpart = textprocessing.split_text(text)
+            jsonpart = textprocessing.split_text(txt)
             file.write(json.dumps(jsonpart))    
 
     return jsonify({'result':'ok'})
