@@ -1502,9 +1502,8 @@ def make_grammar_examples():
 
 import texttoaudio
 
-@app.route('/make_c1_examples', methods=['POST'])
-def make_c1_examples():
-    pattern = request.json['pattern']
+
+def make_long_time_c1_examples(pattern):
     api=openrouter.OpenRouterAPI()
     result = api.open_router_deepseek_r1(
     "Create 15 sentences in C1 level spoken Cantonese " + pattern + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
@@ -1548,6 +1547,13 @@ def make_c1_examples():
             jsonpart = textprocessing.split_text(txt)
             file.write(json.dumps(jsonpart))    
 
+from threading import Thread
+
+@app.route('/make_c1_examples', methods=['POST'])
+def make_c1_examples():
+    pattern = request.json['pattern']
+    Thread(target=make_long_time_c1_examples, args=(pattern,)).start()
+    return jsonify({"status": "Task started"}), 202
     return jsonify({'result':'ok'})
 
 
