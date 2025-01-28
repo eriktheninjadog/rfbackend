@@ -163,7 +163,7 @@ def make_sml_from_chinese_sentences(words_thats_been_given,sentences,include_pre
             sml_text += surround_text_with_short_pause(s)
             clean_text +=  s + '\n'
     sml_text += ' <break time=\"1.0s\"/>'
-    fcounter.save_changes()
+    #fcounter.save_changes()
     f = open('lastssml.xml','w',encoding='utf-8')
     f.write(sml_text)
     f.close()

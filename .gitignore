@@ -4,6 +4,10 @@ __pycache__/remotechineseclient.cpython-310.pyc
 __pycache__/frequencytools.cpython-310.pyc
 __pycache__/frequencytools.cpython-310.pyc
 *.mp3
+*.transcache
+*.pyc
+*.hint.json
+
 spokenarticle_news1737437554.9481032_youtube_t5sJ55VjCrw0.mp3.hint.json
 spokenarticle_news1737437554.9481032_youtube_t5sJ55VjCrw0.mp3.subtitle
 spokenarticle_news1737438131.5019293_youtube_t5sJ55VjCrw1.mp3.hint.json

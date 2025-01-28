@@ -19,6 +19,6 @@ def access_remote_client(endpoint,payload):
         print('Request successful!')
         return response.json()['result']
     else:
-        print('Request failed. Status code:', response.status_code + " " + endpoint)
+        print('Request failed. Status code:', str(response.status_code) + " " + endpoint)
         return None
         

@@ -1548,7 +1548,9 @@ def make_long_time_c1_examples(pattern):
     with open(file_path+".hint.json", 'w', encoding='utf-8') as file:
             jsonpart = textprocessing.split_text(hinttxt)
             file.write(json.dumps(jsonpart))    
-
+    print("All done: "+ txt)
+    
+    s    
 from threading import Thread
 
 @app.route('/make_c1_examples', methods=['POST'])

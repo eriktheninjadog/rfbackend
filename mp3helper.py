@@ -5,9 +5,9 @@ import boto3
 from mutagen.mp3 import MP3
 from pydub import AudioSegment
 
-def extract_audio_segment(mp3_filename, start_timepoint, end_timepoint, outfilename):
+def extract_audio_segment(filename, start_timepoint, end_timepoint, outfilename):
     # Load the original MP3 file
-    audio = AudioSegment.from_mp3(mp3_filename)
+    audio = AudioSegment.from_mp3(filename)
     
     # Convert start and end timepoints from seconds to milliseconds
     start_time_ms = start_timepoint * 1000

@@ -1,10 +1,25 @@
 #deepinfra.py
 from openai import OpenAI
 import os
+import os.path
 import json
 
+#add caching to make it cheaper and faster when debugging!
 
-def transcribe_audio(file_path):    
+def make_md5_from_file(file_path):
+    import hashlib
+    hash_md5 = hashlib.md5()
+    with open(file_path, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+def transcribe_audio(file_path):
+    transpath = make_md5_from_file(file_path)+".transcache"    
+    if os.path.isfile(transpath):
+        with open(transpath, "r") as f:
+            return json.load(f)
+        
     apikey = os.getenv("DEEPINFRAKEY")
     client = OpenAI(
         api_key= apikey,
@@ -27,6 +42,8 @@ def transcribe_audio(file_path):
         ret['end_time'] = s.end
         roar.append(ret)
     print(str(roar))
+    with open(transpath, "w") as f:
+        f.write(json.dumps(roar))
     return roar
 
 

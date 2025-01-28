@@ -16,6 +16,21 @@ def combined_length(lines):
         cnt +=len(l)
     return cnt
 
+
+def pad_time(times):
+    start_time = times[0]
+    start_time -= 0.5
+    end_time = times[1]
+    end_time += 0.5
+    if start_time < 0:
+        start_time = 0
+    
+    return [start_time,end_time]
+
+import webapi
+
+import remotechineseclient
+
 def process_mp3_file(file_path,filename_addon="work",minlength=10):
     # get the transcription
     transcription = deepinfra.transcribe_audio(file_path)
@@ -30,24 +45,30 @@ def process_mp3_file(file_path,filename_addon="work",minlength=10):
         if start_time == 0:
             start_time = segment['start_time']
         end_time = segment['end_time']
-        if (len(current_sentence) > minlength):        
-            timepoints.append([start_time,end_time])
+        if end_time == 0:
+            totaltime= mp3helper.get_total_mp3_duration([file_path])
+            end_time = totaltime
+        if (len(current_sentence) > minlength):
+            timepoints.append(pad_time([start_time,end_time]))
             print(f"Segment: {text} (Start: {start_time}, End: {end_time})")
             sentences.append(current_sentence)
             filename = create_filename_for_segment(text)
             part_file_path = texttoaudio.mp3cachedirectory + '/' + filename
             if  os.path.isfile(part_file_path) == False:
-                mp3helper.extract_audio_segment(file_path, segment['start_time'], segment['end_time'], part_file_path)
+                mp3helper.extract_audio_segment(file_path, start_time, end_time, part_file_path)
             current_sentence = ""
             start_time = 0
             end_time = 0
 
     if len(current_sentence) > 0:
-        timepoints.append([start_time,end_time])
+        timepoints.append(pad_time([start_time,end_time-0.5]))
         print(f"Segment: {text} (Start: {start_time}, End: {end_time})")
         sentences.append(current_sentence)
         filename = create_filename_for_segment(text)
         part_file_path = texttoaudio.mp3cachedirectory + '/' + filename
+
+    totaltext = " ".join(sentences)
+    remotechineseclient.access_remote_client("make_c1_examples",{"pattern":" using vocabulary found in this text: \n "+totaltext})
 
     #done with the mp3 partswords_thats_been_given
     currentpod = []
@@ -83,8 +104,23 @@ def process_mp3_file(file_path,filename_addon="work",minlength=10):
         newscrawler.make_and_upload_audio_from_sml(clean_text, sml_text,filename_addon+str(cnt),postprefixaudio=str(cnt) + "prepostfixtmp.mp3")
         cnt+=1
     
+
+import subprocess    
+
+def handle_local_mp3(name):
+    file ="/home/erik/Downloads/"+name+".mp3"
+    command = "ffmpeg -y -loglevel verbose -analyzeduration 2000 -probesize 10000000 -i " + file+ " tmp.wav"
+    subprocess.run(command, shell=True)
+    command = "ffmpeg -y -loglevel verbose -i tmp.wav tmp.mp3"
+    subprocess.run(command, shell=True)
+    process_mp3_file("tmp.mp3",filename_addon=name)
     
+
 if __name__ == "__main__":
-#    process_mp3_file("/home/erik/Downloads/ethree1.mp3",filename_addon="three1")
+    #handle_local_mp3("flight11")
+    #handle_local_mp3("doctor1")
+    handle_local_mp3("narco12")
+    handle_local_mp3("narco13")
+
+#process_mp3_file("/home/erik/Downloads/ethree1.mp3",filename_addon="three1")
 #process_mp3_file("/home/erik/Downloads/three2.mp3",filename_addon="three2")
-    process_mp3_file("/home/erik/Downloads/ememehk2.mp3",filename_addon="memehk2")
