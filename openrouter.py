@@ -149,6 +149,11 @@ class OpenRouterAPI:
         )
 
 
+    def open_router_nova_micro_v1(self, user_content: str) -> str:
+        return self.get_completion(
+            "amazon/nova-micro-v1",
+            user_content)
+
     def open_router_deepseek_r1(self, user_content: str) -> str:
         return self.get_completion(
             "deepseek/deepseek-r1",

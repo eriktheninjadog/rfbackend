@@ -7,7 +7,7 @@ import openrouter
 #for testing purposes we will use assitant at all times
 def ask_ai(question,bot,clear):
     api = openrouter.OpenRouterAPI()
-    return api.do_open_opus_questions(question)
+    return api.open_router_nova_micro_v1(question)
     if clear:
          send_message_to_server("127.0.0.1","robot",bot)
     msg = send_message_to_server("127.0.0.1","ask",question) 
