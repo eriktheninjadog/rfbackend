@@ -1646,4 +1646,4 @@ def tokenize_chinese():
     text = data['text']
     text = textprocessing.make_sure_traditional(text)
     tokens = textprocessing.split_text(text)
-    return jsonify({'tokens': tokens})
+    return jsonify({'result': tokens})
