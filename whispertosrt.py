@@ -161,6 +161,20 @@ def transcribe_audio(audio_file_path: str, config: TranscriptionConfig) -> Optio
         print(f"Error in transcription process: {str(e)}")
         return None
 
+from pathlib import Path
+
+def change_extension_to_srt(full_path):
+    # Convert the input to a Path object
+    path = Path(full_path)
+    
+    # Extract the base path without the extension
+    root = path.stem
+    
+    # Change the extension to .srt and reconstruct the full path
+    new_path = path.with_name(f"{root}.srt")
+    
+    return str(new_path)
+
 def main():
     # Example configuration
     config = TranscriptionConfig(
@@ -186,7 +200,8 @@ def main():
 
     if srt_content:
         # Save to file
-        output_file = "transcription.srt"
+        
+        output_file = change_extension_to_srt(audio_file_path)
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(srt_content)
         print(f"Transcription completed and saved to {output_file}")
