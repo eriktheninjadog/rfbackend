@@ -41,7 +41,7 @@ def vad_collector(sample_rate, frame_duration_ms, padding_duration_ms, vad, fram
         yield b''.join(voiced_frames)
 
 # Load and preprocess the audio file
-audio = AudioSegment.from_mp3('/home/erik/Downloads/deadringer1.mp3')
+audio = AudioSegment.from_mp3('/home/erik/Downloads/deadringer2.mp3')
 audio = audio.set_frame_rate(16000).set_channels(1)
 sample_rate = audio.frame_rate
 
@@ -59,4 +59,4 @@ output_audio = AudioSegment(
 )
 
 # Export the result
-output_audio.export('/home/erik/Downloads/deadringer1_shortened.mp3', format='mp3')
+output_audio.export('/home/erik/Downloads/deadringer2_shortened.mp3', format='mp3')

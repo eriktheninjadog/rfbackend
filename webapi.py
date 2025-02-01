@@ -1636,8 +1636,6 @@ def convert_webm_to_mp3(input_file, output_file):
     command = ['ffmpeg', '-i', input_file, '-codec:a', 'libmp3lame', output_file]
     subprocess.run(command, check=True)
 
-
-
 @app.route('/tokenize_chinese', methods=['POST'])
 def tokenize_chinese():
     data = request.get_json()
@@ -1647,3 +1645,16 @@ def tokenize_chinese():
     text = textprocessing.make_sure_traditional(text)
     tokens = textprocessing.split_text(text)
     return jsonify({'result': tokens})
+
+@app.route('/ask_nova', methods=['POST'])
+def ask_nova():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({'error': 'Invalid input. "text" parameter is required.'}), 400
+    text = data['text']
+    api=openrouter.OpenRouterAPI()
+    reply = api.open_router_nova_micro_v1(text)
+    text = textprocessing.make_sure_traditional(reply)
+    tokens = textprocessing.split_text(text)
+    return jsonify({'result': tokens})
+
