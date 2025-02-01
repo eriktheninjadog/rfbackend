@@ -64,31 +64,13 @@ def split_audio(audio_file_path: str, chunk_length_ms: int) -> List[Tuple[str, f
     return chunk_files
 
 def transcribe_audio_segment(config: TranscriptionConfig, audio_file_path: str, segment_index: int = 0) -> Optional[List[dict]]:
-    """
-    Transcribe an audio segment using DeepInfra's Whisper model.
-
-    Parameters:
-    - config: TranscriptionConfig object containing API settings
-    - audio_file_path: Path to the audio segment file
-    - segment_index: Index of the current segment (used for prompt modification)
-
-    Returns:
-    - List of transcription segments or None if failed
-    """
-    url = "https://api.deepinfra.com/v1/inference/openai/whisper-1"
-    
-    headers = {
-        "Authorization": f"Bearer {config.api_key}",
-        "Content-Type": "multipart/form-data"
-    }
 
     # Modify prompt based on segment index
     current_prompt = config.prompt
     if current_prompt and segment_index > 0:
         current_prompt = f"Continuing transcription... {current_prompt}"
 
-    
-    
+        
     client = OpenAI(
         api_key= config.api_key,
         base_url="https://api.deepinfra.com/v1/openai"
