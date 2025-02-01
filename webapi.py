@@ -733,7 +733,7 @@ def newParsePoe(aresult):
     result = []
     for i in aresult:
         english = i['english']
-        chinese = i['chinese']
+        chinese = textprocessing.make_sure_traditional(i['chinese'])        
         tok = textprocessing.split_text(chinese)
         result.append( {"chinese":tok,"english":english} )
     return result
@@ -1550,7 +1550,7 @@ def make_long_time_c1_examples(pattern):
             file.write(json.dumps(jsonpart))    
     print("All done: "+ txt)
     
-    s    
+      
 from threading import Thread
 
 @app.route('/make_c1_examples', methods=['POST'])
@@ -1638,162 +1638,12 @@ def convert_webm_to_mp3(input_file, output_file):
 
 
 
-
-
-"""
-import os
-from werkzeug.utils import secure_filename
-import uuid
-
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm'}
-MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB limit
-
-# Ensure upload directory exists
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# Basic file upload
-@app.route('/audio_upload', methods=['POST'])
-def upload_file():
-    try:
-        if 'file' not in request.files:
-            return jsonify({'error': 'No file part'}), 400
-        
-        file = request.files['file']
-        
-        if file.filename == '':
-            return jsonify({'error': 'No selected file'}), 400
-
-        if file and allowed_file(file.filename):
-            # Generate unique filename
-            original_filename = secure_filename(file.filename)
-            filename = f"{uuid.uuid4()}_{original_filename}"
-            filepath = os.path.join(UPLOAD_FOLDER, filename)
-            
-            # Save the file
-            file.save(filepath)
-            
-            return jsonify({
-                'message': 'File uploaded successfully',
-                'filename': filename,
-                'path': filepath
-            }), 200
-        else:
-            return jsonify({'error': 'File type not allowed'}), 400
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-# Chunked upload handling
-@app.route('/audio_upload/chunk', methods=['POST'])
-def upload_chunk():
-    try:
-        if 'chunk' not in request.files:
-            return jsonify({'error': 'No chunk part'}), 400
-
-        chunk = request.files['chunk']
-        chunk_index = int(request.form.get('chunkIndex', 0))
-        total_chunks = int(request.form.get('totalChunks', 1))
-        file_id = request.form.get('fileId', str(uuid.uuid4()))
-        
-        # Create temporary directory for chunks if it doesn't exist
-        temp_dir = os.path.join(UPLOAD_FOLDER, 'temp', file_id)
-        os.makedirs(temp_dir, exist_ok=True)
-        
-        # Save chunk
-        chunk_path = os.path.join(temp_dir, f'chunk_{chunk_index}')
-        chunk.save(chunk_path)
-        
-        # Check if all chunks are uploaded
-        existing_chunks = os.listdir(temp_dir)
-        if len(existing_chunks) == total_chunks:
-            # Combine chunks
-            final_filename = f"{file_id}_complete.file"
-            final_path = os.path.join(UPLOAD_FOLDER, final_filename)
-            
-            with open(final_path, 'wb') as outfile:
-                for i in range(total_chunks):
-                    chunk_path = os.path.join(temp_dir, f'chunk_{i}')
-                    with open(chunk_path, 'rb') as infile:
-                        outfile.write(infile.read())
-            
-            # Clean up chunk directory
-            for chunk_file in existing_chunks:
-                os.remove(os.path.join(temp_dir, chunk_file))
-            os.rmdir(temp_dir)
-            
-            return jsonify({
-                'message': 'File upload completed',
-                'filename': final_filename,
-                'path': final_path
-            }), 200
-        
-        return jsonify({
-            'message': f'Chunk {chunk_index + 1}/{total_chunks} received',
-            'chunkIndex': chunk_index,
-            'totalChunks': total_chunks
-        }), 200
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-# Resume upload support
-@app.route('/audio_upload/status', methods=['GET'])
-def check_upload_status():
-    try:
-        file_id = request.args.get('fileId')
-        if not file_id:
-            return jsonify({'error': 'No fileId provided'}), 400
-        
-        temp_dir = os.path.join(UPLOAD_FOLDER, 'temp', file_id)
-        if not os.path.exists(temp_dir):
-            return jsonify({
-                'status': 'new',
-                'uploadedChunks': []
-            }), 200
-        
-        uploaded_chunks = os.listdir(temp_dir)
-        chunk_indices = [
-            int(chunk.split('_')[1])
-            for chunk in uploaded_chunks
-        ]
-        
-        return jsonify({
-            'status': 'in_progress',
-            'uploadedChunks': chunk_indices
-        }), 200
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-# Error handling
-@app.errorhandler(413)
-def too_large(e):
-    return jsonify({'error': 'File too large'}), 413
-
-@app.errorhandler(500)
-def server_error(e):
-    return jsonify({'error': 'Internal server error'}), 500
-
-# Optional: Cleanup utility
-def cleanup_temporary_files():
-    temp_dir = os.path.join(UPLOAD_FOLDER, 'temp')
-    if os.path.exists(temp_dir):
-        for root, dirs, files in os.walk(temp_dir, topdown=False):
-            for name in files:
-                os.remove(os.path.join(root, name))
-            for name in dirs:
-                os.rmdir(os.path.join(root, name))
-
-# Additional utility functions
-def get_file_size(file_path):
-    return os.path.getsize(file_path)
-
-def validate_mime_type(file):
-    # Add more sophisticated MIME type validation if needed
-    return True
-"""
+@app.route('/tokenize_chinese', methods=['POST'])
+def tokenize_chinese():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({'error': 'Invalid input. "text" parameter is required.'}), 400
+    text = data['text']
+    text = textprocessing.make_sure_traditional(text)
+    tokens = textprocessing.split_text(text)
+    return jsonify({'tokens': tokens})

@@ -1,234 +1,218 @@
-#whispertosrt.py
-from transformers import WhisperProcessor, WhisperForConditionalGeneration
-import librosa
-import torch
-from datetime import timedelta
-from pydub import AudioSegment
-import numpy as np
-import os
+import requests
+import json
 import math
+import os
+import time
+from pydub import AudioSegment
+from typing import Optional, List, Tuple
+from openai import OpenAI
 
-class AudioChunkProcessor:
-    def __init__(self, chunk_duration=30, overlap_duration=2):
-        """
-        Initialize the processor with chunk settings
-        chunk_duration: length of each chunk in seconds
-        overlap_duration: overlap between chunks in seconds
-        """
-        self.chunk_duration = chunk_duration
-        self.overlap_duration = overlap_duration
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        
-        # Initialize Whisper
-        print("Loading Whisper model...")
-        model_name = "alvanlii/whisper-small-cantonese"
-        self.processor = WhisperProcessor.from_pretrained(model_name)
-        self.model = WhisperForConditionalGeneration.from_pretrained(model_name)
-        self.model = self.model.to(self.device)
 
-    def split_audio(self, input_file):
-        """Split audio file into overlapping chunks"""
-        print(f"Loading audio file: {input_file}")
-        audio = AudioSegment.from_file(input_file)
-        
-        # Convert durations to milliseconds
-        chunk_length = self.chunk_duration * 1000
-        overlap_length = self.overlap_duration * 1000
-        
-        chunks = []
-        offset = 0
-        counter = 0
-        
-        while offset < len(audio):
-            start = max(0, offset - overlap_length) if offset > 0 else 0
-            end = min(len(audio), offset + chunk_length + overlap_length)
-            
-            chunk = audio[start:end]
-            chunk_name = f"temp_chunk_{counter}.wav"
-            chunk.export(chunk_name, format="wav")
-            
-            chunks.append({
-                'file': chunk_name,
-                'start': start / 1000,  # Convert to seconds
-                'end': end / 1000,
-                'offset': offset / 1000
-            })
-            
-            offset += chunk_length
-            counter += 1
-            
-        return chunks
+class TranscriptionConfig:
+    """Configuration class for transcription parameters"""
+    def __init__(
+        self,
+        api_key: str,
+        model: str = "whisper-large",
+        language: str = "yue",
+        chunk_length_ms: int = 300000,
+        prompt: Optional[str] = None,
+        temperature: float = 0.0,
+        response_format: str = "json"
+    ):
+        self.api_key = api_key
+        self.model = model
+        self.language = language
+        self.chunk_length_ms = chunk_length_ms
+        self.prompt = prompt
+        self.temperature = temperature
+        self.response_format = response_format
 
-    def process_chunk(self, chunk_info):
-        """Process a single audio chunk"""
-        try:
-            # Load and process audio
-            speech_array, sampling_rate = librosa.load(chunk_info['file'], sr=16000)
-            inputs = self.processor(speech_array, sampling_rate=sampling_rate, return_tensors="pt")
-            input_features = inputs.input_features.to(self.device)
+def seconds_to_srt_timestamp(seconds: float) -> str:
+    """
+    Converts seconds to SRT timestamp format.
+    """
+    milliseconds = int((seconds - int(seconds)) * 1000)
+    timestamp = time.strftime('%H:%M:%S', time.gmtime(seconds))
+    return f"{timestamp},{milliseconds:03d}"
 
-            # Generate transcription
-            predicted_ids = self.model.generate(
-                input_features,
-                return_timestamps=True,
-                max_length=448
+def split_audio(audio_file_path: str, chunk_length_ms: int) -> List[Tuple[str, float]]:
+    """
+    Splits the audio file into chunks of specified length in milliseconds.
+
+    Parameters:
+    - audio_file_path (str): Path to the MP3 file to split
+    - chunk_length_ms (int): Length of each chunk in milliseconds
+
+    Returns:
+    - List of tuples containing (chunk_file_path, start_time_in_seconds)
+    """
+    audio = AudioSegment.from_file(audio_file_path)
+    total_length_ms = len(audio)
+    chunk_files = []
+
+    # Create a temporary directory for chunks if it doesn't exist
+    temp_dir = "temp_audio_chunks"
+    os.makedirs(temp_dir, exist_ok=True)
+
+    for i, start_ms in enumerate(range(0, total_length_ms, chunk_length_ms)):
+        end_ms = min(start_ms + chunk_length_ms, total_length_ms)
+        chunk = audio[start_ms:end_ms]
+        chunk_file = os.path.join(temp_dir, f"chunk_{i}.mp3")
+        chunk.export(chunk_file, format="mp3")
+        chunk_files.append((chunk_file, start_ms / 1000.0))
+    return chunk_files
+
+def transcribe_audio_segment(config: TranscriptionConfig, audio_file_path: str, segment_index: int = 0) -> Optional[List[dict]]:
+    """
+    Transcribe an audio segment using DeepInfra's Whisper model.
+
+    Parameters:
+    - config: TranscriptionConfig object containing API settings
+    - audio_file_path: Path to the audio segment file
+    - segment_index: Index of the current segment (used for prompt modification)
+
+    Returns:
+    - List of transcription segments or None if failed
+    """
+    url = "https://api.deepinfra.com/v1/inference/openai/whisper-1"
+    
+    headers = {
+        "Authorization": f"Bearer {config.api_key}",
+        "Content-Type": "multipart/form-data"
+    }
+
+    # Modify prompt based on segment index
+    current_prompt = config.prompt
+    if current_prompt and segment_index > 0:
+        current_prompt = f"Continuing transcription... {current_prompt}"
+
+    
+    
+    client = OpenAI(
+        api_key= config.api_key,
+        base_url="https://api.deepinfra.com/v1/openai"
+    )
+
+    import subprocess
+    command = "ffmpeg -y -loglevel verbose -analyzeduration 2000 -probesize 10000000 -i " + audio_file_path+ " tmp.wav"
+    subprocess.run(command, shell=True)
+    command = "ffmpeg -y -loglevel verbose -i tmp.wav tmp.mp3"
+    subprocess.run(command, shell=True)
+   
+    
+    with open("tmp.mp3", 'rb') as audio_file:      
+        try:            
+            #audio_file = open(audio_file_path, "rb")
+            transcript = client.audio.transcriptions.create(
+            model="openai/whisper-large-v3",
+                file=audio_file,
+                response_format="verbose_json",
+                language="yue",
+                timestamp_granularities="segment",
+#                prompt="Transcribe this audio file from Cantonese to traditional Chinese Characters. Stay close to the spoken language."
             )
 
-            # Decode and adjust timestamps
-            transcription = self.processor.batch_decode(predicted_ids, skip_special_tokens=False)
-            segments = self.parse_timestamps(transcription[0], chunk_info['offset'])
-            
-            return segments
-            
-        finally:
-            # Clean up temporary file
-            if os.path.exists(chunk_info['file']):
-                os.remove(chunk_info['file'])
-
-    def parse_timestamps(self, transcription, offset):
-        """Parse timestamp tokens and adjust for chunk offset"""
-        timestamp_tokens = transcription.split()
-        segments = []
-        current_segment = {"start": 0, "end": 0, "text": []}
-
-        for token in timestamp_tokens:
-            if token.startswith("<|") and token.endswith("|>"):
-                if token == "<|notimestamps|>":
-                    continue
-                try:
-                    time_value = float(token.replace("<|", "").replace("|>", ""))
-                    time_value += offset  # Adjust timestamp for chunk offset
-                    
-                    if not current_segment["text"]:
-                        current_segment["start"] = time_value
-                    else:
-                        current_segment["end"] = time_value
-                        if current_segment["text"]:
-                            segments.append({
-                                "start": current_segment["start"],
-                                "end": current_segment["end"],
-                                "text": " ".join(current_segment["text"]).strip()
-                            })
-                        current_segment = {"start": time_value, "end": 0, "text": []}
-                except ValueError:
-                    continue
-            else:
-                current_segment["text"].append(token)
-
-        return segments
-
-    def merge_segments(self, all_segments):
-        """Merge segments from different chunks and handle overlaps"""
-        # Flatten all segments
-        flat_segments = []
-        for segments in all_segments:
-            flat_segments.extend(segments)
-            
-        # Sort by start time
-        flat_segments.sort(key=lambda x: x['start'])
-        
-        # Merge overlapping segments
-        merged = []
-        if not flat_segments:
-            return merged
-            
-        current = flat_segments[0]
-        for segment in flat_segments[1:]:
-            if segment['start'] - current['end'] < self.overlap_duration:
-                # Merge overlapping segments
-                current['end'] = max(current['end'], segment['end'])
-                current['text'] = current['text'] + " " + segment['text']
-            else:
-                merged.append(current)
-                current = segment
+            print(transcript)
+            segments = transcript.segments
                 
-        merged.append(current)
-        return merged
+            if not segments:
+                print(f"No segments found in the response for chunk {segment_index}")
+                return None
+            else:
+                return segments
+        except Exception as e:
+            print(f"Error transcribing audio segment {segment_index}: {e}")
+            return segments
+
+def transcribe_audio(audio_file_path: str, config: TranscriptionConfig) -> Optional[str]:
+    """
+    Main function to handle the complete transcription process.
+
+    Parameters:
+    - audio_file_path: Path to the audio file
+    - config: TranscriptionConfig object containing all settings
+
+    Returns:
+    - SRT formatted string or None if failed
+    """
+    try:
+        # Split the audio file into chunks
+        chunk_files = split_audio(audio_file_path, config.chunk_length_ms)
+        
+        all_srt_segments = []
+        caption_index = 1
+
+        # Process each chunk
+        for chunk_index, (chunk_file, chunk_start_time) in enumerate(chunk_files):
+            print(f"Processing chunk {chunk_index + 1}/{len(chunk_files)}")
+            
+            segments = transcribe_audio_segment(config, chunk_file, chunk_index)
+            
+            if segments is None:
+                print(f"Warning: Skipping chunk {chunk_index} due to transcription failure")
+                continue
+
+            # Process segments and adjust timestamps
+            for segment in segments:
+                start = segment.start + chunk_start_time
+                end = segment.end + chunk_start_time
+                text = segment.text.strip()
+
+                if text:  # Only include non-empty segments
+                    start_timestamp = seconds_to_srt_timestamp(start)
+                    end_timestamp = seconds_to_srt_timestamp(end)
+                    
+                    srt_segment = f"{caption_index}\n{start_timestamp} --> {end_timestamp}\n{text}\n\n"
+                    all_srt_segments.append(srt_segment)
+                    caption_index += 1
+
+            # Clean up chunk file
+            os.remove(chunk_file)
+
+        # Clean up temporary directory
+        temp_dir = "temp_audio_chunks"
+        if os.path.exists(temp_dir):
+            os.rmdir(temp_dir)
+
+        # Combine all segments into final SRT content
+        return ''.join(all_srt_segments)
+
+    except Exception as e:
+        print(f"Error in transcription process: {str(e)}")
+        return None
+
+def main():
+    # Example configuration
+    config = TranscriptionConfig(
+        api_key= os.getenv("DEEPINFRAKEY"),
+        model="openai/whisper-large-v3",
+        language="yue",
+        prompt="""
+        Please accurately transcribe this Cantonese audio.
+        Use traditional Chinese characters.
+        Maintain proper punctuation.
+        Include speaker changes with [Speaker 1], [Speaker 2] notation if multiple speakers are present.
+        Use colloquial Cantonese terms and slang as they appear in the audio.
+        """,
+        chunk_length_ms=180000,  # 10 seconds
+        temperature=0.0  # Lower temperature for more focused sampling
+        
+    )
+
+    audio_file_path = "/home/erik/Downloads/deadringer2.mp3"
     
+    print("Starting transcription process...")
+    srt_content = transcribe_audio(audio_file_path, config)
 
-def format_timestamp(seconds):
-    """Convert seconds to SRT timestamp format (HH:MM:SS,mmm)"""
-    td = timedelta(seconds=float(seconds))
-    hours = int(td.total_seconds() // 3600)
-    minutes = int((td.total_seconds() % 3600) // 60)
-    seconds = td.total_seconds() % 60
-    return f"{hours:02d}:{minutes:02d}:{seconds:06.3f}".replace(".", ",")
-
-def split_long_lines(text, max_length=42):
-    """Split long lines to improve readability"""
-    words = text.split()
-    lines = []
-    current_line = []
-    current_length = 0
-
-    for word in words:
-        if current_length + len(word) + 1 <= max_length:
-            current_line.append(word)
-            current_length += len(word) + 1
-        else:
-            lines.append(" ".join(current_line))
-            current_line = [word]
-            current_length = len(word)
-
-    if current_line:
-        lines.append(" ".join(current_line))
-
-    return "\n".join(lines)
-
-    
-def save_as_srt(segments, output_file):
-    """Save transcription as SRT file"""
-    with open(output_file, 'w', encoding='utf-8') as f:
-        for i, segment in enumerate(segments, start=1):
-            f.write(f"{i}\n")
-            start_time = format_timestamp(segment['start'])
-            end_time = format_timestamp(segment['end'])
-            f.write(f"{start_time} --> {end_time}\n")
-            f.write(f"{split_long_lines(segment['text'])}\n\n")
-
-
-def process_audio_file(input_file, output_file, chunk_duration=30, overlap_duration=2):
-    """Process complete audio file with chunking"""
-    processor = AudioChunkProcessor(chunk_duration, overlap_duration)
-    
-    # Split audio into chunks
-    print("Splitting audio into chunks...")
-    chunks = processor.split_audio(input_file)
-    
-    # Process each chunk
-    print(f"Processing {len(chunks)} chunks...")
-    all_segments = []
-    for i, chunk in enumerate(chunks):
-        print(f"Processing chunk {i+1}/{len(chunks)}...")
-        segments = processor.process_chunk(chunk)
-        all_segments.append(segments)
-    
-    # Merge segments
-    print("Merging segments...")
-    merged_segments = processor.merge_segments(all_segments)
-    
-    # Save as SRT
-    print("Saving SRT file...")
-    save_as_srt(merged_segments, output_file)
-    
-    return merged_segments
-
-# [Previous helper functions (format_timestamp, save_as_srt, split_long_lines, filter_segments) remain the same]
+    if srt_content:
+        # Save to file
+        output_file = "transcription.srt"
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(srt_content)
+        print(f"Transcription completed and saved to {output_file}")
+    else:
+        print("Transcription failed")
 
 if __name__ == "__main__":
-    input_file = "path/to/your/audio.wav"
-    output_file = "transcription.srt"
-    
-    try:
-        # Process with specific chunk duration and overlap
-        segments = process_audio_file(
-            input_file,
-            output_file,
-            chunk_duration=30,  # 30 seconds per chunk
-            overlap_duration=2   # 2 seconds overlap
-        )
-        
-        print(f"\nTranscription saved as SRT file: {output_file}")
-        
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+    main()

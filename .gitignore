@@ -7,6 +7,8 @@ __pycache__/frequencytools.cpython-310.pyc
 *.transcache
 *.pyc
 *.hint.json
+*.wav
+*.srt
 
 spokenarticle_news1737437554.9481032_youtube_t5sJ55VjCrw0.mp3.hint.json
 spokenarticle_news1737437554.9481032_youtube_t5sJ55VjCrw0.mp3.subtitle
@@ -30,3 +32,4 @@ spokenarticle_news1737442604.5743735_youtube_t5sJ55VjCrw9.mp3.hint.json
 spokenarticle_news1737442604.5743735_youtube_t5sJ55VjCrw9.mp3.subtitle
 spokenarticle_news1737443194.8215365_youtube_t5sJ55VjCrw10.mp3.hint.json
 spokenarticle_news1737443194.8215365_youtube_t5sJ55VjCrw10.mp3.subtitle
+__pycache__/deepinfra.cpython-310.pyc

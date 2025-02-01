@@ -32,7 +32,8 @@ def transcribe_audio(file_path):
         file=audio_file,
         response_format="verbose_json",
         language="yue",
-        timestamp_granularities="segment"
+        timestamp_granularities="segment",
+        prompt="這是一個香港的廣播節目，請用粵語轉錄。"
     )
     roar = []
     for s in transcript.segments:
@@ -50,4 +51,4 @@ def transcribe_audio(file_path):
 
 
 if __name__ == "__main__":
-    transcribe_audio("/home/erik/Downloads/try.mp3")
+    transcribe_audio("/home/erik/Downloads/narco13.mp3")
