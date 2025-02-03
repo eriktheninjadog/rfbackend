@@ -119,7 +119,7 @@ def handle_local_mp3(name):
 if __name__ == "__main__":
     #handle_local_mp3("flight11")
     #handle_local_mp3("doctor1")
-    handle_local_mp3("deadringer2_shortened")
+    handle_local_mp3("news")
     #handle_local_mp3("narco13")
 
 #process_mp3_file("/home/erik/Downloads/ethree1.mp3",filename_addon="three1")

@@ -487,9 +487,10 @@ def add_listening_sentence(sentence,tokens,result):
 
 
 def add_output_exercise(english,chinesetokens,mp3name,type, result,milliseconds,whenutcmilliseconds):
-    mydb = get_connection()
+    mydb = get_connection();
     mycursor = mydb.cursor()
     sql = "insert into output_exercise(english,chinesetokens,mp3name,type,result,milliseconds,whenutcmilliseconds) values ('"+escape_sql_string(english)+"','"+escape_sql_string(chinesetokens)+"','" +escape_sql_string(mp3name) +"',"+str(type)+","+str(result)+","+str(milliseconds)+","+str(whenutcmilliseconds)+")"
+    print(sq)
     mycursor.execute(sql)
     mydb.commit()
     mycursor.close()
