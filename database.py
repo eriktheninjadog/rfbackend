@@ -631,7 +631,10 @@ def get_failed_reading_tests(days):
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
     for (english,chinesetokens) in myresult:
-        result.append((english," ".join(json.loads(chinesetokens))))
+        try:
+            result.append((english," ".join(json.loads(chinesetokens))))
+        except Exception as e:
+            print(str(e))            
     mycursor.close()
     mydb.close()
     return result
