@@ -1470,6 +1470,8 @@ def make_examples_from_chunk():
     return jsonify({'result':'ok'})
 
 
+import failedsentences_to_mp3
+
 @app.route('/make_grammar_examples', methods=['POST'])
 def make_grammar_examples():
     grammar_pattern = request.json['grammar_pattern']
@@ -1514,43 +1516,24 @@ def make_long_time_c1_examples(pattern):
     print(result)
     txt = '<speak>'
     parsedret = json.loads(result)
-    cachedresult = []
+    tuples = []
     hinttxt = ''
     for r in parsedret:
         if "english" in r and "chinese" in r:
             english = r['english']
             chinese = r['chinese']
             # lets make tokens out of chinese
-            print(english)
-            print(chinese)
-            tradchinese = textprocessing.make_sure_traditional(chinese) + texttoaudio.get_pause_as_ssml_tag()
+            tradchinese = textprocessing.make_sure_traditional(chinese)
+            tuples.append((english,tradchinese))
             txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
             txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( english ))
             txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))            
             txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
             hinttxt += tradchinese + "\n"
-            chinesetokens = textprocessing.split_text(tradchinese)
-            cachedresult.append({'chinese':chinesetokens,'english':english})
-            #database.add_output_exercise(english,str(chinesetokens).replace("'",'"'),"nomp3",2,1,0,int(datetime.now().timestamp() * 1000))
     txt+='</speak>'
     hinttxt+='\n'
-    cachemanagement.add_examples_to_cache(cachedresult)
     file_path = "/var/www/html/mp3/spokenarticl_news_c1_"+ str(random.randint(1000,2000))+".mp3"
-    os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
-    session = boto3.Session(region_name='us-east-1')
-    polly_client = session.client('polly')
-    response = polly_client.synthesize_speech(  
-                Text=txt,
-                OutputFormat='mp3',
-                VoiceId='Hiujin',
-                Engine='neural',
-                TextType='ssml'            
-            )
-    with open(file_path, 'wb') as file:
-            file.write(response['AudioStream'].read())    
-    with open(file_path+".hint.json", 'w', encoding='utf-8') as file:
-            jsonpart = textprocessing.split_text(hinttxt)
-            file.write(json.dumps(jsonpart))    
+    failedsentences_to_mp3.generate_audio_from_tuples(tuples,file_path,scp=False)
     print("All done: "+ txt)
     
       

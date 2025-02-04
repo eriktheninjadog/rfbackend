@@ -34,7 +34,7 @@ def synthesize_speech(text, voice_id, language_code):
         print(f"Error synthesizing speech for text \"{text}\": {e}")
         return AudioSegment.silent(duration=0)  # Return silence in case of error
 
-def generate_audio_from_tuples(sentences, output_filename):
+def generate_audio_from_tuples(sentences, output_filename,scp=True):
     """
     Generate an audio file from a list of English and Cantonese sentence tuples.
     
@@ -65,10 +65,11 @@ def generate_audio_from_tuples(sentences, output_filename):
     # Export the final audio to an mp3 file
     combined_audio.export(output_filename, format="mp3")
     print(f"Audio file saved as: {output_filename}")
-    scp_command = f"scp {output_filename}* chinese.eriktamm.com:/var/www/html/mp3"
-    result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"Error uploading {output_filename}: {result.stderr}")
+    if scp:
+        scp_command = f"scp {output_filename}* chinese.eriktamm.com:/var/www/html/mp3"
+        result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Error uploading {output_filename}: {result.stderr}")
 
 import remotechineseclient
 
