@@ -1525,6 +1525,9 @@ def make_long_time_c1_examples(pattern):
             print(chinese)
             tradchinese = textprocessing.make_sure_traditional(chinese) + texttoaudio.get_pause_as_ssml_tag()
             txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( english ))
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))            
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
             hinttxt += tradchinese + "\n"
             chinesetokens = textprocessing.split_text(tradchinese)
             cachedresult.append({'chinese':chinesetokens,'english':english})
