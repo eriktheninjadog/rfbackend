@@ -2,6 +2,7 @@ import boto3
 from pydub import AudioSegment
 from io import BytesIO
 import subprocess
+import os
 
 def synthesize_speech(text, voice_id, language_code):
     """
@@ -15,6 +16,8 @@ def synthesize_speech(text, voice_id, language_code):
     Returns:
     - audio_segment: A Pydub AudioSegment of the synthesized speech.
     """
+    os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
+
     polly = boto3.client('polly', region_name='us-east-1')
                 
     try:
@@ -42,6 +45,7 @@ def generate_audio_from_tuples(sentences, output_filename,scp=True):
     - sentences: List of tuples [(english, cantonese),...].
     - output_filename: The name of the output mp3 file.
     """
+    print("generate_audio_from_tuples")
     # Silence for 4 seconds
     silence = AudioSegment.silent(duration=2000)
     

@@ -1532,6 +1532,7 @@ def make_long_time_c1_examples(pattern):
             hinttxt += tradchinese + "\n"
     txt+='</speak>'
     hinttxt+='\n'
+    print(str(tuples))
     file_path = "/var/www/html/mp3/spokenarticl_news_c1_"+ str(random.randint(1000,2000))+".mp3"
     failedsentences_to_mp3.generate_audio_from_tuples(tuples,file_path,scp=False)
     print("All done: "+ txt)
