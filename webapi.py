@@ -1645,3 +1645,45 @@ def ask_nova():
     tokens = textprocessing.split_text(text)
     return jsonify({'result': tokens})
 
+
+
+
+import coach.teaching_agent
+
+def read_bearer_key() -> str:
+    try:
+        with open('/var/www/html/api/rfbackend/routerkey.txt', 'r') as f:
+            return f.readline().strip()
+    except FileNotFoundError:
+        raise Exception("API key file not found")
+
+
+agent = coach.teaching_agent.TeachingAgent(api_key=read_bearer_key())
+
+@app.route('/coach/start_session', methods=['POST'])
+def start_session():
+    data = request.json
+    student_name = data.get('student_name')
+
+    # Set student name
+    if not agent.student_state.name and student_name:
+        agent.student_state.name = student_name
+        agent._add_system_message(f"學生名字是 {student_name}。")
+
+    return jsonify({"message": "Session started", "student_name": agent.student_state.name})
+
+@app.route('/coach/input', methods=['POST'])
+def user_input():
+    data = request.json
+    student_input = data.get('input')
+
+    # Process user input
+    if student_input:
+        try:
+            response = agent.handle_input(student_input)
+            return jsonify({"response": response})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    return jsonify({"error": "No input provided"}), 400
+
