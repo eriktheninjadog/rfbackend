@@ -1,8 +1,8 @@
-from llm_service import LLMService
-from feedback_analyzer import FeedbackAnalyzer
-from scenario_manager import ScenarioManager
-from state_manager import StateManager
-from models import RolePlayScenario,StudentState
+from coach.llm_service import LLMService
+from coach.feedback_analyzer import FeedbackAnalyzer
+from coach.scenario_manager import ScenarioManager
+from coach.state_manager import StateManager
+from coach.models import RolePlayScenario,StudentState
 
 from typing import List,Dict
 
