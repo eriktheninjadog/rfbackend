@@ -2,8 +2,8 @@
 from typing import Dict
 import json
 
-from llm_service import LLMService
-from models import RolePlayScenario
+from coach.llm_service import LLMService
+from coach.models import RolePlayScenario
 
 class ScenarioManager:
     def __init__(self, llm_service: LLMService):

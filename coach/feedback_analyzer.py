@@ -1,5 +1,5 @@
 # feedback_analyzer.py
-from llm_service import LLMService
+from coach.llm_service import LLMService
 from typing import Dict, List
 import json
 

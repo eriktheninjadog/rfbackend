@@ -3,7 +3,7 @@ import json
 import os
 
 from typing import List, Dict
-from models import StudentState
+from coach.models import StudentState
 
 class StateManager:
     @staticmethod
