@@ -1870,6 +1870,8 @@ def chat():
     else:
        print(f"API call failed with status code {response.status_code}")
        print(response.text)
+       print(headers)
+       print(payload)
     
     return jsonify({"error": "API call failed"}), 500
 
