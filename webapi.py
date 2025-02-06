@@ -1867,6 +1867,9 @@ def chat():
         ai_message = response.json()['choices'][0]['message']['content']
         session.add_message("assistant", ai_message)
         return jsonify({"response": ai_message})
+    else:
+       print(f"API call failed with status code {response.status_code}")
+       print(response.text)
     
     return jsonify({"error": "API call failed"}), 500
 
