@@ -1773,7 +1773,7 @@ def index():
             let sessionId = null;
             
             function createSession() {
-                fetch('/session', { method: 'POST' })
+                fetch('https://chinese.eriktamm.com/api/session', { method: 'POST' })
                     .then(r => r.json())
                     .then(data => sessionId = data.session_id);
             }
@@ -1784,7 +1784,7 @@ def index():
                 
                 chat.innerHTML += `<div class="message"><b>You:</b> ${input.value}</div>`;
                 
-                fetch('/chat', {
+                fetch('https://chinese.eriktamm.com/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1801,7 +1801,7 @@ def index():
             }
             
             function updateModel(model) {
-                fetch('/config', {
+                fetch('https://chinese.eriktamm.com/api/config', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1812,7 +1812,7 @@ def index():
             }
             
             function updateSystemPrompt(prompt) {
-                fetch('/config', {
+                fetch('https://chinese.eriktamm.com/api/config', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
