@@ -1849,7 +1849,7 @@ def chat():
     
     # Call OpenRouter API
     headers = {
-        "Authorization": f"Bearer {read_bearer_key()}",
+        "Authorization": read_bearer_key(),
         "Content-Type": "application/json"
     }
     
