@@ -9,6 +9,7 @@ from typing import List,Dict
 #teaching_agent.py
 class TeachingAgent:
     def __init__(self, api_key: str):
+        print("teaching agent started")
         self.llm_service = LLMService(api_key)
         self.feedback_analyzer = FeedbackAnalyzer(self.llm_service)
         self.scenario_manager = ScenarioManager(self.llm_service)
