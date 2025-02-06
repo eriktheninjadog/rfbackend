@@ -1,4 +1,4 @@
-# scenario_manager.py
+# scenario_manager.
 from typing import Dict
 import json
 

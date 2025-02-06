@@ -1687,3 +1687,198 @@ def user_input():
 
     return jsonify({"error": "No input provided"}), 400
 
+
+
+
+## here comes my magic bot
+sessions = {}
+
+class SessionManager:
+    def __init__(self, session_id):
+        self.session_id = session_id
+        self.messages = deque(maxlen=20)
+        self.model = "meta-llama/llama-3-70b-instruct"
+        self.context_limit = 4096  # in tokens
+        self.system_prompt = "You are a helpful assistant."
+        self._init_conversation()
+        
+    def _init_conversation(self):
+        self.messages.append({
+            "role": "system",
+            "content": self.system_prompt
+        })
+    
+    def add_message(self, role, content):
+        self.messages.append({"role": role, "content": content})
+        self._trim_context()
+    
+    def _trim_context(self):
+        current_length = sum(len(msg["content"].split()) for msg in self.messages)
+        while current_length > self.context_limit * 0.75:  # Approximate token count
+            if len(self.messages) > 1:
+                removed = self.messages.popleft()
+                if removed["role"] == "system":
+                    self.messages.appendleft(removed)  # Keep system prompt
+                    removed = self.messages.popleft()
+                current_length -= len(removed["content"].split())
+            else:
+                break
+    
+    def update_model(self, new_model):
+        self.model = new_model
+    
+    def update_system_prompt(self, new_prompt):
+        self.system_prompt = new_prompt
+        self.messages[0]["content"] = new_prompt
+
+from flask import Flask, request, jsonify, render_template_string
+import uuid
+
+@app.route('/aiclient')
+def index():
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>LLM Chat</title>
+        <style>
+            #chat { height: 400px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; }
+            .message { margin: 5px 0; padding: 5px; background: #f0f0f0; }
+            #input { width: 70%; }
+        </style>
+    </head>
+    <body>
+        <h1>LLM Chat</h1>
+        <div id="chat"></div>
+        <input type="text" id="input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+        
+        <div>
+            <label>Model: 
+            <select id="model" onchange="updateModel(this.value)">
+                <option value="qwen/qwen-plus">qwen/qwen-plus</option>
+                <option value="meta-llama/llama-3-70b-instruct">Llama 3 70B</option>
+                <option value="google/palm-2">PaLM 2</option>
+                <option value="openchat/openchat-7b">OpenChat 7B</option>
+            </select>
+            </label>
+            
+            <label>System Prompt: 
+            <input type="text" id="system_prompt" onchange="updateSystemPrompt(this.value)" 
+                   value="You are a helpful assistant." style="width: 300px;">
+            </label>
+        </div>
+
+        <script>
+            let sessionId = null;
+            
+            function createSession() {
+                fetch('/session', { method: 'POST' })
+                    .then(r => r.json())
+                    .then(data => sessionId = data.session_id);
+            }
+            
+            function sendMessage() {
+                const input = document.getElementById('input');
+                const chat = document.getElementById('chat');
+                
+                chat.innerHTML += `<div class="message"><b>You:</b> ${input.value}</div>`;
+                
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        message: input.value
+                    })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    chat.innerHTML += `<div class="message"><b>Assistant:</b> ${data.response}</div>`;
+                    chat.scrollTop = chat.scrollHeight;
+                    input.value = '';
+                });
+            }
+            
+            function updateModel(model) {
+                fetch('/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        model: model
+                    })
+                });
+            }
+            
+            function updateSystemPrompt(prompt) {
+                fetch('/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        system_prompt: prompt
+                    })
+                });
+            }
+            
+            // Initialize session on page load
+            window.onload = createSession;
+        </script>
+    </body>
+    </html>
+    ''')
+
+@app.route('/session', methods=['POST'])
+def create_session():
+    session_id = str(uuid.uuid4())
+    sessions[session_id] = SessionManager(session_id)
+    return jsonify({"session_id": session_id})
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    session = sessions.get(data['session_id'])
+    
+    if not session:
+        return jsonify({"error": "Invalid session"}), 404
+    
+    session.add_message("user", data['message'])
+    
+    # Call OpenRouter API
+    headers = {
+        "Authorization": f"Bearer {read_bearer_key()}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "model": session.model,
+        "messages": list(session.messages),
+        "temperature": 0.7
+    }
+    
+    response = requests.post("https://openrouter.ai/api/v1/chat/completions",
+                            headers=headers,
+                            json=payload)
+    
+    if response.status_code == 200:
+        ai_message = response.json()['choices'][0]['message']['content']
+        session.add_message("assistant", ai_message)
+        return jsonify({"response": ai_message})
+    
+    return jsonify({"error": "API call failed"}), 500
+
+@app.route('/config', methods=['POST'])
+def update_config():
+    data = request.json
+    session = sessions.get(data['session_id'])
+    
+    if not session:
+        return jsonify({"error": "Invalid session"}), 404
+    
+    if 'model' in data:
+        session.update_model(data['model'])
+    if 'system_prompt' in data:
+        session.update_system_prompt(data['system_prompt'])
+    
+    return jsonify({"status": "updated"})
