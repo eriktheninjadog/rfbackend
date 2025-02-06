@@ -1733,6 +1733,8 @@ class SessionManager:
 
 from flask import Flask, request, jsonify, render_template_string
 import uuid
+from collections import deque
+
 
 @app.route('/aiclient')
 def index():
