@@ -36,6 +36,8 @@ def synthesize_speech(text, voice_id, language_code):
     except Exception as e:
         print(f"Error synthesizing speech for text \"{text}\": {e}")
         return AudioSegment.silent(duration=0)  # Return silence in case of error
+    
+import expandmp3file
 
 def generate_audio_from_tuples(sentences, output_filename,scp=True):
     """
@@ -74,10 +76,12 @@ def generate_audio_from_tuples(sentences, output_filename,scp=True):
         result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
         if result.returncode != 0:
             print(f"Error uploading {output_filename}: {result.stderr}")
-
+        expandmp3file.process_mp3_file(output_filename)
+        
+        
 import remotechineseclient
-
+import random
 # Example Usage
 if __name__ == "__main__":
     sentences = remotechineseclient.access_remote_client("getfailedreadingtests",{"days":48})
-    generate_audio_from_tuples(sentences, "spokenarticle_news_failed.mp3")
+    generate_audio_from_tuples(sentences, "spokenarticle_news_failed"+ str(random.randint(0,100)) +".mp3")

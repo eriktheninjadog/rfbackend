@@ -1875,6 +1875,9 @@ def chat():
     
     return jsonify({"error": "API call failed"}), 500
 
+
+
+
 @app.route('/config', methods=['POST'])
 def update_config():
     data = request.json
@@ -1889,3 +1892,41 @@ def update_config():
         session.update_system_prompt(data['system_prompt'])
     
     return jsonify({"status": "updated"})
+
+
+
+import activity_time_tracker
+
+# Flask route to get accumulated time for an activity
+@app.route('/get_time', methods=['GET'])
+def get_time():
+    activity_name = request.args.get('activity_name')
+
+    if not activity_name:
+        return jsonify({"error": "Activity name is required"}), 400
+
+    accumulated_time = activity_time_tracker.get_accumulated_time(activity_name)
+
+    return jsonify({
+        "activity_name": activity_name,
+        "accumulated_time": accumulated_time
+    }), 200
+
+
+@app.route('/add_time', methods=['POST'])
+def add_time():
+    data = request.get_json()
+    activity_name = data.get('activity_name')
+    milliseconds_to_add = data.get('milliseconds_to_add')
+
+    if not activity_name or not isinstance(milliseconds_to_add, int) or milliseconds_to_add < 0:
+        return jsonify({"error": "Invalid input"}), 400
+
+    success = activity_time_tracker.add_time_to_activity(activity_name, milliseconds_to_add)
+
+    if success:
+        return jsonify({"message": "Time added successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to add time"}), 500
+
+
