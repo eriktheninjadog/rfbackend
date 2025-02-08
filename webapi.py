@@ -1470,7 +1470,6 @@ def make_examples_from_chunk():
     return jsonify({'result':'ok'})
 
 
-import failedsentences_to_mp3
 
 @app.route('/make_grammar_examples', methods=['POST'])
 def make_grammar_examples():
@@ -1534,7 +1533,7 @@ def make_long_time_c1_examples(pattern):
     hinttxt+='\n'
     print(str(tuples))
     file_path = "/var/www/html/mp3/spokenarticl_news_c1_"+ str(random.randint(1000,2000))+".mp3"
-    failedsentences_to_mp3.generate_audio_from_tuples(tuples,file_path,scp=False)
+    #failedsentences_to_mp3.generate_audio_from_tuples(tuples,file_path,scp=False)
     print("All done: "+ txt)
     
       
