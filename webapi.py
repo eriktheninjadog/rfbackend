@@ -1929,3 +1929,35 @@ def add_time():
         return jsonify({"error": "Failed to add time"}), 500
 
 
+@app.route('/llmentries', methods=['POST'])
+def add_entry():
+    """Add a new entry to the llm_interaction_log table."""
+    data = request.json
+    prompt = data.get('prompt')
+    system_prompt = data.get('system_prompt')
+    reply = data.get('reply')
+
+    if not all([prompt, reply]):
+        return jsonify({"error": "Prompt and reply are required fields."}), 400
+
+    database.add_entry(prompt=prompt,system_prompt=system_prompt,reply=reply)
+    return jsonify({"result": "Time added successfully"}), 200
+
+
+@app.route('/llmentries', methods=['GET'])
+def get_all_entries():
+    """Retrieve all entries from the llm_interaction_log table."""
+    try:
+        result = database.get_all_entries()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/llmentries/last_24_hours', methods=['GET'])
+def get_entries_last_24_hours():
+    """Retrieve entries added within the last 24 hours."""
+    try:
+        result = database.get_entries_last_24_hours()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

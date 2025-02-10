@@ -144,6 +144,7 @@ def get_connection():
     )
     return mydb
 
+
 def add_look_up(term,cwsid):
     mydb = get_connection()
     mycursor = mydb.cursor()
@@ -639,5 +640,51 @@ def get_failed_reading_tests(days):
     mydb.close()
     return result
 
+def add_entry(prompt, system_prompt, reply):
+    """Add a new entry to the llm_interaction_log table."""
+    mydb = get_connection()
+    mycursor = mydb.cursor()
 
+    mycursor.execute('''
+        INSERT INTO llm_interaction_log (prompt, system_prompt, reply)
+        VALUES (%s, %s, %s)
+    ''', (prompt, system_prompt, reply))
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
+
+def get_all_entries():
+    """Retrieve all entries from the llm_interaction_log table."""
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    result = []
+    mycursor.execute('''
+        SELECT reply FROM llm_interaction_log
+    ''')
+    myresult = mycursor.fetchall()
+    for (reply) in myresult:
+        result.append(reply)
+    mycursor.close()
+    mydb.close()
+    return result
+
+import datetime
+def get_entries_last_24_hours(self):
+    """Retrieve entries added within the last 24 hours."""
+    result = []
+    mydb = get_connection()
+    mycursor = mydb.cursor()
+    now = datetime.datetime.now()
+    twenty_four_hours_ago = now - datetime.timedelta(hours=24)
+    self.cursor.execute('''
+        SELECT reply FROM llm_interaction_log
+        WHERE created_at >= %s
+    ''', (twenty_four_hours_ago.strftime('%Y-%m-%d %H:%M:%S'),))
+    
+    myresult = mycursor.fetchall()
+    for (reply) in myresult:
+        result.append(reply)
+    mycursor.close()
+    mydb.close()
+    return result
 
