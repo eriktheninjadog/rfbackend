@@ -1959,6 +1959,6 @@ def get_entries_last_24_hours():
     """Retrieve entries added within the last 24 hours."""
     try:
         result = database.get_entries_last_24_hours()
-        return jsonify(result), 200
+        return jsonify({"result":result}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

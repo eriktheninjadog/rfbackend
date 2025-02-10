@@ -22,3 +22,16 @@ def access_remote_client(endpoint,payload):
         print('Request failed. Status code:', str(response.status_code) + " " + endpoint)
         return None
         
+    
+def access_remote_client_get(endpoint):
+    base_url = 'https://chinese.eriktamm.com/api/'
+    # Send the GET request with the parameters
+    response = requests.get(base_url + endpoint)
+
+    # Check the response status code
+    if response.status_code == 200:
+        print('Request successful!')
+        return response.json()['result']
+    else:
+        print('Request failed. Status code:', str(response.status_code) + " " + endpoint)
+        return None
