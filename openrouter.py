@@ -9,6 +9,9 @@ from datetime import datetime
 from typing import List, Dict, Optional, Union
 from pathlib import Path
 
+
+import database
+
 class OpenRouterAPI:
     BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
     
@@ -208,6 +211,7 @@ class OpenRouterAPI:
             self.logger.info(f"Getting completion from {model}")
             response = self._make_request(model, messages)
             print(str(response))
+            database.add_entry("prompt", "system_prompt", response['choices'][0]['message']['content'])
             return response['choices'][0]['message']['content']
         except Exception as e:
             error_msg = f"Error getting completion: {str(e)}"
