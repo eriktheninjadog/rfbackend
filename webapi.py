@@ -1765,8 +1765,8 @@ def index():
             </label>
             
             <label>System Prompt: 
-            <input type="text" id="system_prompt" onchange="updateSystemPrompt(this.value)" 
-                   value="You are a helpful assistant." style="width: 300px;">
+            <textarea id="system_prompt" onchange="updateSystemPrompt(this.value)" 
+                      style="width: 300px; height: 100px;">You are a helpful assistant.</textarea>
             </label>
         </div>
 

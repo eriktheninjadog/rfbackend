@@ -669,14 +669,14 @@ def get_all_entries():
     return result
 
 import datetime
-def get_entries_last_24_hours(self):
+def get_entries_last_24_hours():
     """Retrieve entries added within the last 24 hours."""
     result = []
     mydb = get_connection()
     mycursor = mydb.cursor()
     now = datetime.datetime.now()
     twenty_four_hours_ago = now - datetime.timedelta(hours=24)
-    self.cursor.execute('''
+    mycursor.execute('''
         SELECT reply FROM llm_interaction_log
         WHERE created_at >= %s
     ''', (twenty_four_hours_ago.strftime('%Y-%m-%d %H:%M:%S'),))
