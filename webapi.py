@@ -1969,7 +1969,7 @@ def coachfeedback():
     txtmass = ""
     result = database.get_entries_last_24_hours()
     for r in result:
-        txtmass += r + "\n"
+        txtmass += str(r) + "\n"
     api = openrouter.OpenRouterAPI()
     result = api.open_router_claude_3_5_sonnet("You are a language teaching expert, helping teachers to make their tutoring more efficient","From this lesson transcript, write notes what the student needs to practice on:" + txtmass)
     return jsonify({"result":result}), 200
