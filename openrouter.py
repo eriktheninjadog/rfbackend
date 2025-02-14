@@ -103,6 +103,13 @@ class OpenRouterAPI:
             "meta-llama/llama-3.1-8b-instruct",
             user_content
         )
+        
+    def open_router_meta_llama_3_3_70b(self, user_content: str) -> str:
+        return self.get_completion(
+            "meta-llama/llama-3.3-70b-instruct",
+            user_content
+        )
+
 
     def open_router_chatgpt_4o1_preview(self, system_content: str, user_content: str) -> str:
         return self.get_completion(
@@ -162,9 +169,9 @@ class OpenRouterAPI:
             "deepseek/deepseek-r1",
             user_content)
 
-    def open_router_deepseek_r1(self, user_content: str) -> str:
+    def open_router_deepseek_v3(self, user_content: str) -> str:
         return self.get_completion(
-            "deepseek/deepseek-r1",
+            "deepseek/deepseek-chat",
             user_content)
 
 
