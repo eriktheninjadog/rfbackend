@@ -1696,8 +1696,8 @@ class SessionManager:
     def __init__(self, session_id):
         self.session_id = session_id
         self.messages = deque(maxlen=20)
-        self.model = "meta-llama/llama-3-70b-instruct"
-        self.context_limit = 4096  # in tokens
+        self.model = "anthropic/claude-3.5-sonnet"
+        self.context_limit = 1024*100  # in tokens
         self.system_prompt = "You are a helpful assistant."
         self._init_conversation()
         
@@ -1865,7 +1865,7 @@ def chat():
     if response.status_code == 200:
         ai_message = response.json()['choices'][0]['message']['content']
         session.add_message("assistant", ai_message)
-        database.add_entry(prompt="prompt",system_prompt="",reply=ai_message)
+        database.add_entry(prompt="prompt",system_prompt=data['system_prompt'],reply=ai_message)
         return jsonify({"response": ai_message})
     else:
        print(f"API call failed with status code {response.status_code}")
@@ -1973,3 +1973,4 @@ def coachfeedback():
     api = openrouter.OpenRouterAPI()
     result = api.open_router_claude_3_5_sonnet("You are a language teaching expert, helping teachers to make their tutoring more efficient","From this lesson transcript, write notes what the student needs to practice on:" + txtmass)
     return jsonify({"result":result}), 200
+  

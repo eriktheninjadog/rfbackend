@@ -193,7 +193,7 @@ def main():
         
     )
 
-    audio_file_path = "/home/erik/Downloads/deadringer3.mp3"
+    audio_file_path = "/home/erik/Downloads/deadringer4.mp3"
     
     print("Starting transcription process...")
     srt_content = transcribe_audio(audio_file_path, config)
