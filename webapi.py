@@ -1698,7 +1698,7 @@ class SessionManager:
         self.messages = deque(maxlen=20)
         self.model = "anthropic/claude-3.5-sonnet"
         self.context_limit = 1024*100  # in tokens
-        self.system_prompt = "You are a helpful assistant."
+        self.system_prompt = "You are a Cantonese tutor. You will present a sentence in English C1 level and the user will reply with a translation in Cantonese. You will correct the users response, give suggestions on how to make it more natural and if the user makes mistakes, ask more questions with similar patterns."
         self._init_conversation()
         
     def _init_conversation(self):
