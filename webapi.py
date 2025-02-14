@@ -1865,7 +1865,7 @@ def chat():
     if response.status_code == 200:
         ai_message = response.json()['choices'][0]['message']['content']
         session.add_message("assistant", ai_message)
-        database.add_entry(prompt="prompt",system_prompt=data['system_prompt'],reply=ai_message)
+        database.add_entry(prompt="prompt",system_prompt=session.system_prompt,reply=ai_message)
         return jsonify({"response": ai_message})
     else:
        print(f"API call failed with status code {response.status_code}")
