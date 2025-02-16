@@ -1987,3 +1987,4 @@ def update_jyutping_dict_prio():
     characters = request.args.get('characters')
     for c in characters:        
         myinputmethod.update_input_method_prio(c)
+    return jsonify({"result":'ok'}), 200
