@@ -10,14 +10,14 @@ def process_jyutping_file(input_file_path):
         lines = f.readlines()
     jyutping_dict = {}
     for line in lines:
-        k = line.split('\t')
-        if len(k) < 2:
+        columns = line.split('\t')
+        if len(columns) < 2:
             continue
-        jyutping = k[1].strip()
-        chinese = k[0]
+        jyutping = columns[1].strip()
+        chinese_character = columns[0]
         if jyutping not in jyutping_dict:
             jyutping_dict[jyutping] = []
-        jyutping_dict[jyutping].append(chinese)    
+        jyutping_dict[jyutping].append(chinese_character)    
     return jyutping_dict
 
 def move_lines_to_top(character, filename):
