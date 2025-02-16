@@ -1974,3 +1974,16 @@ def coachfeedback():
     result = api.open_router_claude_3_5_sonnet("You are a language teaching expert, helping teachers to make their tutoring more efficient","From this lesson transcript, write notes what the student needs to practice on:" + txtmass)
     return jsonify({"result":result}), 200
   
+  
+import myinputmethod
+
+@app.route('/jyutpingdict', methods=['GET'])
+def jyutpingdict():
+    jdict = myinputmethod.get_jyutping_dict()
+    return jsonify({"result":jdict}), 200
+   
+@app.route('/update_jyutping_dict_prio', methods=['GET'])
+def update_jyutping_dict_prio():
+    characters = request.args.get('characters')
+    for c in characters:        
+        myinputmethod.update_input_method_prio(c)

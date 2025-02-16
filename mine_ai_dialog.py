@@ -76,7 +76,7 @@ orgtext = result
 print(str(blop))
 for i in range(10):
     result = api.open_router_claude_3_5_sonnet("You are a language teaching expert, helping teachers to make their tutoring more efficient","From this lesson transcript, write notes what the student needs to practice on:" + orgtext)
-    result = api.open_router_claude_3_5_sonnet("You are a Cantonese coach, All your Cantonese should be spoken correct Cantonese.","Make 40 sentences in Cantonese to a student based upon the notes from this teacher. Return format should be in SSML with each sentence repeated two times and a pause between each sentence. Return all sentences." + result)
+    result = api.open_router_claude_3_5_sonnet("You are a Cantonese coach, All your Cantonese should be spoken correct Cantonese.","Make 40 sentences in Cantonese to a student based upon the notes from this teacher. Return format should be in SSML with each sentence repeated two times and a pause between each sentence. Return all sentences. Do not include jyutping or other pronounciation" + result)
     result = extract_ssml_content(result)
 
     filename = f"spokenarticle_news{time.time()}.mp3"
