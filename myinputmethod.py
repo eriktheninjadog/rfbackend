@@ -2,7 +2,7 @@
 
 import json
 
-jyutping_file_path = "gulag.txt"
+jyutping_file_path = "/var/www/html/mp3/gulag.txt"
 
 
 def process_jyutping_file(input_file_path):
