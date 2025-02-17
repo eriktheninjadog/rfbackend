@@ -1836,6 +1836,13 @@ def create_session():
     sessions[session_id] = SessionManager(session_id)
     return jsonify({"session_id": session_id})
 
+
+def is_chinese(character):
+    code_point = ord(character)
+    # Check if the character's code point is in the range of Chinese characters
+    return '\u4E00' <= character <= '\u9FFF'
+
+
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
@@ -1865,6 +1872,10 @@ def chat():
     if response.status_code == 200:
         ai_message = response.json()['choices'][0]['message']['content']
         session.add_message("assistant", ai_message)
+        for c in ai_message:
+            if (is_chinese(c)):
+                myinputmethod.update_input_method_prio(c)
+
         database.add_entry(prompt="prompt",system_prompt=session.system_prompt,reply=ai_message)
         return jsonify({"response": ai_message})
     else:
