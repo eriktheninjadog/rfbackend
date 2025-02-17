@@ -34,6 +34,7 @@ def get_jyutping_dict():
     return process_jyutping_file(jyutping_file_path)
 
 def update_input_method_prio(character):
+    print("updating character: " + str(character))
     move_lines_to_top(character, jyutping_file_path)
 
 
