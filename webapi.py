@@ -1832,11 +1832,13 @@ def index():
 
 @app.route('/session', methods=['POST'])
 def create_session():
-    session_id = str(uuid.uuid4())
-    sessions[session_id] = SessionManager(session_id)
-    return jsonify({"session_id": session_id})
-
-
+    if not sessions:
+        session_id = str(uuid.uuid4())
+        sessions[session_id] = SessionManager(session_id)
+        return jsonify({"session_id": session_id})
+    else:
+        return jsonify({"session_id": next(iter(sessions))})
+    
 def is_chinese(character):
     code_point = ord(character)
     # Check if the character's code point is in the range of Chinese characters
