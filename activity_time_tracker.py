@@ -152,7 +152,7 @@ def get_total_accumulated_time(activity_name: str) -> int:
 
         # Query to get the accumulated time
         select_query = """
-            SELECT TotalAccumulatedTime FROM ActivityTimes 
+            SELECT AccumulatedTime FROM TotalActivityTimes 
             WHERE ActivityName = %s
         """
         cursor.execute(select_query, (activity_name,))
