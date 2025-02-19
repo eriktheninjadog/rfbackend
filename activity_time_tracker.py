@@ -92,14 +92,7 @@ def get_accumulated_time(activity_name: str) -> int:
     Returns:
         int: Accumulated time in milliseconds, or 0 if activity not found
     """
-    # Database connection configuration
-    db_config = {
-        'host': 'localhost',
-        'user': 'your_username',
-        'password': 'your_password',
-        'database': 'your_database'
-    }
-
+  
     try:
         # Validate input
         if not activity_name or not isinstance(activity_name, str):
@@ -147,13 +140,7 @@ def get_total_accumulated_time(activity_name: str) -> int:
         int: Accumulated time in milliseconds, or 0 if activity not found
     """
     # Database connection configuration
-    db_config = {
-        'host': 'localhost',
-        'user': 'your_username',
-        'password': 'your_password',
-        'database': 'your_database'
-    }
-
+  
     try:
         # Validate input
         if not activity_name or not isinstance(activity_name, str):

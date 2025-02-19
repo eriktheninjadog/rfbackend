@@ -1943,6 +1943,22 @@ def add_time():
         return jsonify({"error": "Failed to add time"}), 500
 
 
+
+@app.route('/getwritingtime', methods=['GET'])
+def get_writing_time():
+    try:
+        total_time = activity_time_tracker.get_accumulated_time('writing')
+        daily_time = activity_time_tracker.get_daily_time('writing')
+        return jsonify({
+            "totalTime": total_time,
+            "dailyTime": daily_time
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+
 @app.route('/llmentries', methods=['POST'])
 def add_entry():
     """Add a new entry to the llm_interaction_log table."""
