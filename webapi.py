@@ -1947,8 +1947,8 @@ def add_time():
 @app.route('/getwritingtime', methods=['GET'])
 def get_writing_time():
     try:
-        total_time = activity_time_tracker.get_accumulated_time('writing')
-        daily_time = activity_time_tracker.get_daily_time('writing')
+        total_time = activity_time_tracker.get_total_accumulated_time('writing')
+        daily_time = activity_time_tracker.get_accumulated_time('writing')
         return jsonify({
             "totalTime": total_time,
             "dailyTime": daily_time
