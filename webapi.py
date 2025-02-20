@@ -2020,44 +2020,44 @@ def update_jyutping_dict_prio():
 
 
 
-    # Dictionary to store activity goals
-    activity_goals = {}
+# Dictionary to store activity goals
+activity_goals = {}
 
-    # Load existing goals from file if available
-    def load_goals():
-        global activity_goals
-        try:
-            with open('/var/www/html/scene/activity_goals.json', 'r') as f:
-                activity_goals = json.load(f)
-        except FileNotFoundError:
-            activity_goals = {}
+# Load existing goals from file if available
+def load_goals():
+    global activity_goals
+    try:
+        with open('/var/www/html/scene/activity_goals.json', 'r') as f:
+            activity_goals = json.load(f)
+    except FileNotFoundError:
+        activity_goals = {}
 
-    # Save goals to file
-    def save_goals():
-        with open('/var/www/html/scene/activity_goals.json', 'w') as f:
-            json.dump(activity_goals, f)
+# Save goals to file
+def save_goals():
+    with open('/var/www/html/scene/activity_goals.json', 'w') as f:
+        json.dump(activity_goals, f)
 
-    # Load goals at startup
-    load_goals()
+# Load goals at startup
+load_goals()
 
-    @app.route('/studygoals/set', methods=['POST'])
-    def set_study_goal():
-        data = request.json
-        activity = data.get('activity')
-        hours = data.get('hours')
-        if not activity or not isinstance(hours, (int, float)):
-            return jsonify({'error': 'Invalid input'}), 400
-        activity_goals[activity] = hours
-        save_goals()
-        return jsonify({'result': 'Goal set successfully'}), 200
+@app.route('/studygoals/set', methods=['POST'])
+def set_study_goal():
+    data = request.json
+    activity = data.get('activity')
+    hours = data.get('hours')
+    if not activity or not isinstance(hours, (int, float)):
+        return jsonify({'error': 'Invalid input'}), 400
+    activity_goals[activity] = hours
+    save_goals()
+    return jsonify({'result': 'Goal set successfully'}), 200
 
-    @app.route('/studygoals/get', methods=['GET'])
-    def get_study_goal():
-        activity = request.args.get('activity')
-        if not activity:
-            return jsonify({'error': 'Activity parameter is required'}), 400
-        hours = activity_goals.get(activity)
-        if hours is None:
-            return jsonify({'error': 'Activity not found'}), 404
-        return jsonify({'activity': activity, 'hours': hours}), 200
+@app.route('/studygoals/get', methods=['GET'])
+def get_study_goal():
+    activity = request.args.get('activity')
+    if not activity:
+        return jsonify({'error': 'Activity parameter is required'}), 400
+    hours = activity_goals.get(activity)
+    if hours is None:
+        return jsonify({'error': 'Activity not found'}), 404
+    return jsonify({'activity': activity, 'hours': hours}), 200
     
