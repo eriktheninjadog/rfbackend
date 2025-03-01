@@ -38,6 +38,16 @@ def is_valid_ssml(ssml_string):
         return False
 
 
+
+def get_pause_as_ssml_tag():
+    return "<break time='0.2s'/>"
+
+
+def surround_text_with_short_pause(text):
+    return get_pause_as_ssml_tag() + text + get_pause_as_ssml_tag()
+
+
+
 def wrap_in_ssml(text: str) -> str:
     """Translate the text to spoken Cantonese using OpenRouter."""
     try:

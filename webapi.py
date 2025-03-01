@@ -1504,6 +1504,40 @@ def make_grammar_examples():
 import texttoaudio
 
 
+
+def make_long_time_b1_examples(pattern):
+    api=openrouter.OpenRouterAPI()
+    result = api.open_router_deepseek_r1(
+    "Create 20 sentences in B1 level spoken Cantonese " + pattern + " \nReturn these together with english translation in json format like this: [{\"english\":ENGLISH_SENTENCE,\"chinese\":CANTONESE_TRANSLATION}].Only respond with the json structure.")
+    i = result.find("[")
+    result = result[i:]
+    i = result.find("]")
+    result = result[:i+1]
+    print(result)
+    txt = '<speak>'
+    parsedret = json.loads(result)
+    tuples = []
+    hinttxt = ''
+    for r in parsedret:
+        if "english" in r and "chinese" in r:
+            english = r['english']
+            chinese = r['chinese']
+            # lets make tokens out of chinese
+            tradchinese = textprocessing.make_sure_traditional(chinese)
+            tuples.append((english,tradchinese))
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( english ))
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))            
+            txt+= texttoaudio.surround_text_with_short_pause(texttoaudio.surround_text_with_short_pause( tradchinese ))
+            hinttxt += tradchinese + "\n"
+    txt+='</speak>'
+    hinttxt+='\n'
+    print(str(tuples))
+    file_path = "/var/www/html/mp3/spokenarticl_news_c1_"+ str(random.randint(1000,2000))+".mp3"
+    #failedsentences_to_mp3.generate_audio_from_tuples(tuples,file_path,scp=False)
+    print("All done: "+ txt)
+
+
 def make_long_time_c1_examples(pattern):
     api=openrouter.OpenRouterAPI()
     result = api.open_router_deepseek_r1(
@@ -1611,8 +1645,6 @@ def getfailedreadingtests():
     except Exception as e:
         print(str(e))
         return jsonify({'result':None,"reason":str(e)})
-
-
 
 import base64
 
@@ -2003,6 +2035,20 @@ def coachfeedback():
     result = api.open_router_claude_3_5_sonnet("You are a language teaching expert, helping teachers to make their tutoring more efficient","From this lesson transcript, write notes what the student needs to practice on:" + txtmass)
     return jsonify({"result":result}), 200
   
+
+@app.route('/make_lesson_vocabulary', methods=['GET'])
+def coachfeedback():
+    txtmass = ""
+    result = database.get_entries_from_last_n_days(7)
+    for r in result:
+        txtmass += str(r) + "\n"
+    api = openrouter.OpenRouterAPI()
+    result = api.open_router_meta_llama_3_3_70b("Extract the Cantonese vocabulary from this text,put one term on each line :" + txtmass)
+    make_long_time_b1_examples(result)
+    return jsonify({"result":result}), 200
+
+
+
   
 import myinputmethod
 
