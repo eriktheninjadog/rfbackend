@@ -669,17 +669,17 @@ def get_all_entries():
     return result
 
 import datetime
-def get_entries_last_24_hours():
-    """Retrieve entries added within the last 24 hours."""
+def get_entries_from_last_n_days(days=1):
+    """Retrieve entries added within the last n days."""
     result = []
     mydb = get_connection()
     mycursor = mydb.cursor()
     now = datetime.datetime.now()
-    twenty_four_hours_ago = now - datetime.timedelta(hours=24)
+    n_days_ago = now - datetime.timedelta(days=days)
     mycursor.execute('''
         SELECT reply FROM llm_interaction_log
         WHERE created_at >= %s
-    ''', (twenty_four_hours_ago.strftime('%Y-%m-%d %H:%M:%S'),))
+    ''', (n_days_ago.strftime('%Y-%m-%d %H:%M:%S'),))
     
     myresult = mycursor.fetchall()
     for (reply) in myresult:
@@ -687,4 +687,8 @@ def get_entries_last_24_hours():
     mycursor.close()
     mydb.close()
     return result
+
+def get_entries_last_24_hours():
+    """Retrieve entries added within the last 24 hours."""
+    return get_entries_from_last_n_days(1)
 

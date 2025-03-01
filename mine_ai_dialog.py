@@ -73,27 +73,61 @@ def extract_ssml_content(ssml_text: str) -> str:
 
 
 from time import sleep
+def mine_lessons():
+    response = remotechineseclient.access_remote_client_get("llmentries/last_24_hours")
+    api = openrouter.OpenRouterAPI()
+    blop = extract_text(response)
+    result = ""
+    for b in blop:
+        result += b
+    orgtext = result
+    print(str(blop))
+    for i in range(10):
+        corgtext = remove_non_chinese_characters(orgtext)
+        remotechineseclient.access_remote_client("make_c1_examples",{"pattern":" using sentence patterns and vocabulary found in this text: \n "+corgtext})
+        sleep(180)
+        result = api.open_router_claude_3_5_sonnet("You are a language teaching expert, helping teachers to make their tutoring more efficient","From this lesson transcript, write notes what the student needs to practice on:" + orgtext)
+        result = api.open_router_claude_3_5_sonnet("You are a Cantonese coach, All your Cantonese should be spoken correct Cantonese.","Make 40 sentences in Cantonese to a student based upon the notes from this teacher. Return format should be in SSML with each sentence repeated two times and a pause between each sentence. Return all sentences. Do not include jyutping or other pronounciation" + result)
+        result = extract_ssml_content(result)
+        filename = f"spokenarticle_news{time.time()}.mp3"
+        cantonese_text_to_mp3(result, filename)
+        scp_command = f"scp {filename}* chinese.eriktamm.com:/var/www/html/mp3"
+        result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+        scp_command = f"scp {filename}* chinese.eriktamm.com:/var/www/html/mp3"
+        result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 
-response = remotechineseclient.access_remote_client_get("llmentries/last_24_hours")
-api = openrouter.OpenRouterAPI()
-blop = extract_text(response)
-result = ""
-for b in blop:
-    result += b
-orgtext = result
-print(str(blop))
-for i in range(10):
-    corgtext = remove_non_chinese_characters(orgtext)
-    remotechineseclient.access_remote_client("make_c1_examples",{"pattern":" using sentence patterns and vocabulary found in this text: \n "+corgtext})
-    sleep(180)
-    result = api.open_router_claude_3_5_sonnet("You are a language teaching expert, helping teachers to make their tutoring more efficient","From this lesson transcript, write notes what the student needs to practice on:" + orgtext)
-    result = api.open_router_claude_3_5_sonnet("You are a Cantonese coach, All your Cantonese should be spoken correct Cantonese.","Make 40 sentences in Cantonese to a student based upon the notes from this teacher. Return format should be in SSML with each sentence repeated two times and a pause between each sentence. Return all sentences. Do not include jyutping or other pronounciation" + result)
-    result = extract_ssml_content(result)
 
-    filename = f"spokenarticle_news{time.time()}.mp3"
-    cantonese_text_to_mp3(result, filename)
+import textprocessing
+import openrouter
+import json
+def mine_lessons_to_dialog():
+    api = openrouter.OpenRouterAPI()
+    response = remotechineseclient.access_remote_client_get("llmentries/last_24_hours")
+    blop = extract_text(response)
+    result = ""
+    for b in blop:
+        result += b
+    orgtext = result
+    orgtext = remove_non_chinese_characters(orgtext)
+    corgtext = textprocessing.make_sure_traditional(orgtext)    
+    result = api.open_router_deepseek_r1("From this corpus, create a Cantonese dialog that provides examples of the grammar and vocabulary. Here is the corpus:  " + corgtext)
+    corgtext = ""
+    txt = "<speak>"
+    for i in result.split('\n'):    
+        corgtext += textprocessing.make_sure_traditional(i) + "\n"
+        txt+=ssml.surround_text_with_short_pause(i)
+    txt+="</speak>"
+    filename = f"spokenarticle_news_dia_{time.time()}.mp3"
+    cantonese_text_to_mp3(txt, filename)
+    splitter = textprocessing.split_text(corgtext)
+    f = open(filename+".hint.json","w",encoding="utf-8")
+    f.write(json.dumps(splitter))
+    f.close()
     scp_command = f"scp {filename}* chinese.eriktamm.com:/var/www/html/mp3"
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+
+for i in range(0,10):
+    mine_lessons_to_dialog()
 
 
 #result = api.open_router_nova_micro_v1("Extract and organise the chinese from this text mass: " + result)
