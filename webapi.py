@@ -2037,7 +2037,7 @@ def coachfeedback():
   
 
 @app.route('/make_lesson_vocabulary', methods=['GET'])
-def coachfeedback():
+def make_lesson_vocabulary():
     txtmass = ""
     result = database.get_entries_from_last_n_days(7)
     for r in result:
