@@ -37,5 +37,11 @@ def update_input_method_prio(character):
     print("updating character: " + str(character))
     move_lines_to_top(character, jyutping_file_path)
 
-
-        
+def add_character_to_input_method(character, jyutping):
+    with open(jyutping_file_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+        for l in lines:
+            if l.find(character="\t") != -1:
+                return
+    with open(jyutping_file_path, "a", encoding="utf-8") as f:
+        f.write(f"{character}\t{jyutping}\n")
