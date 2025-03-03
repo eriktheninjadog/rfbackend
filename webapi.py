@@ -2065,6 +2065,15 @@ def update_jyutping_dict_prio():
     return jsonify({"result":'ok'}), 200
 
 
+@app.route('/add_jyutping', methods=['GET'])
+def add_jyutping():
+    character = request.args.get('character')
+    jyutping = request.args.get('jyutping')
+    myinputmethod.add_character_to_input_method(character, jyutping)
+    return jsonify({'message': 'Character added successfully'}), 200
+ 
+#add_character_to_input_method
+
 
 # Dictionary to store activity goals
 activity_goals = {}
