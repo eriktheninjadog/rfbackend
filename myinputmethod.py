@@ -5,6 +5,8 @@ import json
 jyutping_file_path = "/var/www/html/mp3/gulag.txt"
 
 
+#chinese.eriktamm.com/api/add_jyutping?character=屋企&jyutping=ukkei
+
 def process_jyutping_file(input_file_path):
     with open(input_file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
