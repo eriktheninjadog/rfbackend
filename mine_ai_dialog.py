@@ -126,10 +126,11 @@ def mine_lessons_to_dialog():
     scp_command = f"scp {filename}* chinese.eriktamm.com:/var/www/html/mp3"
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 
-for i in range(0,10):
+for i in range(0,15):
     mine_lessons_to_dialog()
 
 
 #result = api.open_router_nova_micro_v1("Extract and organise the chinese from this text mass: " + result)
 #remotechineseclient.access_remote_client("make_c1_examples", {"pattern": "use vocabulary, syntax, expressions and grammatics from this text:" +result})
  
+#Every Saturday morning I go jogging with my sister for 30 minutes."*
