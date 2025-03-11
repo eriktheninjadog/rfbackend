@@ -2116,3 +2116,14 @@ def get_study_goal():
         return jsonify({'error': 'Activity not found'}), 404
     return jsonify({'activity': activity, 'hours': hours}), 200
     
+    
+    
+    
+
+@app.route('/extract_chinese_sentences', methods=['POST'])
+def extract_chinese_sentences():
+    api = openrouter.OpenRouterAPI()
+    data = request.json
+    page = data.get('page')
+    result = api.open_router_nova_micro_v1("extract all chinese sentences from this page and return them in a list together with their translations in json format (e.g. [{\"chinese\": \"你好\", \"translation\": \"hello\"}]):\n\n"+page)
+    return jsonify({'sentences': result}), 200
