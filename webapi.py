@@ -2209,8 +2209,10 @@ def add_word_orders():
         return jsonify({'error': str(e)}), 500
 
 
+#hi ninja
+
 @app.route('/word_orders', methods=['GET'])
-def add_word_orders():
+def word_orders():
     try:
         newNewArray = append_to_json_array([],word_order_filepath) 
         return jsonify({'result': newNewArray})
