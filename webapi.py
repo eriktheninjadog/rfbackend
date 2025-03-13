@@ -2116,10 +2116,38 @@ def get_study_goal():
         return jsonify({'error': 'Activity not found'}), 404
     return jsonify({'activity': activity, 'hours': hours}), 200
     
+def extract_json_array_from_string(text):
+    """
+    Extract a JSON array from a string by finding everything between the first '[' and the last ']'
     
-    
+    Args:
+        text (str): The string containing a JSON array
+        
+    Returns:
+        list: The parsed JSON array or None if parsing fails
+    """
+    try:
+        # Find the first '[' character
+        start_index = text.find('[')
+        if start_index == -1:
+            return None
+            
+        # Find the last ']' character
+        end_index = text.rfind(']')
+        if end_index == -1:
+            return None
+            
+        # Extract the JSON array substring
+        json_array_str = text[start_index:end_index + 1]
+        
+        # Parse the JSON array
+        json_array = json.loads(json_array_str)
+        return json_array
+    except json.JSONDecodeError:
+        return None
     
 
+    
 @app.route('/extract_chinese_sentences', methods=['POST'])
 def extract_chinese_sentences():
     api = openrouter.OpenRouterAPI()
@@ -2127,3 +2155,66 @@ def extract_chinese_sentences():
     page = data.get('page')
     result = api.open_router_nova_micro_v1("extract all chinese sentences from this page and return them in a list together with their translations in json format (e.g. [{\"chinese\": \"你好\", \"translation\": \"hello\"}]):\n\n"+page)
     return jsonify({'sentences': result}), 200
+
+
+
+def append_to_json_array(new_items, filepath):
+    """
+    Appends new items to a JSON array stored in a file.
+    If the file doesn't exist, creates a new array with the items.
+    
+    Args:
+        new_items: Array of items to append
+        filepath: Path to the JSON file
+        
+    Returns:
+        The combined array (existing items + new items)
+    """
+    existing_items = []
+    
+    # Try to read existing file
+    try:
+        with open(filepath, 'r', encoding='utf-8') as file:
+            existing_items = json.loads(file.read())
+    except (FileNotFoundError, json.JSONDecodeError):
+        # If file doesn't exist or isn't valid JSON, start with empty array
+        existing_items = []
+    
+    # Combine arrays
+    combined_items = existing_items + new_items
+    
+    # Write back to file
+    with open(filepath, 'w', encoding='utf-8') as file:
+        json.dump(combined_items, file, ensure_ascii=False)
+    
+    return combined_items
+
+word_order_filepath = "/var/www/html/mp3/wordorder.json"
+@app.route('/add_word_orders', methods=['POST'])
+def add_word_orders():
+    try:
+        data = request.json
+        text = data.get('text')
+        if not text:
+            return jsonify({'error': 'Text parameter is required'}), 400        
+        #word_orders = textprocessing.extract_word_orders(text)
+        api = openrouter.OpenRouterAPI()
+        result = api.open_router_nova_micro_v1("Extract Cantonese word order rules from this text, make a list of them with a name and the structure and return in json format:\n\n"+text)
+        newArray = extract_json_array_from_string(result)
+        newNewArray = append_to_json_array(newArray,word_order_filepath) 
+        return jsonify({'result': newNewArray})
+    
+    except Exception as e:
+        print(str(e))
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/word_orders', methods=['GET'])
+def add_word_orders():
+    try:
+        newNewArray = append_to_json_array([],word_order_filepath) 
+        return jsonify({'result': newNewArray})
+    
+    except Exception as e:
+        print(str(e))
+        return jsonify({'error': str(e)}), 500
