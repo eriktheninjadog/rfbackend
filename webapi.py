@@ -2184,10 +2184,44 @@ def append_to_json_array(new_items, filepath):
     combined_items = existing_items + new_items
     
     # Write back to file
+    flatten_objects = flatten_structure(combined_items)
     with open(filepath, 'w', encoding='utf-8') as file:
-        json.dump(combined_items, file, ensure_ascii=False)
+        json.dump(flatten_objects, file, ensure_ascii=False)
+    return flatten_objects
+
+
+def flatten_structure(obj):
+    """
+    Recursively flattens a nested structure of arrays and dictionaries into a list of dictionaries.
     
-    return combined_items
+    Args:
+        obj: An object that can be either a dictionary, a list/array, or a leaf value
+        
+    Returns:
+        list: A flat list containing all leaf dictionaries found in the structure
+    """
+    result = []
+    
+    # Base case: if obj is a dictionary and doesn't contain lists or dicts, it's a leaf
+    if isinstance(obj, dict):
+        # Check if this dict contains any nested dicts or lists
+        has_nested = any(isinstance(v, (dict, list)) for v in obj.values())
+        
+        if not has_nested:
+            # This is a leaf dictionary
+            return [obj]
+        else:
+            # Process each value in the dictionary
+            for value in obj.values():
+                result.extend(flatten_structure(value))
+    
+    # If obj is a list, process each element
+    elif isinstance(obj, list):
+        for item in obj:
+            result.extend(flatten_structure(item))
+    
+    # If obj is anything else (leaf value that's not a dict), return empty list
+    return result
 
 word_order_filepath = "/var/www/html/mp3/wordorder.json"
 @app.route('/add_word_orders', methods=['POST'])
@@ -2220,3 +2254,6 @@ def word_orders():
     except Exception as e:
         print(str(e))
         return jsonify({'error': str(e)}), 500
+
+
+o
