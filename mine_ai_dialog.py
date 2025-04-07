@@ -99,6 +99,29 @@ def mine_lessons():
 
 import textprocessing
 import openrouter
+
+
+def text_to_mp3_and_upload(text):
+    api = openrouter.OpenRouterAPI()
+    corgtext = remove_non_chinese_characters(text)
+    text = api.open_router_claude_3_5_sonnet("You are a cantonese expert, helping with changing written text to spoken. Only respond using Cantonese written with Traditional Chinese. No Jyutping","Rewrite this article to spoken Cantonese spoken daily in Hong Kong:\n   " + corgtext)    
+    corgtext = ""
+    txt = "<speak>"
+    for i in text.split('\n'):    
+        corgtext += textprocessing.make_sure_traditional(i) + "\n"
+        txt+=ssml.surround_text_with_short_pause(i)
+    txt+="</speak>"
+    filename = f"spokenarticle_news_spo_{time.time()}.mp3"
+    cantonese_text_to_mp3(txt, filename)
+    splitter = textprocessing.split_text(corgtext)
+    f = open(filename+".hint.json","w",encoding="utf-8")
+    f.write(json.dumps(splitter))
+    f.close()
+    scp_command = f"scp {filename}* chinese.eriktamm.com:/var/www/html/mp3"
+    result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+
+
+
 import json
 def mine_lessons_to_dialog():
     api = openrouter.OpenRouterAPI()
@@ -110,7 +133,7 @@ def mine_lessons_to_dialog():
     orgtext = result
     orgtext = remove_non_chinese_characters(orgtext)
     corgtext = textprocessing.make_sure_traditional(orgtext)    
-    result = api.open_router_deepseek_r1("From this corpus, create a Cantonese dialog that provides examples of the grammar and vocabulary. Here is the corpus:  " + corgtext)
+    result = api.open_router_claude_3_5_sonnet("You are a Cantonese content creator.","From this corpus, create a Cantonese dialog that provides examples of the grammar and vocabulary. Only use Chinese Traditional Characters, no English. Here is the corpus:  " + corgtext)
     corgtext = ""
     txt = "<speak>"
     for i in result.split('\n'):    
@@ -126,8 +149,10 @@ def mine_lessons_to_dialog():
     scp_command = f"scp {filename}* chinese.eriktamm.com:/var/www/html/mp3"
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 
-for i in range(0,15):
-    mine_lessons_to_dialog()
+
+if __name__ == "__main__":
+    for i in range(0,15):
+        mine_lessons_to_dialog()
 
 
 #result = api.open_router_nova_micro_v1("Extract and organise the chinese from this text mass: " + result)

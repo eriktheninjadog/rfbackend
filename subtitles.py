@@ -286,7 +286,7 @@ def process_movie(name):
 def process_mp3(name):
     for i in range(0,120,2):
         x = i * 60
-        srt_to_vtt(     makeSRT_flle_path_and_name(name),makeVTT_flle_path_and_name(name))
+        srt_to_vtt(makeSRT_flle_path_and_name(name),makeVTT_flle_path_and_name(name))
         print("density " +str(i) + " " + str( characters_per_minute( makeVTT_flle_path_and_name(name)  ,x,120)))
         if characters_per_minute('/home/erik/Downloads/'+name+'.vtt',x,120) > 80:
             pop = "" + str(int(i/60))+":"+str(int(i%60))+":00"
@@ -445,10 +445,9 @@ if __name__ == "__main__":
 
     process_movie('coldwar')
 
+     process_movie
+    process_movie('viu1')     y
+
     """
-    if len(sys.argv) > 1:
-        process_mp3(sys.argv[1])
-    else:    
-        process_mp3('testnew')
-        
+    process_movie('anon_sig2')     
 

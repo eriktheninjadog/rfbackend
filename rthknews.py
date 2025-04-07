@@ -36,6 +36,10 @@ def get_all_links(url):
 
 import explaintext_in_simple_cantonese
 
+
+import mine_ai_dialog
+
+
 if __name__ == "__main__":
     # Define the URL you want to scrape
     url = "https://news.rthk.hk/rthk/webpageCache/services/loadModNewsShowSp2List.php?lang=zh-TW&cat=4&newsCount=60&dayShiftMode=1&archive_date="
@@ -58,7 +62,8 @@ if __name__ == "__main__":
         title = i[0]
         text = i[1]
         try:
-            explaintext_in_simple_cantonese.explain_and_render_text(title+"。\n" + text)
+            #explaintext_in_simple_cantonese.explain_and_render_text(title+"。\n" + text)
+            mine_ai_dialog.text_to_mp3_and_upload(title+"。\n" + text)
             print("Calling explain text " + title)
         except:
             print("Something went wrong but never mind that")
