@@ -162,6 +162,61 @@ def transcribe_audio(audio_file_path: str, config: TranscriptionConfig) -> Optio
         return None
 
 from pathlib import Path
+import subprocess
+def convert_video_to_webm(input_file_path: str, output_path: Optional[str] = None, video_bitrate: str = "500k", crf: int = 30) -> str:
+    """
+    Converts an MP4 video file to WebM format using ffmpeg with compression for smaller file size.
+    
+    Parameters:
+    - input_file_path (str): Path to the input video file
+    - output_path (Optional[str]): Path to save the output WebM file. If None, will use the same name as input with .webm extension
+    - video_bitrate (str): Bitrate for the output video, default is "500k" (500 Kbps)
+    - crf (int): Constant Rate Factor (0-63), higher values mean more compression and lower quality (30 is a good balance)
+    
+    Returns:
+    - str: Path to the converted WebM file
+    """
+    # Create output path if not provided
+    if output_path is None:
+        input_path = Path(input_file_path)
+        output_path = str(input_path.with_suffix('.webm'))
+    
+    # Run ffmpeg command to convert to WebM with size-optimized settings
+    command = f'ffmpeg -i "{input_file_path}" -c:v libvpx-vp9 -b:v {video_bitrate} -crf {crf} -deadline good -cpu-used 2 -c:a libopus -b:a 64k "{output_path}"'
+    try:
+        subprocess.run(command, shell=True, check=True)
+        print(f"Video converted to WebM: {output_path}")
+        return output_path
+    except subprocess.CalledProcessError as e:
+        print(f"Error converting video to WebM: {e}")
+        return ""
+
+def extract_audio_from_video(video_file_path: str, output_path: Optional[str] = None) -> str:
+    """
+    Extracts audio from a video file and saves it as MP3.
+    
+    Parameters:
+    - video_file_path (str): Path to the input video file
+    - output_path (Optional[str]): Path to save the output MP3 file. If None, will use the same name as input with .mp3 extension
+    
+    Returns:
+    - str: Path to the extracted MP3 file
+    """
+    # Create output path if not provided
+    if output_path is None:
+        video_path = Path(video_file_path)
+        output_path = str(video_path.with_suffix('.mp3'))
+    
+    # Run ffmpeg command to extract audio
+    command = f'ffmpeg -i "{video_file_path}" -vn -ac 1 -ar 22050 "{output_path}"'
+    try:
+        subprocess.run(command, shell=True, check=True)
+        print(f"Audio extracted to {output_path}")
+        return output_path
+    except subprocess.CalledProcessError as e:
+        print(f"Error extracting audio: {e}")
+        return ""
+
 
 def change_extension_to_srt(full_path):
     # Convert the input to a Path object
@@ -193,7 +248,11 @@ def main():
         
     )
 
-    audio_file_path = "/home/erik/Downloads/deadringer4.mp3"
+
+    video_path = "/home/erik/Downloads/anon_sig2.mp4"
+    audio_file_path =extract_audio_from_video(video_path)
+    #convert_video_to_webm(video_path)
+    #audio_file_path = "/home/erik/Downloads/deadringer4.mp3"
     
     print("Starting transcription process...")
     srt_content = transcribe_audio(audio_file_path, config)
