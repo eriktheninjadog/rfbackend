@@ -140,6 +140,12 @@ class OpenRouterAPI:
         )
         
 
+    def open_router_perplexity_sonar_pro(self, text: str) -> str:
+        return self.get_completion(
+            "perplexity/sonar-pro",
+            text
+        )
+        
     def open_router_meta_llama_3_2_3b_free(self, text: str) -> str:
         return self.get_completion(
             "meta-llama/llama-3.2-3b-instruct:free",
