@@ -39,6 +39,7 @@ import explaintext_in_simple_cantonese
 
 import mine_ai_dialog
 
+import random
 
 if __name__ == "__main__":
     # Define the URL you want to scrape
@@ -47,6 +48,7 @@ if __name__ == "__main__":
     links = get_all_links(url)
 
     fullfilled = []
+    random.shuffle(links)
     for i in links:      
         article = Article(i)
         article.download()

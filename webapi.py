@@ -1389,12 +1389,26 @@ def ai_anything():
     try:
         question = request.json['question']
         api = openrouter.OpenRouterAPI()
-        question_in_chinese = api.open_router_qwen("你是粵語專家。","Translate this to traditional Chinese:" + question)        
+        question_in_chinese = api.open_router_qwen("你是粵語專家。","Translate this to traditional Chinese:" + question)
         explain = api.open_router_qwen("你是粵語專家。",question_in_chinese)
         result = textprocessing.split_text(explain)
         return jsonify({'result': result})
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
+
+
+@app.route('/ai_perplexity', methods=['POST'])
+def ai_perplexity():
+    try:
+        question = request.json['question']
+        api = openrouter.OpenRouterAPI()        
+        sonar_resply = api.open_router_perplexity_sonar_prompt = api.open_router_perplexity_sonar_prompt(question)        
+        text = api.open_router_claude_3_5_sonnet("You are a cantonese expert, helping with translating written english to spoken Cantonese. Only respond using Cantonese written with Traditional Chinese. No Jyutping","Translate this text to spoken Cantonese spoken daily in Hong Kong:\n   " + sonar_resply)    
+        result = textprocessing.split_text(text)
+        return jsonify({'result': result})
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
 
 
 
