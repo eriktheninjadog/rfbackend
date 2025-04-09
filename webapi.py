@@ -1401,8 +1401,8 @@ def ai_anything():
 def ai_perplexity():
     try:
         question = request.json['question']
-        api = openrouter.OpenRouterAPI()        
-        sonar_resply = api.open_router_perplexity_sonar_prompt = api.open_router_perplexity_sonar_prompt(question)        
+        api = openrouter.OpenRouterAPI()       
+        sonar_resply = api.open_router_perplexity_sonar_pro(question)        
         text = api.open_router_claude_3_5_sonnet("You are a cantonese expert, helping with translating written english to spoken Cantonese. Only respond using Cantonese written with Traditional Chinese. No Jyutping","Translate this text to spoken Cantonese spoken daily in Hong Kong:\n   " + sonar_resply)    
         result = textprocessing.split_text(text)
         return jsonify({'result': result})
