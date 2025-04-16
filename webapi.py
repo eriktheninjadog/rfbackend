@@ -1098,7 +1098,7 @@ import mp3helper
 
 @app.route('/getspokenarticles',methods=['POST'])
 def getspokenarticles():
-    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3') and file.find('spoken')!=-1]    
+    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3')]    
     files = sorted(files, key=lambda f: os.path.getctime(os.path.join('/var/www/html/mp3', f)))
     timefiles = []
     for f in files:

@@ -331,6 +331,9 @@ if __name__ == "__main__":
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
     
+    download_explain_uploadvideo('1dJQs4ET6q4')
+    exit(-1)
+    
     """
     if (len(sys.argv)> 1):
         videoid =  sys.argv[1]   
@@ -346,7 +349,7 @@ if __name__ == "__main__":
         print(str(i))
     exit(0)
     
-    video_id = '2tZXj9pMA7k'
+    video_id = 'JU-qeTkNk8A'
     video_details = get_youtube_video_details(your_api_key, video_id)
     video_subtitles = check_video_has_subtitles(your_api_key, video_id)
     if video_details:
