@@ -1449,7 +1449,7 @@ def text2mp3():
         return jsonify({'result':None,"reason":str(e)})
 
 @app.route('/text2mp3_small', methods=['POST'])
-def text2mp3():
+def text2mp3_small():
     try:
         text = request.json['text']
         file_path = "/var/www/html/mp3/spokenarticl_news"+ str(random.randint(1000,2000))+".mp3"
