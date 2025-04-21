@@ -264,6 +264,7 @@ import textprocessing
 import subprocess
     # Get the DeepInfra API key from environment variable
 def simple_process_mp3(filepath):
+    
     deepapi = os.environ.get('DEEP', '')    
     create_srt_from_mp3(filepath,filepath+".srt",deepapi)
     naked_text = extract_text_from_srt(filepath+".srt")

@@ -1411,8 +1411,44 @@ def ai_perplexity():
 
 
 
-
 @app.route('/text2mp3', methods=['POST'])
+def text2mp3():
+    try:
+        text = request.json['text']
+        file_path = "/var/www/html/mp3/spokenarticl_news"+ str(random.randint(1000,2000))+".mp3"
+        os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
+        
+        # Setup AWS session
+        session = boto3.Session(region_name='us-east-1')
+        polly_client = session.client('polly')
+        
+        # Handle long text by splitting into chunks (Polly has a limit)
+        max_chars = 3000  # AWS Polly character limit per request
+        chunks = [text[i:i+max_chars] for i in range(0, len(text), max_chars)]
+        
+        # Process each chunk and combine the audio
+        with open(file_path, 'wb') as outfile:
+            for chunk in chunks:
+                response = polly_client.synthesize_speech(  
+                    Text=chunk,
+                    OutputFormat='mp3',
+                    VoiceId='Hiujin',
+                    Engine='neural',
+                    TextType='text'            
+                )
+                outfile.write(response['AudioStream'].read())
+                
+        # Save the text tokens for reference
+        with open(file_path+".hint.json", 'w', encoding='utf-8') as file:
+                jsonpart = textprocessing.split_text(text)
+                file.write(json.dumps(jsonpart))    
+        
+        return jsonify({'result': file_path})
+                
+    except Exception as e:
+        return jsonify({'result':None,"reason":str(e)})
+
+@app.route('/text2mp3_small', methods=['POST'])
 def text2mp3():
     try:
         text = request.json['text']
