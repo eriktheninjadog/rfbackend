@@ -314,10 +314,25 @@ def downloadanduploadvideo(video_id, thelanguage):
 
 import expandmp3file
 
-def download_explain_uploadvideo(video_id):
-    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,"tmp.mp3")
-    expandmp3file.process_mp3_file("tmp.mp3","youtube_"+video_id)
+def generate_random_filename():
+    """Generate a random 12-character filename with .mp3 extension."""
+    # Define possible characters for the filename
+    characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     
+    # Generate a random string of 12 characters
+    random_string = ''.join(random.choice(characters) for _ in range(12))
+    
+    # Return the filename with .mp3 extension
+    return f"{random_string}.mp3"
+
+import mp3helper
+
+def download_explain_uploadvideo(video_id):
+    newfilename=generate_random_filename()
+    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,newfilename)
+    simple_process_mp3  = "tmp.mp3"
+    #expandmp3file.process_mp3_file("tmp.mp3","youtube_"+video_id)
+    mp3helper.simple_process_mp3(newfilename)
 
 
 import youtubesearcher
@@ -326,12 +341,12 @@ if __name__ == "__main__":
     # Example usage
     #machine
     
-    
-    #download_explain_uploadvideo("iz4IPSiqzso")
+    for i in ['oh2Z6Y-scxs','aQjAQntp2Fg','Vy7c3FYVA2k','IpsxMftMUq4','OVfUclnPheI','oa9MkmSIkJk','zLj7iSc2Xgg']:
+        download_explain_uploadvideo(i)
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
     
-    download_explain_uploadvideo('1dJQs4ET6q4')
+    #download_explain_uploadvideo('1dJQs4ET6q4')
     exit(-1)
     
     """

@@ -139,10 +139,25 @@ class OpenRouterAPI:
             system_content=system_content
         )
         
+    def open_router_claude_3_7_sonnet(self, system_content: str,text: str) -> str:
+        return self.get_completion(
+            "anthropic/claude-3.7-sonnet",
+            text,
+            system_content=system_content
+        )
+
+        
 
     def open_router_perplexity_sonar_pro(self, text: str) -> str:
         return self.get_completion(
             "perplexity/sonar-pro",
+            text
+        )
+
+
+    def open_router_ai21_jamba_1_6_large(self, text: str) -> str:
+        return self.get_completion(
+            "ai21/jamba-1.6-large",
             text
         )
         
