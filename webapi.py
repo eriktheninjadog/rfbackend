@@ -1305,13 +1305,24 @@ def add_interest_to_stack():
 
 
 @app.route('/get_interest_from_stack', methods=['POST'])
-def get_backgget_interest_from_stack():
+def get_interest_from_stack():
     processor   = request.json['processor']
     stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
     if stack.size() == 0:        
         return jsonify({'result':None})
     else:
         astr = stack.pop()
+        return jsonify({'result':astr})
+
+
+@app.route('/peek_interest_from_stack', methods=['POST'])
+def peek_interest_from_stack():
+    processor   = request.json['processor']
+    stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
+    if stack.size() == 0:        
+        return jsonify({'result':None})
+    else:
+        astr = stack.peek()
         return jsonify({'result':astr})
 
 
