@@ -1292,6 +1292,30 @@ def get_background_work():
         astr = stack.pop()
         return jsonify({'result':astr})
 
+
+import stringstack
+
+@app.route('/add_interest_to_stack', methods=['POST'])
+def add_background_work():
+    processor   = request.json['processor']
+    workstring  = request.json['workstring']
+    stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
+    stack.push(workstring)
+    return {}, 200
+
+
+@app.route('/get_interest_from_stack', methods=['POST'])
+def get_background_work():
+    processor   = request.json['processor']
+    stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
+    if stack.size() == 0:        
+        return jsonify({'result':None})
+    else:
+        astr = stack.pop()
+        return jsonify({'result':astr})
+
+
+
 @app.route('/explain_sentence_free', methods=['POST'])
 def explain_sentence_free():
     try:        
