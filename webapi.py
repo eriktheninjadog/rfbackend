@@ -1296,7 +1296,7 @@ def get_background_work():
 import stringstack
 
 @app.route('/add_interest_to_stack', methods=['POST'])
-def add_background_work():
+def add_interest_to_stack():
     processor   = request.json['processor']
     workstring  = request.json['workstring']
     stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
@@ -1305,7 +1305,7 @@ def add_background_work():
 
 
 @app.route('/get_interest_from_stack', methods=['POST'])
-def get_background_work():
+def get_backgget_interest_from_stack():
     processor   = request.json['processor']
     stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
     if stack.size() == 0:        
