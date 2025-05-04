@@ -280,7 +280,8 @@ def simple_process_mp3(filepath):
 
 # Example usage:
 if __name__ == "__main__":
-    simple_process_mp3("/home/erik/Downloads/viu_recruitment_2.mp3")
+    
+    simple_process_mp3("/home/erik/Downloads/lastdance.mp3")
 
 
 

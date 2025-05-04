@@ -3,6 +3,8 @@ import os
 
 #booktools.py
 
+from explaintext_in_simple_cantonese import just_render_text
+from newscrawler import render_from_chinese_to_audio_and_upload
 import openrouter
 
 
@@ -114,12 +116,20 @@ def split_book_into_chapters(file_path, output_dir=None):
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
         
-        api = openrouter.OpenRouterAPI()
-        chaptersummary = api.open_router_claude_3_7_sonnet(system_content="You are a cantonese expert, helping with translating book chapters of written english to spoken Cantonese. Only respond using Cantonese written with Traditional Chinese. No Jyutping. Here is a summary of the book:\n"+summary,text="Translate chapter spoken Cantonese spoken daily in Hong Kong:\n" + content )
         chaptersummary_file_path = file_path + ".summary"
-        with open(chaptersummary_file_path, 'w', encoding='utf-8') as f:
-            f.write(chaptersummary)
-        print(f"Chapter {i+1} saved to {file_path}")
+        if os.path.exists(chaptersummary_file_path):
+            with open(chaptersummary_file_path, 'r', encoding='utf-8') as f:
+                chaptersummary = f.read()
+            print(f"Existing summary found for chapter {i+1}")
+        else:
+            api = openrouter.OpenRouterAPI()
+            chaptersummary = api.open_router_claude_3_7_sonnet(system_content="You are a cantonese expert, helping with translating book chapters of written english to spoken Cantonese. Only respond using Cantonese written with Traditional Chinese. No Jyutping. Here is a summary of the book:\n"+summary,text="Translate chapter spoken Cantonese spoken daily in Hong Kong:\n" + content )
+            chaptersummary_file_path = file_path + ".summary"
+            with open(chaptersummary_file_path, 'w', encoding='utf-8') as f:
+                f.write(chaptersummary)
+            print(f"Chapter {i+1} saved to {file_path}")
+        if (i >= 12):
+            just_render_text(chaptersummary, "book_" + str(i)+".mp3")
         print(f"Chapter {i+1} summary saved to {chaptersummary_file_path}")        
         chapter_files.append(file_path)
     
