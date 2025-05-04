@@ -68,7 +68,7 @@ def process_mp3_file(file_path,filename_addon="work",minlength=10):
         part_file_path = texttoaudio.mp3cachedirectory + '/' + filename
 
     totaltext = " ".join(sentences)
-    remotechineseclient.access_remote_client("make_c1_examples",{"pattern":" using vocabulary found in this text: \n "+totaltext})
+    #remotechineseclient.access_remote_client("make_c1_examples",{"pattern":" using vocabulary found in this text: \n "+totaltext})
 
     #done with the mp3 partswords_thats_been_given
     currentpod = []

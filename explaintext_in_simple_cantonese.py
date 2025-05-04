@@ -59,7 +59,14 @@ def split_text(text, max_length=3000):
         end = min(start + max_length, len(text))
         # Ensure we don't split words in half
         if end < len(text) and text[end] != ' ':
-            end = text.rfind(' ', start, end) + 1
+            # Find the last space or newline character
+            space_pos = text.rfind(' ', start, end)
+            newline_pos = text.rfind('\n', start, end)
+            space_pos = text.rfind(' ', start, end)
+           
+            # Use the rightmost position of either space or newline
+            split_pos = max(space_pos, newline_pos)
+            end = split_pos + 1 if split_pos >= 0 else end
         chunks.append(text[start:end].strip())
         start = end
 
@@ -109,14 +116,19 @@ def explain_and_render_text(text,filename=None):
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 
 
-
+import textprocessing
+import json
 def just_render_text(text,filename=None):
     if filename == None:
         filename = "spokenarticle_news_exp"+ str(random.randint(100,999))+".mp3"
     fulltext = text
     #split the text into 
+    arr = textprocessing.split_text(fulltext)
+    f = open(filename+".hint.json", "w",encoding="utf-8")
+    f.write(json.dumps(arr))
+    f.close()
     text_to_combined_mp3(fulltext, filename, mp3helper.cantonese_text_to_mp3)
-    scp_command = f"scp {filename} chinese.eriktamm.com:/var/www/html/mp3"
+    scp_command = f"scp {filename}* chinese.eriktamm.com:/var/www/html/mp3"
     print(scp_command)
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 

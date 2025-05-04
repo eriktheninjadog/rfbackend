@@ -1729,6 +1729,36 @@ def ask_nova():
 
 
 
+@app.route('/videosegment', methods=['POST'])
+def videosegment():
+    try:
+        data = request.json
+        url = data.get('url')
+        binary_data = data.get('data')
+        timestamp = data.get('timestamp')
+        
+        if not all([url, binary_data, timestamp]):
+            return jsonify({'error': 'Missing required parameters'}), 400
+        
+        # Create directory if it doesn't exist
+        video_dir = '/var/www/html/video_segments'
+        os.makedirs(video_dir, exist_ok=True)
+        
+        # Generate a unique filename
+        filename = f"{timestamp}_{os.path.basename(url).replace('/', '_')}"
+        filepath = os.path.join(video_dir, filename)
+        
+        # Convert array back to binary and save
+        with open(filepath, 'wb') as f:
+            f.write(bytes(binary_data))
+        
+        return jsonify({'result': 'Video segment saved successfully', 'filepath': filepath}), 200
+    
+    except Exception as e:
+        print(f"Error processing video segment: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
 import coach.teaching_agent
 
 def read_bearer_key() -> str:
