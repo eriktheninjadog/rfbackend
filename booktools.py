@@ -128,8 +128,8 @@ def split_book_into_chapters(file_path, output_dir=None):
             with open(chaptersummary_file_path, 'w', encoding='utf-8') as f:
                 f.write(chaptersummary)
             print(f"Chapter {i+1} saved to {file_path}")
-        if (i >= 12):
-            just_render_text(chaptersummary, "book_" + str(i)+".mp3")
+        if (i > 24 ):
+            just_render_text(chaptersummary, "holes_" + str(i)+".mp3")
         print(f"Chapter {i+1} summary saved to {chaptersummary_file_path}")        
         chapter_files.append(file_path)
     
@@ -137,4 +137,4 @@ def split_book_into_chapters(file_path, output_dir=None):
 
 
 if __name__ == "__main__":
-    split_book_into_chapters("/home/erik/Downloads/Brian Robeson - 01 - Hatchet (Gary Paulsen)— (Z-Library).txt")
+    split_book_into_chapters("/home/erik/Downloads/holes.txt")

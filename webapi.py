@@ -1208,6 +1208,13 @@ def getexplainationpage():
     return '<html><head/><body>' + baloba + '</body></html>'
 
 
+@app.route('/simplevocab', methods=['GET'])
+def getexplainationpage():
+    api = openrouter.OpenRouterAPI()
+    sentence = request.args['sentence']
+    ret = api.open_router_nova_micro_v1("List the vocab in this sentence with English:" + sentence)
+    return ret
+
 from datetime import datetime 
 
 @app.route('/makeexamples', methods=['GET'])
