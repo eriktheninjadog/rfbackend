@@ -345,8 +345,8 @@ if __name__ == "__main__":
     #    download_explain_uploadvideo(i)
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
-    
-    download_explain_uploadvideo('uZpWliXAvo4')
+    for i in ['i5exDaOM2NQ','FTeLOGlkZI8','s_Qukqmj6-M','MiN-dzIMMlQ']:
+        download_explain_uploadvideo(i)
     exit(-1)
     
     """
