@@ -1212,6 +1212,9 @@ def getexplainationpage():
 def simplevocab():
     api = openrouter.OpenRouterAPI()
     sentence = request.args['sentence']
+    processor = 'studylater'
+    stack = stringstack.PersistentStack('/var/www/html/scene/' + processor + '.stack')    
+    stack.push(sentence)        
     ret = api.open_router_nova_micro_v1("List the vocab in this sentence with English and pronounciation in jyutping:" + sentence)
     return ret
 
