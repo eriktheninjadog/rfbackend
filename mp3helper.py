@@ -262,12 +262,15 @@ def cantonese_text_to_mp3(text: str, output_file: str) -> None:
 
 import textprocessing
 import subprocess
+import cantonese_ai
     # Get the DeepInfra API key from environment variable
-def simple_process_mp3(filepath):
-    
-    deepapi = os.environ.get('DEEP', '')    
-    create_srt_from_mp3(filepath,filepath+".srt",deepapi)
-    naked_text = extract_text_from_srt(filepath+".srt")
+def simple_process_mp3(filepath,use_deep = False):
+    if use_deep:    
+        deepapi = os.environ.get('DEEP', '')    
+        create_srt_from_mp3(filepath,filepath+".srt",deepapi)
+        naked_text = extract_text_from_srt(filepath+".srt")
+    else:
+        naked_text = cantonese_ai.audio_to_srt(filepath)
     split_naked_text = textprocessing.split_text(naked_text)
     hint_filename = f"{filepath}.hint.json"
     with open(hint_filename, "w") as f:

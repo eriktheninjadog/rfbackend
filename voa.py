@@ -387,7 +387,44 @@ def get_video_info(url):
         info = ydl.extract_info(url, download=False)
         return info.get('title', None), info.get('id', None)
 
+def download_youtube_audio_as_mp3(youtube_url, output_file='output.mp3', save_video=False, video_output_file='output.mp4'):
+    output_path = '/tmp'
+    title, video_id = get_video_info(youtube_url)
+    try:
+        # Download audio as MP3
+        ydl_opts = {
+                'format': 'bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+                'outtmpl': output_path + '/%(id)s.%(ext)s',
+                'progress_hooks': [progress_hook],
+            }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([youtube_url])
+        print(f"Audio download completed successfully: {title}")
+        mp3_file_path = os.path.join(output_path, f"{video_id}.mp3")
+        os.rename(mp3_file_path, output_file)
 
+        # Download video as MP4 if requested
+        if save_video:
+            video_ydl_opts = {
+                'format': 'bestvideo+bestaudio/best',
+                'outtmpl': output_path + '/%(id)s_video.%(ext)s',
+                'progress_hooks': [progress_hook],
+                'merge_output_format': 'mp4',
+            }
+            with yt_dlp.YoutubeDL(video_ydl_opts) as ydl:
+                ydl.download([youtube_url])
+            print(f"Video download completed successfully: {title}")
+            video_file_path = os.path.join(output_path, f"{video_id}_video.mp4")
+            os.rename(video_file_path, video_output_file)
+
+    except Exception as e:
+        print(f'An error occurred: {e}')
+"""
 def download_youtube_audio_as_mp3(youtube_url, output_file='output.mp3'):
     output_path = '/tmp'
     title, video_id = get_video_info(youtube_url)
@@ -410,9 +447,10 @@ def download_youtube_audio_as_mp3(youtube_url, output_file='output.mp3'):
 
     except Exception as e:
         print(f'An error occurred: {e}')
+"""
 
-def make_mp3_file_from_youtube(youtube_url,extra_filename_addon="youtube"):
-    download_youtube_audio_as_mp3(youtube_url)
+def make_mp3_file_from_youtube(youtube_url,extra_filename_addon="youtube",save_video=False):
+    download_youtube_audio_as_mp3(youtube_url,save_video=save_video)
     expandmp3file.process_mp3_file("output.mp3",filename_addon=extra_filename_addon+datetime.now().strftime("%Y%m%d"))
 
 

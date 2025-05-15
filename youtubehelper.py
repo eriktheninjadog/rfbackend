@@ -329,7 +329,7 @@ import mp3helper
 
 def download_explain_uploadvideo(video_id):
     newfilename=generate_random_filename()
-    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,newfilename)
+    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,newfilename,save_video=False)
     simple_process_mp3  = "tmp.mp3"
     #expandmp3file.process_mp3_file("tmp.mp3","youtube_"+video_id)
     mp3helper.simple_process_mp3(newfilename)
@@ -345,7 +345,7 @@ if __name__ == "__main__":
     #    download_explain_uploadvideo(i)
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
-    for i in ['2-qr0igMbaA','NdjcN0ppD2c','s_QukghXDJ5DIkQs','807SvGLSWRw']:
+    for i in ['v--vwlQKDBk','qK3qx8u2EO8']:
         download_explain_uploadvideo(i)
     exit(-1)
     

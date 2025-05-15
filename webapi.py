@@ -2381,3 +2381,19 @@ def word_orders():
         return jsonify({'error': str(e)}), 500
 
 
+
+@app.route('/get_webm_files', methods=['GET'])
+def get_webm_files():
+    try:
+        directory = request.args.get('directory',   '/opt/watchit/')  # Default directory if none provided
+        
+        # Get all files with .webm extension
+        webm_files = [file for file in os.listdir(directory) if file.endswith('.webm')]
+        
+        # Remove the extension from filenames
+        filenames_without_extension = [os.path.splitext(file)[0] for file in webm_files]
+        
+        return jsonify({'result': filenames_without_extension})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
