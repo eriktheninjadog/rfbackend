@@ -249,6 +249,7 @@ def get_last_hour_news():
     
 
 import explaintext_in_simple_cantonese
+# import explaintext_in_simple_cantonese    
 
 
 import mine_ai_dialog
