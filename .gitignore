@@ -9,6 +9,8 @@ __pycache__/frequencytools.cpython-310.pyc
 *.hint.json
 *.wav
 *.srt
+*.mp4
+*.webm
 
 spokenarticle_news1737437554.9481032_youtube_t5sJ55VjCrw0.mp3.hint.json
 spokenarticle_news1737437554.9481032_youtube_t5sJ55VjCrw0.mp3.subtitle

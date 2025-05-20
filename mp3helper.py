@@ -177,7 +177,7 @@ def write_srt_file(segments, output_path):
         for i, segment in enumerate(segments, 1):
             start_time = format_timestamp(segment["start"])
             end_time = format_timestamp(segment["end"])
-            text = segment["text"].strip()
+            text = textprocessing.make_sure_traditional(segment["text"].strip())
             
             srt_file.write(f"{i}\n")
             srt_file.write(f"{start_time} --> {end_time}\n")
@@ -239,6 +239,8 @@ def extract_text_from_srt(srt_file_path):
         return ""
 
 
+import openrouter
+
 def cantonese_text_to_mp3(text: str, output_file: str) -> None:
     """Convert a string of text to an MP3 file using AWS Polly."""
     session = boto3.Session(region_name='us-east-1')
@@ -263,18 +265,49 @@ def cantonese_text_to_mp3(text: str, output_file: str) -> None:
 import textprocessing
 import subprocess
 import cantonese_ai
+import openrouter
     # Get the DeepInfra API key from environment variable
 def simple_process_mp3(filepath,use_deep = False):
-    if use_deep:    
-        deepapi = os.environ.get('DEEP', '')    
-        create_srt_from_mp3(filepath,filepath+".srt",deepapi)
-        naked_text = extract_text_from_srt(filepath+".srt")
-    else:
-        naked_text = cantonese_ai.audio_to_srt(filepath)
-    split_naked_text = textprocessing.split_text(naked_text)
+    deepapi = os.environ.get('DEEP', '')
+       
+    base_name = os.path.splitext(os.path.basename(filepath))[0]
+
+    create_srt_from_mp3(filepath, base_name+".srt",deepapi)
+    with open(base_name+".srt", "r", encoding="utf-8") as srt_file:
+        srt = srt_file.read()
+    first_naked_text = extract_text_from_srt(base_name+".srt") 
+    first_naked_text = textprocessing.make_sure_traditional(first_naked_text)   
+    second_naked_text = cantonese_ai.audio_to_srt(filepath)
+    api = openrouter.OpenRouterAPI()
+    # now lets combine the two files
+    result = api.open_router_claude_3_7_sonnet("You are a cantonese expert.","Here are two transcriptions of the same sound file in Cantonese. One is SRT and the other is text. Use these and your knowledge of spoken Cantonese to output the first 10 minutes with timestamps most likely to be correct:\n\n\n\n" + srt + "\n\n\n\n" +second_naked_text)
+    print(result)
+    split_naked_text = textprocessing.split_text(first_naked_text)
     hint_filename = f"{filepath}.hint.json"
+    # Write first_naked_text to a text file
+    with open(f"{filepath}.naked_1.txt", "w", encoding="utf-8") as f:
+        f.write(first_naked_text)
+        print(f"First text file created: {filepath}.text1.txt")
+
+    # Write second_naked_text to another text file
+    with open(f"{filepath}.naked_2.txt", "w", encoding="utf-8") as f:
+        f.write(second_naked_text)
+        print(f"Second text file created: {filepath}.text2.txt")
+    
+    # Extract just the filename without extension
+    base_name = os.path.splitext(os.path.basename(filepath))[0]
+
+    # Write the combined result from Claude to a file
+    with open(f"{base_name}.srt", "w", encoding="utf-8") as f:
+        f.write(result)
+        print(f"Combined transcription file created: {filepath}.combined.srt")
+
+    
     with open(hint_filename, "w") as f:
         json.dump(split_naked_text, f)
+    
+    
+    
     print(f"Hint file created: {hint_filename}")
     scp_command = f"scp {filepath}* chinese.eriktamm.com:/var/www/html/mp3"
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)

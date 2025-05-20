@@ -1009,7 +1009,9 @@ def remove_audio():
     mp3_file = request.json['audiofile']
     # Return the MP3 file
     #return jsonify({'result':None})
+    basename = os.path.basename(mp3_file)
     os.unlink('/var/www/html/mp3/'+mp3_file)
+    os.unlink('/opt/watchit/'+basename + ".webm")
     return jsonify({'result':'ok'})
 
 def read_audio_time():

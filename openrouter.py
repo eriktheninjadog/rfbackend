@@ -11,7 +11,6 @@ from pathlib import Path
 
 
 import database
-
 class OpenRouterAPI:
     BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
     
@@ -203,6 +202,7 @@ class OpenRouterAPI:
             system_content
         )
 
+    
     def _make_request(self, model: str, messages: List[Dict[str, str]]) -> Dict:
         try:
             request_data = {

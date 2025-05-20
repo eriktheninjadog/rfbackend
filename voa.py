@@ -390,6 +390,8 @@ def get_video_info(url):
 def download_youtube_audio_as_mp3(youtube_url, output_file='output.mp3', save_video=False, video_output_file='output.mp4'):
     output_path = '/tmp'
     title, video_id = get_video_info(youtube_url)
+    base_name = os.path.splitext(os.path.basename(output_file))[0]
+
     try:
         # Download audio as MP3
         ydl_opts = {
@@ -411,7 +413,7 @@ def download_youtube_audio_as_mp3(youtube_url, output_file='output.mp3', save_vi
         # Download video as MP4 if requested
         if save_video:
             video_ydl_opts = {
-                'format': 'bestvideo+bestaudio/best',
+                'format': 'worstvideo[height<=480]+bestaudio',
                 'outtmpl': output_path + '/%(id)s_video.%(ext)s',
                 'progress_hooks': [progress_hook],
                 'merge_output_format': 'mp4',
@@ -420,7 +422,13 @@ def download_youtube_audio_as_mp3(youtube_url, output_file='output.mp3', save_vi
                 ydl.download([youtube_url])
             print(f"Video download completed successfully: {title}")
             video_file_path = os.path.join(output_path, f"{video_id}_video.mp4")
-            os.rename(video_file_path, video_output_file)
+            output_file = base_name+".mp4"
+              
+            os.rename(video_file_path, output_file)
+            # Convert MP4 to WebM
+            webm_output_file = base_name + '.webm'
+            ffmpeg.input(output_file).output(webm_output_file, vcodec='libvpx-vp9', acodec='libopus').run()
+            
 
     except Exception as e:
         print(f'An error occurred: {e}')

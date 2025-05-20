@@ -329,10 +329,18 @@ import mp3helper
 
 def download_explain_uploadvideo(video_id):
     newfilename=generate_random_filename()
-    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,newfilename,save_video=False)
+    base_name = newfilename.split('.')[0]
+    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,newfilename,save_video=True)
     simple_process_mp3  = "tmp.mp3"
     #expandmp3file.process_mp3_file("tmp.mp3","youtube_"+video_id)
     mp3helper.simple_process_mp3(newfilename)
+    
+    scp_command = f"scp {base_name}.webm chinese.eriktamm.com:/opt/watchit"
+    print(scp_command)
+    result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+    scp_command = f"scp {base_name}.srt chinese.eriktamm.com:/opt/watchit"
+    print(scp_command)
+    result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
 
 
 import youtubesearcher
@@ -345,11 +353,15 @@ if __name__ == "__main__":
     #    download_explain_uploadvideo(i)
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
-    for i in ['v--vwlQKDBk','qK3qx8u2EO8']:
+    for i in ['tasgKtrNXVg','ABt1_QkGW-E']:
         download_explain_uploadvideo(i)
     exit(-1)
     
     """
+    https://www.youtube.com/watch?v=
+    https://www.youtube.com/watch?v=
+    https://www.youtube.com/watch?v=
+    https://www.youtube.com/watch?v=
     if (len(sys.argv)> 1):
         videoid =  sys.argv[1]   
         download_explain_uploadvideo(videoid)

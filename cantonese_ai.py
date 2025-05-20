@@ -25,7 +25,7 @@ def audio_to_srt(audiofile):
 
     print(response.text)
     print(response.json())
-    return response.text
+    return response.json()['text']
 
 
 if __name__ == "__main__":
