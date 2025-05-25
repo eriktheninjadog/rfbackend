@@ -2406,6 +2406,7 @@ def generate_cloze():
     api = openrouter.OpenRouterAPI()
     data = request.json
     thetext = data.get('text')
+    thetext = thetext.replace('\""','@')
     result = api.open_router_claude_3_7_sonnet("You are a designer of Cantonese learning material for foreigners.","""Generate a JSON-formatted cloze test based on the following text. The JSON should include:
 
     A title (e.g., the text's original title or a derived name).
@@ -2428,6 +2429,7 @@ def generate_cloze():
     Process the input text and return the JSON structure. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
     result = result.replace('json','')
     result = result.replace('```','')
+    
     
     return jsonify({'result': result}), 200
     
