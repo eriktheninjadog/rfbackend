@@ -2426,8 +2426,8 @@ def generate_cloze():
     }
 
     Process the input text and return the JSON structure. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
-        
-    return jsonify({'data': result}), 200
+    result = result.replase('json','')
+    return jsonify({'result': result}), 200
     
     
     

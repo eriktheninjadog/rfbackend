@@ -230,7 +230,7 @@ def download_video_from_ids(api_key, video_ids, target_languages):
                     f.write(json.dumps(jsonpart))
                     f.close()
                     rename_file("tmp.mp3",filenamestart)
-                    scp_command = f"scp {filenamestart}* chinese.eriktamm.com:/var/www/html/mp3"
+                    scp_command = f"scp {filenamestart}* chinese.eriktamm.com:/var/www/html/mp3/"
                     print(scp_command)
                     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
                     # need to change the srt file to txt file
@@ -342,6 +342,9 @@ def download_explain_uploadvideo(video_id):
     print(scp_command)
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
     scp_command = f"scp {base_name}.mp3 chinese.eriktamm.com:/opt/mp3_to_process"
+    print(scp_command)
+    result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
+    scp_command = f"scp {base_name}.mp3 chinese.eriktamm.com:/var/www/html/mp3"    
     print(scp_command)
     result = subprocess.run(scp_command, shell=True, capture_output=True, text=True)
     
