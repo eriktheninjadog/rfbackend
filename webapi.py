@@ -2406,7 +2406,7 @@ def generate_cloze():
     api = openrouter.OpenRouterAPI()
     data = request.json
     thetext = data.get('text')
-    result = api.open_router_nova_micro_v1(f"""Generate a JSON-formatted cloze test based on the following text. The JSON should include:
+    result = api.open_router_claude_3_7_sonnet("You are a designer of Cantonese learning material for foreigners.",f"""Generate a JSON-formatted cloze test based on the following text. The JSON should include:
 
 
     A title (e.g., the text's original title or a derived name).
