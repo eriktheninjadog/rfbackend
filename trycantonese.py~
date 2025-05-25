@@ -1,0 +1,5 @@
+# Load model directly
+from transformers import AutoProcessor, AutoModelForSpeechSeq2Seq
+
+processor = AutoProcessor.from_pretrained("JackyHoCL/whisper-large-v3-turbo-cantonese-yue-english")
+model = AutoModelForSpeechSeq2Seq.from_pretrained("JackyHoCL/whisper-large-v3-turbo-cantonese-yue-english")

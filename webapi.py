@@ -2399,3 +2399,36 @@ def get_webm_files():
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/generate_cloze', methods=['POST'])
+def generate_cloze():
+    api = openrouter.OpenRouterAPI()
+    data = request.json
+    thetext = data.get('text')
+    result = api.open_router_nova_micro_v1(f"""Generate a JSON-formatted cloze test based on the following text. The JSON should include:
+
+
+    A title (e.g., the text's original title or a derived name).
+
+    instructions explaining the task (e.g., 'Fill in the blanks with the correct words from the text').
+
+    The text with blanks replaced by placeholders like [BLANK_1], [BLANK_2], etc.
+
+    An answers array containing the correct words in order.
+
+    Example format:
+
+    {
+    'title': 'Title of the Text',
+    'instructions': 'Fill in the blanks with the correct words from the text.',
+    'text': 'Text with [BLANK_1], [BLANK_2], ...',
+    'answers': ['word1', 'word2', ...]
+    }
+
+    Process the input text and return the JSON structure. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:{thetext}""")
+        
+    return jsonify({'data': result}), 200
+    
+    
+    
