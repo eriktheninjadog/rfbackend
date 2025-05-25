@@ -7,7 +7,7 @@ def audio_to_srt(audiofile):
     url = "https://paid-api.cantonese.ai"
 
     payload = {
-        "api_key": "sk-5sClgFh8s0ub7h4c2dfemfaFcjxsutwij",
+        "api_key": "2",
         "with_timestmap": "true",
         "with_diarization": "true",
         "with_punctuation": "true",
