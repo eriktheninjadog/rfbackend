@@ -2413,7 +2413,7 @@ def generate_cloze():
 
     instructions explaining the task (e.g., 'Fill in the blanks with the correct words from the text').
 
-    The text with blanks replaced by placeholders like [BLANK_1], [BLANK_2], etc.
+    The text with blanks replaced by placeholders like [BLANK_1], [BLANK_2], etc. There will be maximum one blank per sentence.
 
     An answers array containing the correct words in order.
 
@@ -2426,7 +2426,7 @@ def generate_cloze():
     'answers': ['word1', 'word2', ...]
     }
 
-    Please max one cloze test per sentence. Process the input text and return the JSON structure. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
+    Process the input text and return the JSON structure. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
     result = result.replace('json','')
     result = result.replace('```','')
     
