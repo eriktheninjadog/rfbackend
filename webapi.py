@@ -2426,7 +2426,7 @@ def generate_cloze():
     'answers': ['word1', 'word2', ...]
     }
 
-    Process the input text and return the JSON structure. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
+    Please max one cloze test per sentence. Process the input text and return the JSON structure. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
     result = result.replace('json','')
     result = result.replace('```','')
     
