@@ -2407,7 +2407,7 @@ def generate_cloze():
     data = request.json
     thetext = data.get('text')
     thetext = thetext.replace('\""','@')
-    result = api.open_router_nova_lite_v1("""Generate a JSON-formatted cloze test based on the following text. The JSON should include:
+    result = api.open_router_claude_3_7_sonnet("""Generate a JSON-formatted cloze test based on the following text. The JSON should include:
 
     A title (e.g., the text's original title or a derived name).
 
@@ -2429,7 +2429,6 @@ def generate_cloze():
     Process the input text and return the JSON structure only - no text around it. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
     result = result.replace('json','')
     result = result.replace('```','')
-    result = api.open_router_nova_micro_v1("Try to fix this to proper json. Do not return anything except the strict json structure:" + result)
     start = result.find('{')
     end = result.rfind('}')
     if start == -1 or end == -1:
