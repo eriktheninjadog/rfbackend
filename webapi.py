@@ -2430,7 +2430,11 @@ def generate_cloze():
     result = result.replace('json','')
     result = result.replace('```','')
     result = api.open_router_nova_micro_v1("Try to fix this to proper json. Do not return anything except the strict json structure:" + result)
-    
+    start = result.find('{')
+    end = result.rfind('}')
+    if start == -1 or end == -1:
+        return jsonify({'error': 'Invalid JSON format returned from the API'}), 400
+    result = result[start:end+1]
     return jsonify({'result': result}), 200
     
     
