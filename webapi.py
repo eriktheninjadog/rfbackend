@@ -2393,6 +2393,7 @@ def get_webm_files():
         webm_files = [file for file in os.listdir(directory) if file.endswith('.webm')]
         
         # Remove the extension from filenames
+        
         filenames_without_extension = [os.path.splitext(file)[0] for file in webm_files]
         
         return jsonify({'result': filenames_without_extension})
@@ -2407,6 +2408,9 @@ def generate_cloze():
     data = request.json
     thetext = data.get('text')
     thetext = thetext.replace('\""','@')
+    if len(thetext) > 50000:
+        thetext = thetext[:50000]
+    
     result = api.open_router_claude_3_7_sonnet("You are a cantonese expert that is creating learning material for foreigners learning Cantonese.","""Generate a JSON-formatted cloze test based on the following text. The JSON should include:
 
     A title (e.g., the text's original title or a derived name).
