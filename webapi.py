@@ -2429,7 +2429,7 @@ def generate_cloze():
     Process the input text and return the JSON structure only - no text around it. Ensure the text retains its original structure (line breaks, formatting) and the answers match the blanks in order. Here is the input:""" + thetext)
     result = result.replace('json','')
     result = result.replace('```','')
-    
+    result = api.open_router_nova_micro_v1("Try to fix this to proper json:" + result)
     
     return jsonify({'result': result}), 200
     
