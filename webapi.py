@@ -1147,7 +1147,7 @@ def getspokenarticle():
         f = open('/var/www/html/mp3/'+allhint_file,'r',encoding='utf-8')
         allchitext = f.read()
         f.close()
-        allchiret = json.loads(allchitext)
+        allchiret = json.loads(openrouterallchitext)
     else:
         allchiret = None
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'extendedtokens':allchiret}})
@@ -2441,4 +2441,22 @@ def generate_cloze():
     return jsonify({'result': result}), 200
     
     
+
+
+@app.route('/ask_claude', methods=['POST'])
+def ask_claude():
+    try:
+        data = request.json
+        question = data.get('question')
+        
+        if not question:
+            return jsonify({'error': 'Question parameter is required'}), 400
+        
+        api = openrouter.OpenRouterAPI()
+        result = api.open_router_claude_3_7_sonnet("You are a helpful assistant.", question)
+        
+        return jsonify({'result': result}), 200
     
+    except Exception as e:
+        print(str(e))
+        return jsonify({'error': str(e)}), 500
