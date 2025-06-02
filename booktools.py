@@ -48,6 +48,9 @@ def split_book_into_chapters(file_path, output_dir=None):
     
     # Define different patterns for chapter detection
     chapter_patterns = [
+                r'(?:\n|\r\n)\d+[\s\n\r]',  # "1" format
+
+                r'(?:\n|\r\n)\d+\.[\s\n\r]',  # "1." format
         r'\n\s*\n[A-Z ]+\n\s*\n',  # Empty line, capital letters and spaces only, empty line
         r'\n[A-Z| ]+\n',  # Two empty lines, capital word, two empty lines
         r'(?:\n|\r\n)(?:Chapter|CHAPTER) \d+[\s\n\r]',  # "Chapter X" format
@@ -55,8 +58,6 @@ def split_book_into_chapters(file_path, output_dir=None):
         r'(?:\n|\r\n)(?:第)[\u4e00-\u9fff]+(?:章)[\s\n\r]',  # Chinese "第X章" format
         r'(?:\n|\r\n)(?:BOOK|Book) \d+[\s\n\r]',  # "Book X" format
         r'(?:\n|\r\n)(?:PART|Part) \d+[\s\n\r]',  # "Part X" format
-        r'(?:\n|\r\n)\d+\.[\s\n\r]',  # "1." format
-        r'(?:\n|\r\n)\d+[\s\n\r]',  # "1" format
         r'(?:\n|\r\n)(?:\* \* \*|\-\-\-\-\-|\* \* \* \* \*)[\s\n\r]',  # Common separators
     ]
     
@@ -114,7 +115,7 @@ def split_book_into_chapters(file_path, output_dir=None):
         
         file_path = os.path.join(output_dir, filename)
         
-        # Write chapter to file
+        # Write chapte  r to file
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
         
@@ -130,7 +131,7 @@ def split_book_into_chapters(file_path, output_dir=None):
             with open(chaptersummary_file_path, 'w', encoding='utf-8') as f:
                 f.write(chaptersummary)
             print(f"Chapter {i+1} saved to {file_path}")
-            just_render_text(chaptersummary, "ten_" + str(i)+".mp3")
+            just_render_text(chaptersummary, "giver_" + str(i)+".mp3")
         print(f"Chapter {i+1} summary saved to {chaptersummary_file_path}")        
         chapter_files.append(file_path)
     
@@ -138,4 +139,4 @@ def split_book_into_chapters(file_path, output_dir=None):
 
 
 if __name__ == "__main__":
-    split_book_into_chapters("/home/erik/Downloads/ten.txt")
+    split_book_into_chapters("/home/erik/Downloads/thegiver.txt")

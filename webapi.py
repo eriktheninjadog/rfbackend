@@ -1124,12 +1124,17 @@ def get_next_spoken_article(mp3_file):
     else:
         return files[random.randint(0,nrfiles-1)]
     
+    
+import mp3helper
+    
 @app.route('/getspokenarticle',methods=['POST'])
 def getspokenarticle():    
     # Path to the MP3 file
     mp3_file = request.json['mp3file']
     # Return the MP3 file
     #return jsonify({'result':None})
+    
+    basename = os.path.basename(mp3_file)
     if request.json['next'] == True:
         mp3_file = get_next_spoken_article(mp3_file)
                 
@@ -1140,14 +1145,18 @@ def getspokenarticle():
         f.close()
         chiret = json.loads(chitext)
     else:
-        chiret = ['no','chinese','to','\n','be','found','!']    
-    allhint_file = mp3_file + '.allhint.json'
-    
+        srtfile = basename + '.srt'
+        if os.path.exists('/var/www/html/mp3/'+srtfile):
+            chitext = f.read()
+            chitext = textprocessing.split_text(chitext)
+        else:        
+            chiret = ['no','chinese','to','\n','be','found','!']    
+    allhint_file = mp3_file + '.allhint.json'        
     if os.path.exists('/var/www/html/mp3/'+allhint_file):
         f = open('/var/www/html/mp3/'+allhint_file,'r',encoding='utf-8')
         allchitext = f.read()
         f.close()
-        allchiret = json.loads(openrouterallchitext)
+        allchiret = json.loads(allchitext)
     else:
         allchiret = None
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'extendedtokens':allchiret}})

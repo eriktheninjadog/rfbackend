@@ -359,11 +359,12 @@ if __name__ == "__main__":
     #    download_explain_uploadvideo(i)
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
-    for i in ['hQPRFcHIv2s','idgxMTA7OZM']:
+    for i in ['FR2C_yWL8nc','5S27rIUJXlU','njdlDstgWw4']:
         download_explain_uploadvideo(i)
-        exit(-1)
+    exit(-1)
     
     """
+    https://www.youtube.com/watch?v=
     https://www.youtube.com/watch?v=
     https://www.youtube.com/watch?v=
     https://www.youtube.com/watch?v=
