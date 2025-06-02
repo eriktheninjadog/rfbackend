@@ -1147,7 +1147,9 @@ def getspokenarticle():
     else:
         srtfile = basename.replace(".mp3",".srt")
         print(srtfile)
-        if os.path.exists('/opt/watchit/'+srtfile):
+        fullsrtfile = '/opt/watchit/' + srtfile
+        if os.path.exists(fullsrtfile):
+            f = open(fullsrtfile,'r',encoding='utf-8')
             chitext = f.read()
             chiret = textprocessing.split_text(chitext)
         else:
