@@ -1146,7 +1146,7 @@ def getspokenarticle():
         chiret = json.loads(chitext)
     else:
         srtfile = basename + '.srt'
-        if os.path.exists('/var/www/html/mp3/'+srtfile):
+        if os.path.exists('/opt/watchit/'+srtfile):
             chitext = f.read()
             chitext = textprocessing.split_text(chitext)
         else:        
