@@ -1133,7 +1133,7 @@ def getspokenarticle():
     mp3_file = request.json['mp3file']
     # Return the MP3 file
     #return jsonify({'result':None})
-    
+    srt_file_path = None    
     basename = os.path.basename(mp3_file)
     if request.json['next'] == True:
         mp3_file = get_next_spoken_article(mp3_file)
@@ -1146,13 +1146,13 @@ def getspokenarticle():
         chiret = json.loads(chitext)
     else:
         srtfile = basename.replace(".mp3",".srt")
-        print(srtfile)
         fullsrtfile = '/opt/watchit/' + srtfile
         if os.path.exists(fullsrtfile):
             f = open(fullsrtfile,'r',encoding='utf-8')
             chitext = f.read()
             chiret = textprocessing.split_text(chitext)
-            srt_file_path = '/opt/watchit/' + basename.replace('.mp3','.srt')
+            print("loaded srt file " + fullsrtfile)
+            srt_file_path = fullsrtfile
         else:
             chiret = ['no','chinese','to','\n','be','found','!']    
     allhint_file = mp3_file + '.allhint.json'        
@@ -1163,7 +1163,7 @@ def getspokenarticle():
         allchiret = json.loads(allchitext)
     else:
         allchiret = None
-        srt_file_path = None
+    print(srt_file_path)
     return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'extendedtokens':allchiret,'srtpath':srt_file_path}})
 
 import random
