@@ -1146,10 +1146,11 @@ def getspokenarticle():
         chiret = json.loads(chitext)
     else:
         srtfile = basename + '.srt'
+        print(srtfile)
         if os.path.exists('/opt/watchit/'+srtfile):
             chitext = f.read()
-            chitext = textprocessing.split_text(chitext)
-        else:        
+            chiret = textprocessing.split_text(chitext)
+        else:
             chiret = ['no','chinese','to','\n','be','found','!']    
     allhint_file = mp3_file + '.allhint.json'        
     if os.path.exists('/var/www/html/mp3/'+allhint_file):
