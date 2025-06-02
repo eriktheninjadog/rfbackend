@@ -1152,6 +1152,7 @@ def getspokenarticle():
             f = open(fullsrtfile,'r',encoding='utf-8')
             chitext = f.read()
             chiret = textprocessing.split_text(chitext)
+            srt_file_path = '/opt/watchit/' + basename.replace('.mp3','.srt')
         else:
             chiret = ['no','chinese','to','\n','be','found','!']    
     allhint_file = mp3_file + '.allhint.json'        
@@ -1160,7 +1161,6 @@ def getspokenarticle():
         allchitext = f.read()
         f.close()
         allchiret = json.loads(allchitext)
-        srt_file_path = '/opt/watchit/' + basename.replace('.mp3','.srt')
     else:
         allchiret = None
         srt_file_path = None
