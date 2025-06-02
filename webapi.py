@@ -1160,9 +1160,13 @@ def getspokenarticle():
         allchitext = f.read()
         f.close()
         allchiret = json.loads(allchitext)
+        srt_file_path = '/opt/watchit/' + basename.replace('.mp3','.srt')
     else:
         allchiret = None
-    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'extendedtokens':allchiret}})
+        srt_file_path = None
+    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'extendedtokens':allchiret,'srtpath':srt_file_path}})
+
+import random
 
 
 @app.route('/makemp3fromtext', methods=['POST'])
