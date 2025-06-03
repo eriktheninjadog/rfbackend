@@ -2482,7 +2482,8 @@ def ask_claude():
 def adventure():
     try:
         api = openrouter.OpenRouterAPI()
-        result = api.open_router_claude_3_7_sonnet("You are a producer of chose your own adventure content. You should return valid json only. The adventures should be around 15 choices deep.","""
+        #"You are a producer of chose your own adventure content. You should return valid json only. The adventures should be around 15 choices deep.",
+        result = api.open_router_nova_lite_v1("""
                                                    
                                                    
 "Create a 'choose your own adventure' short story in JSON format. Follow this structure:
