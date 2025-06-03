@@ -2529,7 +2529,7 @@ All nextNodeId values must match existing node IDs.
 
 Avoid dead-ends (non-end nodes must have choices).
 
-Use descriptive text to immerse the reader in the setting.""")
+Use descriptive text to immerse the reader in the setting. All text should be in spoken Cantonese, using Traditional Chinese Characters""")
         result = result.replace('json','')
         result = result.replace('```','')
         start = result.find('{')
