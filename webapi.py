@@ -2539,6 +2539,6 @@ Use descriptive text to immerse the reader in the setting.""")
         result = result[start:end+1]
         # Parse the JSON to ensure it's valid
         json_data = json.loads(result)
-        return jsonify({'result': data}), 200
+        return jsonify({'result': json_data}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
