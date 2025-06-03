@@ -2529,6 +2529,15 @@ All nextNodeId values must match existing node IDs.
 Avoid dead-ends (non-end nodes must have choices).
 
 Use descriptive text to immerse the reader in the setting.""")
-        return jsonify({'result': result}), 200
+        result = result.replace('json','')
+        result = result.replace('```','')
+        start = result.find('{')
+        end = result.rfind('}')
+        if start == -1 or end == -1:
+            return jsonify({'error': 'Invalid JSON format returned from the API'}), 400
+        result = result[start:end+1]
+        # Parse the JSON to ensure it's valid
+        json_data = json.loads(result)
+        return jsonify({'result': data}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
