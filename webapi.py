@@ -2476,69 +2476,30 @@ def ask_claude():
     except Exception as e:
         print(str(e))
         return jsonify({'error': str(e)}), 500
-    
+
 
 @app.route('/adventure', methods=['GET'])
 def adventure():
     try:
-        api = openrouter.OpenRouterAPI()
-        #"You are a producer of chose your own adventure content. You should return valid json only. The adventures should be around 15 choices deep.",
-        result = api.open_router_nova_lite_v1("""
-                                                   
-                                                   
-"Create a 'choose your own adventure' short story in JSON format. Follow this structure:
-
-
-Include a unique id (integer) and creative title for the story.
-
-Define a startNode with an engaging opening scene and 2-3 initial choices.
-
-Build a nodes array containing all story paths. Each node must have:
-id (string)
-text (vivid scene description)
-choices array (with text and nextNodeId), or
-isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
-
-Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
-
-Include at least 2 successful endings and 2 failure endings.
-
-Example Themes (optional):
-
-
-Ancient ruins with cursed relics
-
-A spaceship stranded on an alien planet
-
-A haunted mansion with shifting rooms
-
-Format Reference:
-
-json
-
-{  
-  "id": 1,  
-  "title": "[Your Story Title]",  
-  "startNode": { /* ... */ },  
-  "nodes": [ /* ... */ ]  
-}  
-Constraints:
-
-
-All nextNodeId values must match existing node IDs.
-
-Avoid dead-ends (non-end nodes must have choices).
-
-Use descriptive text to immerse the reader in the setting. """)
-        result = result.replace('json','')
-        result = result.replace('```','')
-        start = result.find('{')
-        end = result.rfind('}')
-        if start == -1 or end == -1:
-            return jsonify({'error': 'Invalid JSON format returned from the API'}), 400
-        result = result[start:end+1]
-        # Parse the JSON to ensure it's valid
-        json_data = json.loads(result)
-        return jsonify({'result': json_data}), 200
+        directory = '/var/www/html/adventures'  # Define the directory path where JSON files are stored
+        
+        # Get list of all JSON files in the directory
+        json_files = [file for file in os.listdir(directory) if file.endswith('.json')]
+        
+        if not json_files:
+            return jsonify({'error': 'No adventure JSON files found'}), 404
+        
+        # Pick a random JSON file
+        random_file = random.choice(json_files)
+        file_path = os.path.join(directory, random_file)
+        
+        # Read and parse the JSON file
+        with open(file_path, 'r', encoding='utf-8') as f:
+            adventure_data = json.load(f)
+        
+        return jsonify({'result': adventure_data, 'filename': random_file}), 200
+    
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+

@@ -200,6 +200,12 @@ class OpenRouterAPI:
             "deepseek/deepseek-chat",
             user_content)
 
+    def open_router_gemini_25_flash(self, system_content: str, user_content: str) -> str:
+        return self.get_completion(
+            "google/gemini-2.5-flash-preview-05-20",
+            user_content,
+            system_content
+        )
 
     def open_router_qwen(self, system_content: str, user_content: str) -> str:
         return self.get_completion(
