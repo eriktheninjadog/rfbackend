@@ -2530,6 +2530,7 @@ All nextNodeId values must match existing node IDs.
 Avoid dead-ends (non-end nodes must have choices).
 
 Use descriptive text to immerse the reader in the setting. """)
+        result = api.open_router_claude_3_7_sonnet("You are a cantonese translation","Translate all text strings to spoken Cantonese using traditional characters. Leave all json intact: " + result)
         result = result.replace('json','')
         result = result.replace('```','')
         start = result.find('{')
