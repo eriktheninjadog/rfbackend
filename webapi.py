@@ -2476,3 +2476,59 @@ def ask_claude():
     except Exception as e:
         print(str(e))
         return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/adventure', methods=['GET'])
+def adventure():
+    try:
+        api = openrouter.OpenRouterAPI()
+        result = api.open_router_claude_3_7_sonnet("You are a producer of chose your own adventure content. You should return valid json only. The adventures should be around 15 choices deep.","""
+                                                   
+                                                   
+"Create a 'choose your own adventure' short story in JSON format. Follow this structure:
+
+
+Include a unique id (integer) and creative title for the story.
+
+Define a startNode with an engaging opening scene and 2-3 initial choices.
+
+Build a nodes array containing all story paths. Each node must have:
+id (string)
+text (vivid scene description)
+choices array (with text and nextNodeId), or
+isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
+
+Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
+
+Include at least 2 successful endings and 2 failure endings.
+
+Example Themes (optional):
+
+
+Ancient ruins with cursed relics
+
+A spaceship stranded on an alien planet
+
+A haunted mansion with shifting rooms
+
+Format Reference:
+
+json
+
+{  
+  "id": 1,  
+  "title": "[Your Story Title]",  
+  "startNode": { /* ... */ },  
+  "nodes": [ /* ... */ ]  
+}  
+Constraints:
+
+
+All nextNodeId values must match existing node IDs.
+
+Avoid dead-ends (non-end nodes must have choices).
+
+Use descriptive text to immerse the reader in the setting.""")
+        return jsonify({'result': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
