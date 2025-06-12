@@ -139,4 +139,4 @@ def split_book_into_chapters(file_path, output_dir=None):
 
 
 if __name__ == "__main__":
-    split_book_into_chapters("/home/erik/Downloads/thegiver.txt")
+    split_book_into_chapters("/home/erik/Downloads/porcelain.txt")

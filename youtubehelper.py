@@ -327,10 +327,13 @@ def generate_random_filename():
 
 import mp3helper
 
-def download_explain_uploadvideo(video_id):
+def download_explain_uploadvideo(video_id, save_video=False):
     newfilename=generate_random_filename()
     base_name = newfilename.split('.')[0]
-    voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,newfilename,save_video=True)
+    if video_id.find('https')!=-1:
+        voa.download_youtube_audio_as_mp3(video_id,newfilename,save_video=save_video)
+    else:        
+        voa.download_youtube_audio_as_mp3("https://www.youtube.com/watch?v="+video_id,newfilename,save_video=save_video)
     simple_process_mp3  = "tmp.mp3"
     #expandmp3file.process_mp3_file("tmp.mp3","youtube_"+video_id)
     #mp3helper.simple_process_mp3(newfilename)
@@ -359,17 +362,14 @@ if __name__ == "__main__":
     #    download_explain_uploadvideo(i)
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
-    for i in ['-BSroezFd9A','Bb5o5CTsC0Y','He9zVyz_u9s','iSYuwq1jUSY','WrX1lRE_Q1c']:
-        download_explain_uploadvideo(i)
+    for i in ['https://www.youtube.com/watch?v=imWj_0_n6nE',
+              'https://www.youtube.com/watch?v=UyXECS_HwVY',
+              'https://www.youtube.com/watch?v=kfFZT7D3lMQ'
+              ]:
+        download_explain_uploadvideo(i,save_video=True)
     exit(-1)
     
     """
-    https://www.youtube.com/watch?v=
-    https://www.youtube.com/watch?v=
-    https://www.youtube.com/watch?v=
-    https://www.youtube.com/watch?v=
-    https://www.youtube.com/watch?v=
-    
     if (len(sys.argv)> 1):
         videoid =  sys.argv[1]   
         download_explain_uploadvideo(videoid)
