@@ -2504,7 +2504,7 @@ def adventure():
 
 
 @app.route('/audioadventure', methods=['GET'])
-def adventure():
+def audioadventure():
     try:
         directory = '/var/www/html/audioadventures'  # Define the directory path where JSON files are stored
         
