@@ -156,7 +156,7 @@ Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate
 
 Include at least 2 successful endings and 2 failure endings.
 
-The language should be suitable for 10 year old children, with simple vocabulary and engaging descriptions.
+The language should be suitable for 8 year old children, with simple vocabulary and simple but engaging descriptions.
 
 Example Themes (optional):
     - A bullying situation in a school playground
@@ -250,7 +250,7 @@ import textprocessing
 def translate_to_cantonese(text):
     api = openrouter.OpenRouterAPI()
     """Translate text to Cantonese using OpenRouter API."""
-    text = api.open_router_claude_3_5_sonnet("You are a cantonese translator."," Your task is to translate the following text to spoken Cantonese written in Traditional Characters. Try to keep it as close to spoken language as possible even though the original is more literate. Only return the chinese, no jyutping or english text with explanations:" +text)
+    text = api.open_router_claude_3_5_sonnet("You are a cantonese translator."," Your task is to translate the following text to spoken Cantonese written in Traditional Characters. Try to keep it as close to spoken language as possible that people would use if they speak in a casual context. Only return the chinese, no jyutping or english text with explanations:" +text)
     tokens = textprocessing.split_text(text)
     return tokens
 
@@ -295,7 +295,7 @@ def upload_adventure_files():
     This function uses scp to copy all adventure JSON files and audio MP3 files
     to the specified remote server destination.
     """
-    remote_destination = "chinese.eriktamm.com:/var/www/html/audioadventures"
+    remote_destination = "chinese.eriktamm.com:/var/www/html/adventures"
     
     # Find all adventure JSON filesupload_adventure_files
     json_files = glob.glob("adventure_*.json")
@@ -325,21 +325,25 @@ def upload_adventure_files():
 
 
 
+
+
+
+
 if __name__ == "__main__":
-    upload_adventure_files()
-    exit(0)
     # Example usage
     print("Generating adventure")
     scenario = "A haunted mansion with shifting rooms"
-    adventure = create_child_adventure(scenario)
-    #adventure = create_ground_adventure(scenario)
+    #adventure = create_child_adventure(scenario)
+    adventure = create_ground_adventure(scenario)
     print("Original Adventure:", adventure)
     translated_adventure = translate_story_to_chinese(adventure)
     tran = json.dumps(translated_adventure)
-    translated_adventure = add_audio_to_adventure(translated_adventure)
+    
+    #translated_adventure = add_audio_to_adventure(translated_adventure)
     filename = "adventure_"+str(random.randint(0,1000000)) +".json"
+    tran = json.dumps(translated_adventure)
     with open(filename, "w", encoding="utf-8") as f:
         f.write(tran)
     print("Translated Adventure JSON saved as adventure.json")
     print("Translated Adventure:", translated_adventure)
-    
+    upload_adventure_files()
