@@ -205,21 +205,22 @@ Define a startNode with an engaging opening scene and 2-3 initial choices.
 Build a nodes array containing all story paths. Each node must have:
 id (string)
 text (vivid scene description)
+sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story)
 choices array (with text and nextNodeId), or
 isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
+
 
 Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
 
 Include at least 2 successful endings and 2 failure endings.
 
 Example Themes (optional):
-    - Looking for a lost child in a skatepark with a gang of skaters
     - A political campaign in a third world corrupted country
-    - A heist in a futuristic city
     - A prison escape in 1950's russia
-    - A surival situation in China during cultural revolution
+    - A survival situation in China during cultural revolution
+    - A survival situation in Cambodja during Pol Pot regime
     - Overthrowing a corrupt government in an authoritian state
-    - A drug operation in filipines Manilla
+    - Solving a murder in Iceland   
     
 
 Format Reference:
@@ -280,12 +281,68 @@ def translate_node(node):
     # Translate ending message if it exists
     if "endingMessage" in node:
         node["cantonese_endingMessage"] = translate_to_cantonese(node["endingMessage"])
+
     
     # Translate choices if they exist
     if "choices" in node and isinstance(node["choices"], list):
         for choice in node["choices"]:
             if "text" in choice:
                 choice["cantonese_text"] = translate_to_cantonese(choice["text"])
+
+
+
+
+def extract_sdd_prompts(adventure_data):
+    """
+    Extracts all sdd_prompt fields from the adventure JSON structure.
+    
+    Args:
+        adventure_data: The JSON adventure data structure
+        
+    Returns:
+        A list of sdd_prompt strings
+    """
+    prompts = []
+    
+    # Check startNode for sdd_prompt
+    if "startNode" in adventure_data and "sdd_prompt" in adventure_data["startNode"]:
+        prompts.append(adventure_data["startNode"]["sdd_prompt"])
+    
+    # Check nodes for sdd_prompt
+    if "nodes" in adventure_data:
+        for node in adventure_data["nodes"]:
+            if "sdd_prompt" in node:
+                prompts.append(node["sdd_prompt"])
+    
+    for p in prompts:
+        md5signature = hashlib.md5(p.encode('utf-8')).hexdigest()
+        # write a file that has the name md5signature.prompt and contains the prompt
+        with open(md5signature + ".prompt", "w", encoding="utf-8") as f:
+            f.write(p)
+            
+    # scp all the md5files to a server and then delete them
+    remote_destination = "chinese.eriktamm.com:/opt/prompts_to_process"
+    
+    # Find all adventure JSON filesupload_adventure_files
+    all_files = glob.glob("*.prompt")
+        
+    
+    if not all_files:
+        print("No files found to upload.")
+        return
+    
+    try:
+        # Create the scp command
+        scp_command = ["scp"] + all_files + [remote_destination]
+        
+        # Execute the scp command
+        result = subprocess.run(scp_command, check=True, capture_output=True, text=True)        
+        print(f"Successfully uploaded {len(all_files)} files to {remote_destination}")
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error during upload: {e}")
+        print(f"Command output: {e.stderr}")
+
 
 
 def upload_adventure_files():
@@ -324,6 +381,30 @@ def upload_adventure_files():
         print(f"Command output: {e.stderr}")
 
 
+def read_adventure_json(filename):
+    """
+    Reads a JSON file with UTF-8 encoding and returns the parsed structure.
+    
+    Args:
+        filename: Path to the JSON file to read
+        
+    Returns:
+        The parsed JSON data structure or None if an error occurs
+    """
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+    except FileNotFoundError:
+        print(f"Error: File {filename} not found.")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"Error parsing JSON in {filename}: {e}")
+        return None
+    except Exception as e:
+        print(f"Unexpected error reading {filename}: {e}")
+        return None
+
 
 
 
@@ -331,6 +412,7 @@ def upload_adventure_files():
 
 if __name__ == "__main__":
     # Example usage
+
     print("Generating adventure")
     scenario = "A haunted mansion with shifting rooms"
     #adventure = create_child_adventure(scenario)
@@ -338,7 +420,6 @@ if __name__ == "__main__":
     print("Original Adventure:", adventure)
     translated_adventure = translate_story_to_chinese(adventure)
     tran = json.dumps(translated_adventure)
-    
     #translated_adventure = add_audio_to_adventure(translated_adventure)
     filename = "adventure_"+str(random.randint(0,1000000)) +".json"
     tran = json.dumps(translated_adventure)
@@ -347,3 +428,9 @@ if __name__ == "__main__":
     print("Translated Adventure JSON saved as adventure.json")
     print("Translated Adventure:", translated_adventure)
     upload_adventure_files()
+    extract_sdd_prompts(translated_adventure)
+
+
+    """"
+    Hmm, the old bird's nest,' she rasps, taking a long sip. 'Elevated patrols tonight. And cameras, new ones, on the lower levels. Best avoid the obvious paths.' Her eyes gleam with a strange light. You've gained crucial insight, but it cost you an hour and a precious few credits.
+    """
