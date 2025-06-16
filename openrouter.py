@@ -145,6 +145,13 @@ class OpenRouterAPI:
             system_content=system_content
         )
 
+    def open_router_claude_4_0_sonnet(self, system_content: str,text: str) -> str:
+        return self.get_completion(
+            "anthropic/claude-sonnet-4",
+            text,
+            system_content=system_content
+        )
+
         
 
     def open_router_perplexity_sonar_pro(self, text: str) -> str:
@@ -206,6 +213,16 @@ class OpenRouterAPI:
             user_content,
             system_content
         )
+        
+        
+    def open_router_gemini_25_pro(self, system_content: str, user_content: str) -> str:
+        return self.get_completion(
+            "google/gemini-2.5-pro-preview",
+            user_content,
+            system_content
+        )
+
+
 
     def open_router_qwen(self, system_content: str, user_content: str) -> str:
         return self.get_completion(

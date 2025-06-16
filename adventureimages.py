@@ -17,9 +17,11 @@ from diffusers import StableDiffusionPipeline
 from PIL import Image
 
 
+#
+
 class StableDiffusionGenerator:
-    def __init__(self, model_name: str = "runwayml/stable-diffusion-v1-5", 
-                 local_model_dir: str = "./models/stable-diffusion",
+    def __init__(self, model_name: str = "mann-e/Mann-E_Dreams", 
+                 local_model_dir: str = "./models/manne",
                  device: Optional[str] = None):
         """
         Initialize the Stable Diffusion generator.
@@ -145,11 +147,10 @@ def read_prompt_files(prompt_dir: str) -> List[tuple]:
     
     return prompts
 
-
 def upload_images(image_dir: str, remote_host: str = "erik@chinese.eriktamm.com",
-                 remote_path: str = "/var/www/html/adventures"):
+                    remote_path: str = "/var/www/html/adventures"):
     """
-    Upload generated images to remote server using SCP.
+    Upload generated images to remote server using a single SCP command.
     
     Args:
         image_dir: Local directory containing images
@@ -165,20 +166,22 @@ def upload_images(image_dir: str, remote_host: str = "erik@chinese.eriktamm.com"
     
     print(f"Uploading {len(jpg_files)} images to {remote_host}:{remote_path}")
     
-    for jpg_file in jpg_files:
-        try:
-            cmd = ["scp", str(jpg_file), f"{remote_host}:{remote_path}/"]
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    try:
+        # Use a single scp command with all files
+        cmd = ["scp"] + [str(jpg_file) for jpg_file in jpg_files] + [f"{remote_host}:{remote_path}/"]
+        print(f"Executing: {' '.join(cmd[:3])}... (and {len(jpg_files)} files)")
+        
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        
+        if result.returncode == 0:
+            print(f"✓ Successfully uploaded {len(jpg_files)} images")
+        else:
+            print(f"✗ Failed to upload images: {result.stderr}")
             
-            if result.returncode == 0:
-                print(f"✓ Uploaded: {jpg_file.name}")
-            else:
-                print(f"✗ Failed to upload {jpg_file.name}: {result.stderr}")
-                
-        except subprocess.TimeoutExpired:
-            print(f"✗ Timeout uploading {jpg_file.name}")
-        except Exception as e:
-            print(f"✗ Error uploading {jpg_file.name}: {e}")
+    except subprocess.TimeoutExpired:
+        print(f"✗ Upload timed out after 300 seconds")
+    except Exception as e:
+        print(f"✗ Error during upload: {e}")
 
 
 def main():

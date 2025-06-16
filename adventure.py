@@ -20,8 +20,8 @@ import glob
 
 def create_adventure_from_prompt(prompt):
     api = openrouter.OpenRouterAPI()
-    
-    result = api.open_router_gemini_25_flash("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully.", prompt)
+    #result = api.open_router_claude_4_0_sonnet("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
+    result = api.open_router_gemini_25_pro("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
     result = result.replace('json','')
     result = result.replace('```','')
     start = result.find('{')
@@ -195,7 +195,7 @@ def create_ground_adventure(scenario):
     prompt = """
                                                    
                                                    
-"Create a 'choose your own adventure' short story in JSON format. Follow this structure:
+"Create a 'choose your own adventure' short story in JSON format. All texts should be in spoken Cantonese using traditional characters. Follow this structure:
 
 
 Include a unique id (integer) and creative title for the story.
@@ -205,7 +205,7 @@ Define a startNode with an engaging opening scene and 2-3 initial choices.
 Build a nodes array containing all story paths. Each node must have:
 id (string)
 text (vivid scene description)
-sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story)
+sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story. The prompt should be in English.)
 choices array (with text and nextNodeId), or
 isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
 
@@ -215,13 +215,14 @@ Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate
 Include at least 2 successful endings and 2 failure endings.
 
 Example Themes (optional):
-    - A political campaign in a third world corrupted country
-    - A prison escape in 1950's russia
-    - A survival situation in China during cultural revolution
-    - A survival situation in Cambodja during Pol Pot regime
-    - Overthrowing a corrupt government in an authoritian state
-    - Solving a murder in Iceland   
-    
+    - A protest turning into a riot during Hong Kong protests 2019
+    - A prison escape in 1950's russia. Make sure to include historical elements.
+    - A survival situation in China during cultural revolution. Make sure to ideological slogans and historical elements.
+    - Investigating corruption in a presidential campaign in the US
+    - A vaccine gone wrong, killing people and the company is trying to cover it up
+    - In China during the COVID pandemic
+    - In the 50s China under Chairman Mao, during the great leap forward. Include famous party members
+    - In Stockholm, in the aftermath of the assisination of Olof Palme
 
 Format Reference:
 
@@ -259,7 +260,7 @@ def translate_story_to_chinese(story):
     """Translate a story adventure to Chinese (Cantonese)."""
     # Translate the title
     if "title" in story:
-        story["cantonese_title"] = translate_to_cantonese(story["title"])
+        story["cantonese_title"] = textprocessing.split_text(story["title"])
     
     # Translate the start node
     if "startNode" in story:
@@ -276,18 +277,18 @@ def translate_node(node):
     """Translate a single node and its choices recursively."""
     # Translate the main text of the node
     if "text" in node:
-        node["cantonese_text"] = translate_to_cantonese(node["text"])
+        node["cantonese_text"] = textprocessing.split_text(node["text"])
     
     # Translate ending message if it exists
     if "endingMessage" in node:
-        node["cantonese_endingMessage"] = translate_to_cantonese(node["endingMessage"])
+        node["cantonese_endingMessage"] = textprocessing.split_text(node["endingMessage"])
 
     
     # Translate choices if they exist
     if "choices" in node and isinstance(node["choices"], list):
         for choice in node["choices"]:
             if "text" in choice:
-                choice["cantonese_text"] = translate_to_cantonese(choice["text"])
+                choice["cantonese_text"] = textprocessing.split_text(choice["text"])
 
 
 
@@ -407,12 +408,8 @@ def read_adventure_json(filename):
 
 
 
-
-
-
 if __name__ == "__main__":
     # Example usage
-
     print("Generating adventure")
     scenario = "A haunted mansion with shifting rooms"
     #adventure = create_child_adventure(scenario)
@@ -422,14 +419,10 @@ if __name__ == "__main__":
     tran = json.dumps(translated_adventure)
     #translated_adventure = add_audio_to_adventure(translated_adventure)
     filename = "adventure_"+str(random.randint(0,1000000)) +".json"
-    tran = json.dumps(translated_adventure)
     with open(filename, "w", encoding="utf-8") as f:
         f.write(tran)
-    print("Translated Adventure JSON saved as adventure.json")
-    print("Translated Adventure:", translated_adventure)
     upload_adventure_files()
     extract_sdd_prompts(translated_adventure)
-
 
     """"
     Hmm, the old bird's nest,' she rasps, taking a long sip. 'Elevated patrols tonight. And cameras, new ones, on the lower levels. Best avoid the obvious paths.' Her eyes gleam with a strange light. You've gained crucial insight, but it cost you an hour and a precious few credits.
