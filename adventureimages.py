@@ -17,11 +17,10 @@ from diffusers import StableDiffusionPipeline
 from PIL import Image
 
 
-#
-
 class StableDiffusionGenerator:
     def __init__(self, model_name: str = "mann-e/Mann-E_Dreams", 
                  local_model_dir: str = "./models/manne",
+                 local_model: bool = False,
                  device: Optional[str] = None):
         """
         Initialize the Stable Diffusion generator.
@@ -35,6 +34,7 @@ class StableDiffusionGenerator:
         self.local_model_dir = Path(local_model_dir)
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.pipeline = None
+        self.local_model = local_model
         
         print(f"Using device: {self.device}")
         
@@ -42,7 +42,7 @@ class StableDiffusionGenerator:
         """Load the model from local directory or download from HuggingFace."""
         try:
             # Try to load from local directory first
-            if self.local_model_dir.exists() and any(self.local_model_dir.iterdir()):
+            if self.local_model and self.local_model_dir.exists() and any(self.local_model_dir.iterdir()):
                 print(f"Loading model from local directory: {self.local_model_dir}")
                 self.pipeline = StableDiffusionPipeline.from_pretrained(
                     str(self.local_model_dir),
@@ -66,9 +66,10 @@ class StableDiffusionGenerator:
             )
             
             # Save model locally for future use
-            print(f"Saving model to local directory: {self.local_model_dir}")
-            self.local_model_dir.mkdir(parents=True, exist_ok=True)
-            self.pipeline.save_pretrained(str(self.local_model_dir))
+            if self.local_model:
+                print(f"Saving model to local directory: {self.local_model_dir}")
+                self.local_model_dir.mkdir(parents=True, exist_ok=True)
+                self.pipeline.save_pretrained(str(self.local_model_dir))
         
         # Move pipeline to device and optimize
         self.pipeline = self.pipeline.to(self.device)
@@ -184,8 +185,10 @@ def upload_images(image_dir: str, remote_host: str = "erik@chinese.eriktamm.com"
         print(f"✗ Error during upload: {e}")
 
 
+
 def main():
     parser = argparse.ArgumentParser(description="Generate images from text prompts using Stable Diffusion")
+    parser.add_argument("local_model", default="no",help="dont save")    
     parser.add_argument("prompt_dir", default="input",help="Directory containing prompt text files")
     parser.add_argument("-o", "--output-dir", default="./generated_images", 
                        help="Output directory for generated images")
@@ -223,6 +226,7 @@ def main():
         generator = StableDiffusionGenerator(
             model_name=args.model_name,
             local_model_dir=args.model_dir,
+            local_model=args.local_model == "yes",  
             device=device
         )
         

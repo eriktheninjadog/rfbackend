@@ -217,12 +217,11 @@ Include at least 2 successful endings and 2 failure endings.
 Example Themes (optional):
     - A protest turning into a riot during Hong Kong protests 2019
     - A prison escape in 1950's russia. Make sure to include historical elements.
-    - A survival situation in China during cultural revolution. Make sure to ideological slogans and historical elements.
+    - During the long march in China. Include historical figures
+    - Saigon during the vietnamese war, spies are everywhere, the vietcong is approaching
     - Investigating corruption in a presidential campaign in the US
-    - A vaccine gone wrong, killing people and the company is trying to cover it up
     - In China during the COVID pandemic
     - In the 50s China under Chairman Mao, during the great leap forward. Include famous party members
-    - In Stockholm, in the aftermath of the assisination of Olof Palme
 
 Format Reference:
 
@@ -410,19 +409,20 @@ def read_adventure_json(filename):
 
 if __name__ == "__main__":
     # Example usage
-    print("Generating adventure")
-    scenario = "A haunted mansion with shifting rooms"
-    #adventure = create_child_adventure(scenario)
-    adventure = create_ground_adventure(scenario)
-    print("Original Adventure:", adventure)
-    translated_adventure = translate_story_to_chinese(adventure)
-    tran = json.dumps(translated_adventure)
-    #translated_adventure = add_audio_to_adventure(translated_adventure)
-    filename = "adventure_"+str(random.randint(0,1000000)) +".json"
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write(tran)
-    upload_adventure_files()
-    extract_sdd_prompts(translated_adventure)
+    for i in range(3):
+        print("Generating adventure")
+        scenario = "A haunted mansion with shifting rooms"
+        #adventure = create_child_adventure(scenario)
+        adventure = create_ground_adventure(scenario)
+        print("Original Adventure:", adventure)
+        translated_adventure = translate_story_to_chinese(adventure)
+        tran = json.dumps(translated_adventure)
+        #translated_adventure = add_audio_to_adventure(translated_adventure)
+        filename = "adventure_"+str(random.randint(0,1000000)) +".json"
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(tran)
+        upload_adventure_files()
+        extract_sdd_prompts(translated_adventure)
 
     """"
     Hmm, the old bird's nest,' she rasps, taking a long sip. 'Elevated patrols tonight. And cameras, new ones, on the lower levels. Best avoid the obvious paths.' Her eyes gleam with a strange light. You've gained crucial insight, but it cost you an hour and a precious few credits.
