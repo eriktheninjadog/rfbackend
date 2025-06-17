@@ -519,6 +519,161 @@ def enrich_adventure_descriptions(adventure_data):
     print(f"Successfully enriched {len(enriched_descriptions)} descriptions.")
     return adventure_data
 
+
+def continue_adventure(adv):
+    """
+    Takes an existing adventure, removes one of the end-nodes, and expands it into
+    a new branch with at least one successful ending and one failure ending.
+    The new branch will have a depth between 5-10 levels.
+    
+    Args:
+        adv: The adventure data structure to expand
+        
+    Returns:
+        The updated adventure data structure
+    """
+    api = openrouter.OpenRouterAPI()
+    
+    # Find all end nodes
+    end_nodes = []
+    if "nodes" in adv:
+        for node in adv["nodes"]:
+            if "isEnd" in node and node["isEnd"]:
+                end_nodes.append(node)
+    
+    if not end_nodes:
+        print("No end nodes found to expand.")
+        return adv
+    
+    # Select a random end node to expand
+    node_to_expand = random.choice(end_nodes)
+    
+    # Get the original node's ID and remove isEnd property
+    original_id = node_to_expand["id"]
+    node_to_expand.pop("isEnd", None)
+    node_to_expand.pop("isSuccess", None)
+    node_to_expand.pop("endingMessage", None)
+    node_to_expand.pop("cantonese_endingMessage", None)
+    
+    # Extract background context from start node
+    background_context = ""
+    if "startNode" in adv and "text" in adv["startNode"]:
+        background_context = adv["startNode"]["text"]
+    elif "overall" in adv:
+        background_context = adv["overall"]
+    
+    # Get the current text of the node to expand
+    current_text = node_to_expand.get("text", "")
+    
+    # Create a prompt for expanding this node
+    prompt = f"""
+    Continue this adventure branch from the current node. The current scene is:
+    "{current_text}"
+    
+    Background context for the adventure:
+    "{background_context}"
+    
+    Create a branch with 5-10 new nodes that continues from this point. Include:
+    - At least one successful ending
+    - At least one failure ending
+    - Meaningful choices that branch the story
+    
+    Format the response as a valid JSON array of nodes, where each node has:
+    - id: a unique string (use the format "new_[number]")
+    - text: descriptive scene text
+    - sdd_prompt: English prompt for image generation 
+    - choices: array of options (each with text and nextNodeId), or
+    - isEnd: true, isSuccess: boolean, and endingMessage for final outcomes
+    
+    All nextNodeId values should reference valid nodes in your response.
+    """
+    
+    # Get the new nodes from the API
+    print("Expanding adventure branch...")
+    response = api.open_router_gemini_25_flash(
+        "You are an expert adventure story writer creating JSON content.",
+        prompt
+    )
+    
+    # Extract the JSON array from the response
+    try:
+        # Find JSON array in the response
+        json_start = response.find('[')
+        json_end = response.rfind(']')
+        
+        if json_start == -1 or json_end == -1:
+            print("Could not find JSON array in response. Trying to fix...")
+            # Try to request a fix
+            response = api.open_router_nova_lite_v1(
+                f"Fix the JSON array in this response: {response}\nReturn only the valid JSON array."
+            )
+            json_start = response.find('[')
+            json_end = response.rfind(']')
+        
+        if json_start != -1 and json_end != -1:
+            json_str = response[json_start:json_end + 1]
+            new_nodes = json.loads(json_str)
+        else:
+            print("Failed to extract JSON array. Using fallback approach.")
+            # Try to parse the whole response as JSON
+            new_nodes = json.loads(response)
+    except json.JSONDecodeError as e:
+        print(f"Error parsing JSON: {e}")
+        print("Falling back to default expansion.")
+        # Create a simple fallback expansion
+        new_nodes = [
+            {
+                "id": "new_1",
+                "text": f"Continuing from {current_text}. You face a critical decision.",
+                "sdd_prompt": "Character at a crossroads facing a difficult choice in a tense situation",
+                "choices": [
+                    {"text": "Take the risky path", "nextNodeId": "new_2"},
+                    {"text": "Follow the safer route", "nextNodeId": "new_3"}
+                ]
+            },
+            {
+                "id": "new_2", 
+                "text": "The risky path leads to danger.",
+                "sdd_prompt": "Character in dangerous situation with obstacles",
+                "isEnd": True,
+                "isSuccess": False,
+                "endingMessage": "Your risk did not pay off. The adventure ends in failure."
+            },
+            {
+                "id": "new_3",
+                "text": "The safer route leads to success.",
+                "sdd_prompt": "Character achieving their goal triumphantly",
+                "isEnd": True,
+                "isSuccess": True,
+                "endingMessage": "Your caution was rewarded. You succeed!"
+            }
+        ]
+    
+    # Add the new nodes to the adventure
+    if "nodes" not in adv:
+        adv["nodes"] = []
+    
+    # Update the original node to point to the first new node
+    if new_nodes:
+        first_new_node = new_nodes[0]["id"]
+        node_to_expand["choices"] = [
+            {"text": "Continue your journey", "nextNodeId": first_new_node}
+        ]
+        
+        # Add all the new nodes
+        adv["nodes"].extend(new_nodes)
+        
+        # Translate the new nodes to Cantonese
+        for node in new_nodes:
+            translate_node(node)
+    
+    # Check for dead ends in the updated adventure
+    dead_ends = check_for_dead_ends(adv)
+    if dead_ends:
+        print(f"Warning: The expanded adventure has {len(dead_ends)} dead ends: {dead_ends}")
+    
+    return adv
+
 def extract_sdd_prompts(adventure_data):
     """
     Extracts all sdd_prompt fields from the adventure JSON structure.
@@ -718,6 +873,18 @@ if __name__ == "__main__":
         scenario = "A haunted mansion with shifting rooms"
         #adventure = create_child_adventure(scenario)
         adventure = create_ground_adventure(scenario)
+        ids = check_for_dead_ends(adventure)
+        while len(ids) > 0:
+            print("Found dead ends, filling them in")
+            exit(0)
+        for i in range(3):
+            adventure = continue_adventure(adventure)
+            ids = check_for_dead_ends(adventure)
+            while len(ids) > 0:
+                print("Found dead ends, filling them in")
+                exit(0)
+        
+        
         adventure = enrich_adventure_descriptions(adventure)
         print("Original Adventure:", adventure)
         ids = check_for_dead_ends(adventure)

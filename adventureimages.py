@@ -35,6 +35,7 @@ class EnvaGenerator:
                        num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
         image = self.pipe(prompt,height=height,
             width=width,
+            num_inference_steps=20
             ).images[0]
         return image
 
