@@ -16,246 +16,82 @@ import torch
 from diffusers import StableDiffusionPipeline
 from PIL import Image
 
-class ModelConfig:
-    """Helper class for model-specific configurations"""
-    
-    @staticmethod
-    def get_model_config(model_name):
-        """
-        Returns the appropriate configuration for the given model
-        
-        Args:
-            model_name: Name of the model
-            
-        Returns:
-            Dictionary with model configuration parameters
-        """
-        # Add model-specific configurations here
-        if "mann-e" in model_name.lower():
-            return {
-                "needs_conversion": False
-            }
-        else:
-            return {
-                "torch_dtype": torch.float16 if torch.cuda.is_available() else torch.float32,
-                "variant": "fp16" if torch.cuda.is_available() else "fp32",
-                "needs_conversion": False
-            }
-    
-    @staticmethod
-    def apply_config(pipeline, model_config):
-        """Apply model-specific configurations to the pipeline"""
-        # This can be extended with other model-specific adjustments
-        return pipeline
-
 class StableDiffusionGenerator:
-    def __init__(self, model_name: str = "mann-e/Mann-E_Dreams", 
-                    local_model_dir: str = "./models/manne",
-                    local_model: bool = False,
-                    device: Optional[str] = None):
-        """
-        Initialize the Stable Diffusion generator.
-        
-        Args:
-            model_name: HuggingFace model identifier
-            local_model_dir: Local directory to store/load model
-            device: Device to use ('cuda', 'cpu', or None for auto-detection)
-        """
+    """
+    Stable Diffusion image generator class
+    """
+    def __init__(self, model_name: str, local_model_dir: str = None, 
+                 local_model: bool = False, device: Optional[str] = None):
         self.model_name = model_name
-        self.local_model_dir = Path(local_model_dir)
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-        self.pipeline = None
+        self.local_model_dir = local_model_dir
         self.local_model = local_model
-        
-        # Get model-specific configuration
-        self.model_config = ModelConfig.get_model_config(model_name)
-        
-        print(f"Using device: {self.device}")
+        self.device = device if device else ("cuda" if torch.cuda.is_available() else "cpu")
+        self.pipe = None
         
     def load_model(self):
-        """Load the model from local directory or download from HuggingFace."""
-        try:
-            # Try to load from local directory first
-            if self.local_model and self.local_model_dir.exists() and any(self.local_model_dir.iterdir()):
-                print(f"Loading model from local directory: {self.local_model_dir}")
-                self.pipeline = StableDiffusionPipeline.from_pretrained(
-                    str(self.local_model_dir),
-                    torch_dtype=self.model_config["torch_dtype"],
-                    variant=self.model_config["variant"],
-                    safety_checker=None,
-                    requires_safety_checker=False
-                )
-            else:
-                raise FileNotFoundError("Local model not found")
-                
-        except (FileNotFoundError, OSError, Exception) as e:
-            print(f"Failed to load local model: {e}")
-            print(f"Downloading model from HuggingFace: {self.model_name}")
-            
-            # Download from HuggingFace
-            self.pipeline = StableDiffusionPipeline.from_pretrained(
-                self.model_name,
-                torch_dtype=self.model_config["torch_dtype"],
-                variant=self.model_config["variant"],
-                safety_checker=None,
-                requires_safety_checker=False
-            )
-            
-            # Save model locally for future use
-            if self.local_model:
-                print(f"Saving model to local directory: {self.local_model_dir}")
-                self.local_model_dir.mkdir(parents=True, exist_ok=True)
-                self.pipeline.save_pretrained(str(self.local_model_dir))
+        """Load the Stable Diffusion model"""
+        if self.local_model:
+            model_path = os.path.join(self.local_model_dir, self.model_name)
+            self.pipe = StableDiffusionPipeline.from_pretrained(
+                model_path, local_files_only=True
+            ).to(self.device)
+        else:
+            self.pipe = StableDiffusionPipeline.from_pretrained(
+                self.model_name, 
+                use_auth_token=False,
+            ).to(self.device)
         
-        # Apply model-specific configurations
-        self.pipeline = ModelConfig.apply_config(self.pipeline, self.model_config)
-        
-        # Move pipeline to device and optimize
-        self.pipeline = self.pipeline.to(self.device)
-        
+        # Enable memory optimization if using CUDA
         if self.device == "cuda":
-            # Enable memory efficient attention if available
-            try:
-                self.pipeline.enable_xformers_memory_efficient_attention()
-            except ImportError:
-                print("xformers not available, using default attention")
-            
-            # Enable CPU offload to save GPU memory
-            self.pipeline.enable_model_cpu_offload()
+            self.pipe.enable_attention_slicing()
             
     def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
-                    num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
+                       num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
         """
-        Generate an image from a text prompt.
+        Generate an image using the loaded model
         
         Args:
-            prompt: Text prompt for image generation
-            width: Image width
-            height: Image height
+            prompt: Text prompt to generate image from
+            width: Output image width
+            height: Output image height
             num_inference_steps: Number of denoising steps
-            guidance_scale: Guidance scale for generation
-            
-        Returns:
-            PIL Image object
-         """
-        if self.pipeline is None:
-            raise RuntimeError("Model not loaded. Call load_model() first.")
-    
-        print(f"Generating image for prompt: '{prompt[:50]}...'")
-        
-        with torch.autocast(self.device):
-            result = self.pipeline(
-                prompt=prompt,
-                width=width,
-                height=height,
-                num_inference_steps=num_inference_steps,
-                guidance_scale=guidance_scale,
-                generator=torch.Generator(device=self.device).manual_seed(42)  # For reproducibility
-            )
-        
-        return result.images[0]
-
-            
-            
-class StableDiffusionGenerator2:
-    def __init__(self, model_name: str = "mann-e/Mann-E_Dreams", 
-                 local_model_dir: str = "./models/manne",
-                 local_model: bool = False,
-                 device: Optional[str] = None):
-        """
-        Initialize the Stable Diffusion generator.
-        
-        Args:
-            model_name: HuggingFace model identifier
-            local_model_dir: Local directory to store/load model
-            device: Device to use ('cuda', 'cpu', or None for auto-detection)
-        """
-        self.model_name = model_name
-        self.local_model_dir = Path(local_model_dir)
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-        self.pipeline = None
-        self.local_model = local_model
-        
-        print(f"Using device: {self.device}")
-        
-    def load_model(self):
-        """Load the model from local directory or download from HuggingFace."""
-        try:
-            # Try to load from local directory first
-            if self.local_model and self.local_model_dir.exists() and any(self.local_model_dir.iterdir()):
-                print(f"Loading model from local directory: {self.local_model_dir}")
-                self.pipeline = StableDiffusionPipeline.from_pretrained(
-                    str(self.local_model_dir),
-                    #torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
-                    safety_checker=None,
-                    requires_safety_checker=False
-                )
-            else:
-                raise FileNotFoundError("Local model not found")
-                
-        except (FileNotFoundError, OSError, Exception) as e:
-            print(f"Failed to load local model: {e}")
-            print(f"Downloading model from HuggingFace: {self.model_name}")
-            
-            # Download from HuggingFace
-            self.pipeline = StableDiffusionPipeline.from_pretrained(
-                self.model_name,
-                #torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
-                safety_checker=None,
-                requires_safety_checker=False
-            )
-            
-            # Save model locally for future use
-            if self.local_model:
-                print(f"Saving model to local directory: {self.local_model_dir}")
-                self.local_model_dir.mkdir(parents=True, exist_ok=True)
-                self.pipeline.save_pretrained(str(self.local_model_dir))
-        
-        # Move pipeline to device and optimize
-        self.pipeline = self.pipeline.to(self.device)
-        
-        if self.device == "cuda":
-            # Enable memory efficient attention if available
-            try:
-                self.pipeline.enable_xformers_memory_efficient_attention()
-            except ImportError:
-                print("xformers not available, using default attention")
-            
-            # Enable CPU offload to save GPU memory
-            self.pipeline.enable_model_cpu_offload()
-    
-    def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
-                      num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
-        """
-        Generate an image from a text prompt.
-        
-        Args:
-            prompt: Text prompt for image generation
-            width: Image width
-            height: Image height
-            num_inference_steps: Number of denoising steps
-            guidance_scale: Guidance scale for generation
+            guidance_scale: Guidance scale for conditioning
             
         Returns:
             PIL Image object
         """
-        if self.pipeline is None:
-            raise RuntimeError("Model not loaded. Call load_model() first.")
-        
-        print(f"Generating image for prompt: '{prompt[:50]}...'")
-        
-        with torch.autocast(self.device):
-            result = self.pipeline(
-                prompt=prompt,
-                width=width,
-                height=height,
-                num_inference_steps=num_inference_steps,
-                guidance_scale=guidance_scale,
-                generator=torch.Generator(device=self.device).manual_seed(42)  # For reproducibility
-            )
-        
-        return result.images[0]
+        if self.pipe is None:
+            raise RuntimeError("Model not loaded. Call load_model() first")
+            
+        return self.pipe(
+            prompt,
+            height=height,
+            width=width,
+            num_inference_steps=num_inference_steps,
+            guidance_scale=guidance_scale
+        ).images[0]
 
+
+def create_generator(model_name: str, **kwargs):
+    """
+    Create an appropriate image generator based on the model name
+    
+    Args:
+        model_name: Name of the model to use
+        **kwargs: Additional arguments to pass to the generator
+    
+    Returns:
+        An image generator object
+    """
+    # Currently only supporting StableDiffusion models
+    # Can be extended to support other model types
+    if "stable-diffusion" in model_name.lower() or "runwayml" in model_name.lower():
+        return StableDiffusionGenerator(model_name=model_name, **kwargs)
+    else:
+        # Default to StableDiffusion for now
+        # This could be expanded to support DALL-E, Midjourney API, etc.
+        print(f"Using default StableDiffusionGenerator for model: {model_name}")
+        return StableDiffusionGenerator(model_name=model_name, **kwargs)
 
 def read_prompt_files(prompt_dir: str) -> List[tuple]:
     """
@@ -363,17 +199,14 @@ def main():
         
         # Initialize generator
         device = None if args.device == "auto" else args.device
-        generator = StableDiffusionGenerator(
-            model_name=args.model_name,
-            local_model_dir=args.model_dir,
-            local_model=args.local_model == "yes",  
-            device=device
-        )
         
         # Load model
-        print("Loading Stable Diffusion model...")
-        generator.load_model()
-        print("Model loaded successfully!")
+        print(f"Initializing generator with model: {args.model_name}")
+        generator = create_generator(model_name=args.model_name,
+            local_model_dir=args.model_dir if args.local_model.lower() == "yes" else None,
+            local_model=args.local_model.lower() == "yes",
+            device=device
+        )
         
         # Generate images
         for i, (file_path, prompt_text, base_name) in enumerate(prompts, 1):
