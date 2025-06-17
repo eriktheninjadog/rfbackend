@@ -16,7 +16,39 @@ import torch
 from diffusers import StableDiffusionPipeline
 from PIL import Image
 
-
+class ModelConfig:
+    """Helper class for model-specific configurations"""
+    
+    @staticmethod
+    def get_model_config(model_name):
+        """
+        Returns the appropriate configuration for the given model
+        
+        Args:
+            model_name: Name of the model
+            
+        Returns:
+            Dictionary with model configuration parameters
+        """
+        # Add model-specific configurations here
+        if "mann-e" in model_name.lower():
+            return {
+                "torch_dtype": torch.float32,  # Mann-E models need float32
+                "variant": "fp32",
+                "needs_conversion": False
+            }
+        else:
+            return {
+                "torch_dtype": torch.float16 if torch.cuda.is_available() else torch.float32,
+                "variant": "fp16" if torch.cuda.is_available() else "fp32",
+                "needs_conversion": False
+            }
+    
+    @staticmethod
+    def apply_config(pipeline, model_config):
+        """Apply model-specific configurations to the pipeline"""
+        # This can be extended with other model-specific adjustments
+        return pipeline
 class StableDiffusionGenerator:
     def __init__(self, model_name: str = "mann-e/Mann-E_Dreams", 
                  local_model_dir: str = "./models/manne",
