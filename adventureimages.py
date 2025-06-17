@@ -33,8 +33,6 @@ class ModelConfig:
         # Add model-specific configurations here
         if "mann-e" in model_name.lower():
             return {
-                "torch_dtype": torch.float32,  # Mann-E models need float32
-                "variant": "fp32",
                 "needs_conversion": False
             }
         else:
