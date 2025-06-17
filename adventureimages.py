@@ -109,6 +109,9 @@ def create_generator(model_name: str, **kwargs):
     # Can be extended to support other model types
     if "stable-diffusion" in model_name.lower() or "runwayml" in model_name.lower():
         return StableDiffusionGenerator(model_name=model_name, **kwargs)
+    
+    if "mann-e" in model_name.lower():
+        return EnvaGenerator(model_name=model_name, **kwargs)
     else:
         # Default to StableDiffusion for now
         # This could be expanded to support DALL-E, Midjourney API, etc.
