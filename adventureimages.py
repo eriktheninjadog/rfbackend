@@ -49,7 +49,117 @@ class ModelConfig:
         """Apply model-specific configurations to the pipeline"""
         # This can be extended with other model-specific adjustments
         return pipeline
+
 class StableDiffusionGenerator:
+    def __init__(self, model_name: str = "mann-e/Mann-E_Dreams", 
+                    local_model_dir: str = "./models/manne",
+                    local_model: bool = False,
+                    device: Optional[str] = None):
+        """
+        Initialize the Stable Diffusion generator.
+        
+        Args:
+            model_name: HuggingFace model identifier
+            local_model_dir: Local directory to store/load model
+            device: Device to use ('cuda', 'cpu', or None for auto-detection)
+        """
+        self.model_name = model_name
+        self.local_model_dir = Path(local_model_dir)
+        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        self.pipeline = None
+        self.local_model = local_model
+        
+        # Get model-specific configuration
+        self.model_config = ModelConfig.get_model_config(model_name)
+        
+        print(f"Using device: {self.device}")
+        
+    def load_model(self):
+        """Load the model from local directory or download from HuggingFace."""
+        try:
+            # Try to load from local directory first
+            if self.local_model and self.local_model_dir.exists() and any(self.local_model_dir.iterdir()):
+                print(f"Loading model from local directory: {self.local_model_dir}")
+                self.pipeline = StableDiffusionPipeline.from_pretrained(
+                    str(self.local_model_dir),
+                    torch_dtype=self.model_config["torch_dtype"],
+                    variant=self.model_config["variant"],
+                    safety_checker=None,
+                    requires_safety_checker=False
+                )
+            else:
+                raise FileNotFoundError("Local model not found")
+                
+        except (FileNotFoundError, OSError, Exception) as e:
+            print(f"Failed to load local model: {e}")
+            print(f"Downloading model from HuggingFace: {self.model_name}")
+            
+            # Download from HuggingFace
+            self.pipeline = StableDiffusionPipeline.from_pretrained(
+                self.model_name,
+                torch_dtype=self.model_config["torch_dtype"],
+                variant=self.model_config["variant"],
+                safety_checker=None,
+                requires_safety_checker=False
+            )
+            
+            # Save model locally for future use
+            if self.local_model:
+                print(f"Saving model to local directory: {self.local_model_dir}")
+                self.local_model_dir.mkdir(parents=True, exist_ok=True)
+                self.pipeline.save_pretrained(str(self.local_model_dir))
+        
+        # Apply model-specific configurations
+        self.pipeline = ModelConfig.apply_config(self.pipeline, self.model_config)
+        
+        # Move pipeline to device and optimize
+        self.pipeline = self.pipeline.to(self.device)
+        
+        if self.device == "cuda":
+            # Enable memory efficient attention if available
+            try:
+                self.pipeline.enable_xformers_memory_efficient_attention()
+            except ImportError:
+                print("xformers not available, using default attention")
+            
+            # Enable CPU offload to save GPU memory
+            self.pipeline.enable_model_cpu_offload()
+            
+    def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
+                    num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
+        """
+        Generate an image from a text prompt.
+        
+        Args:
+            prompt: Text prompt for image generation
+            width: Image width
+            height: Image height
+            num_inference_steps: Number of denoising steps
+            guidance_scale: Guidance scale for generation
+            
+        Returns:
+            PIL Image object
+         """
+        if self.pipeline is None:
+            raise RuntimeError("Model not loaded. Call load_model() first.")
+    
+        print(f"Generating image for prompt: '{prompt[:50]}...'")
+        
+        with torch.autocast(self.device):
+            result = self.pipeline(
+                prompt=prompt,
+                width=width,
+                height=height,
+                num_inference_steps=num_inference_steps,
+                guidance_scale=guidance_scale,
+                generator=torch.Generator(device=self.device).manual_seed(42)  # For reproducibility
+            )
+        
+        return result.images[0]
+
+            
+            
+class StableDiffusionGenerator2:
     def __init__(self, model_name: str = "mann-e/Mann-E_Dreams", 
                  local_model_dir: str = "./models/manne",
                  local_model: bool = False,
