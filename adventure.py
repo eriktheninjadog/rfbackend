@@ -13,6 +13,32 @@ import random
 import glob
 
 
+def create_adventure_background_context_from_prompt(themes):
+    api = openrouter.OpenRouterAPI()
+    
+    description = """        
+    You are a creative writer. Your task is to create the background for a 'choose your own adventure' story. 
+    Outline the enviroment, 
+            the main characters (names, gender, character, description),
+            locations, 
+            the overall goal with the adventure and possible success and failure endings. 
+    Here is a list of possible themese:
+    """ + themes
+    return api.mixtral_8x22b_instruct("You are a creative writer. Your task is to create a 'choose your own adventure' story.",description)
+
+
+def create_adventure_background_context_from_prompt(themes):
+    api = openrouter.OpenRouterAPI()
+    
+    description = """        
+    You are a creative writer. Your task is to create the background for a 'choose your own adventure' story. 
+    Outline the enviroment, 
+            the main characters (names, gender, character, description),
+            locations, 
+            the overall goal with the adventure and possible success and failure endings. 
+    Here is a list of possible themese:
+    """ + themes
+    return api.mixtral_8x22b_instruct("You are a creative writer. Your task is to create a 'choose your own adventure' story.",description)
 
 
 
@@ -21,7 +47,7 @@ import glob
 def create_adventure_from_prompt(prompt):
     api = openrouter.OpenRouterAPI()
     #result = api.open_router_claude_4_0_sonnet("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
-    result = api.open_router_gemini_25_pro("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
+    result = api.open_router_gemini_25_flash("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
     result = result.replace('json','')
     result = result.replace('```','')
     start = result.find('{')
@@ -138,7 +164,7 @@ def add_audio_to_node(node):
 def create_child_adventure(scenario):
     prompt = """
                                                    
-                                                   
+                     
 "Create a 'choose your own adventure' short story in JSON format. Follow this structure:
 
 
@@ -184,18 +210,64 @@ All nextNodeId values must match existing node IDs.
 
 Avoid dead-ends (non-end nodes must have choices).
 
-Create at least 40 locations with unique scenes.
+Make sure to only create choices that actually goes to an existing node
 
 Use descriptive text to immerse the reader in the setting. """
     
     return create_adventure_from_prompt(prompt)
 
 
+def check_for_dead_ends(adventure_data):
+    """
+    Checks for dead-ends in a choose-your-own adventure story.
+    A dead-end is a node that isn't marked as an ending but has no choices.
+    
+    Args:
+        adventure_data: The JSON adventure data structure
+        
+    Returns:
+        A list of node IDs that are dead-ends
+    """
+    dead_ends = []
+    
+    # Check start node
+    if "startNode" in adventure_data:
+        if ("choices" not in adventure_data["startNode"] or not adventure_data["startNode"]["choices"]) and \
+            ("isEnd" not in adventure_data["startNode"] or not adventure_data["startNode"]["isEnd"]):
+            dead_ends.append("startNode")
+    
+    # Check all other nodes
+    if "nodes" in adventure_data:
+        for node in adventure_data["nodes"]:
+            if "id" in node and \
+                ("choices" not in node or not node["choices"]) and \
+                ("isEnd" not in node or not node["isEnd"]):
+                dead_ends.append(node["id"])
+    
+    knownids = []
+    for node in adventure_data.get("nodes", []):
+        knownids.append( node["id"] )
+    # Print total number of locations
+    print("Total number of locations: " + str(len(knownids)))
+    # Check for dead-ends in choices
+    for node in adventure_data.get("nodes", []):
+        if "choices" in node:
+            for choice in node["choices"]:
+                next_node_id = choice.get("nextNodeId")
+                if next_node_id and next_node_id not in knownids:
+                    # If the next node ID is not in known IDs, it's a dead-end
+                    dead_ends.append(next_node_id)
+                    print("missing " + next_node_id)
+                    # If the next node ID is known, check if it has choices
+                    # Check if the next node is a dead-end
+
+    return dead_ends
+
 def create_ground_adventure(scenario):
     prompt = """
                                                    
                                                    
-"Create a 'choose your own adventure' short story in JSON format. All texts should be in spoken Cantonese using traditional characters. Follow this structure:
+"Create a 'choose your own adventure' medium story in JSON format. All texts should be in spoken Cantonese using traditional characters. Follow this structure:
 
 
 Include a unique id (integer) and creative title for the story.
@@ -204,7 +276,7 @@ Define a startNode with an engaging opening scene and 2-3 initial choices.
 
 Build a nodes array containing all story paths. Each node must have:
 id (string)
-text (vivid scene description)
+text (one brief sentence describing scene)
 sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story. The prompt should be in English.)
 choices array (with text and nextNodeId), or
 isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
@@ -212,17 +284,17 @@ isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
 
 Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
 
-Include at least 2 successful endings and 2 failure endings.
+Include at least 2 successful endings and 3 failure endings. At least 30 different locations.
+
 
 Example Themes (optional):
-    - A protest turning into a riot during Hong Kong protests 2019
-    - A prison escape in 1950's russia. Make sure to include historical elements.
     - During the long march in China. Include historical figures
     - Saigon during the vietnamese war, spies are everywhere, the vietcong is approaching
     - Investigating corruption in a presidential campaign in the US
     - In China during the COVID pandemic
     - In the 50s China under Chairman Mao, during the great leap forward. Include famous party members
-
+    - A monk during Pol Pots regime, make sure to include buddhist terms
+    
 Format Reference:
 
 json
@@ -231,16 +303,15 @@ json
   "id": 1,  
   "title": "[Your Story Title]",  
   "startNode": { /* ... */ },  
-  "nodes": [ /* ... */ ]  
+  "overall": "[overall description of the scenario, atmosphere and goals of the adventure]"
+  "nodes": [ /* ... */ ]
 }  
 Constraints:
 
 
-All nextNodeId values must match existing node IDs.
+All nextNodeId values must match existing node IDs. Verify that all choices nextNodeId correspond to an existing node, keep adding nodes that doesn't yet exist.
 
 Avoid dead-ends (non-end nodes must have choices).
-
-Create at least 40 locations with unique scenes.
 
 Use descriptive text to immerse the reader in the setting. """
     
@@ -291,6 +362,162 @@ def translate_node(node):
 
 
 
+def walk_through_ends(adventure_data):
+    """
+    Returns all possible paths through the adventure from start to end nodes.
+    
+    Args:
+        adventure_data: The JSON adventure data structure
+        
+    Returns:
+        A list of lists, where each inner list represents a complete path through
+        the adventure, starting with the start node and ending with an end node.
+    """
+    all_paths = []
+    
+    # Create a dictionary to map node IDs to nodes for easy lookup
+    node_map = {}
+    if "nodes" in adventure_data:
+        for node in adventure_data["nodes"]:
+            if "id" in node:
+                node_map[node["id"]] = node
+    
+    # Start the traversal from the startNode
+    if "startNode" in adventure_data:
+        start_node = adventure_data["startNode"]
+        # Start a recursive depth-first search from the start node
+        traverse_path(start_node, [start_node], node_map, all_paths)
+    
+    return all_paths
+
+def traverse_path(current_node, current_path, node_map, all_paths):
+    """
+    Recursively traverses the adventure graph depth-first to find all paths.
+    
+    Args:
+        current_node: The current node being explored
+        current_path: The path taken so far (list of nodes)
+        node_map: Dictionary mapping node IDs to nodes
+        all_paths: List to collect complete paths
+    """
+    # If this is an end node, we've found a complete path
+    if "isEnd" in current_node and current_node["isEnd"]:
+        # Make a copy of the current path and add it to all_paths
+        all_paths.append(current_path.copy())
+        return
+    
+    # If this node has choices, explore each one
+    if "choices" in current_node and isinstance(current_node["choices"], list):
+        for choice in current_node["choices"]:
+            if "nextNodeId" in choice:
+                next_node_id = choice["nextNodeId"]
+                if next_node_id in node_map:
+                    next_node = node_map[next_node_id]
+                    # Only proceed if this doesn't create a cycle
+                    if next_node not in current_path:
+                        # Continue traversing with the next node added to the path
+                        traverse_path(next_node, current_path + [next_node], node_map, all_paths)
+    
+
+
+def enrich_adventure_descriptions(adventure_data):
+    """
+    Enhances the descriptions in all nodes of the adventure by using
+    an AI model to expand and enrich them.
+    
+    Args:
+        adventure_data: The JSON adventure data structure
+        
+    Returns:
+        Updated adventure data with enriched descriptions
+    """
+    api = openrouter.OpenRouterAPI()
+    
+    # Collect all descriptions
+    descriptions = []
+    description_mapping = []  # Store (node, field) tuples to map back enriched descriptions
+    
+    # Check startNode description
+    if "startNode" in adventure_data and "text" in adventure_data["startNode"]:
+        descriptions.append(adventure_data["startNode"]["text"])
+        description_mapping.append((adventure_data["startNode"], "text"))
+    
+    # Check all nodes descriptions
+    if "nodes" in adventure_data:
+        for node in adventure_data["nodes"]:
+            if "text" in node:
+                descriptions.append(node["text"])
+                description_mapping.append((node, "text"))
+            
+            # Also include ending messages if they exist
+            if "endingMessage" in node:
+                descriptions.append(node["endingMessage"])
+                description_mapping.append((node, "endingMessage"))
+    
+    if not descriptions:
+        print("No descriptions found to enrich.")
+        return adventure_data
+    
+    # Prepare prompt for the AI model
+    prompt = """Please expand and enrich the following descriptions to make them more vivid,
+    engaging, and immersive. Keep the core meaning and key details intact, but add sensory details,
+    atmosphere, and depth to each description. Each description should be enhanced but still concise.
+    Return your response as a numbered list matching the input list format.
+
+    Descriptions:
+    """ + "\n".join([f"{i+1}. {desc}" for i, desc in enumerate(descriptions)])
+    
+    # Call the AI model to enrich descriptions
+    print("Enriching descriptions using AI...")
+    enriched_text = api.open_router_gemini_25_flash(
+        "You are an expert at enhancing descriptive text for interactive stories.",
+        prompt
+    )
+    
+    # Parse the enriched descriptions
+    enriched_descriptions = []
+    
+    # Simple parser for numbered list format
+    lines = enriched_text.strip().split('\n')
+    current_desc = ""
+    
+    for line in lines:
+        if line.strip() == "":
+            continue
+            
+        # Check if this line starts a new numbered item
+        if line.strip()[0].isdigit() and ". " in line:
+            if current_desc:  # Save previous description if it exists
+                enriched_descriptions.append(current_desc.strip())
+                current_desc = ""
+            
+            # Extract just the description part after the number
+            parts = line.split(". ", 1)
+            if len(parts) > 1:
+                current_desc = parts[1]
+            else:
+                current_desc = parts[0]  # Just in case there's no period after number
+        else:
+            # Continue previous description
+            current_desc += " " + line.strip()
+    
+    # Add the last description if it exists
+    if current_desc:
+        enriched_descriptions.append(current_desc.strip())
+    
+    # Ensure we have the correct number of descriptions
+    if len(enriched_descriptions) != len(descriptions):
+        print(f"Warning: Got {len(enriched_descriptions)} enriched descriptions but expected {len(descriptions)}.")
+        print("Using original descriptions to avoid data loss.")
+        return adventure_data
+    
+    # Replace original descriptions with enriched ones
+    for i, (node, field) in enumerate(description_mapping):
+        if i < len(enriched_descriptions):
+            node[field] = enriched_descriptions[i]
+    
+    print(f"Successfully enriched {len(enriched_descriptions)} descriptions.")
+    return adventure_data
 
 def extract_sdd_prompts(adventure_data):
     """
@@ -406,17 +633,100 @@ def read_adventure_json(filename):
         return None
 
 
+def download_and_check_adventures():
+    """
+    Downloads all adventure*.json files from the server, checks for dead ends,
+    and deletes files with dead ends from the server.
+    
+    This function uses scp to download all adventure JSON files from the specified
+    remote server, then checks each file for dead ends using the check_for_dead_ends function.
+    Files with dead ends are deleted from the remote server.
+    
+    Returns:
+        A dictionary mapping filenames to their dead end node IDs
+    """
+    remote_source = "erik@chinese.eriktamm.com:/var/www/html/adventures/adventure_*.json"
+    remote_directory = "chinese.eriktamm.com:/var/www/html/adventures/"
+    local_destination = "."
+    
+    try:
+        # Create a temporary directory for downloaded files
+        temp_dir = "temp_adventures"
+        os.makedirs(temp_dir, exist_ok=True)
+        
+        # Create the scp command to download files
+        scp_command = ["scp", remote_source, temp_dir]
+        
+        print("Downloading adventure files...")
+        result = subprocess.run(scp_command, check=True, capture_output=True, text=True)
+        print(f"Successfully downloaded adventure files")
+        
+        # Check each downloaded file for dead ends
+        results = {}
+        files_to_delete = []
+        
+        for filename in glob.glob(f"{temp_dir}/adventure_*.json"):
+            print(f"Checking {filename} for dead ends...")
+            adventure_data = read_adventure_json(filename)
+            if adventure_data:
+                dead_ends = check_for_dead_ends(adventure_data)
+                if dead_ends:
+                    print(f"Found {len(dead_ends)} dead ends in {filename}: {dead_ends}")
+                    results[filename] = dead_ends
+                    # Add file to delete list
+                    files_to_delete.append(os.path.basename(filename))
+                else:
+                    print(f"No dead ends found in {filename}")
+                    results[filename] = []
+        
+        # Delete files with dead ends from the remote server
+        if files_to_delete:
+            print(f"Deleting {len(files_to_delete)} files with dead ends from server...")
+            for file_to_delete in files_to_delete:
+                remote_file_path = f"{remote_directory}{file_to_delete}"
+                ssh_command = ["ssh", "erik@chinese.eriktamm.com", f"rm -f /var/www/html/adventures/{file_to_delete}"]
+                
+                try:
+                    delete_result = subprocess.run(ssh_command, check=True, capture_output=True, text=True)
+                    print(f"Deleted {file_to_delete} from server")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error deleting {file_to_delete}: {e.stderr}")
+        
+        return results
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error during download: {e}")
+        print(f"Command output: {e.stderr}")
+        return {}
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return {}
+
 
 if __name__ == "__main__":
-    # Example usage
-    for i in range(3):
+    # Example 
+    #result = create_adventure_background_context_from_prompt("A protest turning into a riot during Hong Kong protests 2019\nBeijing during the Cultural Revolution\nNorthern Burma in civil war")
+    #print(result)
+    
+    #exit(-1)
+
+    #download_and_check_adventures()
+    #adv = read_adventure_json("temp_adventures/adventure_268473.json")
+    #paths = walk_through_ends(adv)
+    for i in range(1):        
         print("Generating adventure")
         scenario = "A haunted mansion with shifting rooms"
         #adventure = create_child_adventure(scenario)
         adventure = create_ground_adventure(scenario)
+        adventure = enrich_adventure_descriptions(adventure)
         print("Original Adventure:", adventure)
+        ids = check_for_dead_ends(adventure)
+        while len(ids) > 0:
+            print("Found dead ends, filling them in")
+            exit(0)
         translated_adventure = translate_story_to_chinese(adventure)
         tran = json.dumps(translated_adventure)
+        print("Dead ends" + str(check_for_dead_ends(translated_adventure)))
         #translated_adventure = add_audio_to_adventure(translated_adventure)
         filename = "adventure_"+str(random.randint(0,1000000)) +".json"
         with open(filename, "w", encoding="utf-8") as f:

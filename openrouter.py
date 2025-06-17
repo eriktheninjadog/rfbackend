@@ -124,6 +124,15 @@ class OpenRouterAPI:
             system_content
         )
 
+    def mixtral_8x22b_instruct(self, system_content: str, user_content: str) -> str:
+        return self.get_completion(
+            "mistralai/mixtral-8x22b-instruct",
+            user_content,
+            system_content
+        )
+
+
+
     def open_router_chatgpt_4o_mini(self, system_content: str, user_content: str) -> str:
         return self.get_completion(
             "openai/gpt-4o-mini",

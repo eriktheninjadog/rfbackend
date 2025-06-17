@@ -46,7 +46,7 @@ class StableDiffusionGenerator:
                 print(f"Loading model from local directory: {self.local_model_dir}")
                 self.pipeline = StableDiffusionPipeline.from_pretrained(
                     str(self.local_model_dir),
-                    torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
+                    #torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
                     safety_checker=None,
                     requires_safety_checker=False
                 )
@@ -60,7 +60,7 @@ class StableDiffusionGenerator:
             # Download from HuggingFace
             self.pipeline = StableDiffusionPipeline.from_pretrained(
                 self.model_name,
-                torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
+                #torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
                 safety_checker=None,
                 requires_safety_checker=False
             )
