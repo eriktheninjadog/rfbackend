@@ -207,7 +207,7 @@ def main():
             local_model=args.local_model.lower() == "yes",
             device=device
         )
-        
+        generator.load_model()
         # Generate images
         for i, (file_path, prompt_text, base_name) in enumerate(prompts, 1):
             print(f"\nProcessing {i}/{len(prompts)}: {base_name}")
