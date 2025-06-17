@@ -14,7 +14,29 @@ from typing import List, Optional
 
 import torch
 from diffusers import StableDiffusionPipeline
+from diffusers import DiffusionPipeline
 from PIL import Image
+
+
+class EnvaGenerator:
+    
+    def __init__(self, model_name: str, local_model_dir: str = None,     
+                 local_model: bool = False, device: Optional[str] = None):
+        self.model_name = model_name
+        self.local_model_dir = local_model_dir
+        self.pipe = None
+
+    def load_model(self):
+        pipe = DiffusionPipeline.from_pretrained("mann-e/Mann-E_Dreams")
+        pipe.to("cuda")
+        self.pipe = pipe
+    
+    def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
+                       num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
+        image = self.pipe(prompt,height=height,
+            width=width,
+            ).images[0]
+        return image
 
 class StableDiffusionGenerator:
     """
