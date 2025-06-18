@@ -153,6 +153,14 @@ class OpenRouterAPI:
             text,
             system_content=system_content
         )
+        
+    def open_router_claude_3_7_sonnet_thinking(self, system_content: str,text: str) -> str:
+        return self.get_completion(
+            "anthropic/claude-3.7-sonnet:thinking",
+            text,
+            system_content=system_content
+        )
+
 
     def open_router_claude_4_0_sonnet(self, system_content: str,text: str) -> str:
         return self.get_completion(

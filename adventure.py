@@ -11,6 +11,7 @@ import subprocess
 import os
 import random
 import glob
+import deepinfra
 
 
 def create_adventure_background_context_from_prompt(themes):
@@ -47,7 +48,9 @@ def create_adventure_background_context_from_prompt(themes):
 def create_adventure_from_prompt(prompt):
     api = openrouter.OpenRouterAPI()
     #result = api.open_router_claude_4_0_sonnet("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
-    result = api.open_router_gemini_25_flash("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
+    #result = api.open_router_gemini_25_flash("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
+    result = deepinfra.call_deepinfra_gemini_flash_2_5("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
+
     result = result.replace('json','')
     result = result.replace('```','')
     start = result.find('{')
@@ -165,7 +168,7 @@ def create_child_adventure(scenario):
     prompt = """
                                                    
                      
-"Create a 'choose your own adventure' short story in JSON format. Follow this structure:
+"Create a 'choose your own adventure' short story in JSON format. All texts should be in spoken Cantonese using traditional characters. Follow this structure:
 
 
 Include a unique id (integer) and creative title for the story.
@@ -174,7 +177,8 @@ Define a startNode with an engaging opening scene and 2-3 initial choices.
 
 Build a nodes array containing all story paths. Each node must have:
 id (string)
-text (vivid scene description)
+text (one brief sentence describing scene using simple vocabulary)
+sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story. The prompt should be in English.)
 choices array (with text and nextNodeId), or
 isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
 
@@ -182,15 +186,15 @@ Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate
 
 Include at least 2 successful endings and 2 failure endings.
 
-The language should be suitable for 8 year old children, with simple vocabulary and simple but engaging descriptions.
+The language should be suitable for 6 year old children, with simple daily vocabulary. Avoid using vocabulary that is not useful in daily life. No fantasy settings (magic, wizards, dragons et)
 
 Example Themes (optional):
     - A bullying situation in a school playground
-    - A lost pet in a neighborhood
-    - A treasure hunt in a local park
-    - A rescue mission for a friend in trouble
-    - Surviving in a war zone
-    - Helping a friend with a difficult family situation
+    - Surviving in a war torn city
+    - Going to the post office for the first time
+    - A gang of child thieves in Moscow during the 1920's
+    - First day in new school
+    - Lost in a forest, find your way home!    
     
 
 Format Reference:
@@ -288,12 +292,7 @@ Include at least 2 successful endings and 3 failure endings. At least 30 differe
 
 
 Example Themes (optional):
-    - During the long march in China. Include historical figures
-    - Saigon during the vietnamese war, spies are everywhere, the vietcong is approaching
-    - Investigating corruption in a presidential campaign in the US
-    - In China during the COVID pandemic
-    - In the 50s China under Chairman Mao, during the great leap forward. Include famous party members
-    - A monk during Pol Pots regime, make sure to include buddhist terms
+    - Hong Kong during the 1967 Hong Kong riots, communists are protesting against the British colonial government, bombs go off and normal citizens are caught in the middle are caught in between. A deep sense of insecurity in the atmosphere.
     
 Format Reference:
 
@@ -326,24 +325,23 @@ def translate_to_cantonese(text):
     tokens = textprocessing.split_text(text)
     return tokens
 
-def translate_story_to_chinese(story):
-    """Translate a story adventure to Chinese (Cantonese)."""
+def tokenize_story(story):
     # Translate the title
     if "title" in story:
         story["cantonese_title"] = textprocessing.split_text(story["title"])
     
     # Translate the start node
     if "startNode" in story:
-        translate_node(story["startNode"])
+        tokenize_node(story["startNode"])
     
     # Translate all nodes
     if "nodes" in story:
         for node in story["nodes"]:
-            translate_node(node)
+            tokenize_node(node)
     
     return story
 
-def translate_node(node):
+def tokenize_node(node):
     """Translate a single node and its choices recursively."""
     # Translate the main text of the node
     if "text" in node:
@@ -665,7 +663,7 @@ def continue_adventure(adv):
         
         # Translate the new nodes to Cantonese
         for node in new_nodes:
-            translate_node(node)
+            tokenize_node(node)
     
     # Check for dead ends in the updated adventure
     dead_ends = check_for_dead_ends(adv)
@@ -727,14 +725,18 @@ def extract_sdd_prompts(adventure_data):
 
 
 
-def upload_adventure_files():
+def upload_adventure_files(is_audio=False):
     """
     Uploads all adventure*.json files and adv_*.mp3 files to the server.
     
     This function uses scp to copy all adventure JSON files and audio MP3 files
     to the specified remote server destination.
     """
-    remote_destination = "chinese.eriktamm.com:/var/www/html/adventures"
+    if is_audio:
+        remote_destination = "chinese.eriktamm.com:/var/www/html/audioadventures"
+    else:
+        remote_destination = "chinese.eriktamm.com:/var/www/html/adventures"
+        
     
     # Find all adventure JSON filesupload_adventure_files
     json_files = glob.glob("adventure_*.json")
@@ -856,9 +858,182 @@ def download_and_check_adventures():
     except Exception as e:
         print(f"Unexpected error: {e}")
         return {}
+    
+    
+def make_child_audio():
+        scenario = "A haunted mansion with shifting rooms"
+        adventure = create_child_adventure(scenario)
+        ids = check_for_dead_ends(adventure)
+        while len(ids) > 0:
+            print("Found dead ends, filling them in")
+            exit(0)                
+        #adventure = enrich_adventure_descriptions(adventure)
+        print("Original Adventure:", adventure)
+        ids = check_for_dead_ends(adventure)
+        while len(ids) > 0:
+            print("Found dead ends, filling them in")
+            exit(0)
+        translated_adventure = tokenize_story(adventure)
+        tran = json.dumps(translated_adventure)
+        print("Dead ends" + str(check_for_dead_ends(translated_adventure)))
+        translated_adventure = add_audio_to_adventure(translated_adventure)
+        tran = json.dumps(translated_adventure)
+        filename = "adventure_"+str(random.randint(0,1000000)) +".json"
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(tran)
+        upload_adventure_files(is_audio=True)
+        extract_sdd_prompts(translated_adventure)
+    
+    
+import time
 
+def generate_adult_adventure(resume_from_step=None, saved_data_file=None):
+    """
+    Generates an adult adventure with intermediate results saved to files.
+    
+    Args:
+        resume_from_step: Step number to resume from (1-8)
+        saved_data_file: Path to saved data file to load
+        
+    Steps:
+        1. Create initial adventure
+        2. Continue adventure (multiple rounds)
+        3. Enrich descriptions
+        4. Tokenize story
+        5. Write to file and upload
+        6. Extract prompts
+    """
+    adventure = None
+    step_number = 1
+    
+    # Load saved data if resuming
+    if resume_from_step and saved_data_file:
+        try:
+            with open(saved_data_file, "r", encoding="utf-8") as f:
+                adventure = json.load(f)
+            print(f"Loaded saved data from {saved_data_file}")
+            step_number = resume_from_step
+        except Exception as e:
+            print(f"Error loading saved data: {e}")
+            return
+    
+    # Step 1: Create initial adventure
+    if step_number <= 1:
+        print("Step 1: Generating initial adventure")
+        scenario = "A haunted mansion with shifting rooms"
+        adventure = create_ground_adventure(scenario)
+        
+        # Save intermediate result
+        step_file = f"adventure_step1_{int(time.time())}.json"
+        with open(step_file, "w", encoding="utf-8") as f:
+            json.dump(adventure, f, ensure_ascii=False, indent=2)
+        print(f"Saved step 1 result to {step_file}")
+        
+        # Check for dead ends
+        ids = check_for_dead_ends(adventure)
+        if len(ids) > 0:
+            print(f"Found dead ends: {ids}")
+            print("Please fix these before continuing")
+            return
+    
+    # Step 2: Continue adventure
+    if step_number <= 2:
+        print("Step 2: Expanding adventure branches")
+        for i in range(8):
+            print(f"Expansion round {i+1}/8")
+            adventure = continue_adventure(adventure)
+            
+            # Save intermediate result after each expansion
+            step_file = f"adventure_step2_{i+1}_{int(time.time())}.json"
+            with open(step_file, "w", encoding="utf-8") as f:
+                json.dump(adventure, f, ensure_ascii=False, indent=2)
+            print(f"Saved expansion {i+1} result to {step_file}")
+            
+            # Check for dead ends
+            ids = check_for_dead_ends(adventure)
+            if len(ids) > 0:
+                print(f"Found dead ends: {ids}")
+                print("Please fix these before continuing")
+                return
+    
+    # Step 3: Enrich descriptions
+    if step_number <= 3:
+        print("Step 3: Enriching adventure descriptions")
+        adventure = enrich_adventure_descriptions(adventure)
+        
+        # Save intermediate result
+        step_file = f"adventure_step3_{int(time.time())}.json"
+        with open(step_file, "w", encoding="utf-8") as f:
+            json.dump(adventure, f, ensure_ascii=False, indent=2)
+        print(f"Saved step 3 result to {step_file}")
+        
+        # Check for dead ends
+        ids = check_for_dead_ends(adventure)
+        if len(ids) > 0:
+            print(f"Found dead ends: {ids}")
+            print("Please fix these before continuing")
+            return
+    
+    # Step 4: Tokenize the story
+    if step_number <= 4:
+        print("Step 4: Translating and tokenizing story")
+        translated_adventure = tokenize_story(adventure)
+        
+        # Save intermediate result
+        step_file = f"adventure_step4_{int(time.time())}.json"
+        with open(step_file, "w", encoding="utf-8") as f:
+            json.dump(translated_adventure, f, ensure_ascii=False, indent=2)
+        print(f"Saved step 4 result to {step_file}")
+        
+        print("Dead ends: " + str(check_for_dead_ends(translated_adventure)))
+        adventure = translated_adventure
+    
+    # Step 5: Write to file and upload
+    if step_number <= 5:
+        print("Step 5: Writing to file and uploading")
+        filename = "adventure_" + str(random.randint(0, 1000000)) + ".json"
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(adventure, f, ensure_ascii=False, indent=2)
+        print(f"Saved final adventure to {filename}")
+        upload_adventure_files()
+    
+    # Step 6: Extract prompts
+    if step_number <= 6:
+        print("Step 6: Extracting prompts for image generation")
+        extract_sdd_prompts(adventure)
+        print("Completed all steps")
+
+    if __name__ == "__main__":
+        """
+        upload_adventure_files(is_audio=True)
+        for i in range(0,5):
+            make_child_audio()
+        exit(0)
+       """
+        # Example 
+        #result = create_adventure_background_context_from_prompt("A protest turning into a riot during Hong Kong protests 2019\nBeijing during the Cultural Revolution\nNorthern Burma in civil war")
+        #print(result)
+        
+        #exit(-1)
+
+        #download_and_check_adventures()
+        #adv = read_adventure_json("temp_adventures/adventure_268473.json")
+        #paths = walk_through_ends(adv)
+        """"
+        Hmm, the old bird's nest,' she rasps, taking a long sip. 'Elevated patrols tonight. And cameras, new ones, on the lower levels. Best avoid the obvious paths.' Her eyes gleam with a strange light. You've gained crucial insight, but it cost you an hour and a precious few credits.
+        """        
+        # To run from beginning:
+        generate_adult_adventure()
+        
 
 if __name__ == "__main__":
+    generate_adult_adventure()
+    """
+    upload_adventure_files(is_audio=True)
+    for i in range(0,5):
+        make_child_audio()
+    exit(0)
+   """
     # Example 
     #result = create_adventure_background_context_from_prompt("A protest turning into a riot during Hong Kong protests 2019\nBeijing during the Cultural Revolution\nNorthern Burma in civil war")
     #print(result)
@@ -868,39 +1043,6 @@ if __name__ == "__main__":
     #download_and_check_adventures()
     #adv = read_adventure_json("temp_adventures/adventure_268473.json")
     #paths = walk_through_ends(adv)
-    for i in range(1):        
-        print("Generating adventure")
-        scenario = "A haunted mansion with shifting rooms"
-        #adventure = create_child_adventure(scenario)
-        adventure = create_ground_adventure(scenario)
-        ids = check_for_dead_ends(adventure)
-        while len(ids) > 0:
-            print("Found dead ends, filling them in")
-            exit(0)
-        for i in range(3):
-            adventure = continue_adventure(adventure)
-            ids = check_for_dead_ends(adventure)
-            while len(ids) > 0:
-                print("Found dead ends, filling them in")
-                exit(0)
-        
-        
-        adventure = enrich_adventure_descriptions(adventure)
-        print("Original Adventure:", adventure)
-        ids = check_for_dead_ends(adventure)
-        while len(ids) > 0:
-            print("Found dead ends, filling them in")
-            exit(0)
-        translated_adventure = translate_story_to_chinese(adventure)
-        tran = json.dumps(translated_adventure)
-        print("Dead ends" + str(check_for_dead_ends(translated_adventure)))
-        #translated_adventure = add_audio_to_adventure(translated_adventure)
-        filename = "adventure_"+str(random.randint(0,1000000)) +".json"
-        with open(filename, "w", encoding="utf-8") as f:
-            f.write(tran)
-        upload_adventure_files()
-        extract_sdd_prompts(translated_adventure)
-
     """"
     Hmm, the old bird's nest,' she rasps, taking a long sip. 'Elevated patrols tonight. And cameras, new ones, on the lower levels. Best avoid the obvious paths.' Her eyes gleam with a strange light. You've gained crucial insight, but it cost you an hour and a precious few credits.
     """
