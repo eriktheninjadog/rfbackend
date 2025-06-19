@@ -190,11 +190,13 @@ The language should be suitable for 6 year old children, with simple daily vocab
 
 Example Themes (optional):
     - A bullying situation in a school playground
-    - Surviving in a war torn city
     - Going to the post office for the first time
     - A gang of child thieves in Moscow during the 1920's
-    - First day in new school
-    - Lost in a forest, find your way home!    
+    - A child who has to take care of a baby sibling while the parents are away
+    - A child who has to find his lost front door key
+    - A dolphin and a boy becomes friends 
+    
+
     
 
 Format Reference:
@@ -298,8 +300,9 @@ Include at least 2 successful endings and 3 failure endings. At least 30 differe
 """ + wordlist + """
 
 Example Themes (optional):
-    - Hong Kong during the 1967 Hong Kong riots, communists are protesting against the British colonial government, bombs go off and normal citizens are caught in the middle are caught in between. A deep sense of insecurity in the atmosphere.
-    
+    - starting a new chapter of life as a woman in a new city and new country
+    - landing a new job in medical industry 
+        
 Format Reference:
 
 json
@@ -901,7 +904,7 @@ def make_child_audio():
     
 import time
 
-def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_steps = 0,word_list_to_inclue=None):
+def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_steps = 0,words_to_use=None):
     """
     Generates an adult adventure with intermediate results saved to files.
     
@@ -935,10 +938,10 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
     if step_number <= 1:
         print("Step 1: Generating initial adventure")
         scenario = "A haunted mansion with shifting rooms"
-        adventure = create_ground_adventure(scenario)
+        adventure = create_ground_adventure(scenario,words_to_use=words_to_use)
         
         # Save intermediate result
-        step_file = f"adventure_step1_{int(time.time())}.json"
+        step_file = f"a_step1_{int(time.time())}.json"
         with open(step_file, "w", encoding="utf-8") as f:
             json.dump(adventure, f, ensure_ascii=False, indent=2)
         print(f"Saved step 1 result to {step_file}")
@@ -958,7 +961,7 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
             adventure = continue_adventure(adventure)
             
             # Save intermediate result after each expansion
-            step_file = f"adventure_step2_{i+1}_{int(time.time())}.json"
+            step_file = f"a_step2_{i+1}_{int(time.time())}.json"
             with open(step_file, "w", encoding="utf-8") as f:
                 json.dump(adventure, f, ensure_ascii=False, indent=2)
             print(f"Saved expansion {i+1} result to {step_file}")
@@ -973,10 +976,10 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
     # Step 3: Enrich descriptions
     if step_number <= 3:
         print("Step 3: Enriching adventure descriptions")
-        adventure = enrich_adventure_descriptions(adventure)
+        adventure = enrich_adventure_descriptions(adventure,words_to_use=words_to_use)
         
         # Save intermediate result
-        step_file = f"adventure_step3_{int(time.time())}.json"
+        step_file = f"a_step3_{int(time.time())}.json"
         with open(step_file, "w", encoding="utf-8") as f:
             json.dump(adventure, f, ensure_ascii=False, indent=2)
         print(f"Saved step 3 result to {step_file}")
@@ -994,7 +997,7 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
         translated_adventure = tokenize_story(adventure)
         
         # Save intermediate result
-        step_file = f"adventure_step4_{int(time.time())}.json"
+        step_file = f"a_step4_{int(time.time())}.json"
         with open(step_file, "w", encoding="utf-8") as f:
             json.dump(translated_adventure, f, ensure_ascii=False, indent=2)
         print(f"Saved step 4 result to {step_file}")
@@ -1037,11 +1040,18 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
         Hmm, the old bird's nest,' she rasps, taking a long sip. 'Elevated patrols tonight. And cameras, new ones, on the lower levels. Best avoid the obvious paths.' Her eyes gleam with a strange light. You've gained crucial insight, but it cost you an hour and a precious few credits.
         """        
         # To run from beginning:
-        generate_adult_adventure()
+        #generate_adult_adventure()
         
 
+
+import remoteapiclient
+
 if __name__ == "__main__":
-    generate_adult_adventure()
+    words = remoteapiclient.managelist_client("get",name="nextadventure")
+    #generate_adult_adventure(words_to_use=words)
+    for i in range(0,5):
+        make_child_audio()
+  
     """
     upload_adventure_files(is_audio=True)
     for i in range(0,5):
