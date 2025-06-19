@@ -2194,6 +2194,8 @@ def make_lesson_vocabulary():
 
   
 import myinputmethod
+import requests
+import json
 
 @app.route('/jyutpingdict', methods=['GET'])
 def jyutpingdict():
@@ -2543,5 +2545,65 @@ def audioadventure():
         
         return jsonify({'result': adventure_data, 'filename': random_file}), 200
     
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+@app.route('/managelist', methods=['POST'])
+def managelist():
+    try:
+        data = request.json
+        name = data.get('name')
+        command = data.get('command')
+        word = data.get('word', None)
+        
+        # Validate inputs
+        if not name or not command:
+            return jsonify({'error': 'Name and command parameters are required'}), 400
+        
+        # Create directory if it doesn't exist
+        os.makedirs('/opt/wordlists', exist_ok=True)
+        
+        file_path = f'/opt/wordlists/{name}.json'
+        
+        if command == 'get':
+            # Get the list contents
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    word_list = json.load(f)
+                return jsonify({'result': word_list}), 200
+            else:
+                return jsonify({'result': []}), 200
+                
+        elif command == 'addto':
+            # Add a word to the list
+            if not word:
+                return jsonify({'error': 'Word parameter is required for addto command'}), 400
+                
+            word_list = []
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    word_list = json.load(f)
+                    
+            if word not in word_list:
+                word_list.append(word)
+                
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(word_list, f, ensure_ascii=False)
+                
+            return jsonify({'result': 'Word added successfully'}), 200
+            
+        elif command == 'delete':
+            # Delete the list
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                return jsonify({'result': 'List deleted successfully'}), 200
+            else:
+                return jsonify({'error': 'List does not exist'}), 404
+                
+        else:
+            return jsonify({'error': 'Invalid command. Use get, addto, or delete'}), 400
+            
     except Exception as e:
         return jsonify({'error': str(e)}), 500
