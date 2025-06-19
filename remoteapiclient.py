@@ -2,7 +2,7 @@
 
 import requests
 
-def managelist_client(command,url_base="https://chinese.eriktamm.com/api", name="adventure",  word=None):
+def managelist_client(command,word=None,url_base="https://chinese.eriktamm.com/api", name="adventure"):
     """
     Client function to interact with the managelist endpoint.
     
@@ -39,12 +39,37 @@ def managelist_client(command,url_base="https://chinese.eriktamm.com/api", name=
     except requests.exceptions.RequestException as e:
         raise Exception(f"Request to managelist failed: {str(e)}")
 
-    # Example usage:
-    # Get all words in a list
-    # result = managelist_client('https://chinese.eriktamm.com/api', 'mylist', 'get')
-    # 
+ 
+
+if __name__ == "__main__":
+    # Example usage
+    try:
+        result = managelist_client('get')
+        print("List contents:", result)
+    except Exception as e:
+        print("Error:", str(e))
     # Add a word to a list
-    # result = managelist_client('https://chinese.eriktamm.com/api', 'mylist', 'addto', '你好')
-    # 
-    # Delete a list
-    # result = managelist_client('https://chinese.eriktamm.com/api', 'mylist', 'delete')
+    try:
+        result = managelist_client('addto', '你好')
+        print("Add word result:", result)
+    except Exception as e:  
+        print("Error:", str(e)) 
+
+    try:
+        result = managelist_client('get')
+        print("List contents:", result)
+    except Exception as e:
+        print("Error:", str(e))
+        
+    # Delete a list 
+    try:
+        result = managelist_client('delete')
+        print("Delete list result:", result)
+    except Exception as e:
+        print("Error:", str(e)) 
+        
+    try:
+        result = managelist_client('get')
+        print("List contents:", result)
+    except Exception as e:
+        print("Error:", str(e))

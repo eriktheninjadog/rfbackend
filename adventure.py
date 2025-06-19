@@ -267,8 +267,13 @@ def check_for_dead_ends(adventure_data):
 
     return dead_ends
 
-def create_ground_adventure(scenario):
-    prompt = """
+def create_ground_adventure(scenario,words_to_use=None):
+    if words_to_use != None:
+        wordlist = "\ninclude these words in the adventure " + str(words_to_use) + "\n"
+    else:
+        wordlist = ""
+        
+    prompt = f"""
                                                    
                                                    
 "Create a 'choose your own adventure' medium story in JSON format. All texts should be in spoken Cantonese using traditional characters. Follow this structure:
@@ -290,6 +295,7 @@ Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate
 
 Include at least 2 successful endings and 3 failure endings. At least 30 different locations.
 
+""" + wordlist + """
 
 Example Themes (optional):
     - Hong Kong during the 1967 Hong Kong riots, communists are protesting against the British colonial government, bombs go off and normal citizens are caught in the middle are caught in between. A deep sense of insecurity in the atmosphere.
@@ -418,7 +424,13 @@ def traverse_path(current_node, current_path, node_map, all_paths):
     
 
 
-def enrich_adventure_descriptions(adventure_data):
+def enrich_adventure_descriptions(adventure_data,words_to_use=None):
+    
+    if words_to_use != None:
+        add_list = "\ninclude these words where you can " + str(words_to_use) + "\n"
+    else:
+        add_list = ""
+
     """
     Enhances the descriptions in all nodes of the adventure by using
     an AI model to expand and enrich them.
@@ -457,10 +469,12 @@ def enrich_adventure_descriptions(adventure_data):
         return adventure_data
     
     # Prepare prompt for the AI model
-    prompt = """Please expand and enrich the following descriptions to make them more vivid,
+    
+    prompt = f"""Please expand and enrich the following descriptions to make them more vivid,
     engaging, and immersive. Keep the core meaning and key details intact, but add sensory details,
     atmosphere, and depth to each description. Each description should be enhanced but still concise.
     Return your response as a numbered list matching the input list format.
+    {add_list}
 
     Descriptions:
     """ + "\n".join([f"{i+1}. {desc}" for i, desc in enumerate(descriptions)])
@@ -887,7 +901,7 @@ def make_child_audio():
     
 import time
 
-def generate_adult_adventure(resume_from_step=None, saved_data_file=None):
+def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_steps = 0,word_list_to_inclue=None):
     """
     Generates an adult adventure with intermediate results saved to files.
     
@@ -939,7 +953,7 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None):
     # Step 2: Continue adventure
     if step_number <= 2:
         print("Step 2: Expanding adventure branches")
-        for i in range(8):
+        for i in range(extend_steps):
             print(f"Expansion round {i+1}/8")
             adventure = continue_adventure(adventure)
             
