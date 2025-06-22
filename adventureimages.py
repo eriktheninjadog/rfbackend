@@ -20,7 +20,7 @@ from PIL import Image
 
 
 
-class InkPunkGenerator:
+class SchnellGenerator:
     
     def __init__(self, model_name: str, local_model_dir: str = None,     
                  local_model: bool = False, device: Optional[str] = None):
