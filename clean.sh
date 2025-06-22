@@ -1,6 +1,5 @@
 #!/bin/bash
-#clean.sh
-
+rm *.prompt
 rm *.mp3
-rm *.mp4
-rm *.webm
+rm *.wav
+rm advent*.json

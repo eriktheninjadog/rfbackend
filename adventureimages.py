@@ -19,6 +19,28 @@ from PIL import Image
 
 
 
+
+class InkPunkGenerator:
+    
+    def __init__(self, model_name: str, local_model_dir: str = None,     
+                 local_model: bool = False, device: Optional[str] = None):
+        self.model_name = model_name
+        self.local_model_dir = local_model_dir
+        self.pipe = None
+
+    def load_model(self):
+        pipe = DiffusionPipeline.from_pretrained("Enblack-forest-labs/FLUX.1-schnell")
+        pipe.to("cuda")
+        self.pipe = pipe
+    
+    def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
+                       num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
+        image = self.pipe(prompt,height=height,
+            width=width,
+            num_inference_steps=4
+            ).images[0]
+        return image
+
 class InkPunkGenerator:
     
     def __init__(self, model_name: str, local_model_dir: str = None,     
@@ -134,6 +156,11 @@ def create_generator(model_name: str, **kwargs):
     if "stable-diffusion" in model_name.lower() or "runwayml" in model_name.lower():
         return StableDiffusionGenerator(model_name=model_name, **kwargs)
     
+
+    if "schnell" in model_name.lower():
+        return SchnellGenerator(model_name=model_name, **kwargs)
+
+
     if "mann-e" in model_name.lower():
         return EnvaGenerator(model_name=model_name, **kwargs)
     

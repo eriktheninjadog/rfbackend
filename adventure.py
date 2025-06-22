@@ -165,10 +165,13 @@ def add_audio_to_node(node):
 
 
 def create_child_adventure(scenario):
+    lola = str(random.randint(100,999))
     prompt = """
                                                    
                      
-"Create a 'choose your own adventure' short story in JSON format. All texts should be in spoken Cantonese using traditional characters. Follow this structure:
+"Create a 'choose your own adventure' story in JSON for
+
+mat. All texts should be in spoken Cantonese using traditional characters, Cantonese as spoken in Hong Kong, avoid standard Chinese. Follow this structure:
 
 
 Include a unique id (integer) and creative title for the story.
@@ -184,20 +187,12 @@ isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
 
 Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
 
-Include at least 2 successful endings and 2 failure endings.
+Include at least 2 successful endings and 2 failure endings.At least 10 different locations.
 
-The language should be suitable for 6 year old children, with simple daily vocabulary. Avoid using vocabulary that is not useful in daily life. No fantasy settings (magic, wizards, dragons et)
+The language should be suitable for 10 year old children, with simple daily vocabulary. Avoid using vocabulary that is not useful in daily life. Make this about real life and the problems that a child at age 10 might struggle with (bullying, family problems, too much homework, moving to a new school).
 
-Example Themes (optional):
-    - A bullying situation in a school playground
-    - Going to the post office for the first time
-    - A gang of child thieves in Moscow during the 1920's
-    - A child who has to take care of a baby sibling while the parents are away
-    - A child who has to find his lost front door key
-    - A dolphin and a boy becomes friends 
-    
 
-    
+""" + lola + """
 
 Format Reference:
 
@@ -275,7 +270,7 @@ def create_ground_adventure(scenario,words_to_use=None):
     else:
         wordlist = ""
         
-    prompt = f"""
+    prompt = """
                                                    
                                                    
 "Create a 'choose your own adventure' medium story in JSON format. All texts should be in spoken Cantonese using traditional characters. Follow this structure:
@@ -297,11 +292,11 @@ Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate
 
 Include at least 2 successful endings and 3 failure endings. At least 30 different locations.
 
-""" + wordlist + """
+""" + wordlist + " " + str(random.randint(0,100))+ """ 
 
 Example Themes (optional):
-    - starting a new chapter of life as a woman in a new city and new country
-    - landing a new job in medical industry 
+    - A day in the life of a 10-year-old triad member in Hong Kong who has a brother who is a police officer. Use a lot of Cantonese slang and dialogue. The story is set in the 2020's.
+    - Escaping Chile during the Pinochet dictatorship. Include a love story.
         
 Format Reference:
 
@@ -718,28 +713,6 @@ def extract_sdd_prompts(adventure_data):
             f.write(p)
             
     # scp all the md5files to a server and then delete them
-    remote_destination = "chinese.eriktamm.com:/opt/prompts_to_process"
-    
-    # Find all adventure JSON filesupload_adventure_files
-    all_files = glob.glob("*.prompt")
-        
-    
-    if not all_files:
-        print("No files found to upload.")
-        return
-    
-    try:
-        # Create the scp command
-        scp_command = ["scp"] + all_files + [remote_destination]
-        
-        # Execute the scp command
-        result = subprocess.run(scp_command, check=True, capture_output=True, text=True)        
-        print(f"Successfully uploaded {len(all_files)} files to {remote_destination}")
-        
-    except subprocess.CalledProcessError as e:
-        print(f"Error during upload: {e}")
-        print(f"Command output: {e.stderr}")
-
 
 
 def upload_adventure_files(is_audio=False):
@@ -770,12 +743,13 @@ def upload_adventure_files(is_audio=False):
     
     try:
         # Create the scp command
-        scp_command = ["scp"] + all_files + [remote_destination]
+        scp_command = ["scp"]    + all_files + [remote_destination]
         
-        # Execute the scp command
+        # Execute the scp commandn
         result = subprocess.run(scp_command, check=True, capture_output=True, text=True)
         
         print(f"Successfully uploaded {len(all_files)} files to {remote_destination}")
+        # Delete any intermediate step files and previous adventure files before upload
         
     except subprocess.CalledProcessError as e:
         print(f"Error during upload: {e}")
@@ -1042,15 +1016,22 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
         # To run from beginning:
         #generate_adult_adventure()
         
-
+        
+       
 
 import remoteapiclient
 
 if __name__ == "__main__":
     words = remoteapiclient.managelist_client("get",name="nextadventure")
-    #generate_adult_adventure(words_to_use=words)
-    for i in range(0,5):
-        make_child_audio()
+    
+    print(str(words))
+    for i in range(0,3):
+        generate_adult_adventure(extend_steps=4, words_to_use=words)
+    # Uncomment to generate a child adventure
+
+
+    #generate_adul(extend_steps=4,e(0,5):
+    #    make_child_audio()
   
     """
     upload_adventure_files(is_audio=True)
