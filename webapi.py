@@ -2132,8 +2132,6 @@ def get_writing_time():
         return jsonify({"error": str(e)}), 500
 
 
-
-
 @app.route('/llmentries', methods=['POST'])
 def add_entry():
     """Add a new entry to the llm_interaction_log table."""

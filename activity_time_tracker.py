@@ -6,6 +6,7 @@ from mysql.connector import Error
 
 import database
 
+            
 def add_time_to_activity(activity_name: str, milliseconds_to_add: int) -> bool:
     """
     Adds milliseconds to an activity's accumulated time. Creates new activity if it doesn't exist.

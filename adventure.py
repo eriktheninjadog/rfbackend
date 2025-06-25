@@ -1268,7 +1268,8 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
 import remoteapiclient
 
 if __name__ == "__main__":
-    words = remoteapiclient.managelist_client("get",name="nextadventure")
+    
+    words = remoteapiclient.managelist_client("delete",name="nextadventure")
     
     print(str(words))
     
