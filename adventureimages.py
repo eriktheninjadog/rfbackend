@@ -59,7 +59,7 @@ class NotaGenerator:
         self.pipe = None
 
     def load_model(self):
-        pipe = DiffusionPipeline.from_pretrained("nota-ai/bk-sdm-base")
+        pipe = DiffusionPipeline.from_pretrained("nota-ai/bk-sdm-base",torch_dtype=torch.float16)
         pipe.to("cuda")
         self.pipe = pipe
     
