@@ -48,7 +48,6 @@ class ByteDanceLightGenerator:
         return image
     
     
-    nota-ai/bk-sdm-base
     
     
 class NotaGenerator:
