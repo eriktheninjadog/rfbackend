@@ -45,12 +45,16 @@ def create_adventure_background_context_from_prompt(themes):
 
 
 
-def create_adventure_from_prompt(prompt):
+def create_adventure_from_prompt(prompt,dont_use_cantonese=False):  
     api = openrouter.OpenRouterAPI()
     #result = api.open_router_claude_4_0_sonnet("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
     #result = api.open_router_gemini_25_flash("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
-    result = deepinfra.call_deepinfra_gemini_flash_2_5("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
-
+    if dont_use_cantonese:
+        api = openrouter.OpenRouterAPI()
+        #result = deepinfra.call_deepinfra_gemini_flash_2_5("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in written Mandarin Taiwanese style using traditional characters. ", prompt)        
+        result = api.open_router_gemini_25_flash("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in written Mandarin Taiwanese style using traditional characters. ", prompt)
+    else:
+        result = deepinfra.call_deepinfra_gemini_flash_2_5("You are a creative writer. Your task is to create a 'choose your own adventure' story in JSON format. Follow the provided structure and constraints carefully. All text descriptions must be in spoken Cantonese using traditional characters. ", prompt)
     result = result.replace('json','')
     result = result.replace('```','')
     start = result.find('{')
@@ -218,6 +222,97 @@ Use descriptive text to immerse the reader in the setting. """
     return create_adventure_from_prompt(prompt)
 
 
+
+def remove_node_from_adventure(adventure_data, node_id_to_remove):
+    """
+    Removes a node with a specific ID from an adventure and all choices that lead to it.
+    
+    Args:
+        adventure_data: The JSON adventure data structure
+        node_id_to_remove: The ID of the node to remove
+        
+    Returns:
+        The updated adventure data structure
+    """
+    # Check if the node to remove is the start node
+    if "startNode" in adventure_data and adventure_data["startNode"].get("id") == node_id_to_remove:
+        print(f"Cannot remove start node with ID {node_id_to_remove}")
+        return adventure_data
+    
+    # Remove the node from nodes list
+    if "nodes" in adventure_data:
+        adventure_data["nodes"] = [node for node in adventure_data["nodes"] if node.get("id") != node_id_to_remove]
+    
+    # Remove choices that lead to the removed node
+    # First in the startNode
+    if "startNode" in adventure_data and "choices" in adventure_data["startNode"]:
+        adventure_data["startNode"]["choices"] = [
+            choice for choice in adventure_data["startNode"]["choices"] 
+            if choice.get("nextNodeId") != node_id_to_remove
+        ]
+    
+    # Then in all other nodes
+    if "nodes" in adventure_data:
+        for node in adventure_data["nodes"]:
+            if "choices" in node:
+                node["choices"] = [
+                    choice for choice in node["choices"] 
+                    if choice.get("nextNodeId") != node_id_to_remove
+                ]
+    
+    print(f"Removed node with ID {node_id_to_remove} and all choices leading to it")
+    return adventure_data
+
+
+
+def fix_dead_ends(adventure_data, max_attempts=10):
+    """
+    Identifies and removes dead ends in the adventure to ensure a valid story structure.
+    
+    Args:
+        adventure_data: The JSON adventure data structure
+        max_attempts: Maximum number of removal attempts to prevent infinite loops
+        
+    Returns:
+        Updated adventure data with dead ends removed
+    """
+    attempts = 0
+    while attempts < max_attempts:
+        # Check for dead ends
+        dead_ends = check_for_dead_ends(adventure_data)
+        
+        if not dead_ends:
+            print("No dead ends found in the adventure.")
+            return adventure_data
+            
+        print(f"Found {len(dead_ends)} dead ends: {dead_ends}")
+        
+        # Remove each dead end
+        for node_id in dead_ends:
+            if node_id == "startNode":
+                print("Warning: Start node is a dead end but cannot be removed.")
+                continue
+                
+            print(f"Removing dead end node: {node_id}")
+            adventure_data = remove_node_from_adventure(adventure_data, node_id)
+        
+        attempts += 1
+        
+        # Recheck after removals
+        remaining_dead_ends = check_for_dead_ends(adventure_data)
+        if not remaining_dead_ends or remaining_dead_ends == dead_ends:
+            # Either all fixed or we can't fix any more
+            break
+    
+    # Final check
+    final_dead_ends = check_for_dead_ends(adventure_data)
+    if final_dead_ends:
+        print(f"Warning: Could not remove all dead ends. Remaining: {final_dead_ends}")
+    else:
+        print("Successfully removed all dead ends.")
+        
+    return adventure_data
+
 def check_for_dead_ends(adventure_data):
     """
     Checks for dead-ends in a choose-your-own adventure story.
@@ -264,6 +359,120 @@ def check_for_dead_ends(adventure_data):
 
     return dead_ends
 
+
+
+
+def create_article_adventure(article,words_to_use=None):
+    if words_to_use != None:
+        wordlist = "\ninclude these words in the adventure " + str(words_to_use) + "\n"
+    else:
+        wordlist = ""
+        
+    prompt = """
+                                                   
+                                                   
+"Create a 'choose your own adventure' medium story in JSON format. All texts should be in traditional chinese characters. Follow this structure:
+
+
+Include a unique id (integer) and creative title for the story.
+
+Define a startNode with an engaging opening scene and 2-3 initial choices.
+
+Build a nodes array containing all story paths. Each node must have:
+id (string)
+text (one brief sentence describing scene)
+sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story. The prompt should be in English.)
+choices array (with text and nextNodeId), or
+isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
+
+
+Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
+
+Include at least 2 successful endings and 3 failure endings. At least 30 different locations.
+
+""" + wordlist + " " + str(random.randint(0,100))+ """ 
+
+The adventure should be based on the following article and use vocabulary from this article: """ + article + """    
+        
+Format Reference:
+
+json
+
+{  
+  "id": 1,  
+  "title": "[Your Story Title]",  
+  "startNode": { /* ... */ },  
+  "overall": "[overall description of the scenario, atmosphere and goals of the adventure]"
+  "nodes": [ /* ... */ ]
+}  
+Constraints:
+
+
+All nextNodeId values must match existing node IDs. Verify that all choices nextNodeId correspond to an existing node, keep adding nodes that doesn't yet exist.
+
+Avoid dead-ends (non-end nodes must have choices).
+
+Use descriptive text to immerse the reader in the setting. """
+    
+    return create_adventure_from_prompt(prompt,dont_use_cantonese=True)
+
+
+
+def create_vocab_adventure(article,words_to_use=None):
+    if words_to_use != None:
+        wordlist = "\ninclude these words in the adventure " + str(words_to_use) + "\n"
+    else:
+        wordlist = ""
+        
+    prompt = """
+                                                   
+                                                   
+"Create a 'choose your own adventure' medium story in JSON format. All texts should be in traditional chinese characters. Follow this structure:
+
+
+Include a unique id (integer) and creative title for the story.
+
+Define a startNode with an engaging opening scene and 2-3 initial choices.
+
+Build a nodes array containing all story paths. Each node must have:
+id (string)
+text (use similar language to the text provided)
+sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story. The prompt should be in English.)
+choices array (with text and nextNodeId), or
+isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
+
+
+Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
+
+Include at least 2 successful endings and 3 failure endings. At least 30 different locations.
+
+""" + wordlist + " " + str(random.randint(0,100))+ """ 
+
+Use grammar, vocabulary and the style of this article to construct the adventure: """ + article + """    
+        
+Format Reference:
+
+json
+
+{  
+  "id": 1,  
+  "title": "[Your Story Title]",  
+  "startNode": { /* ... */ },  
+  "overall": "[overall description of the scenario, atmosphere and goals of the adventure]"
+  "nodes": [ /* ... */ ]
+}  
+Constraints:
+
+
+All nextNodeId values must match existing node IDs. Verify that all choices nextNodeId correspond to an existing node, keep adding nodes that doesn't yet exist.
+
+Avoid dead-ends (non-end nodes must have choices).
+
+Use descriptive text to immerse the reader in the setting but try to follow the style of the text provided. """
+    
+    return create_adventure_from_prompt(prompt,dont_use_cantonese=True)
+
+
 def create_ground_adventure(scenario,words_to_use=None):
     if words_to_use != None:
         wordlist = "\ninclude these words in the adventure " + str(words_to_use) + "\n"
@@ -295,8 +504,11 @@ Include at least 2 successful endings and 3 failure endings. At least 30 differe
 """ + wordlist + " " + str(random.randint(0,100))+ """ 
 
 Example Themes (optional):
-    - A day in the life of a 10-year-old triad member in Hong Kong who has a brother who is a police officer. Use a lot of Cantonese slang and dialogue. The story is set in the 2020's.
-    - Escaping Chile during the Pinochet dictatorship. Include a love story.
+    - Hong Kong during the japanese occupation in World War II. Include historical events and figures.
+    - The 2003 SARS outbreak in Hong Kong. Include health and safety measures.  
+    - The 1997 handover of Hong Kong to China. Include historical events and figures.
+    - The fincancial stormy waters of 1990's Hong Kong. Include financial terms and concepts.
+    
         
 Format Reference:
 
@@ -875,10 +1087,32 @@ def make_child_audio():
         upload_adventure_files(is_audio=True)
         extract_sdd_prompts(translated_adventure)
     
+
+
+def make_article_adventure(article_text,words_to_use=None,use_vocab=False):
+    if use_vocab:   
+        adventure = create_article_adventure(article_text,words_to_use=words_to_use)
+    else:
+        adventure = create_vocab_adventure(article_text,words_to_use=words_to_use)
+    ids = check_for_dead_ends(adventure)
+    print("Original Adventure:", adventure)
+    ids = check_for_dead_ends(adventure)
+    adventure = fix_dead_ends(adventure)
+    while len(ids) > 0:
+        print("Found dead ends, filling them in")
+        exit(0)
+    translated_adventure = tokenize_story(adventure)
+    tran = json.dumps(translated_adventure)
+    filename = "adventure_"+str(random.randint(0,1000000)) +".json"
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(tran)
+    upload_adventure_files(is_audio=False)
+    extract_sdd_prompts(translated_adventure)
+
     
 import time
 
-def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_steps = 0,words_to_use=None):
+def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_steps = 0,words_to_use=None,add_audio=False):
     """
     Generates an adult adventure with intermediate results saved to files.
     
@@ -993,6 +1227,18 @@ def generate_adult_adventure(resume_from_step=None, saved_data_file=None,extend_
         print("Step 6: Extracting prompts for image generation")
         extract_sdd_prompts(adventure)
         print("Completed all steps")
+    
+    if add_audio:
+        print("Adding audio to adventure")
+        translated_adventure = add_audio_to_adventure(adventure)
+        filename = "adv_" + str(random.randint(0, 1000000)) + ".json"
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(translated_adventure, f, ensure_ascii=False, indent=2)
+        print(f"Saved adventure with audio to {filename}")
+        upload_adventure_files(is_audio=True)
+        
+           
+    
 
     if __name__ == "__main__":
         """
@@ -1025,8 +1271,31 @@ if __name__ == "__main__":
     words = remoteapiclient.managelist_client("get",name="nextadventure")
     
     print(str(words))
-    for i in range(0,3):
-        generate_adult_adventure(extend_steps=4, words_to_use=words)
+    
+    make_article_adventure("""
+
+中共中央政治局委員、國務院副總理何立峰，在北京人民大會堂會見荷蘭路易達孚集團董事會主席瑪格麗特。
+
+何立峰表示，中國致力全面推進高質量發展，正在加快建設發展全國統一大市場，人民對美好生活的嚮往正不斷推動農食產業發展釋放巨大內需潛力，強調中國著力創建穩定開放的貿易和營商環境，歡迎路易達孚集團在內的更多外資企業深化對華務實合作，共享發展機遇。
+
+瑪格麗特表示，集團將繼續深耕中國市場，積極推進農產品進口來源多元化，為維護全球農業供應鏈穩定暢通貢獻積極力量。
+
+""",use_vocab=True)
+    
+    
+    
+    make_article_adventure("""
+
+一名49歲越南女子失蹤，警方正循謀殺方向調查，追緝一名持「行街紙」的非華裔男子。調查發現，失蹤女子與涉案男子曾進入長沙灣一幢大廈，其後男子多次持重物出入，並懷疑不斷棄置物品，而在涉事單位就發現懷疑血濺痕跡，不排除案件涉及金錢糾紛。
+
+另外，警方拘捕一名25歲非華裔、持「行街紙」女子，相信她涉嫌多次向男子提供藏身地點，而被捕女子與男子相信屬情侶關係。
+
+警方表示，失蹤女子持香港身份證，她的家人上周六報案，指女子失蹤。警方之後發現有可疑，發現失蹤女子曾與一名男子進入青山道152號一幢大廈，其後女事主並無離開，但男子多次出入，並手持較重物品，懷疑在附近後巷等位置不斷棄置物品。調查相信，失蹤女子與疑犯相識。
+
+警方下午到屯門稔灣堆填區搜證。警方指，案情嚴重，期望可從中找到重要線索，亦會繼續在本港多處繼續搜證。
+""",use_vocab=True)
+
+    # generate_adult_adventure(extend_steps=7, words_to_use=words,add_audio=False)
     # Uncomment to generate a child adventure
 
 

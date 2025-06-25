@@ -14,11 +14,62 @@ from typing import List, Optional
 
 import torch
 from diffusers import StableDiffusionPipeline
-from diffusers import DiffusionPipeline
+from diffusers import StableDiffusionXLPipeline,DiffusionPipeline,UNet2DConditionModel, EulerDiscreteScheduler
+from safetensors.torch import load_file
+from huggingface_hub import hf_hub_download
+
 from PIL import Image
 
 
 
+
+class ByteDanceLightGenerator:
+
+    def __init__(self, model_name: str, local_model_dir: str = None,     
+                 local_model: bool = False, device: Optional[str] = None):
+        self.model_name = model_name
+        self.local_model_dir = local_model_dir
+        self.pipe = None
+
+    def load_model(self):
+        base = "stabilityai/stable-diffusion-xl-base-1.0"
+        repo = "ByteDance/SDXL-Lightning"
+        ckpt = "sdxl_lightning_4step_unet.safetensors" # Use the correct ckpt for your step setting!
+        unet = UNet2DConditionModel.from_config(base, subfolder="unet").to("cuda", torch.float16)
+        unet.load_state_dict(load_file(hf_hub_download(repo, ckpt), device="cuda"))
+        self.pipe = StableDiffusionXLPipeline.from_pretrained(base, unet=unet, torch_dtype=torch.float16, variant="fp16").to("cuda")
+    
+    def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
+                       num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
+        image = self.pipe(prompt,height=height,
+            width=width,
+            num_inference_steps=4
+            ).images[0]
+        return image
+    
+    
+    nota-ai/bk-sdm-base
+    
+    
+class NotaGenerator:
+    def __init__(self, model_name: str, local_model_dir: str = None,     
+                 local_model: bool = False, device: Optional[str] = None):
+        self.model_name = model_name
+        self.local_model_dir = local_model_dir
+        self.pipe = None
+
+    def load_model(self):
+        pipe = DiffusionPipeline.from_pretrained("nota-ai/bk-sdm-base")
+        pipe.to("cuda")
+        self.pipe = pipe
+    
+    def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
+                       num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
+        image = self.pipe(prompt,height=height,
+            width=width,
+            num_inference_steps=4   
+            ).images[0]
+        return image    
 
 class SchnellGenerator:
     
@@ -37,7 +88,8 @@ class SchnellGenerator:
                        num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
         image = self.pipe(prompt,height=height,
             width=width,
-            num_inference_steps=4
+            guidance_scale=0.0,
+            num_inference_steps=4   
             ).images[0]
         return image
 
@@ -164,6 +216,9 @@ def create_generator(model_name: str, **kwargs):
     if "mann-e" in model_name.lower():
         return EnvaGenerator(model_name=model_name, **kwargs)
     
+    
+    if "notai" in model_name.lower():
+        return NotaGenerator(model_name=model_name, **kwargs)
     
     if "inkpunk" in model_name.lower():
         return  InkPunkGenerator(model_name=model_name, **kwargs)    
