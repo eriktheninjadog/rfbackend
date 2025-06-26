@@ -2194,6 +2194,7 @@ def make_lesson_vocabulary():
 import myinputmethod
 import requests
 import json
+import cnn
 
 @app.route('/jyutpingdict', methods=['GET'])
 def jyutpingdict():
@@ -2474,9 +2475,6 @@ def generate_cloze():
         return jsonify({'error': 'Invalid JSON format returned from the API'}), 400
     result = result[start:end+1]
     return jsonify({'result': result}), 200
-    
-    
-
 
 @app.route('/ask_claude', methods=['POST'])
 def ask_claude():
@@ -2604,4 +2602,27 @@ def managelist():
             return jsonify({'error': 'Invalid command. Use get, addto, or delete'}), 400
             
     except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    
+@app.route('/random_cnn_article', methods=['GET'])
+def random_cnn_article():
+    try:
+        article = cnn.get_random_article()
+        
+        if not article:
+            return jsonify({'error': 'No articles found'}), 404
+            
+        # Extract relevant information from the article
+        result = {
+            'title': article.get('title', 'No title'),
+            'url': article.get('url', ''),
+            'text': article.get('text', 'No content'),
+            'published': article.get('published', '')
+        }
+        
+        return jsonify({'result': result}), 200
+        
+    except Exception as e:
+        print(f"Error fetching CNN article: {str(e)}")
         return jsonify({'error': str(e)}), 500

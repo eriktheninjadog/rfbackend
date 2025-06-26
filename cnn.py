@@ -5,7 +5,7 @@ from newspaper import Article
 #cnn.py
 
 
-def get_top_cnn_articles(limit=10):
+def get_top_cnn_articles(limit=20):
     """
     Get the links to the top CNN articles from their website.
     
@@ -88,6 +88,17 @@ def get_article_content(url):
         return {'title': None, 'text': None}
 
 
+def get_random_cnn_article():
+    """
+    Get the top CNN articles and their content.
+    
+    Returns:
+        list: A list of dictionaries containing article titles, URLs, and content.
+    """
+    articles = get_top_cnn_articles()
+    random.shuffle(articles)
+
+    return get_article_content(articles[0]['url'])
 
 
 import random

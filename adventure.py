@@ -473,6 +473,57 @@ Use descriptive text to immerse the reader in the setting but try to follow the 
     return create_adventure_from_prompt(prompt,dont_use_cantonese=True)
 
 
+
+def create_pure_vocab_adventure(words_to_use=None):
+    prompt = """
+                                                   
+                                                   
+"Create a 'choose your own adventure' medium story in JSON format. All texts should be in traditional chinese characters and be formal like a Hong Kong news article . Follow this structure:
+
+
+Include a unique id (integer) and creative title for the story.
+
+Define a startNode with an engaging opening scene and 2-3 initial choices.
+
+Build a nodes array containing all story paths. Each node must have:
+id (string)
+text (use similar language to the text provided)
+sdd_prompt (a prompt that will be used for stable diffusion to generate an illustration of the scene. Make sure the prompt include objects important to the story. The prompt should be in English.)
+choices array (with text and nextNodeId), or
+isEnd: true, isSuccess (boolean), and endingMessage for final outcomes.
+
+
+Ensure choices lead to logical consequences (e.g., traps, discoveries, alternate paths).
+
+Include at least 2 successful endings and 3 failure endings. At least 30 different locations.
+
+The adventure must use words from this list, ideally repeately: """ + str(words_to_use) + """ 
+
+        
+Format Reference:
+
+json
+
+{  
+  "id": 1,  
+  "title": "[Your Story Title]",  
+  "startNode": { /* ... */ },  
+  "overall": "[overall description of the scenario, atmosphere and goals of the adventure]"
+  "nodes": [ /* ... */ ]
+}  
+Constraints:
+
+
+All nextNodeId values must match existing node IDs. Verify that all choices nextNodeId correspond to an existing node, keep adding nodes that doesn't yet exist.
+
+Avoid dead-ends (non-end nodes must have choices).
+
+Use descriptive text to immerse the reader in the setting but try to follow the style of the text provided. """
+    
+    return create_adventure_from_prompt(prompt,dont_use_cantonese=True)
+
+
+
 def create_ground_adventure(scenario,words_to_use=None):
     if words_to_use != None:
         wordlist = "\ninclude these words in the adventure " + str(words_to_use) + "\n"
@@ -1109,6 +1160,25 @@ def make_article_adventure(article_text,words_to_use=None,use_vocab=False):
     upload_adventure_files(is_audio=False)
     extract_sdd_prompts(translated_adventure)
 
+
+def make_vocab_adventure(words_to_use=None):
+    adventure = create_pure_vocab_adventure(words_to_use=words_to_use)
+    ids = check_for_dead_ends(adventure)
+    print("Original Adventure:", adventure)
+    ids = check_for_dead_ends(adventure)
+    adventure = fix_dead_ends(adventure)
+    while len(ids) > 0:
+        print("Found dead ends, filling them in")
+        exit(0)
+    translated_adventure = tokenize_story(adventure)
+    tran = json.dumps(translated_adventure)
+    filename = "adventure_"+str(random.randint(0,1000000)) +".json"
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(tran)
+    upload_adventure_files(is_audio=False)
+    extract_sdd_prompts(translated_adventure)
+
+
     
 import time
 
@@ -1269,33 +1339,14 @@ import remoteapiclient
 
 if __name__ == "__main__":
     
-    words = remoteapiclient.managelist_client("delete",name="nextadventure")
+    words = remoteapiclient.managelist_client("get",name="nextadventure")
     
     print(str(words))
     
-    make_article_adventure("""
-
-中共中央政治局委員、國務院副總理何立峰，在北京人民大會堂會見荷蘭路易達孚集團董事會主席瑪格麗特。
-
-何立峰表示，中國致力全面推進高質量發展，正在加快建設發展全國統一大市場，人民對美好生活的嚮往正不斷推動農食產業發展釋放巨大內需潛力，強調中國著力創建穩定開放的貿易和營商環境，歡迎路易達孚集團在內的更多外資企業深化對華務實合作，共享發展機遇。
-
-瑪格麗特表示，集團將繼續深耕中國市場，積極推進農產品進口來源多元化，為維護全球農業供應鏈穩定暢通貢獻積極力量。
-
-""",use_vocab=True)
     
+    for i in range(0,10):
+        make_vocab_adventure(words_to_use=words)
     
-    
-    make_article_adventure("""
-
-一名49歲越南女子失蹤，警方正循謀殺方向調查，追緝一名持「行街紙」的非華裔男子。調查發現，失蹤女子與涉案男子曾進入長沙灣一幢大廈，其後男子多次持重物出入，並懷疑不斷棄置物品，而在涉事單位就發現懷疑血濺痕跡，不排除案件涉及金錢糾紛。
-
-另外，警方拘捕一名25歲非華裔、持「行街紙」女子，相信她涉嫌多次向男子提供藏身地點，而被捕女子與男子相信屬情侶關係。
-
-警方表示，失蹤女子持香港身份證，她的家人上周六報案，指女子失蹤。警方之後發現有可疑，發現失蹤女子曾與一名男子進入青山道152號一幢大廈，其後女事主並無離開，但男子多次出入，並手持較重物品，懷疑在附近後巷等位置不斷棄置物品。調查相信，失蹤女子與疑犯相識。
-
-警方下午到屯門稔灣堆填區搜證。警方指，案情嚴重，期望可從中找到重要線索，亦會繼續在本港多處繼續搜證。
-""",use_vocab=True)
-
     # generate_adult_adventure(extend_steps=7, words_to_use=words,add_audio=False)
     # Uncomment to generate a child adventure
 
