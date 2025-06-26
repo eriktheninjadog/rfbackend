@@ -96,13 +96,16 @@ def get_random_cnn_article():
         list: A list of dictionaries containing article titles, URLs, and content.
     """
     articles = get_top_cnn_articles()
-    random.shuffle(articles)
-
-    return get_article_content(articles[0]['url'])
+    article = Article(articles[0]['url'])
+    article.download()
+    article.parse()
+    return article.text
 
 
 import random
 if __name__ == "__main__":
+    pop = get_random_cnn_article()
+    print(pop)
     articles = get_top_cnn_articles()
     random.shuffle(articles)
     for i, article in enumerate(articles, 1):
