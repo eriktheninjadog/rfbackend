@@ -2608,20 +2608,14 @@ def managelist():
 @app.route('/random_cnn_article', methods=['GET'])
 def random_cnn_article():
     try:
-        article = cnn.get_random_article()
+        article = cnn.get_random_cnn_article()
         
         if not article:
             return jsonify({'error': 'No articles found'}), 404
             
         # Extract relevant information from the article
-        result = {
-            'title': article.get('title', 'No title'),
-            'url': article.get('url', ''),
-            'text': article.get('text', 'No content'),
-            'published': article.get('published', '')
-        }
-        
-        return jsonify({'result': result}), 200
+
+        return jsonify({'result': article}), 200
         
     except Exception as e:
         print(f"Error fetching CNN article: {str(e)}")
