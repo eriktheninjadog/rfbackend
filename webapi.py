@@ -2119,6 +2119,9 @@ def add_time():
 
 
 
+
+
+
 @app.route('/getwritingtime', methods=['GET'])
 def get_writing_time():
     try:
@@ -2597,7 +2600,19 @@ def managelist():
                 return jsonify({'result': 'List deleted successfully'}), 200
             else:
                 return jsonify({'error': 'List does not exist'}), 404
-                
+        elif command == 'deleteWord':
+            # Delete the list
+            word_list = []
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    word_list = json.load(f)
+            if word in word_list:
+                word_list.remove(word)
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    json.dump(word_list, f, ensure_ascii=False) 
+                return jsonify({'result': 'Word deleted successfully'}), 200
+            else:
+                return jsonify({'error': 'Word does not exist'}), 404                
         else:
             return jsonify({'error': 'Invalid command. Use get, addto, or delete'}), 400
             
