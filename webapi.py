@@ -2099,7 +2099,7 @@ def get_time():
     return jsonify({
         "activity_name": activity_name,
         "accumulated_time": accumulated_time,
-        "total_accumulated_time":total_accumulated_time
+        "total_accumulated_time":int(total_accumulated_time)
     }), 200
 
 
