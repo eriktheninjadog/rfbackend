@@ -2525,6 +2525,33 @@ def adventure():
         return jsonify({'error': str(e)}), 500
 
 
+
+@app.route('/flashcard', methods=['GET'])
+def flashcard():
+    try:
+        directory = '/var/www/html/flashcards'  # Define the directory path where JSON files are stored
+        
+        # Get list of all JSON files in the directory
+        json_files = [file for file in os.listdir(directory) if file.endswith('.json')]
+        
+        if not json_files:
+            return jsonify({'error': 'No adventure JSON files found'}), 404
+        
+        # Pick a random JSON file
+        random_file = random.choice(json_files)
+        file_path = os.path.join(directory, random_file)
+        
+        # Read and parse the JSON file
+        with open(file_path, 'r', encoding='utf-8') as f:
+            adventure_data = json.load(f)
+        
+        return jsonify({'result': adventure_data, 'filename': random_file}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
 @app.route('/audioadventure', methods=['GET'])
 def audioadventure():
     try:
