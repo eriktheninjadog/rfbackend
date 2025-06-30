@@ -104,7 +104,7 @@ def get_accumulated_time(activity_name: str,all_activity=False) -> int:
         cursor = conn.cursor()
 
         # Query to get the accumulated time
-        if all_activity:
+        if all_activity == False:
             select_query = """
                 SELECT AccumulatedTime FROM ActivityTimes 
                 WHERE ActivityName = %s
