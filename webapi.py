@@ -2094,10 +2094,12 @@ def get_time():
         return jsonify({"error": "Activity name is required"}), 400
 
     accumulated_time = activity_time_tracker.get_accumulated_time(activity_name)
+    total_accumulated_time = activity_time_tracker.get_total_accumulated_time(activity_name,all_activity=True)
 
     return jsonify({
         "activity_name": activity_name,
-        "accumulated_time": accumulated_time
+        "accumulated_time": accumulated_time,
+        "total_accumulated_time":total_accumulated_time
     }), 200
 
 
