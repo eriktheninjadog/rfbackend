@@ -96,6 +96,7 @@ def get_random_cnn_article():
         list: A list of dictionaries containing article titles, URLs, and content.
     """
     articles = get_top_cnn_articles()
+    random.shuffle(articles)
     article = Article(articles[0]['url'])
     article.download()
     article.parse()
