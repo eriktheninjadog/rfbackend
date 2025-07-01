@@ -114,6 +114,7 @@ class InkPunkGenerator:
         return image
 
 
+
 class EnvaGenerator:
     
     def __init__(self, model_name: str, local_model_dir: str = None,     
@@ -124,6 +125,28 @@ class EnvaGenerator:
 
     def load_model(self):
         pipe = DiffusionPipeline.from_pretrained("mann-e/Mann-E_Dreams")
+        pipe.to("cuda")
+        self.pipe = pipe
+    
+    def generate_image(self, prompt: str, width: int = 512, height: int = 512, 
+                       num_inference_steps: int = 20, guidance_scale: float = 7.5) -> Image.Image:
+        image = self.pipe(prompt,height=height,
+            width=width,
+            num_inference_steps=20
+            ).images[0]
+        return image
+
+
+class NotaGenerator:
+    
+    def __init__(self, model_name: str, local_model_dir: str = None,     
+                 local_model: bool = False, device: Optional[str] = None):
+        self.model_name = model_name
+        self.local_model_dir = local_model_dir
+        self.pipe = None
+
+    def load_model(self):
+        pipe = DiffusionPipeline.from_pretrained("nota-ai/bk-sdm-small",torch_dtype=torch.float16)
         pipe.to("cuda")
         self.pipe = pipe
     
@@ -207,6 +230,8 @@ def create_generator(model_name: str, **kwargs):
     if "stable-diffusion" in model_name.lower() or "runwayml" in model_name.lower():
         return StableDiffusionGenerator(model_name=model_name, **kwargs)
     
+    if "nota" in model_name.lower():
+        return  NotaGenerator(model_name=model_name, **kwargs)
 
     if "schnell" in model_name.lower():
         return SchnellGenerator(model_name=model_name, **kwargs)
