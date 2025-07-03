@@ -47,7 +47,8 @@ class DoubleIndex:
     def load_from_disk(cls, filename):
         """Loads the double index from a file."""
         instance = cls()
-        with open(flash_card_directory+"/"+filename, "rb") as f:
+        total_filename =flash_card_directory+"/"+filename 
+        with open(total_filename, "rb") as f:
             instance.word_to_sentences, instance.sentence_to_words = pickle.load(f)
         return instance
 
@@ -351,20 +352,7 @@ class WordSentenceIdxBuilder:
         sentenceidx = self.sentencedb.get_index(sentence)
         string_list = self.worddb.get_all_words()
    
-        automaton = ahocorasick.Automaton()
-    
-    # Add all strings to the automaton
-        for idx, string in enumerate(string_list):
-            automaton.add_word(string, (idx, string))
-        
-        # Make the automaton
-        automaton.make_automaton()
-        
-        # Find all matches
-        found_strings = set()
-        for end_index, (insert_order, original_string) in automaton.iter(sentence):
-            found_strings.add(original_string)
-
+        found_strings = find_strings_simple(sentence, string_list)
         alist = list(found_strings)
         for word in alist:
             wordidx = self.worddb.get_index(word)
@@ -543,8 +531,15 @@ def filter_flashcards_by_word_list(flashcards, excluded_words):
     return [card for card in flashcards if card['word'] not in excluded_words]
 
 
-import ahocorasick
 import glob
+
+def find_strings_simple(text, string_list):
+    found_strings = []
+    for string in string_list:
+        if string in text:
+            found_strings.append(string)
+    return found_strings
+
 
 def get_words_in_text(text):
     wb = WordDatabase()    
@@ -557,20 +552,11 @@ def get_words_in_text(text):
     
     string_list = wb.get_all_words()
    
-    automaton = ahocorasick.Automaton()
+   
+    found_strings = find_strings_simple(text, string_list)
     
     # Add all strings to the automaton
-    for idx, string in enumerate(string_list):
-        automaton.add_word(string, (idx, string))
-    
-    # Make the automaton
-    automaton.make_automaton()
-    
-    # Find all matches
-    found_strings = set()
-    for end_index, (insert_order, original_string) in automaton.iter(text):
-        found_strings.add(original_string)
-
+ 
     alist = list(found_strings)
     emptytext = text
     for l in alist:
@@ -747,7 +733,7 @@ def process_text_in_chunks(text, chunk_size=200):
 if __name__ == "__main__":
     
     
-    #build_counters()
+    build_counters()
     
     
     #process_all_flashcard_files()
@@ -768,7 +754,7 @@ if __name__ == "__main__":
 
     """
     
-    get_server_flashcard_from_text(trim)
+    #get_server_flashcard_from_text(trim)
     about = build_flashcards_from_wordlist(get_words_in_text(trim))
 
     j_chinese = filter_chinese_lines(trim)
