@@ -707,7 +707,7 @@ def generate_flashcards(text):
 
 def get_server_flashcard_from_text(text):
     global flash_card_directory
-    flash_card_directory = "/var/www.html/flashcards"
+    flash_card_directory = "/var/www/html/flashcards"
     about = build_flashcards_from_wordlist(get_words_in_text(trim))
     return about
 
