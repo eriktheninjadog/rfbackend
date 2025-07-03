@@ -2551,6 +2551,22 @@ def flashcard():
         return jsonify({'error': str(e)}), 500
 
 
+import flashcardgenerate
+
+@app.route('/flashcard_from_text', methods=['POST'])
+def flashcard_from_text():
+    try:        
+        directory = '/var/www/html/flashcards'  # Define the directory path where JSON files are stored        
+        data = request.json
+        text = data.get('text')
+        returnflash = flashcardgenerate.get_server_flashcard_from_text(text)
+        return jsonify({'result': returnflash}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
 
 @app.route('/audioadventure', methods=['GET'])
 def audioadventure():

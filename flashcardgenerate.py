@@ -1,15 +1,57 @@
 #flashcardgenerate.py
 
 
-
-
-
 import openrouter
 import json
 import re
 import os
+import pickle
 
 flash_card_directory = "/home/erik/flashcards"
+
+
+class DoubleIndex:
+    def __init__(self):
+        # Maps word ID to a set of sentence IDs
+        self.word_to_sentences = {}
+
+        # Maps sentence ID to a set of word IDs
+        self.sentence_to_words = {}
+
+    def add_word_sentence_relationship(self, word_id, sentence_id):
+        """Adds a relationship between a word ID and a sentence ID."""
+        # Add sentence ID to the word's set
+        if word_id not in self.word_to_sentences:
+            self.word_to_sentences[word_id] = set()
+        self.word_to_sentences[word_id].add(sentence_id)
+
+        # Add word ID to the sentence's set
+        if sentence_id not in self.sentence_to_words:
+            self.sentence_to_words[sentence_id] = set()
+        self.sentence_to_words[sentence_id].add(word_id)
+
+    def get_sentence_ids_for_word(self, word_id):
+        """Returns a list of sentence IDs containing the given word ID."""
+        return list(self.word_to_sentences.get(word_id, []))
+
+    def get_word_ids_for_sentence(self, sentence_id):
+        """Returns a list of word IDs in the given sentence ID."""
+        return list(self.sentence_to_words.get(sentence_id, []))
+
+    def save_to_disk(self, filename):
+        """Saves the double index to a file."""
+        with open(flash_card_directory+"/"+filename, "wb") as f:
+            pickle.dump((self.word_to_sentences, self.sentence_to_words), f)
+
+    @classmethod
+    def load_from_disk(cls, filename):
+        """Loads the double index from a file."""
+        instance = cls()
+        with open(flash_card_directory+"/"+filename, "rb") as f:
+            instance.word_to_sentences, instance.sentence_to_words = pickle.load(f)
+        return instance
+
+
 class KeyCounter:
     def __init__(self, filename="wb_freq_counter.json"):
         self.counts = {}
@@ -90,6 +132,10 @@ class KeyCounter:
         except Exception as e:
             print(f"Error loading counts: {e}")
             return False
+        
+        
+        
+
 class WordDatabase:
     def __init__(self, database_filename="wb.json"):
         self.words = {}  # Dictionary mapping words to their indices
@@ -99,6 +145,9 @@ class WordDatabase:
         # If a filename is provided, try to load the database
         if self.database_filename and os.path.exists(self.database_filename):
             self.load_database()
+    
+    def get_all_words(self):
+        return list(self.words.keys())
     
     def add_word(self, word):
         """
@@ -221,8 +270,6 @@ class WordDatabase:
             return False
 
 
-
-
 def process_flashcard_files(directory=flash_card_directory, pattern="flashcard*.json", processobject=None):
     """
     Process all flashcard JSON files matching a pattern in the specified directory.
@@ -277,6 +324,69 @@ class WordCountObject:
         self.freqdb.increase_count(idx)
         
 
+class SentenceDBBuilder:
+    def __init__(self,sentencedb):
+        self.sentencedb = sentencedb
+
+    def process(self,card):
+        idx = self.sentencedb.add_word(card['sentence'])
+ 
+
+class ImageDBBuilder:
+    def __init__(self,imagedb):
+        self.imagedb = imagedb
+
+    def process(self,card):
+        idx = self.imagedb.add_word(card['md5signature'])
+
+ 
+class WordSentenceIdxBuilder:
+    def __init__(self,wsidx,worddb,sentencedb):
+        self.wsidx = wsidx
+        self.worddb = worddb
+        self.sentencedb = sentencedb
+
+    def process(self,card):
+        sentence = card['sentence']        
+        sentenceidx = self.sentencedb.get_index(sentence)
+        string_list = self.worddb.get_all_words()
+   
+        automaton = ahocorasick.Automaton()
+    
+    # Add all strings to the automaton
+        for idx, string in enumerate(string_list):
+            automaton.add_word(string, (idx, string))
+        
+        # Make the automaton
+        automaton.make_automaton()
+        
+        # Find all matches
+        found_strings = set()
+        for end_index, (insert_order, original_string) in automaton.iter(sentence):
+            found_strings.add(original_string)
+
+        alist = list(found_strings)
+        for word in alist:
+            wordidx = self.worddb.get_index(word)
+            if wordidx is not None and sentenceidx is not None:
+                self.wsidx.add_word_sentence_relationship(wordidx, sentenceidx) 
+
+
+
+class WordImageIdxBuilder:
+    def __init__(self,wiidx,worddb,imagedb):
+        self.wiidx = wiidx
+        self.worddb = worddb
+        self.imagedb = imagedb
+
+    def process(self,card):
+        image = card['md5signature']
+        imageidx = self.imagedb.add_word(image)
+        word  = card['word']
+        wordidx = self.worddb.get_index(word)
+        self.wiidx.add_word_sentence_relationship(wordidx, imageidx) 
+
+        
 class ProcessFlashFile:
     def __init__(self,process_object):
         self.process_object  = process_object
@@ -286,26 +396,83 @@ class ProcessFlashFile:
         process_words(file,self.process_object)
         
 
+def build_flashcards_from_wordlist(wordlist):
+    wb = WordDatabase()    
+    kc = KeyCounter()
+    wc = WordCountObject(wb,kc)
+    sdb = WordDatabase("sentencedb.json")
+    imagedb = WordDatabase("imagedb.json")
+    word_sentence_ci = DoubleIndex.load_from_disk("word_sentence_idx.pickle")
+    word_image_ci = DoubleIndex.load_from_disk("word_image_idx.pickle")
+
+    ret = []
+    for word in wordlist:
+        w_idx = wb.get_index(word)
+        sentence_idxs = word_sentence_ci.get_sentence_ids_for_word(w_idx)
+        sentences = []
+        for s in sentence_idxs:
+            asentence = sdb.get_word(s) 
+            sentences.append(asentence)
+        images = []
+        imagesidxs =  word_image_ci.get_sentence_ids_for_word(w_idx)
+        for i in imagesidxs:
+            md5stuff = imagedb.get_word(i)
+            images.append(md5stuff)   
+        ret.append({ "word":word,"sentences":sentences,'images':images})
+    return ret
+
 
 def build_counters():
     wb = WordDatabase()    
     kc = KeyCounter()
     wc = WordCountObject(wb,kc)
+    sdb = WordDatabase("sentencedb.json")
+    imagedb = WordDatabase("imagedb.json")
+    
+    word_sentence_ci = DoubleIndex()
+    word_image_ci = DoubleIndex()
+    
+
+    sbuilder = SentenceDBBuilder(sdb)
+    imagebuilder = WordImageIdxBuilder(word_image_ci,wb,imagedb)
     
     pf =ProcessFlashFile(wc)
     process_flashcard_files(processobject=pf)
     wb.save_database()
     kc.save_to_file()
+    
+    
+    
+    pf =ProcessFlashFile(sbuilder)
+    process_flashcard_files(processobject=pf)
+    sdb.save_database()
+
+    pf =ProcessFlashFile(imagebuilder)
+    process_flashcard_files(processobject=pf)
+    imagedb.save_database()
+    word_image_ci.save_to_disk("word_image_idx.pickle")
+    
+  
+    sdbb = WordSentenceIdxBuilder(word_sentence_ci,wb,sdb)
+    pf =ProcessFlashFile(sdbb)
+    process_flashcard_files(processobject=pf)
+    word_sentence_ci.save_to_disk("word_sentence_idx.pickle")
+    
+#    idbb = WordImageIdxBuilder(word_image_ci,wb,imagedb)
+#    pf =ProcessFlashFile(idbb)
+#    process_flashcard_files(processobject=pf)
+#    word_image_ci.save_to_disk("word_image_idx.pickle")
+    
+    
+
     list = wb.get_words_by_frequency(kc,4,5000)
     print(list)
     None
 
 
-
-
 def extract_json_from_text(text):
     
-    api = openrouter.OpenRouterAPI
+    api = openrouter.OpenRouterAPI()
     """
     Extracts and parses a JSON block from within text.
     
@@ -357,15 +524,178 @@ import textprocessing
 import json
 import os
 import glob
+
+def filter_flashcards_by_word_list(flashcards, excluded_words):
+    """
+    Filters a list of flashcard dictionaries, removing cards whose 'word' value
+    is found in the excluded_words list.
+    
+    Args:
+        flashcards (list): List of flashcard dictionaries
+        excluded_words (list): List of words to exclude
+        
+    Returns:
+        list: Filtered list of flashcards
+    """
+    if not flashcards or not excluded_words:
+        return flashcards
+    
+    return [card for card in flashcards if card['word'] not in excluded_words]
+
+
+import ahocorasick
+import glob
+
+def get_words_in_text(text):
+    wb = WordDatabase()    
+    kc = KeyCounter()
+    wc = WordCountObject(wb,kc)    
+    pf = ProcessFlashFile(wc)
+    process_flashcard_files(processobject=pf)
+    wb.save_database()
+    kc.save_to_file()
+    
+    string_list = wb.get_all_words()
+   
+    automaton = ahocorasick.Automaton()
+    
+    # Add all strings to the automaton
+    for idx, string in enumerate(string_list):
+        automaton.add_word(string, (idx, string))
+    
+    # Make the automaton
+    automaton.make_automaton()
+    
+    # Find all matches
+    found_strings = set()
+    for end_index, (insert_order, original_string) in automaton.iter(text):
+        found_strings.add(original_string)
+
+    alist = list(found_strings)
+    emptytext = text
+    for l in alist:
+        emptytext = emptytext.replace(l,"_")
+    print(emptytext)
+    return alist
+    
+def contains_chinese(text):
+    """
+    Check if the given text contains Chinese characters.
+    
+    Args:
+        text (str): The text to check for Chinese characters
+        
+    Returns:
+        bool: True if text contains at least one Chinese character, False otherwise
+    """
+    # Define the Unicode ranges for Chinese characters
+    # Common Chinese/Japanese/Korean (CJK) Unified Ideographs range
+    # This covers most common Chinese characters
+    for char in text:
+        # Check if character is in the main CJK unified ideographs block
+        if '\u4e00' <= char <= '\u9fff':
+            return True
+        # Check if character is in CJK Unified Ideographs Extension A
+        elif '\u3400' <= char <= '\u4dbf':
+            return True
+        # Check if character is in CJK Unified Ideographs Extension B
+        elif '\u20000' <= char <= '\u2a6df':
+            return True
+    
+    # No Chinese characters found
+    return False
+
+def filter_chinese_lines(text):
+    """
+    Filter a text to keep only lines that contain Chinese characters.
+    
+    Args:
+        text (str): The input text to filter
+        
+    Returns:
+        str: Text with only lines containing Chinese characters
+    """
+    lines = text.split('\n')
+    chinese_lines = []
+    
+    for line in lines:
+        if contains_chinese(line):
+            chinese_lines.append(line)
+    
+    return '\n'.join(chinese_lines)
+
+
+
+
+def generate_prompts_from_flash_card_file(filename):
+    """
+    Generate flashcards from a file containing text.
+    
+    Args:
+        filename (str): Path to the file containing text
+        
+    Returns:
+        None
+    """
+    with open(filename, 'r', encoding='utf-8') as f:
+        text = f.read()
+        flashcards = json.loads(text)
+    
+        for card in flashcards:         
+            md5signature = hashlib.md5(card['prompt'].encode('utf-8')).hexdigest()
+            with open(md5signature + ".prompt", "w", encoding="utf-8") as f:
+                f.write(card['prompt'])
+ 
+ 
+def process_all_flashcard_files(directory=None, pattern="flashcard*.json"):
+    """
+    Process all flashcard files matching the pattern in the specified directory
+    and generate prompts for each flashcard.
+    
+    Args:
+        directory (str): Directory to search for files. If None, uses current directory.
+        pattern (str): File pattern to match (default: "flashcard*.json")
+        
+    Returns:
+        int: Number of files processed
+    """
+    if directory is None:
+        directory = os.getcwd()
+    else:
+        directory = os.path.expanduser(directory)
+    
+    # Get list of files matching pattern in the directory
+    file_pattern = os.path.join(directory, pattern)
+    files = glob.glob(file_pattern)
+    
+    count = 0
+    for file_path in files:
+        try:
+            generate_prompts_from_flash_card_file(file_path)
+            print(f"Processed {file_path}")
+            count += 1
+        except Exception as e:
+            print(f"Error processing {file_path}: {e}")
+    
+    print(f"Total flashcard files processed: {count}")
+    return count
+ 
+ 
+ 
+
 def generate_flashcards(text):    
     api = openrouter.OpenRouterAPI()
+    
+    list = get_words_in_text(text)
+    
     #"""You are a chinese language learning content creator. You focus on material to help foreigner learn written Chinese.""",
     result = api.open_router_claude_3_7_sonnet("""You are a chinese language learning content creator. You focus on material to help foreigner learn written Chinese.""","""
-    split this text into the separate words, split words longer than 2 characters into parts, and create a prompt for each one that is suitable to generate an image for the word that can be used in a flashcard game. Make the output in this json format [{"word":word,"sentence": the sentence the word is in in the structure,"prompt":prompt},...]. Do not include these words: """ +str(list) + """ Here is the text:
+    split this text into the separate words, split words longer than 4 characters into parts, and create a prompt for each one that is suitable to generate an image for the word that can be used in a flashcard game. Make the output in this json format [{"word":word,"sentence": the sentence the word is in in the structure,"prompt":prompt},...]. Do not include any these words: """ +str(list) + """ Here is the text:
     
     """+ text )
     flashcards = extract_json_from_text(result)
-    for card in flashcards:
+    flashcards = filter_flashcards_by_word_list(flashcards, list)
+    for card in flashcards:         
          md5signature = hashlib.md5(card['prompt'].encode('utf-8')).hexdigest()
          card['md5signature'] = md5signature
          card['tokens'] = textprocessing.split_text(card['sentence'])
@@ -375,12 +705,17 @@ def generate_flashcards(text):
  
 
 
+def get_server_flashcard_from_text(text):
+    global flash_card_directory
+    flash_card_directory = "/var/www.html/flashcards"
+    about = build_flashcards_from_wordlist(get_words_in_text(trim))
+    return about
+
 
 def process_text_in_chunks(text, chunk_size=200):
-    wb = WordDatabase()    
+    wb = WordDatabase()
     kc = KeyCounter()
-    wc = WordCountObject(wb,kc)
-    
+    wc = WordCountObject(wb,kc)    
     pf =ProcessFlashFile(wc)
     process_flashcard_files(processobject=pf)
     wb.save_database()
@@ -410,113 +745,39 @@ def process_text_in_chunks(text, chunk_size=200):
 
 
 if __name__ == "__main__":
-    build_counters()
+    
+    
+    #build_counters()
+    
+    
+    #process_all_flashcard_files()
+    
+    #build_counters()
     trim = """
-    好的，這是一個為您創作的故事第一章，希望能符合您的要求。
+    旅發局委任劉鎮漢為總幹事，8月4日履新，接替將會離任的程鼎一。
 
----
+    旅發局主席林建岳歡迎劉鎮漢加盟旅發局，認為對方擁有豐富的旅遊業和市場推廣經驗，富有卓越的領導和管治才能，是擔任總幹事的理想人選。
 
-### **第一章：彌敦道上的單行道**
+    他相信劉鎮漢定必能夠帶領旅發局團隊，根據《香港旅遊業發展藍圖 2.0》訂定的方向，聯同業界及不同的持份者，齊心推動旅遊業更上一層樓，鞏固香港成為一個更多元化體驗的世界級旅遊目的地，擴大旅遊業對社會的貢獻。
 
-放學鐘聲，是每日的救贖，也是另一種迷惘的開始。
+    林建岳提到，劉鎮漢曾於2007年至2019年間曾出任旅發局總幹事，其後於2023年出任為勞工及福利局香港人才服務辦公室總監。
 
-我叫陳浩然，中四學生，就讀於九龍塘一間普普通通的中學。成績普普通通，樣貌普普通通，身高一米七二，在人群中就像一顆沒人會多看一眼的石子。每日穿著燙得不怎麼筆直的校服，背著塞滿了課本和前途問號的書包，穿梭在香港這個擠迫得令人窒息的城市裡。
+    另外，林建岳代表旅發局感謝程鼎一過去六年帶領，渡過疫情挑戰，帶動旅遊業疫後穩步復蘇，為香港旅遊業作出重大貢獻。
 
-「喂，浩然！想什麼呢？口水都快流到地理書上了。」一把聲音把我從白日夢的邊緣拉回來。
 
-是我的死黨，李偉傑，大家都叫他阿傑。他是我從中一就認識的朋友，籃球打得比我好，追女生的膽子比我大，功課……好吧，功課跟我一樣，在及格線的邊緣掙扎。
 
-我抹了抹嘴角，還好是乾的。我剛剛正盯著窗外，看著樓下那棵鳳凰木。夏天快到了，火紅色的花瓣在悶熱的空氣中微微晃動，就像我那顆靜不下來的心。
+    """
+    
+    get_server_flashcard_from_text(trim)
+    about = build_flashcards_from_wordlist(get_words_in_text(trim))
 
-但真正讓我分心的，不是鳳凰木，而是坐在我斜前方三排的林㴓君。
+    j_chinese = filter_chinese_lines(trim)
 
-林㴓君，我們班的女神。不是那種遙不可及、會上電視的校花，而是一種更真實、更貼近生活的美好。她的馬尾總是梳得一絲不苟，陽光透過窗戶灑在她身上時，連髮絲都像在發光。她上課總是很專心，筆記永遠整齊得像印刷出來一樣。最重要的是，她笑起來的時候，嘴角會有兩個淺淺的酒窩，彷彿能裝下整個維多利亞港的溫柔。
-
-我從來沒跟她說過超過三句話。第一句是「唔該，借借」，第二句是「對唔住」，第三句是……我想不起來了，大概也是類似的客套話。
-
-「還在看你的㴓君女神？」阿傑用手肘撞了撞我，臉上掛著促狹的笑容。「拜託，你這樣看到畢業都沒用的。行動啊，兄弟！」
-
-「怎麼行動？」我小聲地反駁，「難道衝過去跟她說『你好，我想做你男朋友』嗎？她大概會以為我是神經病，然後叫風紀老師過來。」
-
-「嘖，你就是想太多。」阿傑一邊把書本胡亂塞進書包，一邊說：「機會是要自己創造的。你看，下個禮拜數學大測，你知道她數學超強的吧？你可以去問她問題啊，多麼順理成章的開場白。」
-
-數學大測。這四個字像一塊巨石，瞬間把我心頭那點青春的悸動壓得粉碎。我的數學成績，用「災難」來形容都算是客氣了。
-
-「問問題？我連題目都看不懂，要問什麼？」我愁眉苦臉地說。
-
-「這就是問題所在了！」阿傑把書包甩到肩上，「所以，我有一個絕妙的計畫。」
-
-我們跟著人潮走出校門，悶熱的空氣混雜著汽車廢氣迎面撲來。學校門口的紅色小巴站已經排起了長龍。我和阿傑習慣走去地鐵站，那段路不長不短，剛好夠我們聊一些不能在課室裡說的秘密。
-
-「什麼計畫？」我問。
-
-阿傑左右看了看，神秘兮兮地湊到我耳邊：「『出貓』。」
-
-我愣住了。
-
-「出貓？你瘋了？」我壓低聲音，但還是忍不住拔高了語調。「被抓到要記大過的！說不定還會影響考大學。」
-
-「哎呀，富貴險中求嘛。」阿傑滿不在乎地說，「不是那種寫在手心上的低級方法。我聽說高年級的師兄有路子，可以弄到這次測驗的『溫習重點』，命中率百分之九十以上。我們只要湊點錢，就能搞到手。你想想，數學成績突然突飛猛進，老師肯定對你刮目相看，林㴓君說不定也會注意到你啊！覺得你『嘩，原來陳浩然是個隱藏的數學天才』。」
-
-我沉默了。阿傑描繪的畫面確實很吸引人。在這個只看重成績的環境裡，一個好分數就像一件名牌外套，能立刻讓你整個人都亮起來。我也厭倦了每次派卷時，老師那種失望的眼神，和父母那句「唉，下次再努力吧」的嘆息。
-
-但……這畢竟是作弊。從小到大，老師和家人都教導我要誠實。這條底線，我從來沒有跨越過。
-
-「我……我考慮一下。」我含糊地說。
-
-我們走進了旺角地鐵站，人潮像潮水一樣將我們吞沒。車廂裡，人們肩並肩地站著，每個人的臉上都帶著一絲疲憊。我握著扶手，看著窗外飛速倒退的黑暗，感覺自己的人生也像這班列車，被推著往前走，卻不知道終點在哪裡。
-
-我為什麼要讀書？為了考上好大學。為什麼要考上好大學？為了找份好工作。為什麼要找份好工作？為了賺錢，為了在香港這個寸金寸土的地方生存下去。
-
-這條路，就像彌敦道一樣，筆直、繁忙，所有人都朝著同一個方向前進。但這真的是我想要的嗎？我不知道。我只知道，我對未來感到迷茫，就像站在尖沙咀碼頭，隔著一片霧，看不清對岸的中環一樣。
-
-「喂，想什麼呢？到旺角了。」阿傑拉了我一把。
-
-走出地鐵站，一股屬於旺角的獨特氣息撲面而來——街頭小食的香氣、化妝品店的香水味、還有巨大的廣告牌上閃爍的霓虹燈光。西洋菜南街永遠都是那麼多人，我們像兩條小魚，在人海中奮力洄游。
-
-「走，去信和中心逛逛，看有沒有新遊戲。」阿傑興致勃勃地說。
-
-我心不在焉地點點頭。腦子裡還在想著「出貓」和林㴓君的事。這兩件事，一件是通往成功的捷徑，另一件是我心中遙不可及的美好。它們就像兩條完全相反的路。
-
-就在這時，我的目光被街角的一家書店吸引住了。
-
-不是因為書店本身，而是因為站在書店門口，正在認真翻閱一本參考書的人——是林㴓君。
-
-她沒有穿校服，換上了一件簡單的白色T恤和牛仔褲，腳上是一雙乾淨的白色帆布鞋。她扎著馬尾，身旁放著一個布袋，樣子專注而安靜，與周圍的喧囂格格不入。
-
-那一刻，時間彷彿變慢了。我看著她，她正在為下週的數學測驗認真地挑選練習題。而我，幾分鐘前，還在和阿傑討論如何用不光彩的手段去應付它。
-
-一股莫名的羞愧感湧上心頭。
-
-我想像了一下，如果我真的靠作弊拿了高分，然後故作聰明地去跟她討論題目，我還能坦然面對她那雙清澈的眼睛嗎？
-
-追一個女孩子，到底是為了讓她喜歡上一個「更好」的自己，還是為了讓她喜歡上一個「真實」的自己？如果為了得到她的注意，而變成一個連自己都討厭的人，那這份喜歡，又有什麼意義？
-
-「浩然？你看什麼呢？」阿傑順著我的目光望過去，也看到了林㴓君。「嘩，真是冤家路窄……不對，是天賜良緣啊！快去啊，就說『嗨，好巧啊，你也來買參考書嗎』，完美！」
-
-我搖了搖頭，拉著阿傑轉身走進了另一條小巷。
-
-「喂！你幹嘛啊？這麼好的機會！」阿傑不滿地嚷嚷。
-
-「走吧，我不想去了。」我低聲說。
-
-「為什麼啊？」
-
-我深吸了一口氣，香港潮濕的空氣似乎也變得清新了一些。我停下腳步，看著阿傑，認真地說：
-
-「我想靠自己試一次。」
-
-也許我的努力換來的，依然會是一個不及格的分數。也許林㴓君永遠都不會注意到我這個普通得不能再普通的同學。
-
-但是，至少，當我站在彌敦道的十字路口，選擇前進方向時，我可以選擇那條更難走，卻能讓我心安理得的路。
-
-這是我第一次，為自己的人生，做出了一個小小的，但卻無比堅定的決定。
-
-"""
+    #generate_flashcard_test(j_chinese)
 
     sample_text = "This is a sample text with some words that are not on HSK1-2 level. For example, 'abandon', 'zealous', and 'quintessential'."
 
-    process_text_in_chunks(trim)
+    process_text_in_chunks(j_chinese,chunk_size=500)
 
     print("Flashcards generated and saved.")
     
