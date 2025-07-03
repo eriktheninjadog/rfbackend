@@ -2566,6 +2566,20 @@ def flashcard_from_text():
         return jsonify({'error': str(e)}), 500
 
 
+import sys
+@app.route('/install_package', methods=['POST'])
+def install_package():
+    try:
+        data = request.json
+        package = data.get('package')        
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        return jsonify({'result': 'ok'}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
 
 
 @app.route('/audioadventure', methods=['GET'])
