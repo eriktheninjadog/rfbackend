@@ -2525,7 +2525,6 @@ def adventure():
         return jsonify({'error': str(e)}), 500
 
 
-
 @app.route('/flashcard', methods=['GET'])
 def flashcard():
     try:
@@ -2550,7 +2549,6 @@ def flashcard():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-"""
 import flashcardgenerate
 
 @app.route('/flashcard_from_text', methods=['POST'])
@@ -2565,7 +2563,7 @@ def flashcard_from_text():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-"""
+# hi there
 
 import sys
 @app.route('/install_package', methods=['POST'])
