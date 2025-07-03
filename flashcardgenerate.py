@@ -551,7 +551,8 @@ def get_words_in_text(text):
     kc.save_to_file()
     
     string_list = wb.get_all_words()
-   
+    # Sort string_list by length (descending) so longer words are found first
+    string_list.sort(key=len, reverse=True)
    
     found_strings = find_strings_simple(text, string_list)
     
