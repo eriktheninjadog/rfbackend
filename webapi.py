@@ -2564,8 +2564,8 @@ def flashcard_from_text():
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/flashcard_from_wordlist', methods=['POST'])
-def flashcard_from_wordlist():
+@app.route('/flashcard_from_list', methods=['POST'])
+def flashcard_from_list():
     try:        
         directory = '/var/www/html/flashcards'  # Define the directory path where JSON files are stored        
         data = request.json
