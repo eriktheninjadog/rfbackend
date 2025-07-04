@@ -2563,6 +2563,21 @@ def flashcard_from_text():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+@app.route('/flashcard_from_text', methods=['POST'])
+def flashcard_from_wordlist():
+    try:        
+        directory = '/var/www/html/flashcards'  # Define the directory path where JSON files are stored        
+        data = request.json
+        wordlist = data.get('wordlist')
+        returnflash = flashcardgenerate.get_server_flashcard_from_list(wordlist)
+        return jsonify({'result': returnflash}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
 # hi there
 
 import sys

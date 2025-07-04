@@ -104,7 +104,7 @@ import openrouter
 def text_to_mp3_and_upload(text):
     api = openrouter.OpenRouterAPI()
     corgtext = remove_non_chinese_characters(text)
-    text = api.open_router_claude_3_5_sonnet("You are a cantonese expert, helping with changing written text to spoken. Only respond using Cantonese written with Traditional Chinese. No Jyutping","Rewrite this article to spoken Cantonese spoken daily in Hong Kong:\n   " + corgtext)    
+    text = api.open_router_claude_3_5_sonnet("You are a cantonese expert, helping with changing written text to spoken. Only respond using Cantonese written with Traditional Chinese. No Jyutping","Rewrite this article to spoken Cantonese spoken daily in Hong Kong:\n   " + corgtext)
     corgtext = ""
     txt = "<speak>"
     for i in text.split('\n'):    

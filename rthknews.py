@@ -261,18 +261,22 @@ import datetime
 if __name__ == "__main__":
     
     
+    url = "https://news.rthk.hk/rthk/webpageCache/services/loadModNewsShowSp2List.php?lang=zh-TW&cat=4&newsCount=60&dayShiftMode=1&archive_date="
+
+    
+    """
+    
     get_last_hour_news()
     exit(0)
     # Define the URL you want to scrape
-    url = "https://news.rthk.hk/rthk/webpageCache/services/loadModNewsShowSp2List.php?lang=zh-TW&cat=4&newsCount=60&dayShiftMode=1&archive_date="
-
+    
     audio_links = extract_src_links("https://news.rthk.hk/rthk/ch/news-bulletins.htm", depth=2)
 
     # Get all links from the webpage
     # Find and filter out all MP3 links from the extracted URLs
     mp3_links = [link for link in audio_links if 'mp3' in link.lower() or 'm4a' in link.lower()]
     
-
+    """
     links = get_all_links(url)
 
     fullfilled = []

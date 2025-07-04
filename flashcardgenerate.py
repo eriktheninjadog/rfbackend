@@ -699,6 +699,14 @@ def get_server_flashcard_from_text(text):
     return about
 
 
+def get_server_flashcard_from_list(wordlist):
+    global flash_card_directory
+    flash_card_directory = "/var/www/html/flashcards"
+    about = build_flashcards_from_wordlist(wordlist)
+    return about
+
+
+
 def process_text_in_chunks(text, chunk_size=200):
     wb = WordDatabase()
     kc = KeyCounter()
