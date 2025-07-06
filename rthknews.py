@@ -251,6 +251,27 @@ def get_last_hour_news():
 import explaintext_in_simple_cantonese
 # import explaintext_in_simple_cantonese    
 
+import textprocessing
+
+def get_rthk_tokenized_news():
+    url = "https://news.rthk.hk/rthk/webpageCache/services/loadModNewsShowSp2List.php?lang=zh-TW&cat=4&newsCount=60&dayShiftMode=1&archive_date="
+
+    links = get_all_links(url)
+    return_news = []
+    fullfilled = []
+    random.shuffle(links)
+    for i in links:      
+        article = Article(i)
+        article.download()
+        article.parse()
+        title = article.title
+        text = article.text
+        if len(text) > 0:
+            fullfilled.append((title,text))
+            return_news.append(textprocessing.split_text(text))
+            if len(fullfilled) > 20:
+                break
+    return return_news
 
 import mine_ai_dialog
 

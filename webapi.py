@@ -2692,16 +2692,13 @@ def managelist():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
-    
+import rthknews
 @app.route('/random_cnn_article', methods=['GET'])
 def random_cnn_article():
     try:
-        article = cnn.get_random_cnn_article()
         
-        if not article:
-            return jsonify({'error': 'No articles found'}), 404
-            
-        # Extract relevant information from the article
+        articles = rthknews.get_rthk_tokenized_news()
+        article = random.choice(articles)
 
         return jsonify({'result': article}), 200
         

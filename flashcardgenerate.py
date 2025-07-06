@@ -271,6 +271,24 @@ class WordDatabase:
             return False
 
 
+
+
+def process_vocab_list(filename):
+    with open(filename,"r",encoding="utf-8") as f:
+        blob = f.read()
+        mystuff = json.loads(blob)
+        for card in mystuff:
+            card['md5signature'] =  hashlib.md5(card['prompt'].encode('utf-8')).hexdigest()
+            with open(card['md5signature'] + ".prompt", "w", encoding="utf-8") as f:
+                f.write(card['prompt'])
+        prefix = "flashcard"
+        random_int = random.randint(1000, 9999)
+        filename = f"{prefix}{random_int}.json"
+        with open(filename,"w",encoding='utf-8') as f:
+            f.write(json.dumps(mystuff))
+
+
+
 def process_flashcard_files(directory=flash_card_directory, pattern="flashcard*.json", processobject=None):
     """
     Process all flashcard JSON files matching a pattern in the specified directory.
@@ -667,13 +685,42 @@ def process_all_flashcard_files(directory=None, pattern="flashcard*.json"):
     print(f"Total flashcard files processed: {count}")
     return count
  
+def dictionarylookup(word):
+    """
+    Lookup a word in a remote Chinese dictionary
+    
+    Args:
+        word (str): The Chinese word to lookup
+        
+    Returns:
+        dict: Dictionary response containing the word definition and information
+            or None if the request failed
+    """
+    try:
+        url = "https://chinese.eriktamm.com/api/dictionarylookup"
+        params = {"word": word}
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        response = requests.post(url, json=params, headers=headers)
+        # Raise an exception for HTTP errors
+        response.raise_for_status()
+        
+        # Return the JSON response
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error looking up word '{word}': {e}")
+        return None
+ 
  
  
 
 def generate_flashcards(text):    
     api = openrouter.OpenRouterAPI()
     
-    list = get_words_in_text(text)
+    #list = get_words_in_text(text)
+    list = []
     
     #"""You are a chinese language learning content creator. You focus on material to help foreigner learn written Chinese.""",
     result = api.open_router_claude_3_7_sonnet("""You are a chinese language learning content creator. You focus on material to help foreigner learn written Chinese.""","""
@@ -705,6 +752,64 @@ def get_server_flashcard_from_list(wordlist):
     about = build_flashcards_from_wordlist(wordlist)
     return about
 
+
+
+def get_dictionary_words_not_in_flashcards(wordlist, flashcard_files=None):
+    """
+    Get words from a wordlist that are not present in any flashcard files.
+    
+    Args:
+        wordlist (list): List of words to check
+        flashcard_files (list, optional): List of flashcard files to check against
+        
+    Returns:
+        list: Words from the wordlist that are not found in any flashcard file
+    """
+    wb = WordDatabase()
+    chosenwords = []
+    for word in wordlist:
+        word = word.strip()
+        if not word:
+            continue
+        
+        if wb.get_index(word) is not None:
+            print(f"Word '{word}' already exists in flashcard database.")
+            continue
+
+        foundit = dictionarylookup(word)
+        if foundit['result'] == None:
+            print(f"Error looking up word: {word}")
+            continue
+        #now we want to find the word in the flashcard files
+        chosenwords.append(word)
+    
+    if (len(chosenwords) == 0):
+        print("No words found in the wordlist that are not already in flashcards.")
+        return  
+
+    api = openrouter.OpenRouterAPI()
+    
+    #list = get_words_in_text(text)
+    list = []
+    
+    #"""You are a chinese language learning content creator. You focus on material to help foreigner learn written Chinese.""",
+    result = api.open_router_claude_3_7_sonnet("""You are a chinese language learning content creator. You focus on material to help foreigner learn written Chinese.""","""
+    for each word in the provided text: create a prompt that is suitable to generate an image for the word that can be used in a flashcard game. Make the output in this json format [{"word":word,"sentence": a sample sentence the word is used in,"prompt":prompt},...]. Do not include any these words: """ +str(list) + """ Here is the list:
+    
+    """+ str(chosenwords) )
+    flashcards = extract_json_from_text(result)
+    flashcards = filter_flashcards_by_word_list(flashcards, list)
+    for card in flashcards:         
+         md5signature = hashlib.md5(card['prompt'].encode('utf-8')).hexdigest()
+         card['md5signature'] = md5signature
+         card['tokens'] = textprocessing.split_text(card['sentence'])
+         with open(md5signature + ".prompt", "w", encoding="utf-8") as f:
+            f.write(card['prompt'])
+    save_flashcards_to_json(flashcards, prefix="flashcard")
+    
+        
+    
+    
 
 
 def process_text_in_chunks(text, chunk_size=200):
@@ -739,32 +844,109 @@ def process_text_in_chunks(text, chunk_size=200):
 
 
 
+import rthknews
+import requests
+
+def generate_flashcards_for_rthk_news(use_dictionary=False):
+    """
+    Generate flashcards for RTHK news articles.
+    
+    This function fetches the latest RTHK news articles, extracts text from them,
+    and generates flashcards based on the content.
+    
+    Returns:
+        None
+    """
+    articles = rthknews.get_rthk_tokenized_news()
+    for tokenarray in articles:
+        #make a string from  all the elemments in the tokenarray
+        article = "".join(tokenarray) 
+        text = article
+        if not use_dictionary:
+            generate_flashcards(text)
+        else:
+            get_dictionary_words_not_in_flashcards(tokenarray)
+    
+    
+    
+    
+    
+    get_dictionary_words_not_in_flashcards
+
+
 if __name__ == "__main__":
     
     
+    #process_vocab_list("wordlist.json")
+    
     build_counters()
     
+
+    #generate_flashcards_for_rthk_news(use_dictionary=True)
     
     #process_all_flashcard_files()
     
     #build_counters()
     trim = """
-    旅發局委任劉鎮漢為總幹事，8月4日履新，接替將會離任的程鼎一。
+    不知道你有沒有聽過一個關於沉船之際的笑話？
 
-    旅發局主席林建岳歡迎劉鎮漢加盟旅發局，認為對方擁有豐富的旅遊業和市場推廣經驗，富有卓越的領導和管治才能，是擔任總幹事的理想人選。
+這則笑話簡明易懂地表現出各國民族性和價值觀。
 
-    他相信劉鎮漢定必能夠帶領旅發局團隊，根據《香港旅遊業發展藍圖 2.0》訂定的方向，聯同業界及不同的持份者，齊心推動旅遊業更上一層樓，鞏固香港成為一個更多元化體驗的世界級旅遊目的地，擴大旅遊業對社會的貢獻。
+一艘載著來自各國遊客的豪華客船即將沉沒，然而救生艇的數量卻不及乘載所有乘客，船長因此勸說乘客自行投海，他依乘客的國籍不同來改變勸進的說法。
 
-    林建岳提到，劉鎮漢曾於2007年至2019年間曾出任旅發局總幹事，其後於2023年出任為勞工及福利局香港人才服務辦公室總監。
+對美國人說：「跳下去，你就是英雄了！」
 
-    另外，林建岳代表旅發局感謝程鼎一過去六年帶領，渡過疫情挑戰，帶動旅遊業疫後穩步復蘇，為香港旅遊業作出重大貢獻。
+對義大利人說：「欸，海裡有美女在游泳呢！」
 
+對英國人說：「所謂的紳士，就是在這樣的時刻往海裡跳的人喔！」
 
+對德國人說：「這是規定，所以請你跳進海裡。」
+
+對日本人說：「大家都已經跳下去囉！」
+
+對韓國人說：「日本人已經跳下去了喔！」
+
+這則笑話是一個例子，說明了不同國家國民的動機各不相同，這一點十分有趣。從這則笑話可以得知兩個啟示。
+
+一、創造動機的結構各有不同
+在這個例子中，因為在社會上被視為美德的行為不同，讓人有興趣去做一件事的開關也各自相異。這不只是在團體裡，每一個人受到刺激引發動機的點也各不相同。
+
+二、懂得動機的運作方式，下點功夫就能改變心態
+在這則笑話，船長只是稍微改變用詞如英雄、美女、規定等，就能激發動機，同樣的道理，早起、運動、整理也只需要下一點功夫就能讓你提起勁做到。
+
+要改變自己的心，非常困難。但如果只要下一點功夫點燃自己的熱情，你是不是就覺得可以做得到了呢？
+
+本書的主題，不在於勉強提升自己做事的幹勁或動機，而是要找到好的方法，讓自己願意去做。如果能讓自己願意去做，自然能夠點燃動機。因此，先找到讓自己有興趣的開關非常重要。
+
+以早起為例，先不想正確答案或對不對、訣竅等，而是先試著想怎樣才會讓自己有興趣。
+
+曾經，人們將清晨的活動稱為「朝活」，流行一段時間，有些人因此養成了早起的習慣，然而這方法並不適合所有人。
+
+有些人替自己準備有名店家的麵包，讓自己期待早起，有些人則是每天在臉書上發文昭告自己的起床時間，逼著自己，激發自己的意願。
+
+也有人在陽台放把椅子，期待早起能邊喝咖啡邊看報紙。也有人因為喜歡上在安靜的通勤電車中讀書的感覺，因而能持續早起的習慣。
+
+此外，也有人因為在晨跑之後上班，實際感受到早起是開啟一整天良性循環的關鍵，因而能夠持續。
+
+運動也是一樣，不是所有人都到健身房就好，有些人因為夫妻一起慢走而能持續下去，有些人享受打網球的樂趣，有些人如果可以在不勉強自己的情況下游泳十五分鐘，就可以持之以恆。我則是因為練空手道的關係，只要是能夠增加身體運動強度的事情，就能讓我躍躍欲試。
+
+此外，從別的角度來看，有些女性只要穿上可愛的運動服就願意跑步，也有些人喜歡和朋友繞著天皇所居住的皇居跑，更有人是訂下了目標，要挑戰鐵人三項或跑完全程馬拉松，因而能夠持續運動。
+
+總之，只要在行動上下一點功夫，就能點燃一個人的動機。反過來說，如果因為微妙的差距而搔不到癢處，習慣的養成就不會順利。
+
+我當過許多人的教練，在過程中，我漸漸認為，讓習慣和人生都好轉的竅門，在於學會「有意念地做自己有興趣的事，並且有勇氣放棄自己做起來不起勁的事！」
+
+因此，我將本書的核心思想放在「巧妙地誘發自己的興致」。
+
+「那件事，我做起來感覺有興致，還是沒有呢？」「如果提不起勁，用什麼樣的方法能誘發我的興致呢？」對自己提問，是找到答案的方法。「如何才能誘發自己行動的興致？」「對事情採取什麼想法、看法，能誘發我的興致呢？」「想要讓自己樂在其中，我的信念和欲求是什麼？」「能幫助我進入狀況的環境在哪裡？」
+
+希望你能隨著本書，從行動、思考、感受、環境等習慣的六十五個面向來找到提起自己興致的方法。為了讓你能夠找到完全符合你自己的開關，我盡可能提供許多方法，使本書成為一本習慣養成大全。請挑選適合自己的方法，忽視那些不適合你的。
 
     """
     
     #get_server_flashcard_from_text(trim)
-    about = build_flashcards_from_wordlist(get_words_in_text(trim))
+    #about = build_flashcards_from_wordlist(get_words_in_text(trim))
+    get_dictionary_words_not_in_flashcards(textprocessing.split_text(trim))
 
     j_chinese = filter_chinese_lines(trim)
 
@@ -773,6 +955,9 @@ if __name__ == "__main__":
     sample_text = "This is a sample text with some words that are not on HSK1-2 level. For example, 'abandon', 'zealous', and 'quintessential'."
 
     process_text_in_chunks(j_chinese,chunk_size=500)
+
+
+
 
     print("Flashcards generated and saved.")
     
