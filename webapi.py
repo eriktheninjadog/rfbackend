@@ -1154,7 +1154,7 @@ def getspokenarticle():
             print("loaded srt file " + fullsrtfile)
             srt_file_path = fullsrtfile
         else:
-            fullsrtfile = '/var/www/html/mp3/' + basename + '.srt'
+            fullsrtfile = '/var/www/html/mp3/' + basename.replace(".mp3",".srt")
             print("full srt file " + fullsrtfile)
             if os.path.exists(fullsrtfile):
                 f = open(fullsrtfile,'r',encoding='utf-8')
