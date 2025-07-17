@@ -42,6 +42,81 @@ def call_deepinfra_gemini_flash_2_5(systemprompt, text):
     
     return response.choices[0].message.content
 
+def combine_short_segments(segments, min_duration=2.0):
+    """
+    Combines segments that are shorter than the minimum duration into longer segments.
+    
+    Args:
+        segments: List of transcription segments
+        min_duration: Minimum duration in seconds for a segment
+        
+    Returns:
+        List of combined segments
+    """
+    if not segments:
+        return []
+    
+    combined = []
+    current = segments[0].copy()
+    
+    for next_segment in segments[1:]:
+        # Calculate current duration
+        current_duration = current['end_time'] - current['start_time']
+        
+        # If current segment is too short and not the last one, combine with next
+        if current_duration < min_duration:
+            current['end_time'] = next_segment['end_time']
+            current['text'] += " " + next_segment['text']
+        else:
+            # Current segment is long enough, add it to result
+            combined.append(current)
+            current = next_segment.copy()
+    
+    # Don't forget to add the last segment
+    combined.append(current)
+    
+    return combined
+
+def write_srt_from_audio(audio_file_path, output_srt_path=None):
+    """
+    Transcribes audio and writes the result to an SRT subtitle file.
+    
+    Args:
+        audio_file_path: Path to the audio file to transcribe
+        output_srt_path: Path where the SRT file should be written (defaults to audio filename with .srt extension)
+    
+    Returns:
+        Path to the created SRT file
+    """
+    if output_srt_path is None:
+        # Default to same name as audio file but with .srt extension
+        output_srt_path = os.path.splitext(audio_file_path)[0] + ".srt"
+    
+    # Get transcription data
+    segments = transcribe_audio(audio_file_path)
+    segments = combine_short_segments(segments, min_duration=4.0)
+    
+    with open(output_srt_path, "w", encoding="utf-8") as srt_file:
+        for i, segment in enumerate(segments, 1):
+            # Format timestamp as HH:MM:SS,mmm
+            start_time = format_timestamp(segment['start_time'])
+            end_time = format_timestamp(segment['end_time'])
+            
+            # Write SRT entry
+            srt_file.write(f"{i}\n")
+            srt_file.write(f"{start_time} --> {end_time}\n")
+            srt_file.write(f"{segment['text']}\n\n")
+    
+    return output_srt_path
+
+def format_timestamp(seconds):
+    """Convert seconds to SRT timestamp format: HH:MM:SS,mmm"""
+    hours = int(seconds // 3600)
+    minutes = int((seconds % 3600) // 60)
+    seconds = seconds % 60
+    # SRT uses comma as decimal separator
+    return f"{hours:02d}:{minutes:02d}:{int(seconds):02d},{int((seconds % 1) * 1000):03d}"
+
 def transcribe_audio(file_path):
     transpath = make_md5_from_file(file_path)+".transcache"    
     if os.path.isfile(transpath):

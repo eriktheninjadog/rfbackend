@@ -1154,7 +1154,16 @@ def getspokenarticle():
             print("loaded srt file " + fullsrtfile)
             srt_file_path = fullsrtfile
         else:
-            chiret = ['no','chinese','to','\n','be','found','!']    
+            fullsrtfile = '/var/www/html/mp3/' + basename + '.srt'
+            print("full srt file " + fullsrtfile)
+            if os.path.exists(fullsrtfile):
+                f = open(fullsrtfile,'r',encoding='utf-8')
+                chitext = f.read()
+                chiret = textprocessing.split_text(chitext)
+                print("loaded srt file " + fullsrtfile)
+                srt_file_path = fullsrtfile
+            else:
+                chiret = ['no','chinese','to','\n','be','found','!']    
     allhint_file = mp3_file + '.allhint.json'        
     if os.path.exists('/var/www/html/mp3/'+allhint_file):
         f = open('/var/www/html/mp3/'+allhint_file,'r',encoding='utf-8')

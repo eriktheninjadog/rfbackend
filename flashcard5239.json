@@ -1,0 +1,189 @@
+[
+  {
+    "word": "盟誓",
+    "sentence": "他們簽訂了盟誓，承諾永遠和平共處。",
+    "prompt": "Two ancient Chinese officials in traditional robes standing face to face, holding a scroll with Chinese characters, performing a solemn oath ceremony. Background shows ancient Chinese palace architecture. Clear blue sky overhead.",
+    "md5signature": "b2583ce2294d91e5632721afa0648af9",
+    "tokens": [
+      "他們",
+      "簽訂",
+      "了",
+      "盟誓",
+      "，",
+      "承諾",
+      "永遠",
+      "和平共處",
+      "。"
+    ]
+  },
+  {
+    "word": "流亡",
+    "sentence": "皇帝流亡海外，已有十年之久。",
+    "prompt": "A solitary figure in tattered traditional Chinese royal robes walking alone on a mountain path, carrying a small bundle, looking back at a distant palace. Misty mountains in background, conveying a sense of exile and longing.",
+    "md5signature": "12175b29148528d0af75638d0ad22da0",
+    "tokens": [
+      "皇帝",
+      "流亡海外",
+      "，",
+      "已有",
+      "十年",
+      "之",
+      "久",
+      "。"
+    ]
+  },
+  {
+    "word": "殉葬",
+    "sentence": "古代帝王死後，常有人被迫殉葬陪伴。",
+    "prompt": "An ancient Chinese tomb with clay figurines (terracotta warriors) arranged in rows. Several small treasures, jade artifacts and bronze vessels placed alongside. The scene depicts the concept of burial objects accompanying the deceased, shown in archaeological context.",
+    "md5signature": "54bd8fde3f5446f767830c1d88dcca61",
+    "tokens": [
+      "古代",
+      "帝王",
+      "死",
+      "後",
+      "，",
+      "常有",
+      "人",
+      "被迫",
+      "殉葬",
+      "陪伴",
+      "。"
+    ]
+  },
+  {
+    "word": "政變",
+    "sentence": "政變之後，新的統治者掌握了權力。",
+    "prompt": "A dramatic scene in an ancient Chinese palace throne room - soldiers rushing in, officials in disarray, royal banners being torn down, new flags being raised. Tension and chaos depicted through dynamic composition, with dramatic lighting.",
+    "md5signature": "166d94fbbfc890a3dee07b598429bdf6",
+    "tokens": [
+      "政變",
+      "之後",
+      "，",
+      "新",
+      "的",
+      "統治者",
+      "掌握",
+      "了",
+      "權力",
+      "。"
+    ]
+  },
+  {
+    "word": "嚎啕大哭",
+    "sentence": "聽到壞消息後，她嚎啕大哭，無法控制自己的情緒。",
+    "prompt": "A person in traditional Chinese clothing kneeling on the ground, face buried in hands, shoulders heaving with intense sobbing. Tears visible streaming down face, expression showing extreme grief and emotion. Setting is dimly lit room with traditional Chinese furniture.",
+    "md5signature": "ea34b240c77927cdc7cf328cf8af9268",
+    "tokens": [
+      "聽到",
+      "壞消息",
+      "後",
+      "，",
+      "她",
+      "嚎啕大哭",
+      "，",
+      "無法控制",
+      "自己",
+      "的",
+      "情緒",
+      "。"
+    ]
+  },
+  {
+    "word": "騷擾",
+    "sentence": "敵軍不斷騷擾邊境，使得當地居民生活不安。",
+    "prompt": "A peaceful Chinese village near a border with farmers looking worried as they spot distant riders on horseback approaching. Some villagers hurrying to secure belongings, others pointing at the horizon with concerned expressions. Traditional Chinese rural landscape with mountains in background.",
+    "md5signature": "f0a230d25ddc525fa54b23e398d37c37",
+    "tokens": [
+      "敵軍",
+      "不斷",
+      "騷擾",
+      "邊境",
+      "，",
+      "使得",
+      "當地",
+      "居民",
+      "生活",
+      "不安",
+      "。"
+    ]
+  },
+  {
+    "word": "貴族",
+    "sentence": "貴族家庭穿著華麗的衣服參加宮廷宴會。",
+    "prompt": "Elegant Chinese nobility from ancient times wearing elaborate silk robes with intricate embroidery patterns, jade accessories, and formal headdresses. They stand with dignified posture in a grand palace hall decorated with red columns and gold accents.",
+    "md5signature": "9d5c5e708d85cd7d8a44a68eccde466f",
+    "tokens": [
+      "貴族",
+      "家庭",
+      "穿著",
+      "華麗",
+      "的",
+      "衣服",
+      "參加",
+      "宮廷",
+      "宴會",
+      "。"
+    ]
+  },
+  {
+    "word": "疆土",
+    "sentence": "經過多年征戰，王朝的疆土擴展到了前所未有的規模。",
+    "prompt": "An ancient Chinese map painted on silk showing expanding territorial boundaries with mountains, rivers and cities marked with Chinese characters. Small flags indicating newly conquered areas, with visual contrast between original and expanded territories.",
+    "md5signature": "95ad71e6db077d6d89c89cccbfda8f79",
+    "tokens": [
+      "經過",
+      "多年",
+      "征戰",
+      "，",
+      "王朝",
+      "的",
+      "疆土",
+      "擴展",
+      "到",
+      "了",
+      "前所未有",
+      "的",
+      "規模",
+      "。"
+    ]
+  },
+  {
+    "word": "赫赫",
+    "sentence": "他的功績赫赫，被後世永遠銘記。",
+    "prompt": "A magnificent stone monument with Chinese calligraphy engraved, commemorating great achievements. People bowing respectfully before it. Stone tablets recording historical deeds line the pathway. Incense burns in ceremonial vessels nearby, creating an atmosphere of reverence.",
+    "md5signature": "7ce6bf8ff6885788e7215562ab40697c",
+    "tokens": [
+      "他",
+      "的",
+      "功績",
+      "赫赫",
+      "，",
+      "被",
+      "後世",
+      "永遠",
+      "銘記",
+      "。"
+    ]
+  },
+  {
+    "word": "巫",
+    "sentence": "巫在古代儀式中跳舞，試圖與神靈溝通。",
+    "prompt": "An ancient Chinese shaman in ceremonial costume with elaborate mask, dancing around a fire. Holding ritual objects like bells and feathers, surrounded by incense smoke. Setting is nighttime with full moon visible, creating mystical atmosphere. Traditional drums nearby.",
+    "md5signature": "bba0ab3fe3c29837f5370a834b8a1091",
+    "tokens": [
+      "巫",
+      "在",
+      "古代",
+      "儀式",
+      "中",
+      "跳舞",
+      "，",
+      "試圖",
+      "與",
+      "神靈",
+      "溝通",
+      "。"
+    ]
+  }
+]
