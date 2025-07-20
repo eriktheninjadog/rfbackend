@@ -94,7 +94,8 @@ def write_srt_from_audio(audio_file_path, output_srt_path=None):
     
     # Get transcription data
     segments = transcribe_audio(audio_file_path)
-    segments = combine_short_segments(segments, min_duration=4.0)
+    #lets skip the combining for now, it is not needed
+    #segments = combine_short_segments(segments, min_duration=4.0)
     
     with open(output_srt_path, "w", encoding="utf-8") as srt_file:
         for i, segment in enumerate(segments, 1):

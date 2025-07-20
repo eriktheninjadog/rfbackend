@@ -2714,3 +2714,149 @@ def random_cnn_article():
     except Exception as e:
         print(f"Error fetching CNN article: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+class SimpleQueue:
+    def __init__(self):
+        self.items = []
+    
+    def enqueue(self, item):
+        """Add an item to the end of the queue"""
+        self.items.append(item)
+    
+    def dequeue(self):
+        """Remove and return the item at the front of the queue"""
+        if self.is_empty():
+            return None
+        return self.items.pop(0)
+    
+    def peek(self):
+        """Return the item at the front of the queue without removing it"""
+        if self.is_empty():
+            return None
+        return self.items[0]
+    
+    def is_empty(self):
+        """Check if the queue is empty"""
+        return len(self.items) == 0
+    
+    def size(self):
+        """Return the number of items in the queue"""
+        return len(self.items)
+    
+    def clear(self):
+        """Remove all items from the queue"""
+        self.items = []
+
+@app.route('/queue/create', methods=['POST'])
+def create_queue():
+    """Create a new queue and return its ID"""
+    queue_id = str(uuid.uuid4())
+    sessions[queue_id] = SimpleQueue()
+    return jsonify({"queue_id": queue_id})
+
+@app.route('/queue/enqueue', methods=['POST'])
+def queue_enqueue():
+    """Add an item to a queue"""
+    data = request.json
+    queue_id = data.get('queue_id')
+    item = data.get('item')
+    
+    if not queue_id or not item or queue_id not in sessions:
+        return jsonify({"error": "Invalid queue ID or item"}), 400
+    
+    sessions[queue_id].enqueue(item)
+    return jsonify({"status": "Item added to queue"})
+
+@app.route('/queue/dequeue', methods=['POST'])
+def queue_dequeue():
+    """Remove and return the first item from a queue"""
+    data = request.json
+    queue_id = data.get('queue_id')
+    
+    if not queue_id or queue_id not in sessions:
+        return jsonify({"error": "Invalid queue ID"}), 400
+    
+    item = sessions[queue_id].dequeue()
+    if item is None:
+        return jsonify({"error": "Queue is empty"}), 404
+    
+    return jsonify({"item": item})
+
+@app.route('/queue/peek', methods=['POST'])
+def queue_peek():
+    """Return the first item from a queue without removing it"""
+    data = request.json
+    queue_id = data.get('queue_id')
+    
+    if not queue_id or queue_id not in sessions:
+        return jsonify({"error": "Invalid queue ID"}), 400
+    
+    item = sessions[queue_id].peek()
+    if item is None:
+        return jsonify({"error": "Queue is empty"}), 404
+    
+    return jsonify({"item": item})
+
+@app.route('/queue/size', methods=['POST'])
+def queue_size():
+    """Return the number of items in a queue"""
+    data = request.json
+    queue_id = data.get('queue_id')
+    
+    if not queue_id or queue_id not in sessions:
+        return jsonify({"error": "Invalid queue ID"}), 400
+    
+    size = sessions[queue_id].size()
+    return jsonify({"size": size})
+
+
+global_message = SimpleQueue()
+
+#all messages are in json and this format:
+#{
+   #messageid:id
+   #type:id
+   #sender:id
+   #data - a type dependent structure
+#}
+
+@app.route('/message/post', methods=['POST'])
+def post_message():
+    """Add a message to the global message queue"""
+    try:
+        data = request.json
+        
+        # Validate required fields
+        required_fields = ['messageid', 'type', 'sender', 'data']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Missing required field: {field}"}), 400
+        
+        # Add message to the global queue
+        global_message.enqueue(json.dumps(data))
+        
+        return jsonify({"status": "Message queued successfully"}), 200
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+
+
+@app.route('/stream')
+def stream():
+    def event_stream():
+        while True:
+            # Wait for a message to be available in the global queue
+            message = global_message.dequeue()
+            
+            # If we got a message, yield it in SSE format
+            if message:
+                yield f"data: {message}\n\n"
+            else:
+            # No message available yet, wait a bit before checking again
+                time.sleep(0.5)
+
+    # 3. Return a streaming response with the correct mimetype
+    return Response(event_stream(), mimetype='text/event-stream')

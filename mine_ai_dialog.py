@@ -100,16 +100,16 @@ def mine_lessons():
 import textprocessing
 import openrouter
 
-
 def text_to_mp3_and_upload(text):
     api = openrouter.OpenRouterAPI()
-    corgtext = remove_non_chinese_characters(text)
+    #corgtext = remove_non_chinese_characters(text)
+    corgtext = text
     text = api.open_router_claude_3_5_sonnet("You are a cantonese expert, helping with changing written text to spoken. Only respond using Cantonese written with Traditional Chinese. No Jyutping","Rewrite this article to spoken Cantonese spoken daily in Hong Kong:\n   " + corgtext)
-    corgtext = ""
+    text = text + "\n ORIGINAL TEXT:\n" + corgtext +"\n\n"
     txt = "<speak>"
-    for i in text.split('\n'):    
+    for i in text.split('\n'):
         corgtext += textprocessing.make_sure_traditional(i) + "\n"
-        txt+=ssml.surround_text_with_short_pause(i)
+        txt+=ssml.surround_text_with_short_pause(i)    
     txt+="</speak>"
     filename = f"spokenarticle_news_spo_{time.time()}.mp3"
     cantonese_text_to_mp3(txt, filename)
