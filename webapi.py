@@ -2851,6 +2851,28 @@ function postMessage(messageId, type, sender, data) {
 #
 #
 
+@app.route('/feed_back_prompt', methods=['POST'])
+def feed_back_prompt():
+    prompttemplate = "write a llm prompt based upon learning data that can be used to drive a language learning discussion. Try to cover both grammarm vocab and set expressions. The language is Cantonese and the discussion should be in Cantonese as well."
+    data = request.json
+    # Read the feedback data from file
+    try:
+        with open('/var/www/html/mp3/feedback.txt', 'r', encoding='utf-8') as f:
+            feedback_data = f.read()
+        # Delete the file after reading
+        os.remove('/var/www/html/mp3/feedback.txt')
+        api = openrouter.OpenRouterAPI()
+        prompt = prompttemplate + "\n\nHere's the recent feedback data:\n" + feedback_data
+        result = api.open_router_claude_3_7_sonnet("You are a language teaching expert.", prompt)
+        systemprompt = api.open_router_claude_3_7_sonnet("You are a language teaching system designer expert.", "Write a system prompt suitable for this prompt:" + result )
+        
+        return jsonify({"result": {"system_prompt":systemprompt,"prompt":result}}), 200
+    except FileNotFoundError:
+        return jsonify({"error": "Feedback data not found"}), 404
+    except Exception as e:
+        print(f"Error processing feedback: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
 def handle_feedback(message):
     """Handle feedback messages"""
     # Log the feedback message to a file
@@ -2907,3 +2929,6 @@ def stream():
 
     # 3. Return a streaming response with the correct mimetype
     return Response(event_stream(), mimetype='text/event-stream')
+
+
+
