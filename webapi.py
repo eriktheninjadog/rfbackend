@@ -2820,12 +2820,54 @@ global_message = SimpleQueue()
    #data - a type dependent structure
 #}
 
+"""
+function postMessage(messageId, type, sender, data) {
+    return fetch('/message/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            messageid: messageId,
+            type: type,
+            sender: sender,
+            data: data
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error posting message:', error);
+        throw error;
+    });
+}
+"""
+#
+#
+#
+#
+
+def handle_feedback(message):
+    """Handle feedback messages"""
+    # Here you can process the feedback message as needed
+    print(f"Feedback received: {message}")
+
+global_message_listeners = {}
+global_message_listeners['feedback'] = handle_feedback
+        
+
 @app.route('/message/post', methods=['POST'])
 def post_message():
     """Add a message to the global message queue"""
     try:
         data = request.json
-        
+        if data['type'] in global_message_listeners:
+            global_message_listeners[data['type']](data['data'])
+            return jsonify({"status": "Message queued successfully"}), 200
         # Validate required fields
         required_fields = ['messageid', 'type', 'sender', 'data']
         for field in required_fields:

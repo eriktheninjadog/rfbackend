@@ -162,7 +162,7 @@ def main():
     # --- Start the Producer (ffmpeg) ---
     ffmpeg_command = [
         "ffmpeg", "-i", M3U8_URL,
-        "-c", "copy", "-f", "segment", "-segment_time", "300",
+        "-c", "copy", "-f", "segment", "-segment_time", "100",
         "-reset_timestamps", "1", "-strftime", "1",
         os.path.join(CHUNK_DIR, "chunk_%Y-%m-%d_%H-%M-%S.ts")
     ]
