@@ -2853,6 +2853,11 @@ function postMessage(messageId, type, sender, data) {
 
 def handle_feedback(message):
     """Handle feedback messages"""
+    # Log the feedback message to a file
+    with open('/var/www/html/mp3/feedback.txt', 'a', encoding='utf-8') as f:
+        timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+        f.write(f"[{timestamp}] {json.dumps(message, ensure_ascii=False)}\n")
+    
     # Here you can process the feedback message as needed
     print(f"Feedback received: {message}")
 
