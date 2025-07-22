@@ -2859,13 +2859,15 @@ def feed_back_prompt():
     try:
         with open('/var/www/html/mp3/feedback.txt', 'r', encoding='utf-8') as f:
             feedback_data = f.read()
+            print(feedback_data)
         # Delete the file after reading
         os.remove('/var/www/html/mp3/feedback.txt')
         api = openrouter.OpenRouterAPI()
         prompt = prompttemplate + "\n\nHere's the recent feedback data:\n" + feedback_data
         result = api.open_router_claude_3_7_sonnet("You are a language teaching expert.", prompt)
+        print(result)
         systemprompt = api.open_router_claude_3_7_sonnet("You are a language teaching system designer expert.", "Write a system prompt suitable for this prompt:" + result )
-        
+        print(systemprompt)
         return jsonify({"result": {"system_prompt":systemprompt,"prompt":result}}), 200
     except FileNotFoundError:
         return jsonify({"error": "Feedback data not found"}), 404
