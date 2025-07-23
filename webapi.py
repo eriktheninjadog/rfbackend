@@ -2866,7 +2866,7 @@ def feed_back_prompt():
         prompt = prompttemplate + "\n\nHere's the recent feedback data:\n" + feedback_data
         result = api.open_router_nova_lite_v1( prompt)
         print(result)
-        systemprompt = api.open_router_nova_lite_v1("You are a language teaching system designer expert.", "Write a system prompt suitable for this prompt:" + result )
+        systemprompt = api.open_router_nova_lite_v1("Write a system prompt suitable for this prompt:" + result )
         #systemprompt = "You are a cantonese language teaching expert."
         print(systemprompt)
         return jsonify({"result": {"system_prompt":systemprompt,"prompt":result}}), 200
