@@ -1111,7 +1111,7 @@ def getspokenarticles():
     
 def get_next_spoken_article(mp3_file):
     print("called next spoken carticle " + mp3_file)
-    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3') and file.find('spoken')!=-1]    
+    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3')]    
     files = sorted(files, key=lambda f: os.path.getctime(os.path.join('/var/www/html/mp3', f)))
     nrfiles = len(files)
     idx = -1
