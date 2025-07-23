@@ -2864,7 +2864,7 @@ def feed_back_prompt():
         os.remove('/var/www/html/mp3/feedback.txt')
         api = openrouter.OpenRouterAPI()
         prompt = prompttemplate + "\n\nHere's the recent feedback data:\n" + feedback_data
-        result = api.open_router_claude_4_0_sonnet( prompt)
+        result = api.open_router_claude_4_0_sonnet("You are a language learning system design expert, specializing in Cantonese.", prompt)
         print(result)
         systemprompt = api.open_router_nova_lite_v1("Write a system prompt suitable for this prompt:" + result )
         #systemprompt = "You are a cantonese language teaching expert."
