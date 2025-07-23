@@ -2864,10 +2864,10 @@ def feed_back_prompt():
         os.remove('/var/www/html/mp3/feedback.txt')
         api = openrouter.OpenRouterAPI()
         prompt = prompttemplate + "\n\nHere's the recent feedback data:\n" + feedback_data
-        result = api.open_router_claude_3_7_sonnet("You are a language teaching expert.", prompt)
+        result = api.open_router_nova_lite_v1("You are a language teaching expert.", prompt)
         print(result)
-        #systemprompt = api.open_router_claude_3_7_sonnet("You are a language teaching system designer expert.", "Write a system prompt suitable for this prompt:" + result )
-        systemprompt = "You are a cantonese language teaching expert."
+        systemprompt = api.open_router_nova_lite_v1("You are a language teaching system designer expert.", "Write a system prompt suitable for this prompt:" + result )
+        #systemprompt = "You are a cantonese language teaching expert."
         print(systemprompt)
         return jsonify({"result": {"system_prompt":systemprompt,"prompt":result}}), 200
     except FileNotFoundError:
