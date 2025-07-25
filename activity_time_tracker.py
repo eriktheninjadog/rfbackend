@@ -133,7 +133,34 @@ def get_accumulated_time(activity_name: str,all_activity=False) -> int:
         if 'conn' in locals() and conn.is_connected():
             cursor.close()
             conn.close()
-
+            
+            
+            
+            
+def remove_time() -> bool:
+        # Establish database connection
+    conn = database.get_connection()
+    cursor= conn.cursor()
+    try:
+        # Query to delete the last 10 rows based on ActivityID
+        delete_query = """
+            DELETE FROM ActivityTimes
+            WHERE ActivityID IN (
+                SELECT ActivityID FROM (
+                    SELECT ActivityID FROM ActivityTimes
+                    ORDER BY ActivityID DESC
+                    LIMIT 10
+                ) as temp
+            )
+        """
+        cursor.execute(delete_query)
+        
+        # Commit the transaction
+        conn.commit()
+        return True
+    except Error as e:  
+        print(f"Database error: {e}")
+        return False    
 
 
 def get_total_accumulated_time(activity_name: str) -> int:
