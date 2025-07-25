@@ -2129,7 +2129,6 @@ def add_time():
         return jsonify({"error": "Failed to add time"}), 500
 
 
-
 @app.route('/remove_time', methods=['GET','POST'])
 def add_time():    
     success = activity_time_tracker.remove_time()    
@@ -2137,10 +2136,6 @@ def add_time():
         return jsonify({"message": "Time added successfully"}), 200
     else:
         return jsonify({"error": "Failed to add time"}), 500
-
-
-
-
 
 
 @app.route('/getwritingtime', methods=['GET'])
