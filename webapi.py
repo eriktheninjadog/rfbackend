@@ -2130,7 +2130,7 @@ def add_time():
 
 
 @app.route('/remove_time', methods=['GET','POST'])
-def add_time():    
+def remove_time():    
     success = activity_time_tracker.remove_time()    
     if success:
         return jsonify({"message": "Time added successfully"}), 200
