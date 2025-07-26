@@ -363,9 +363,7 @@ if __name__ == "__main__":
     
     your_api_key = 'AIzaSyDTczpLLlzdHN4We1mzu5x2mKkuJqadID0'
     for i in [
-        'https://www.youtube.com/watch?v=LVA49lYorMs',
-        'https://www.youtube.com/watch?v=HGRTaZdKPZQ',
-        'https://www.youtube.com/watch?v=rHqoNBl6BqI'
+        'https://www.youtube.com/watch?v=GOq3d4yyUcg',
         
     ]:
         download_explain_uploadvideo(i,save_video=True)
