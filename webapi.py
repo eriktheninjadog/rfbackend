@@ -2178,8 +2178,8 @@ def get_time():
     total_accumulated_time = activity_time_tracker.get_accumulated_time(activity_name,all_activity=True)
 
     return jsonify({
-        "activity_name": int(activity_name),
-        "accumulated_time": accumulated_time,
+        "activity_name": activity_name,
+        "accumulated_time": int(accumulated_time,
         "total_accumulated_time":int(total_accumulated_time)
     }), 200
 
