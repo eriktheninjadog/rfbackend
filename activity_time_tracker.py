@@ -67,6 +67,8 @@ def add_time_to_activity(activity_name: str, milliseconds_to_add: int) -> bool:
 
         # Commit the transaction
         conn.commit()
+        conn.close()
+        cursor.close()
         return True
 
     except Error as e:
@@ -118,7 +120,10 @@ def get_accumulated_time(activity_name: str,all_activity=False) -> int:
         result = cursor.fetchone()
 
         # Return the accumulated time or 0 if not found
-        return result[0] if result else 0
+        returnvalue = result[0] if result else 0
+        cursor.close()
+        conn.close()
+        return returnvalue
 
     except Error as e:
         print(f"Database error: {e}")
