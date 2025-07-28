@@ -92,6 +92,7 @@ def get_accumulated_time(activity_name: str,all_activity=False) -> int:
         if not activity_name or not isinstance(activity_name, str):
             raise ValueError("Activity name must be a non-empty string")
         
+        #ww
         # Establish database connection
         conn = database.get_connection()
         cursor = conn.cursor()
