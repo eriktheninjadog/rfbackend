@@ -27,45 +27,36 @@ def add_time_to_activity(activity_name: str, milliseconds_to_add: int) -> bool:
         if not isinstance(milliseconds_to_add, int) or milliseconds_to_add < 0:
             raise ValueError("Milliseconds must be a positive integer")
 
-        # Establish database connection
-        conn = database.get_connection()
-        cursor= conn.cursor()
+        
+        acctime = get_accumulated_time(activity_name)
+       
+        if acctime == 0:
+            conn = database.get_connection()
+            cursor= conn.cursor()
 
-        # First, try to update existing activity
-        update_query = """
-            UPDATE ActivityTimes 
-            SET AccumulatedTime = AccumulatedTime + %s 
-            WHERE ActivityName = %s
-        """
-        cursor.execute(update_query, (milliseconds_to_add, activity_name))
-
-        # If no rows were updated (activity doesn't exist), create new activity
-        if cursor.rowcount == 0:
             insert_query = """
                 INSERT INTO ActivityTimes (ActivityName, AccumulatedTime) 
                 VALUES (%s, %s)
             """
             cursor.execute(insert_query, (activity_name, milliseconds_to_add))
+            conn.commit()
+            conn.close()
+            cursor.close()
+            return True
 
-        # Commit the transaction
-        conn.commit()
+        conn = database.get_connection()
+        cursor= conn.cursor()
+
         # First, try to update existing activity
+        milliseconds_to_add += acctime
+        
         update_query = """
-            UPDATE TotalActivityTimes 
-            SET AccumulatedTime = AccumulatedTime + %s 
+            UPDATE ActivityTimes 
+            SET AccumulatedTime = %s 
             WHERE ActivityName = %s
         """
         cursor.execute(update_query, (milliseconds_to_add, activity_name))
 
-        # If no rows were updated (activity doesn't exist), create new activity
-        if cursor.rowcount == 0:
-            insert_query = """
-                INSERT INTO TotalActivityTimes (ActivityName, AccumulatedTime) 
-                VALUES (%s, %s)
-            """
-            cursor.execute(insert_query, (activity_name, milliseconds_to_add))
-
-        # Commit the transaction
         conn.commit()
         conn.close()
         cursor.close()
