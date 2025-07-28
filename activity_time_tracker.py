@@ -110,9 +110,10 @@ def get_accumulated_time(activity_name: str,all_activity=False) -> int:
             """
             cursor.execute(select_query)
         result = cursor.fetchone()
-        print(f"Result: {result}")
         # Return the accumulated time or 0 if not found
         returnvalue = result[0] if result else 0
+        if returnvalue is None:
+            returnvalue = 0
         cursor.close()
         conn.close()
         return returnvalue
