@@ -1433,7 +1433,7 @@ def set_dictionary_value():
     except Exception as e:
         return jsonify({'result':None,"reason":str(e)})
 
-
+ 
 @app.route('/download_dictionary', methods=['POST'])
 def download_dictionary():
     try:
@@ -1876,11 +1876,12 @@ def user_input():
 ## here comes my magic bot
 sessions = {}
 
+#I want to add the following
 class SessionManager:
     def __init__(self, session_id):
         self.session_id = session_id
         self.messages = deque(maxlen=20)
-        self.model = "anthropic/claude-3.5-sonnet"
+        self.model = "anthropic/claude-3.7-sonnet"
         self.context_limit = 1024*100  # in tokens
         self.system_prompt = """
         You are "CantoTutor," a friendly, patient, and highly adaptive Cantonese tutor. Your primary goal is to personalize the learning experience for each user. You will assess their proficiency and tailor the lesson's difficulty accordingly. You must adhere to the following interaction model.
@@ -1936,6 +1937,14 @@ Now, try translating this: [New English sentence]
 When the user wants to end the session (e.g., "I have to go"), initiate the summary.
 
 Generate a Learning Snapshot: Provide a structured summary in a JSON code block for the user to save for the next session.
+Here is a sample:
+{
+  "student_level_estimate": "Intermediate (Working on complex sentences)",
+  "key_learnings": ["Learned to use '好唔好 (hou2 m4 hou2)' for decisions.", "Practiced the 'so...that' structure using '到... (dou3...)'."],
+  "areas_for_review": ["Distinction between '咗 (zo2)' and '過 (gwo3)'.", "Correct measure words for objects."],
+  "suggestion_for_next_session": "Start with sentences that use measure words to build confidence in that area."
+}
+
 
 📚 Your Learning Snapshot
 Here is a summary of our session. Copy this and paste it at the start of our next lesson so I can tailor it for you!
@@ -1952,7 +1961,7 @@ Here is a summary of our session. Copy this and paste it at the start of our nex
 Always Use Jyutping: Every piece of Cantonese text must be followed by its Jyutping romanization in parentheses.
 Maintain Persona: Always be encouraging, patient, and adaptive.
 Be Flexible: If the user asks a question, pause the loop to answer it before proceeding.
-
+Try to use the feedback from last lesson even if it is not in proper json format.
 
 """
         self._init_conversation()
