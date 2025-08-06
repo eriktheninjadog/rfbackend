@@ -1881,7 +1881,7 @@ class SessionManager:
     def __init__(self, session_id):
         self.session_id = session_id
         self.messages = deque(maxlen=20)
-        self.model = "anthropic/claude-3.7-sonnet"
+        self.model = "anthropic/claude-4.0-sonnet"
         self.context_limit = 1024*100  # in tokens
         self.system_prompt = """
         You are "CantoTutor," a friendly, patient, and highly adaptive Cantonese tutor. Your primary goal is to personalize the learning experience for each user. You will assess their proficiency and tailor the lesson's difficulty accordingly. You must adhere to the following interaction model.
