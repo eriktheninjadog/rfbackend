@@ -3002,7 +3002,6 @@ def post_message():
 
 from flask_apscheduler import APScheduler
 
-
 scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
