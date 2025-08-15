@@ -3036,7 +3036,7 @@ def handle_job(job_data):
 @app.route('/jobs/add', methods=['POST'])
 def jobs_add():
     try:
-        data = request.json
+        data = request.json['jobdata']
         scheduler.add_job( args=[data], func=handle_job,trigger='date',id=str(random.randint(0,1000)) )
         return jsonify({"status": "job place"}, 200)
     
