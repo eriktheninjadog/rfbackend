@@ -37,7 +37,7 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
         
         # Keyword search (no LLM)
         if keywords and not pattern:
-            print("just doing a simple search  "+ directory + " " + str(keywords) + " " + match)
+            print("just doing a simple search  "+ str(directory) + " " + str(keywords) + " " + match)
             return fast_search(directory, keywords, match)
         
         # LLM-assisted pattern search
