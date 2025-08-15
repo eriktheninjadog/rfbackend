@@ -34,9 +34,10 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
         Returns:
             list: List of matching blocks
         """
-        client = OpenRouterClient()
+        
         # Keyword search (no LLM)
         if keywords and not pattern:
+            print("just doing a simple search  "+ directory + " " + str(keywords) + " " + match)
             return fast_search(directory, keywords, match)
         
         # LLM-assisted pattern search
