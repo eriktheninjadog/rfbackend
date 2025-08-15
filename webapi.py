@@ -3008,14 +3008,19 @@ scheduler.start()
 
 import time
 
+import srtdb_search
+
 def handle_job(job_data):
     """Process a job"""
     print(f"Processing job: {job_data}")
     time.sleep(5)  # Simulate a long-running job
+    if job_data['type'] == 'simple_srt_search':
+        returned_list = srtdb_search.search_srt_files(keywords=job_data['keywords'])
+        global_message.enqueue(json.dumps({"type": "job_completed", "data": job_data, "result": returned_list}))
+        return
+    global_message.enqueue(json.dumps({"type": "job_completed", "data": job_data, "result": "unknown command"}))
     print(f"Job completed: {job_data}")
-    result = "hi there"
-    global_message.enqueue(json.dumps({"type": "job_completed", "data": job_data, "result": result}))
-
+    
 
 @app.route('/jobs/add', methods=['POST'])
 def jobs_add():
