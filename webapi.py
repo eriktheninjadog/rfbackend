@@ -3000,11 +3000,39 @@ def post_message():
 
 
 
+from flask_apscheduler import APScheduler
+
+
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
+
+import time
+
+def handle_job(job_data):
+    """Process a job"""
+    print(f"Processing job: {job_data}")
+    time.sleep(5)  # Simulate a long-running job
+    print(f"Job completed: {job_data}")
+    result = "hi there"
+    global_message.enqueue(json.dumps({"type": "job_completed", "data": job_data, "result": result}))
+
+
+@app.route('/jobs/add', methods=['POST'])
+def post_message():
+    try:
+        data = request.json
+        scheduler.add_job( args=[data], func=handle_job,trigger='date',id=str(random.randint(0,1000)) )
+        return jsonify({"status": "job place"}, 200)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/stream')
 def stream():
     def event_stream():
+        empty_count = 0
         while True:
             # Wait for a message to be available in the global queue
             message = global_message.dequeue()
@@ -3015,6 +3043,10 @@ def stream():
             else:
             # No message available yet, wait a bit before checking again
                 time.sleep(0.5)
+                empty_count += 1
+                if empty_count > 60:  # If no messages for a while, ping
+                    empty_count = 0
+                    yield "data: [NO_MESSAGES]\n\n"
 
     # 3. Return a streaming response with the correct mimetype
     return Response(event_stream(), mimetype='text/event-stream')
