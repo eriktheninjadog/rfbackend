@@ -3019,7 +3019,7 @@ def handle_job(job_data):
 
 
 @app.route('/jobs/add', methods=['POST'])
-def post_message():
+def jobs_add():
     try:
         data = request.json
         scheduler.add_job( args=[data], func=handle_job,trigger='date',id=str(random.randint(0,1000)) )
