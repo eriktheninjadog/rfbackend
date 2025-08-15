@@ -3045,8 +3045,8 @@ def stream():
                 time.sleep(0.5)
                 empty_count += 1
                 if empty_count > 60:  # If no messages for a while, ping
-                    empty_count = 0
-                    yield "data: [NO_MESSAGES]\n\n"
+                    empty_count = 0                    
+                    yield "data: {\"type\":\"ping\"}\n\n"
 
     # 3. Return a streaming response with the correct mimetype
     return Response(event_stream(), mimetype='text/event-stream')
