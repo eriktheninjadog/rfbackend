@@ -3010,6 +3010,15 @@ import time
 
 import srtdb_search
 
+
+
+
+import os
+
+with open('/var/www/html/api/rfbackend/routerkey.txt', 'r') as f:
+    os.environ['OPENROUTER_API_KEY'] = f.readline().strip()
+
+
 def handle_job(job_data):
     """Process a job"""
     print(f"Processing job: {job_data}")
