@@ -2,7 +2,7 @@ import argparse
 import os
 import json
 from srtdb_utils import fast_search, setup_srt_directory
-from srtdb_openrouter import init_openrouter, llm_match
+from srtdb_openrouter import  llm_match,OpenRouterClient
 
 # Common grammatical patterns mapping
 COMMON_PATTERNS = {
@@ -34,12 +34,12 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
         Returns:
             list: List of matching blocks
         """
+        client = OpenRouterClient()
         # Keyword search (no LLM)
         if keywords and not pattern:
             return fast_search(directory, keywords, match)
         
         # LLM-assisted pattern search
-        client = init_openrouter()
         candidates = fast_search(directory, keywords or [""], 'any') if keywords else []
         
         print(f"⚡ Found {len(candidates)} candidate blocks")
@@ -51,7 +51,7 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
             print(f"   Processing batch {(i//batch_size)+1}/{len(candidates)//batch_size + 1}")
             
             for block in batch:
-                if llm_match(client, block['text'], pattern, model):
+                if llm_match( block['text'], pattern, model):
                     results.append(block)
         
         return results
@@ -101,8 +101,8 @@ def main():
             print(f"   {block['text']}")
         return
     
+    client = OpenRouterClient()
     # LLM-assisted pattern search
-    client = init_openrouter()
     candidates = fast_search(args.directory, args.keywords or [""], 'any') if args.keywords else []
     
     print(f"⚡ Found {len(candidates)} candidate blocks")
@@ -114,7 +114,7 @@ def main():
         print(f"   Processing batch {(i//args.batch)+1}/{len(candidates)//args.batch + 1}")
         
         for block in batch:
-            if llm_match(client, block['text'], pattern, args.model):
+            if llm_match(block['text'], pattern, args.model):
                 results.append(block)
     
     # Output final results
