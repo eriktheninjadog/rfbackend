@@ -3029,6 +3029,15 @@ def handle_job(job_data):
         print(str(returned_list))
         global_message.enqueue(json.dumps({"type": "job_completed", "data": job_data, "result": returned_list}))
         return
+
+    if job_data['type'] == 'pattern_srt_search':
+        print("doing a simple search over srt " + str(job_data['keywords']) + ' ' + job_data['pattern'])
+        pattern = job_data['pattern']
+        returned_list = srtdb_search.search_srt_files(keywords=job_data['keywords'],pattern=pattern)
+        print(str(returned_list))
+        global_message.enqueue(json.dumps({"type": "job_completed", "data": job_data, "result": returned_list}))
+        return
+
     global_message.enqueue(json.dumps({"type": "job_completed", "data": job_data, "result": "unknown command"}))
     print(f"Job completed: {job_data}")
     
