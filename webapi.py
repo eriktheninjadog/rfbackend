@@ -3065,6 +3065,7 @@ def get_search_term():
         system_msg = "You are a language processing expert,helping analysing and preprosessing language tasks"
         openpapi = openrouter.OpenRouterAPI()
         presearch = openpapi.open_router_qwen_turbo(system_msg,msg)
+        print("We got a keyword " + presearch)
         return jsonify({"result":presearch  }, 200)
     
     except Exception as e:
