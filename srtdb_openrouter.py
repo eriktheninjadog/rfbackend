@@ -28,7 +28,7 @@ class ChatCompletions:
     def create(self, model, messages, max_tokens=None, temperature=None, **kwargs):
         url = f"{self.client.base_url}/chat/completions"
         headers = {
-            "Authorization": f"Bearer {self.client.api_key}",
+            "Authorization": self.client.api_key,
             "Content-Type": "application/json"
         }
         
