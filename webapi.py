@@ -3044,6 +3044,24 @@ def jobs_add():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/get_search_term')
+def get_search_term():
+    try:
+        pattern = request.json['pattern']
+        msg = """
+    Given a string in Cantonese describing a grammatical pattern or fixed expression with variable components such as ellipses ..., placeholders like [X], or other markers, split the string into segments separated by variable parts. Then, extract the longest contiguous fixed substring from these segments. If there are multiple fixed parts, choose the one with the most characters. 
+    Reply with only the chosen substring, nothing more.
+    Here is the string describing the grammar pattern: """+ pattern +"""
+    """
+        system_msg = "You are a language processing expert,helping analysing and preprosessing language tasks"
+        openpapi = openrouter.OpenRouterAPI()
+        presearch = openpapi.open_router_qwen_turbo(system_msg,msg)
+        return jsonify({"result":presearch  }, 200)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route('/stream')
 def stream():
     def event_stream():

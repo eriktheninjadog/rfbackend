@@ -96,6 +96,15 @@ class OpenRouterAPI:
             user_content,
             "You are an assistant"
         )        
+        
+        
+    def open_router_qwen_turbo(self, system_msg: str,user_msg: str) -> str:
+        return self.get_completion(
+            "qwen/qwen-turbo",
+            user_msg,
+            system_msg
+        )        
+
     
     def open_router_meta_llama_3_1_8b(self, user_content: str) -> str:
         return self.get_completion(
