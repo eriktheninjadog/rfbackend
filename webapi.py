@@ -3053,7 +3053,7 @@ def jobs_add():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/get_search_term')
+@app.route('/get_search_term', methods=['POST'])
 def get_search_term():
     try:
         pattern = request.json['pattern']
