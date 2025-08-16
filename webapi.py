@@ -3066,8 +3066,8 @@ def get_search_term():
         openpapi = openrouter.OpenRouterAPI()
         presearch = openpapi.open_router_qwen_turbo(system_msg,msg)
         print("We got a keyword " + presearch)
-        return jsonify({"result":presearch  }, 200)
-    
+        return jsonify({"result":presearch  }), 200
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
