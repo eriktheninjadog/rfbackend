@@ -3,8 +3,18 @@ import os
 import requests
 import time
 class OpenRouterClient:
+    
+    
+    def _read_bearer_key(self) -> str:
+        try:
+            with open('/var/www/html/api/rfbackend/routerkey.txt', 'r') as f:
+                return f.readline().strip()
+        except FileNotFoundError:
+            raise Exception("API key file not found")
+
+    
     def __init__(self, api_key=None):
-        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
+        self.api_key = api_key or self._read_bearer_key()
         if not self.api_key:
             raise ValueError("OpenRouter API key not provided and not found in environment variables")
         self.base_url = "https://openrouter.ai/api/v1"
