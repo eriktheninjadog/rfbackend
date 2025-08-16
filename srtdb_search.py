@@ -102,7 +102,6 @@ def main():
             print(f"   {block['text']}")
         return
     
-    client = OpenRouterClient()
     # LLM-assisted pattern search
     candidates = fast_search(args.directory, args.keywords or [""], 'any') if args.keywords else []
     

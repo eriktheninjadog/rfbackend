@@ -117,4 +117,4 @@ def llm_match( text: str, pattern: str, model="amazon/nova-micro-v1"):
         print(f"⚠️ LLM error: {e}")
         print("⏳ Retrying with GPT-4 fallback in 3s...")
         time.sleep(3)
-        return llm_match(client, text, pattern, "openai/gpt-4-turbo")
+        return llm_match( text, pattern, "openai/gpt-4-turbo")
