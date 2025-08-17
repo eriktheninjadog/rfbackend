@@ -68,6 +68,7 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
             result = fast_search(directory, keywords, match)
             if len(result) > max_nr:
                 return random.sample(result, max_nr)
+            return result
 
         # LLM-assisted pattern search
         candidates = fast_search(directory, keywords or [""], 'any') if keywords else []
