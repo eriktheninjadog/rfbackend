@@ -19,7 +19,34 @@ def parse_pattern(input_pattern: str):
         return COMMON_PATTERNS[input_pattern]
     return input_pattern
 
-def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None, match='any', batch_size=5, model="anthropic/claude-3.7-sonnet"):
+import random
+import subprocess
+
+
+def make_mp3_from_search(keywords,pattern,result):
+    filename = "srt_search_"+keywords[0]+"_"+pattern+".json"
+    filename = filename.replace(' ','_')
+    with open(filename, 'w') as f:
+        json.dump(result, f)    
+    # Construct the remote destination
+    remote_destination = f"erik@storage.eriktamm.com:/home/erik/make_mp3/{filename}"
+    print(f"Uploading search results to {remote_destination}")
+
+    # Execute SCP command to upload the file
+    try:
+        result = subprocess.run(
+            ["scp", filename, remote_destination],
+            check=True,
+            text=True,
+            capture_output=True
+        )
+        print(f"Upload successful: {result.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Upload failed: {e.stderr}")
+    # Code to generate MP3 from result
+    return filename
+
+def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None, match='any', batch_size=5, max_nr = 10,model="anthropic/claude-3.7-sonnet"):
         """
         Search SRT files for keywords and/or grammatical patterns
         
@@ -38,8 +65,10 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
         # Keyword search (no LLM)
         if keywords and not pattern:
             print("just doing a simple search  "+ str(directory) + " " + str(keywords) + " " + match)
-            return fast_search(directory, keywords, match)
-        
+            result = fast_search(directory, keywords, match)
+            if len(result) > max_nr:
+                return random.sample(result, max_nr)
+
         # LLM-assisted pattern search
         candidates = fast_search(directory, keywords or [""], 'any') if keywords else []
         
@@ -54,7 +83,8 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
             for block in batch:
                 if llm_match( block['text'], pattern, model):
                     results.append(block)
-        
+                    if len(results) >= max_nr:
+                        return results        
         return results
 
 def main():
