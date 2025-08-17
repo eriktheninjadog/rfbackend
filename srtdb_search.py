@@ -24,11 +24,10 @@ import subprocess
 
 
 def make_mp3_from_search(keywords,pattern,result):
-    filename = "srt_search_"+str(keywords[0])+"_"+str(pattern)+".json"
+    filename = "srt_search_"+ str(random.randint(1000))+".json"
     filename = filename.replace(' ','_')
-    asjson = json.dumps(result, ensure_ascii=False, indent=4)
-    print(asjson)
     with open(filename, 'w',encoding='utf-8') as f:
+        asjson = json.dumps(result, ensure_ascii=False, indent=4)
         f.write(asjson)    
     # Construct the remote destination
     remote_destination = f"erik@storage.eriktamm.com:/home/erik/make_mp3/{filename}"
