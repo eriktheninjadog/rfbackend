@@ -27,7 +27,9 @@ def make_mp3_from_search(keywords,pattern,result):
     filename = "srt_search_"+str(keywords[0])+"_"+str(pattern)+".json"
     filename = filename.replace(' ','_')
     with open(filename, 'w',encoding='utf-8') as f:
-        json.dump(result, f)    
+        asjson = json.dumps(result, ensure_ascii=False, indent=4)
+        print(asjson)
+        f.write(asjson)    
     # Construct the remote destination
     remote_destination = f"erik@storage.eriktamm.com:/home/erik/make_mp3/{filename}"
     print(f"Uploading search results to {remote_destination}")
