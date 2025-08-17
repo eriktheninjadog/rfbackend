@@ -24,7 +24,7 @@ import subprocess
 
 
 def make_mp3_from_search(keywords,pattern,result):
-    filename = "srt_search_"+keywords[0]+"_"+pattern+".json"
+    filename = "srt_search_"+str(keywords[0])+"_"+str(pattern)+".json"
     filename = filename.replace(' ','_')
     with open(filename, 'w') as f:
         json.dump(result, f)    
