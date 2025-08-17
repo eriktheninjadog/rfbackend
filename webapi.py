@@ -3053,6 +3053,21 @@ def jobs_add():
         return jsonify({"error": str(e)}), 500
 
 
+import regex
+
+def longest_chinese_substring(s):
+    # Match only sequences of valid Chinese characters (Unicode general category "Lo")
+    chinese_segments = regex.findall(r'[\p{Lo}]+', s)
+    
+    # If no Chinese characters found, return an empty string
+    if not chinese_segments:
+        return ""
+    
+    # Find the longest segment
+    longest_segment = max(chinese_segments, key=len)
+    
+    return longest_segment
+
 @app.route('/get_search_term', methods=['POST'])
 def get_search_term():
     try:
@@ -3063,9 +3078,12 @@ def get_search_term():
     Here is the string describing the grammar pattern: """+ pattern +"""
     """
         system_msg = "You are a language processing expert,helping analysing and preprosessing language tasks"
-        openpapi = openrouter.OpenRouterAPI()
-        presearch = openpapi.open_router_qwen_turbo(system_msg,msg)
-        print("We got a keyword " + presearch)
+        #openpapi = openrouter.OpenRouterAPI()
+        #presearch = openpapi.open_router_qwen_turbo(system_msg,msg)
+        #print("We got a keyword " + presearch)
+        
+        presearch = longest_chinese_substring(pattern)
+        
         return jsonify({"result":presearch  }), 200
         
     except Exception as e:
