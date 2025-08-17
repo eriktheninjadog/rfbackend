@@ -67,7 +67,10 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
             print("just doing a simple search  "+ str(directory) + " " + str(keywords) + " " + match)
             result = fast_search(directory, keywords, match)
             if len(result) > max_nr:
-                return random.sample(result, max_nr)
+                result =  random.sample(result, max_nr)
+                make_mp3_from_search(keywords, pattern, result)
+                return result
+            make_mp3_from_search(keywords, pattern, result)
             return result
 
         # LLM-assisted pattern search
@@ -85,7 +88,9 @@ def search_srt_files(directory="/var/srt_archive/", keywords=None, pattern=None,
                 if llm_match( block['text'], pattern, model):
                     results.append(block)
                     if len(results) >= max_nr:
+                        make_mp3_from_search(keywords, pattern, result)
                         return results        
+        make_mp3_from_search(keywords, pattern, result)
         return results
 
 def main():
