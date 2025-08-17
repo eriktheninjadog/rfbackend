@@ -30,7 +30,7 @@ def make_mp3_from_search(keywords,pattern,result):
         asjson = json.dumps(result, ensure_ascii=False, indent=4)
         f.write(asjson)    
     # Construct the remote destination
-    remote_destination = f"erik@storage.eriktamm.com:/home/erik/make_mp3/{filename}"
+    remote_destination = f"erik@storage.eriktamm.com:/home/erik/make_mp3/"
     print(f"Uploading search results to {remote_destination}")
 
     # Execute SCP command to upload the file
