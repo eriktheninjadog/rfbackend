@@ -37,3 +37,7 @@ spokenarticle_news1737443194.8215365_youtube_t5sJ55VjCrw10.mp3.subtitle
 __pycache__/deepinfra.cpython-310.pyc
 trycantonese.py
 __pycache__/trycantonese.cpython-310.pyc
+*.pyc
+__pycache__/*.pyc
+__pycache__/openrouter.cpython-310.pyc
+
