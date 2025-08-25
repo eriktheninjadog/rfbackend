@@ -3011,8 +3011,6 @@ import time
 import srtdb_search
 
 
-
-
 import os
 
 with open('/var/www/html/api/rfbackend/routerkey.txt', 'r') as f:
@@ -3065,8 +3063,28 @@ def longest_chinese_substring(s):
     
     # Find the longest segment
     longest_segment = max(chinese_segments, key=len)
-    
     return longest_segment
+
+
+
+@app.route('/get_txt_files', methods=['GET'])
+def get_txt_files():
+    try:
+        # Get directory from query parameter or use default
+        directory = request.args.get('directory', '/var/www/html/texts')
+        
+        # Get all files with .txt extension
+        txt_files = [file for file in os.listdir(directory) if file.endswith('.txt')]
+        
+        # Sort files alphabetically
+        txt_files.sort()
+        
+        return jsonify({'result': txt_files}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 
 @app.route('/get_search_term', methods=['POST'])
 def get_search_term():
