@@ -3066,7 +3066,6 @@ def longest_chinese_substring(s):
     return longest_segment
 
 
-
 @app.route('/get_txt_files', methods=['GET'])
 def get_txt_files():
     try:
@@ -3084,6 +3083,32 @@ def get_txt_files():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+
+@app.route('/get_txt_content', methods=['GET'])
+def get_txt_content():
+    try:
+        # Get filename from query parameter
+        filename = request.args.get('filename')
+        
+        if not filename:
+            return jsonify({'error': 'Filename parameter is required'}), 400
+            
+        # Construct the full path (ensuring it's within the intended directory)
+        file_path = os.path.join('/var/www/html/texts', filename)
+        
+        # Check if the file exists
+        if not os.path.exists(file_path) or not os.path.isfile(file_path):
+            return jsonify({'error': 'File not found'}), 404
+            
+        # Read and return the file content
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+        content = textprocessing.split_text(content)
+        return jsonify({'result': content}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/get_search_term', methods=['POST'])
