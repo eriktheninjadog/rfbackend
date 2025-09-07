@@ -1154,7 +1154,7 @@ def getspokenarticle():
             print("loaded srt file " + fullsrtfile)
             srt_file_path = fullsrtfile
         else:
-            fullsrtfile = '/var/www/html/mp3/' + basename.replace(".mp3",".srt")
+            fullsrtfile = '/var/www/html/mp3/' + basename + '.srt'
             print("full srt file " + fullsrtfile)
             if os.path.exists(fullsrtfile):
                 f = open(fullsrtfile,'r',encoding='utf-8')
@@ -3064,7 +3064,6 @@ def longest_chinese_substring(s):
     # Find the longest segment
     longest_segment = max(chinese_segments, key=len)
     return longest_segment
-
 
 @app.route('/get_txt_files', methods=['GET'])
 def get_txt_files():

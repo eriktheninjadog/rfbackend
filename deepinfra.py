@@ -135,7 +135,7 @@ def transcribe_audio(file_path):
     model="openai/whisper-large-v3",
         file=audio_file,
         response_format="verbose_json",
-        language="yue",
+        language="zh",
         timestamp_granularities=["segment"],
     )
     roar = []

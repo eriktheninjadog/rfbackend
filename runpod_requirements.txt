@@ -1,0 +1,9 @@
+runpod
+requests
+torch
+transformers[torch]
+accelerate
+datasets[audio]
+fastapi
+uvicorn[standard]
+python-multipart
