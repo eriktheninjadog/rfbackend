@@ -515,6 +515,7 @@ def main():
                                     'ffmpeg', 
                                     '-i', capture.last_saved_file, 
                                     '-codec:a', 'libmp3lame', 
+                                    '-ar','16000',  # Set sample rate to 16kHz
                                     '-qscale:a', '2',  # High quality, adjust if needed
                                     '-y',  # Overwrite output file if it exists
                                     mp3_filename
@@ -527,7 +528,9 @@ def main():
                                 ], check=True, capture_output=True)
                                 print(f"Uploaded: {mp3_filename}")                                
                                 # Send the MP3 file instead of WAV
+                                print(f"Sending: {mp3_filename} to relay server")                                
                                 client.send_file(mp3_filename)
+                                print(f"Sent: {mp3_filename} to relay server")                                
                                 last_sent = mp3_filename
                                 
                             except subprocess.CalledProcessError as e:
