@@ -1,0 +1,16 @@
+{
+  "level_1": {
+    "description": "Basic problem solving and daily communication",
+    "tasks": [
+      {
+        "id": "lost_wallet",
+        "level": 1,
+        "scenario_template": "你朋友{name}喺{location}食完飯之後發現銀包唔見咗。佢好緊張，問你可以點幫佢。你會點做？",
+        "target_skills": ["giving_advice", "problem_solving", "asking_questions"],
+        "target_vocabulary": ["建議", "搵", "問", "侍應生", "經理"],
+        "complexity": "simple_linear",
+        "prerequisites": []
+      }
+    ]
+  }
+}

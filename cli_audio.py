@@ -539,7 +539,7 @@ def main():
                                 client.send_file(capture.last_saved_file)
                             except Exception as e:
                                 print(f"Error: {e}")
-                        client.send_file(capture.last_saved_file)
+                        #client.send_file(capture.last_saved_file)
                     elif command == 'transcribe':
                         # Parse language parameter
                         language = args.language  # Default language

@@ -3156,3 +3156,211 @@ def stream():
 
 
 
+#
+#
+# DM tutor stuff
+#
+#
+
+import cantonese_tutor_server.services.claude_service as claudeservice
+import cantonese_tutor_server.services.storage_service as storageservice
+import cantonese_tutor_server.services.task_service as taskservice
+import cantonese_tutor_server.models.task as taskmodel
+
+# Initialize services   
+claude_service = claudeservice.ClaudeService()
+storage_service = storageservice.StorageService()
+task_service = taskservice.TaskService()
+
+
+# Global session state (in production, use proper session management)
+current_dm_sessions = {}
+
+@app.route('/dmapi/start-session', methods=['POST'])
+def start_session():
+    """Start a new learning session"""
+    try:
+        user_data = storage_service.load_user_data()
+        task = task_service.get_next_task(user_data)
+        
+        if not task:
+            return jsonify({"error": "暫時冇更多任務"}), 404
+        
+        scenario = task_service.generate_scenario(task)
+        
+        # Create session
+        session_id = f"session_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        session = taskmodel.TaskSession(
+            task_id=task.id,
+            level=task.level,
+            date=datetime.now().strftime("%Y-%m-%d"),
+            scenario=scenario,
+            conversation=[],
+            errors_corrected=[],
+            vocabulary_used=[]
+        )
+        
+        # Store session
+        current_dm_sessions[session_id] = session
+        
+        # Add scenario to conversation
+        entry = taskmodel.ConversationEntry(
+            speaker="claude",
+            message=scenario,
+            timestamp=datetime.now().strftime("%H:%M:%S"),
+            message_type="scenario"
+        )
+        session.conversation.append(entry)
+        
+        return jsonify({
+            "session_id": session_id,
+            "task": {
+                "id": task.id,
+                "level": task.level,
+                "scenario": scenario
+            },
+            "message": scenario
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/dmapi/chat', methods=['POST'])
+def chat():
+    """Process user message and get tutor response"""
+    try:
+        data = request.json
+        session_id = data.get('session_id')
+        user_message = data.get('message')
+        
+        if not session_id or session_id not in current_dm_sessions:
+            return jsonify({"error": "Invalid session"}), 400
+        
+        session = current_dm_sessions[session_id]
+        
+        # Add user message to conversation
+        user_entry = taskmodel.ConversationEntry(
+            speaker="student",
+            message=user_message,
+            timestamp=datetime.now().strftime("%H:%M:%S")
+        )
+        session.conversation.append(user_entry)
+        
+        # Build conversation history for Claude
+        conversation_history = []
+        for entry in session.conversation[-6:]:
+            role = "user" if entry.speaker == "student" else "assistant"
+            conversation_history.append({"role": role, "content": entry.message})
+        
+        # Get Claude response
+        system_context = f"任務: {session.scenario}"
+        response = claude_service.get_tutor_response(conversation_history, system_context)
+        
+        if not response:
+            return jsonify({"error": "系統出錯，請重試"}), 500
+        
+        # Add Claude response to conversation
+        claude_entry = taskmodel.ConversationEntry(
+            speaker="claude",
+            message=response,
+            timestamp=datetime.now().strftime("%H:%M:%S")
+        )
+        session.conversation.append(claude_entry)
+        
+        # Check for task completion
+        task_completed = any(phrase in response for phrase in 
+                           ["任務完成", "問題解決", "好好", "完美", "成功"])
+        
+        return jsonify({
+            "message": response,
+            "task_completed": task_completed
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/dmapi/complete-task', methods=['POST'])
+def complete_task():
+    """Mark current task as completed"""
+    try:
+        data = request.json
+        session_id = data.get('session_id')
+        
+        if not session_id or session_id not in current_dm_sessions:
+            return jsonify({"error": "Invalid session"}), 400
+        
+        session = current_dm_sessions[session_id]
+        session.task_completed = True
+        session.duration_minutes = 10  # Placeholder
+        
+        # Load user data and update progress
+        user_data = storage_service.load_user_data()
+        
+        completed_task = taskmodel.CompletedTask(
+            task_id=session.task_id,
+            completion_date=session.date,
+            level=session.level,
+            duration_minutes=session.duration_minutes
+        )
+        
+        user_data.progress.completed_tasks.append(completed_task)
+        user_data.progress.total_sessions += 1
+        user_data.progress.last_session = datetime.now().strftime("%Y-%m-%d")
+        
+        # Save data
+        storage_service.save_task_session(session)
+        storage_service.save_user_data(user_data)
+        
+        # Clean up session
+        del current_dm_sessions[session_id]
+        
+        return jsonify({"message": "任務完成！"})
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/dmapi/tasks', methods=['GET'])
+def get_tasks():
+    """Get all available tasks"""
+    try:
+        tasks = task_service.get_all_tasks()
+        return jsonify(tasks)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/dmapi/tasks', methods=['POST'])
+def create_task():
+    """Create a new task"""
+    try:
+        data = request.json
+        
+        task_request = taskmodel.TaskCreationRequest(
+            level=data['level'],
+            scenario_template=data['scenario_template'],
+            target_skills=data['target_skills'],
+            target_vocabulary=data['target_vocabulary'],
+            complexity=data['complexity'],
+            prerequisites=data.get('prerequisites', [])
+        )
+        
+        new_task = task_service.create_task(task_request)
+        
+        return jsonify({
+            "message": "任務創建成功！",
+            "task": new_task.to_dict()
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/dmapi/progress', methods=['GET'])
+def get_progress():
+    """Get user progress"""
+    try:
+        user_data = storage_service.load_user_data()
+        return jsonify(user_data.to_dict())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
