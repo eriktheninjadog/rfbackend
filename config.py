@@ -1,5 +1,5 @@
 #config
-
+# eoo
 import json
 def get_config_value(name):
     f = open('/var/www/html/scene/wwwconfig.json','r')

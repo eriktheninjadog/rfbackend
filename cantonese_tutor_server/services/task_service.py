@@ -2,15 +2,14 @@ import json
 import random
 import uuid
 from typing import List, Optional
-from models.task import Task, TaskCreationRequest
-from models.user_data import UserData
-from config import TASKS_DIR
+from cantonese_tutor_server.models.task import Task, TaskCreationRequest
+from cantonese_tutor_server.models.user_data import UserData
 import os
 
 class TaskService:
     def __init__(self):
-        self.tasks_file = f"{TASKS_DIR}/task_definitions.json"
-        os.makedirs(TASKS_DIR, exist_ok=True)
+        self.tasks_file = f"/var/www/html/api/rfbackend/tasks/task_definitions.json"
+        os.makedirs(os.path.dirname(self.tasks_file), exist_ok=True)
         self.tasks = self._load_tasks()
     
     def _load_tasks(self) -> dict:
