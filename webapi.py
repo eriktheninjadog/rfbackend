@@ -3177,7 +3177,7 @@ task_service = taskservice.TaskService()
 current_dm_sessions = {}
 
 @app.route('/dmapi/start-session', methods=['POST'])
-def start_session():
+def start_dm_session():
     """Start a new learning session"""
     try:
         user_data = storage_service.load_user_data()
