@@ -3227,7 +3227,7 @@ def start_dm_session():
 
 
 @app.route('/dmapi/chat', methods=['POST'])
-def chat():
+def dm_chat():
     """Process user message and get tutor response"""
     try:
         data = request.json
