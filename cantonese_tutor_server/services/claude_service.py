@@ -1,19 +1,29 @@
 import requests
 import json
 from typing import Optional
-from config import OPENROUTER_API_KEY, OPENROUTER_URL, MODEL_NAME
 
 class ClaudeService:
     def __init__(self):
-        self.api_key = OPENROUTER_API_KEY
-        self.base_url = OPENROUTER_URL
-        self.model = MODEL_NAME
+        self.base_url = "https://openrouter.ai/api/v1/chat/completions"
+        self.model = "anthropic/claude-3.7-sonnet"
+
+
+
+    def _read_bearer_key(self) -> str:
+        try:
+            with open('/var/www/html/api/rfbackend/routerkey.txt', 'r') as f:
+                return f.readline().strip()
+        except FileNotFoundError:
+            raise Exception("API key file not found")
+
         
+    #this is the chat function that sends messages to Claude via OpenRouter
+    
     def chat(self, messages: list, system_prompt: str = "") -> Optional[str]:
         """Send a chat request to Claude via OpenRouter"""
         
         headers = {
-            "Authorization": f"Bearer {self.api_key}",
+            "Authorization": self._read_bearer_key(),
             "Content-Type": "application/json",
             "HTTP-Referer": "https://chinese.eriktamm.com",
             "X-Title": "Cantonese Tutor"

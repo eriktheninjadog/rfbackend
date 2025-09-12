@@ -6,6 +6,7 @@ import boto3
 
 
 def cantonese_text_to_mp3(text: str, output_file: str) -> None:
+    nina = None
     """Convert a string of text to an MP3 file using AWS Polly."""
     session = boto3.Session(region_name='us-east-1')
     polly_client = session.client('polly')
