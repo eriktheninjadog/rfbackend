@@ -2,13 +2,12 @@ import json
 import os
 from datetime import datetime
 from typing import Optional
-from models.user_data import UserData, UserProgress
-from models.task import TaskSession
-from config import USER_DATA_DIR
+from cantonese_tutor_server.models.user_data import UserData, UserProgress
+from cantonese_tutor_server.models.task import TaskSession
 
 class StorageService:
     def __init__(self):
-        self.user_data_dir = USER_DATA_DIR
+        self.user_data_dir = "/var/www/html/api/rfbackend/user_data"
         os.makedirs(self.user_data_dir, exist_ok=True)
         os.makedirs(f"{self.user_data_dir}/interactions", exist_ok=True)
     
