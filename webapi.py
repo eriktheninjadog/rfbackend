@@ -3166,6 +3166,7 @@ import cantonese_tutor_server.services.claude_service as claudeservice
 import cantonese_tutor_server.services.storage_service as storageservice
 import cantonese_tutor_server.services.task_service as taskservice
 import cantonese_tutor_server.models.task as taskmodel
+import cantonese_tutor_server.models.user_data as usermodel
 
 # Initialize services   
 claude_service = claudeservice.ClaudeService()
@@ -3297,7 +3298,7 @@ def complete_task():
         # Load user data and update progress
         user_data = storage_service.load_user_data()
         
-        completed_task = taskmodel.CompletedTask(
+        completed_task = usermodel.CompletedTask(
             task_id=session.task_id,
             completion_date=session.date,
             level=session.level,

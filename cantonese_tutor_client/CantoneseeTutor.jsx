@@ -8,7 +8,7 @@ const CantoneseeTutor = () => {
   const [taskCompleted, setTaskCompleted] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const API_BASE = 'http://localhost:5000/api/dmapi';
+  const API_BASE = 'https://chinese,eriktamm.com/api/dmapi';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
