@@ -2831,7 +2831,7 @@ Start with a natural opener like "喂，你知唔知..." or "我啱啱睇到個�
 
 Here is the article to retell in Cantonese:""" +article_text)
         print("got the news " + chinese)
-        chinese_tokens = textprocessing.tokenize_chinese_text(chinesse)
+        chinese_tokens = textprocessing.split_text(chinese)
         return jsonify({'result': chinese_tokens}), 200
 
     except Exception as e:
