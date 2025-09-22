@@ -171,6 +171,7 @@ class SystemAudioCapture:
     def purge(self):
         """Purge the current audio buffer - """
         try:
+            
             # Create a new empty buffer
             old_size = self.buffer.qsize()
             with self.buffer.mutex:

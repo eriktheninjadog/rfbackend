@@ -15,7 +15,7 @@ def get_top_cnn_articles(limit=20):
     Returns:
         list: A list of dictionaries containing title and URL of top CNN articles.
     """
-    url = "https://www.cnn.com"
+    url = "https://edition.cnn.com/world"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
@@ -40,9 +40,9 @@ def get_top_cnn_articles(limit=20):
             if link_tag and 'href' in link_tag.attrs:
                 link = link_tag['href']
                 if not link.startswith('http'):
-                    link = url + link
-                    
-                articles.append({'title': title, 'url': link})
+                    link = "https://edition.cnn.com" + link
+                if not 'video' in link:
+                    articles.append({'title': title, 'url': link})
         #random.shuffle(articles)
         return articles[:limit]
         
@@ -88,6 +88,8 @@ def get_article_content(url):
         return {'title': None, 'text': None}
 
 
+
+import random
 def get_random_cnn_article():
     """
     Get the top CNN articles and their content.

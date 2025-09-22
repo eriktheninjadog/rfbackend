@@ -2788,15 +2788,50 @@ def managelist():
         return jsonify({'error': str(e)}), 500
     
 import rthknews
+import cnn
 @app.route('/random_cnn_article', methods=['GET'])
 def random_cnn_article():
     try:
-        
-        articles = rthknews.get_rthk_tokenized_news()
-        article = random.choice(articles)
+        article_text = cnn.get_random_cnn_article()
+        #articles = rthknews.get_rthk_tokenized_news()
+        #article = random.choice(articles)
+        api = openrouter.OpenRouterAPI()
+        api.open_router_claude_4_0_sonnet("You are a language expert in Cantonese.","""
+        You are a friendly Hong Kong person explaining a news story to your Cantonese-speaking friend in a casual, natural way. Your task is to retell the given English news article into spoken Hong Kong Cantonese that sounds like everyday conversation.
 
-        return jsonify({'result': article}), 200
-        
+Guidelines:
+
+Language Style:
+
+Use natural, colloquial Hong Kong Cantonese as spoken in daily life
+Write in traditional Chinese characters only (no jyutping or romanization)
+Adopt a warm, engaging tone like you're sharing interesting news with a friend
+Use common Cantonese sentence particles (啦, 㗎, 咋, 呀, etc.) naturally
+Include typical Cantonese expressions and idioms where appropriate
+Content Adaptation:
+
+Retell the article's main news points and context, not translate word-for-word
+Keep all place names in English (e.g., "Washington", "Beijing", "Ukraine")
+Keep technical terms, organization names, and proper nouns in English
+Simplify complex political/economic concepts while maintaining accuracy
+Add brief context for international events that Hong Kong audiences might need
+Focus on the key facts: who, what, when, where, why
+Target Audience:
+
+Intermediate Cantonese learners using comprehensible input method
+Make the language challenging but accessible
+Use varied vocabulary and sentence structures
+Avoid overly complex classical Chinese or formal news language
+Format:
+
+Present as continuous spoken narrative
+Use natural speech rhythms suitable for text-to-speech
+Break into logical speaking segments with appropriate pauses
+Start with a natural opener like "喂，你知唔知..." or "我啱啱睇到個新聞..."
+
+Here is the article to retell in Cantonese:""" +article_text)
+        return jsonify({'result': article_text}), 200
+
     except Exception as e:
         print(f"Error fetching CNN article: {str(e)}")
         return jsonify({'error': str(e)}), 500
