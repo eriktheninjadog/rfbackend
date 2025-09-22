@@ -2796,7 +2796,7 @@ def random_cnn_article():
         #articles = rthknews.get_rthk_tokenized_news()
         #article = random.choice(articles)
         api = openrouter.OpenRouterAPI()
-        chinesse = api.open_router_claude_4_0_sonnet("You are a language expert in Cantonese.","""
+        chinese = api.open_router_claude_4_0_sonnet("You are a language expert in Cantonese.","""
         You are a friendly Hong Kong person explaining a news story to your Cantonese-speaking friend in a casual, natural way. Your task is to retell the given English news article into spoken Hong Kong Cantonese that sounds like everyday conversation.
 
 Guidelines:
