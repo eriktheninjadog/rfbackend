@@ -2796,7 +2796,7 @@ def random_cnn_article():
         #articles = rthknews.get_rthk_tokenized_news()
         #article = random.choice(articles)
         api = openrouter.OpenRouterAPI()
-        api.open_router_claude_4_0_sonnet("You are a language expert in Cantonese.","""
+        chinesse = api.open_router_claude_4_0_sonnet("You are a language expert in Cantonese.","""
         You are a friendly Hong Kong person explaining a news story to your Cantonese-speaking friend in a casual, natural way. Your task is to retell the given English news article into spoken Hong Kong Cantonese that sounds like everyday conversation.
 
 Guidelines:
@@ -2830,7 +2830,9 @@ Break into logical speaking segments with appropriate pauses
 Start with a natural opener like "喂，你知唔知..." or "我啱啱睇到個新聞..."
 
 Here is the article to retell in Cantonese:""" +article_text)
-        return jsonify({'result': article_text}), 200
+        print("got the news " + chinese)
+        chinese_tokens = textprocessing.tokenize_chinese_text(chinesse)
+        return jsonify({'result': chinese_tokens}), 200
 
     except Exception as e:
         print(f"Error fetching CNN article: {str(e)}")
