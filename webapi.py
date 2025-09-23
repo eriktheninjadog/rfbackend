@@ -2202,6 +2202,9 @@ def add_time():
     if not activity_name or not isinstance(milliseconds_to_add, int) or milliseconds_to_add < 0:
         return jsonify({"error": "Invalid input"}), 400
 
+    if milliseconds_to_add > 3600000:
+        return jsonify({"error": "Cannot add more than 1 hour at a time"}), 400
+    
     success = activity_time_tracker.add_time_to_activity(activity_name, milliseconds_to_add)
 
     if success:
