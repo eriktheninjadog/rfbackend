@@ -27,8 +27,12 @@ def add_time_to_activity(activity_name: str, milliseconds_to_add: int) -> bool:
         if not isinstance(milliseconds_to_add, int) or milliseconds_to_add < 0:
             raise ValueError("Milliseconds must be a positive integer")
 
+
+        print("add_time_to_activity("+str(activity_name)+"," + str(milliseconds_to_add) +")")
         
         acctime = get_accumulated_time(activity_name)
+        print("accumulated time = " + str(acctime))
+
        
         if acctime == 0:
             conn = database.get_connection()
