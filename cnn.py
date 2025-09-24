@@ -5,7 +5,7 @@ from newspaper import Article
 #cnn.py
 
 
-def get_top_cnn_articles(limit=20):
+def get_top_cnn_articles(limit=40):
     """
     Get the links to the top CNN articles from their website.
     
@@ -15,7 +15,7 @@ def get_top_cnn_articles(limit=20):
     Returns:
         list: A list of dictionaries containing title and URL of top CNN articles.
     """
-    url = "https://edition.cnn.com/world"
+    url = "https://edition.cnn.com/"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
