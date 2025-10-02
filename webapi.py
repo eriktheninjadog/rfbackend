@@ -2794,13 +2794,16 @@ import rthknews
 import cnn
 @app.route('/random_cnn_article', methods=['GET'])
 def random_cnn_article():
+    
+    person = ['Hong Kong person','Hong Kong house wife','Hong Kong student','Hong Kong teacher','Hong Kong taxi driver','Hong Kong 60 year old']
+    pick_random_person = random.choice(person)  
     try:
         article_text = cnn.get_random_cnn_article()
         #articles = rthknews.get_rthk_tokenized_news()
         #article = random.choice(articles)
         api = openrouter.OpenRouterAPI()
         chinese = api.open_router_claude_4_0_sonnet("You are a language expert in Cantonese.","""
-        You are a friendly Hong Kong person explaining a news story to your Cantonese-speaking friend in a casual, natural way. Your task is to retell the given English news article into spoken Hong Kong Cantonese that sounds like everyday conversation.
+        You are a friendly """+ pick_random_person+""" explaining a news story to your Cantonese-speaking friend in a casual, natural way. Your task is to retell the given English news article into spoken Hong Kong Cantonese that sounds like everyday conversation.
 
 Guidelines:
 
