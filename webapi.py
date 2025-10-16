@@ -345,6 +345,7 @@ def get_stored_value():
     storage     = request.json['storage']  
     key         = request.json['key']
     value       = api.read_value_from_dictionary_file(storage,key)
+    print("stored value gotten from server: " + str(value))
     return jsonify({'result':value})
 
 
