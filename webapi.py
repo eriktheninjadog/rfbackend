@@ -2234,9 +2234,9 @@ def load_session_endpoint():
     """
     try:
         data = load_chat_session_from_file()
-        if not data:
-            return jsonify({"error": "no saved session"}), 404
-
+        if data:
+            return jsonify({"result": "loaded", "session_id": data.session_id}), 200
+            
         sid = data.get('session_id') or str(uuid.uuid4())
         # recreate SessionManager and populate fields
         sm = SessionManager(sid)
