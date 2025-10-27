@@ -2196,7 +2196,7 @@ def save_chat_session(session_id):
         "messages": list(sess.messages)  # deque -> list of dicts
     }
     with open(LAST_CHAT_PATH, 'w', encoding='utf-8') as f:
-        json.dump(out, f, ensure_ascii=False, indent=2)
+        json.dump(sess, f, ensure_ascii=False, indent=2)
     return True
 
 def load_chat_session_from_file():
