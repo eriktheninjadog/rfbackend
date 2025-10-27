@@ -2123,21 +2123,15 @@ def is_chinese(character):
 
 @app.route('/chat', methods=['POST'])
 def chat():
+    global last_loaded_session
     data = request.json
-    try:
-        session = sessions.get(data['session_id'])
-    except KeyError:
-        session = load_chat_session_from_file()
-    
+    session = sessions.get(data['session_id'])
     if not session:
-        session = load_chat_session_from_file()
-        if not session:
-            return jsonify({"error": "Invalid session"}), 404
-    
+        load_chat_session_from_file()
+        session = last_loaded_session    
     session.add_message("user", data['message'])
-    save_chat_session(session.session_id)
-    
-    
+    save_session_endpoint()
+        
     # Call OpenRouter API
     headers = {
         "Authorization": read_bearer_key(),
@@ -2162,7 +2156,7 @@ def chat():
 
         # save last session automatically after assistant reply
         try:
-            save_chat_session(session.session_id)
+            save_session_endpoint()
         except Exception:
             # don't break chat on save errors
             pass
@@ -2196,7 +2190,7 @@ def save_chat_session(session_id):
         "messages": list(sess.messages)  # deque -> list of dicts
     }
     with open(LAST_CHAT_PATH, 'w', encoding='utf-8') as f:
-        json.dump(sess, f, ensure_ascii=False, indent=2)
+        json.dump(out, f, ensure_ascii=False, indent=2)
     return True
 
 def load_chat_session_from_file():
@@ -2207,6 +2201,7 @@ def load_chat_session_from_file():
         return None
     with open(LAST_CHAT_PATH, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    
     return data
 
 @app.route('/save_session', methods=['POST'])
@@ -2225,8 +2220,11 @@ def save_session_endpoint():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+lastloaded_session = None
+
 @app.route('/load_session', methods=['POST'])
 def load_session_endpoint():
+    global lastloaded_session
     """
     Load the last saved session from LAST_CHAT_PATH into memory.
     If session_id exists in file it will recreate/overwrite sessions[session_id].
@@ -2234,9 +2232,9 @@ def load_session_endpoint():
     """
     try:
         data = load_chat_session_from_file()
-        if data:
-            return jsonify({"result": "loaded", "session_id": data.session_id}), 200
-            
+        if not data:
+            return jsonify({"error": "no saved session"}), 404
+
         sid = data.get('session_id') or str(uuid.uuid4())
         # recreate SessionManager and populate fields
         sm = SessionManager(sid)
@@ -2248,6 +2246,7 @@ def load_session_endpoint():
         sm.messages = deque(loaded_messages, maxlen=20)
 
         sessions[sid] = sm
+        last_loaded_session = sm
         return jsonify({"result": "loaded", "session_id": sid}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
