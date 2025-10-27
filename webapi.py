@@ -1879,6 +1879,8 @@ sessions = {}
 
 #I want to add the following
 class SessionManager:
+    
+        
     def __init__(self, session_id):
         self.session_id = session_id
         self.messages = deque(maxlen=20)
@@ -2111,15 +2113,20 @@ def is_chinese(character):
     return '\u4E00' <= character <= '\u9FFF'
 
 
+
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
     session = sessions.get(data['session_id'])
     
     if not session:
-        return jsonify({"error": "Invalid session"}), 404
+        session = load_chat_session_from_file()
+        if not session:
+            return jsonify({"error": "Invalid session"}), 404
     
     session.add_message("user", data['message'])
+    save_chat_session(session.session_id)
+    
     
     # Call OpenRouter API
     headers = {
@@ -2142,6 +2149,14 @@ def chat():
         session.add_message("assistant", ai_message)
 
         database.add_entry(prompt="prompt",system_prompt=session.system_prompt,reply=ai_message)
+
+        # save last session automatically after assistant reply
+        try:
+            save_chat_session(session.session_id)
+        except Exception:
+            # don't break chat on save errors
+            pass
+
         return jsonify({"response": ai_message})
     else:
        print(f"API call failed with status code {response.status_code}")
@@ -2150,6 +2165,82 @@ def chat():
        print(payload)
     
     return jsonify({"error": "API call failed"}), 500
+
+
+# -- Persist/load helpers and endpoints for last chat session --
+LAST_CHAT_PATH = '/var/www/html/mp3/lastchatsession.json'
+
+def save_chat_session(session_id):
+    """
+    Save a session (by id) to LAST_CHAT_PATH as JSON.
+    Overwrites the file with the last saved session.
+    """
+    sess = sessions.get(session_id)
+    if not sess:
+        raise ValueError("Invalid session id")
+
+    out = {
+        "session_id": sess.session_id,
+        "model": sess.model,
+        "system_prompt": sess.system_prompt,
+        "messages": list(sess.messages)  # deque -> list of dicts
+    }
+    with open(LAST_CHAT_PATH, 'w', encoding='utf-8') as f:
+        json.dump(out, f, ensure_ascii=False, indent=2)
+    return True
+
+def load_chat_session_from_file():
+    """
+    Load session data from LAST_CHAT_PATH and return the dict or None.
+    """
+    if not os.path.exists(LAST_CHAT_PATH):
+        return None
+    with open(LAST_CHAT_PATH, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    return data
+
+@app.route('/save_session', methods=['POST'])
+def save_session_endpoint():
+    """
+    POST JSON: { "session_id": "<id>" }
+    Saves the named session to LAST_CHAT_PATH.
+    """
+    data = request.json
+    sid = data.get('session_id')
+    if not sid:
+        return jsonify({"error": "session_id required"}), 400
+    try:
+        save_chat_session(sid)
+        return jsonify({"result": "saved"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/load_session', methods=['POST'])
+def load_session_endpoint():
+    """
+    Load the last saved session from LAST_CHAT_PATH into memory.
+    If session_id exists in file it will recreate/overwrite sessions[session_id].
+    Returns the session_id loaded.
+    """
+    try:
+        data = load_chat_session_from_file()
+        if not data:
+            return jsonify({"error": "no saved session"}), 404
+
+        sid = data.get('session_id') or str(uuid.uuid4())
+        # recreate SessionManager and populate fields
+        sm = SessionManager(sid)
+        sm.update_model(data.get('model', sm.model))
+        if 'system_prompt' in data and data['system_prompt']:
+            sm.update_system_prompt(data['system_prompt'])
+        # replace messages with loaded list (keep deque maxlen)
+        loaded_messages = data.get('messages', [])
+        sm.messages = deque(loaded_messages, maxlen=20)
+
+        sessions[sid] = sm
+        return jsonify({"result": "loaded", "session_id": sid}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 
