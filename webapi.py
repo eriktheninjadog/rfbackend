@@ -2100,9 +2100,16 @@ def index():
 
 @app.route('/session', methods=['POST'])
 def create_session():
+    "some changes here bro"
     if not sessions:
-        session_id = str(uuid.uuid4())
-        sessions[session_id] = SessionManager(session_id)
+        session = load_chat_session_from_file()
+        if not session:
+            session_id = str(uuid.uuid4())
+            sessions[session_id] = SessionManager(session_id)
+        else:
+            print("loaded session from file")
+            sessions[session.session_id] = session
+            session_id = session.session_id
         return jsonify({"session_id": session_id})
     else:
         return jsonify({"session_id": next(iter(sessions))})
