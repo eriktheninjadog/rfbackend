@@ -2124,7 +2124,10 @@ def is_chinese(character):
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
-    session = sessions.get(data['session_id'])
+    try:
+        session = sessions.get(data['session_id'])
+    except KeyError:
+        session = load_chat_session_from_file()
     
     if not session:
         session = load_chat_session_from_file()
