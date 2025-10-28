@@ -2124,7 +2124,27 @@ def is_chinese(character):
 @app.route('/chat', methods=['POST'])
 def chat():
     global last_loaded_session
-    data = request.json
+    data = request.json or {}
+    if 'session_id' not in data:
+        # Try to load last saved session from file and put it into sessions
+        loaded = load_chat_session_from_file()
+        if loaded:
+            sid = loaded.get('session_id') or str(uuid.uuid4())
+            sm = SessionManager(sid)
+            sm.update_model(loaded.get('model', sm.model))
+            if 'system_prompt' in loaded and loaded['system_prompt']:
+                sm.update_system_prompt(loaded['system_prompt'])
+            loaded_messages = loaded.get('messages', [])
+            sm.messages = deque(loaded_messages, maxlen=20)
+            sessions[sid] = sm
+            last_loaded_session = sm
+            data['session_id'] = sid
+        else:
+            # create a fresh session if nothing on disk
+            sid = str(uuid.uuid4())
+            sessions[sid] = SessionManager(sid)
+            data['session_id'] = sid
+        
     session = sessions.get(data['session_id'])
     if not session:
         load_chat_session_from_file()
