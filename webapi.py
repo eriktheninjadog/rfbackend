@@ -1452,13 +1452,13 @@ def add_subtitles():
         subtitles   = request.json['subtitles']
         returntext = ''
         for s in subtitles:
-            #long_running_adding_subtitle_chunk(s)
-            
+            #long_running_adding_subtitle_chunk(s)            
             tradchinese = textprocessing.make_sure_traditional(s)
             chinesetokens = textprocessing.split_text(tradchinese)
+            result = '<h3>' + s + '</h3><br/>\n'
             for c in chinesetokens:
                     result = api.dictionary_lookup(c)
-                    returntext = returntext + c + ' ' + str(result) + '<br/>\n'            
+                    returntext = returntext + c + ' ' + result.jyutping + '  '+ result.definition + '<br/>\n'
         return returntext
     except Exception as e:
         return str(e)
