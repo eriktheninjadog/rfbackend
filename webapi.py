@@ -1457,7 +1457,7 @@ def add_subtitles():
             tradchinese = textprocessing.make_sure_traditional(s)
             chinesetokens = textprocessing.split_text(tradchinese)
             for c in chinesetokens:
-                    result = dictionarylookup(c)
+                    result = api.dictionary_lookup(c)
                     returntext = returntext + c + ' ' + str(result) + '<br/>\n'            
         return returntext
     except Exception as e:
