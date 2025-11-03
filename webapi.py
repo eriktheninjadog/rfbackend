@@ -1445,6 +1445,26 @@ def download_dictionary():
         return jsonify({'result':None,"reason":str(e)})
 
 
+
+@app.route('/add_subtitles', methods=['POST'])
+def add_subtitles():
+    try:
+        subtitles   = request.json['subtitles']
+        returntext = ''
+        for s in subtitles:
+            #long_running_adding_subtitle_chunk(s)
+            
+            tradchinese = textprocessing.make_sure_traditional(s)
+            chinesetokens = textprocessing.split_text(tradchinese)
+            for c in chinesetokens:
+                    result = dictionarylookup(c)
+                    returntext = returntext + c + ' ' + str(result) + '<br/>\n'            
+        return returntext
+    except Exception as e:
+        return str(e)
+    
+
+
 @app.route('/explain_sentence', methods=['POST'])
 def explain_sentence():
     try:
