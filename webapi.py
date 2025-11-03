@@ -1458,7 +1458,8 @@ def add_subtitles():
             result = '<h3>' + s + '</h3><br/>\n'
             for c in chinesetokens:
                     result = api.dictionary_lookup(c)
-                    returntext = returntext + c + ' ' + result.jyutping + '  '+ result.definition + '<br/>\n'
+                    if result != None:
+                        returntext = returntext + c + ' ' + result.jyutping + '  '+ result.definition + '<br/>\n'
         return returntext
     except Exception as e:
         return str(e)
