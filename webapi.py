@@ -1451,16 +1451,26 @@ def add_subtitles():
     try:
         subtitles   = request.json['subtitles']
         returntext = ''
+        plaintext = ''
         for s in subtitles:
             #long_running_adding_subtitle_chunk(s)            
             tradchinese = textprocessing.make_sure_traditional(s)
             chinesetokens = textprocessing.split_text(tradchinese)
             returntext = returntext  + '<h3>' + str(s) + '</h3><br/>\n'
+            plaintext = plaintext + s 
             print("Subtitle "+ str(s))
             for c in chinesetokens:
                     result = api.dictionary_lookup(c)
                     if result != None:
                         returntext = returntext + c + ' ' + str(result.jyutping) + '  '+ str(result.definition) + '<br/>\n'
+            
+            safe_sub = 'sub_'
+            filename = f"{safe_sub}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+            os.makedirs('/var/www/html/texts', exist_ok=True)
+            filepath = os.path.join('/var/www/html/texts', filename)
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(plaintext)
+            returntext += f"\nSaved to {filename}"
         return returntext
     except Exception as e:
         return str(e)
