@@ -290,7 +290,7 @@ class CharacterCache:
 
 
 def dictionary_lookup(word):
-    ret = str(database.find_word(word))
+    ret = database.find_word(word)
     if len(word) == 1:
         cc = CharacterCache()
         if cc.has(word):
