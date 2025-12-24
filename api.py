@@ -295,7 +295,7 @@ def dictionary_lookup(word):
         cc = CharacterCache()
         if cc.has(word):
             log.log("Found character in cache: " + word)
-            ret = ret + cc.get(word)
+            ret['definition'] = ret['definition'] +cc.get(word)
     return ret 
 
 #changed to numbered
