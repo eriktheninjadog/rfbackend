@@ -250,6 +250,7 @@ def get_imported_texts():
     return database.get_cws_list_by_status(constants.CWS_STATUS_VISIBLE)
 
 
+import os
 
 class CharacterCache:
     """Handles caching of character descriptions to avoid repeated API calls."""
