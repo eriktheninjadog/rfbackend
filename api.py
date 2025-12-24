@@ -249,8 +249,53 @@ def unanswered_questions():
 def get_imported_texts():
     return database.get_cws_list_by_status(constants.CWS_STATUS_VISIBLE)
 
+
+
+class CharacterCache:
+    """Handles caching of character descriptions to avoid repeated API calls."""
+    
+    def __init__(self, cache_file="/var/www/html/texts/char_cache.json"):
+        self.cache_file = cache_file
+        self.cache = self._load_cache()
+    
+    def _load_cache(self):
+        """Load cache from file, return empty dict if file doesn't exist or is invalid."""
+        if os.path.exists(self.cache_file):
+            try:
+                with open(self.cache_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except (json.JSONDecodeError, ValueError):
+                return {}
+        return {}
+    
+    def _save_cache(self):
+        """Save cache to file."""
+        with open(self.cache_file, 'w', encoding='utf-8') as f:
+            json.dump(self.cache, f, ensure_ascii=False, indent=4)
+    
+    def get(self, character):
+        """Get character description from cache."""
+        return self.cache.get(character)
+    
+    def set(self, character, description):
+        """Store character description in cache and save to file."""
+        self.cache[character] = description
+        self._save_cache()
+    
+    def has(self, character):
+        """Check if character is in cache."""
+        return character in self.cache
+
+
+
 def dictionary_lookup(word):
-    return database.find_word(word)
+    ret = str(database.find_word(word))
+    if len(word) == 1:
+        cc = CharacterCache()
+        if cc.has(word):
+            log.log("Found character in cache: " + word)
+            ret = ret + cc.get(word)
+    return ret 
 
 #changed to numbered
 def create_verify_challenge(text):
