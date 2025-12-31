@@ -48,8 +48,8 @@ current_side = 'front'  # 'front' or 'back'
 deck_name = None
 deck_metadata = None
 
-@app.route('/flashcard', methods=['GET'])
-def flashcard():
+@app.route('/flashcard2', methods=['GET'])
+def flashcard2():
     global current_deck, current_card_index, current_side, deck_name, deck_metadata
     
     command = request.args.get('command')
