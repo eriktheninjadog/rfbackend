@@ -67,7 +67,7 @@ def flashcard2():
             if not os.path.exists(deck_path):
                 return jsonify({'error': f'Deck "{name}" not found'}), 404
             
-            with open(deck_path, 'r') as f:
+            with open(deck_path, 'r', encoding='utf-8') as f:
                 deck_data = json.load(f)
             
             # Extract cards array from the new format
