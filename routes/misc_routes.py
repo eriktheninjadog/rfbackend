@@ -13,7 +13,6 @@ import log
 import constants
 import newscrawler
 import poe
-import homecommand
 import config
 import stockmanager
 import dbconfig
@@ -236,18 +235,6 @@ def commandstream():
             yield "data: ping\n\n"
     
     return Response(generate(), mimetype='text/plain')
-
-
-@bp.route('/executehomecommand', methods=['POST'])
-def executehomecommand():
-    command = request.json['command']
-    directory = request.json['directory']
-    secret = config.get_config_value('HOMECOMMANDSECRET')
-    if command.find(secret) == -1:
-        return jsonify({'result': 'error'})
-    command = command.replace(secret, '')
-    homecommand.run_command_on_remote(command, directory)
-    return jsonify({'result': 'ok'})
 
 
 @bp.route('/stockupdate', methods=['POST'])
