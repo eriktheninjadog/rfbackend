@@ -5,6 +5,8 @@ import subprocess
 import textprocessing
 import database
 import cachemanagement
+import random
+import mp3helper
 from flask import Blueprint, request, jsonify, send_file
 
 bp = Blueprint('audio', __name__, url_prefix='')
@@ -36,29 +38,9 @@ def pick_random_artice_file(directory, extension):
     return files[0]
 
 
-def read_audio_time():
-    """Read audio time from file"""
-    try:
-        f = open('/var/www/html/scene/audiotime.txt', "r", encoding='utf-8')
-        js = f.read()
-        f.close()
-        jsonload = json.loads(js)
-        thetime = jsonload['totaltime']
-        return thetime
-    except:
-        return 0
-    
-
-def write_audio_time(totaltime):
-    """Write audio time to file"""
-    f = open('/var/www/html/scene/audiotime.txt', "w", encoding='utf-8')
-    db = {'totaltime': totaltime}
-    f.write(json.dumps(db))
-    f.close()
-
-
 @bp.route('/audioexample', methods=['GET'])
 def get_audio():
+    """Get random audio file"""
     # Path to the MP3 file
     mp3_file = get_random_file('/var/www/html/mp3')
     # Return the MP3 file
@@ -67,6 +49,7 @@ def get_audio():
 
 @bp.route('/audioexample2', methods=['GET', 'POST'])
 def get_audio2():
+    """Get audio file with hint and timing data"""
     # Path to the MP3 file
     mp3_file = pick_random_file('/var/www/html/mp3', 'total', 'mp3')
     # Return the MP3 file
@@ -96,6 +79,7 @@ def get_audio2():
 
 @bp.route('/audioexample3', methods=['GET', 'POST'])
 def get_audio3():
+    """Get article audio file"""
     # Path to the MP3 file
     mp3_file = pick_random_artice_file('/var/www/html/mp3', 'mp3')
     # Return the MP3 file
@@ -112,26 +96,32 @@ def get_audio3():
 
 @bp.route('/remove_audio', methods=['POST'])
 def remove_audio():
+    """Remove audio file and associated webm"""
     # Path to the MP3 file
     mp3_file = request.json['audiofile']
     basename = os.path.basename(mp3_file)
-    os.unlink('/var/www/html/mp3/' + mp3_file)
-    os.unlink('/opt/watchit/' + basename + ".webm")
-    return jsonify({'result': 'ok'})
+    try:
+        os.unlink('/var/www/html/mp3/' + mp3_file)
+        os.unlink('/opt/watchit/' + basename + ".webm")
+        return jsonify({'result': 'ok'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @bp.route('/addaudiotime', methods=['POST'])
 def addaudiotime():
+    """Add audio time tracking"""
     amount = request.json['amount']
     # try to read added time
     totaltime = read_audio_time()
     totaltime += amount
     write_audio_time(totaltime)
     return jsonify({'result': totaltime})
-    
+
 
 @bp.route('/addoutputexercise', methods=['POST'])
 def addoutputexercise():
+    """Add output exercise data"""
     english = request.json['english']
     chinesetokens = request.json['chinesetokens']
     if len(chinesetokens) < 2:
@@ -148,6 +138,7 @@ def addoutputexercise():
 
 @bp.route('/addlisteningexercise', methods=['POST'])
 def addlisteningexercise():
+    """Add listening exercise data"""
     sentence = request.json['sentence']
     chinesetokens = request.json['tokens']
     if len(chinesetokens) < 2:
@@ -159,11 +150,53 @@ def addlisteningexercise():
 
 @bp.route('/gettotalaudiotime', methods=['POST'])
 def gettotalaudiotime():
+    """Get total audio time"""
     total = database.get_total_audio_time()
     return jsonify({'result': total})
 
 
 @bp.route('/gettotaloutputtime', methods=['POST'])
 def gettotaloutputtime():
+    """Get total output time"""
     total = database.get_total_output_time()
     return jsonify({'result': total})
+
+
+def read_audio_time():
+    """Read audio time from file"""
+    try:
+        f = open('/var/www/html/scene/audiotime.txt', "r", encoding='utf-8')
+        js = f.read()
+        f.close()
+        jsonload = json.loads(js)
+        thetime = jsonload['totaltime']
+        return thetime
+    except:
+        return 0
+    
+
+def write_audio_time(totaltime):
+    """Write audio time to file"""
+    f = open('/var/www/html/scene/audiotime.txt', "w", encoding='utf-8')
+    db = {'totaltime': totaltime}
+    f.write(json.dumps(db))
+    f.close()
+
+
+def get_next_spoken_article(mp3_file):
+    """Get the next spoken article file"""
+    print(f"called next spoken article {mp3_file}")
+    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3')]    
+    files = sorted(files, key=lambda f: os.path.getctime(os.path.join('/var/www/html/mp3', f)))
+    nrfiles = len(files)
+    idx = -1
+    for i in range(nrfiles):
+        print(files[i])
+        if files[i].find(mp3_file) != -1:
+            idx = i
+    if idx != -1 and idx < nrfiles - 1:
+        return files[idx + 1]
+    else:
+        return files[random.randint(0, nrfiles - 1)]
+
+

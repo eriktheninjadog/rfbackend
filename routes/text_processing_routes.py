@@ -61,19 +61,38 @@ def updatecws():
     return jsonify({'result': 'ok'})
 
 
+@bp.route('/generate_text', methods=['POST'])
+def generate_text():
+    """Generate text using AI"""
+    text = request.json['text']
+    api.create_generative_text(text)
+    return jsonify({'result': 'OK'})
+
+
 @bp.route('/deletecws', methods=['POST'])
 def deletecws():
+    """Delete CWS by ID"""
     cwsid = request.json['cwsid']
     api.deletecwsbyid(cwsid)
-    return jsonify({'result': 'ok'})
+    return jsonify({'result': 'OK'})
 
 
 @bp.route('/changecwsstatus', methods=['POST'])
 def changecwsstatus():
+    """Change CWS status"""
     cwsid = request.json['cwsid']
     status = request.json['status']
     api.changecwsstatusbyid(cwsid, status)
-    return jsonify({'result': 'ok'})
+    return jsonify({'result': 'OK'})
+
+
+@bp.route('/simplifycws', methods=['POST'])
+def simplifycws():
+    """Simplify CWS text"""
+    cwsid = request.json['cwsid']
+    import batchprocessing
+    batchprocessing.simplify_cws(cwsid)
+    return jsonify({'result': 'OK'})
 
 
 @bp.route('/getimportedtexts', methods=['POST'])

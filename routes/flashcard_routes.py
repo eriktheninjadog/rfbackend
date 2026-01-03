@@ -3,7 +3,7 @@ import os
 import json
 from flask import Blueprint, request, jsonify
 
-bp = Blueprint('flashcard', __name__, url_prefix='/flashcard')
+bp = Blueprint('flashcard', __name__, url_prefix='')
 
 # Flashcard state variables
 current_deck = []
@@ -13,7 +13,7 @@ deck_name = None
 deck_metadata = None
 
 
-@bp.route('/2', methods=['GET'])
+@bp.route('/flashcard2', methods=['GET'])
 def flashcard2():
     global current_deck, current_card_index, current_side, deck_name, deck_metadata
     

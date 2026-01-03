@@ -14,6 +14,7 @@ bp = Blueprint('translation', __name__, url_prefix='')
 
 @bp.route("/translatechinese", methods=["POST"])
 def translatechinese():
+    """Translate Chinese text to English using AWS Translate"""
     os.environ["AWS_CONFIG_FILE"] = "/etc/aws/credentials"
     print("Translate To English")
     translate = boto3.client(service_name='translate', region_name='ap-southeast-1', use_ssl=True)
@@ -31,6 +32,7 @@ def translatechinese():
 
 @bp.route('/cleanandtranslate', methods=['POST'])
 def cleanandtranslate():
+    """Clean and translate text using AI"""
     robot = "Claude-instant-100k"
     log.log("cleanandtranslate")
     text = request.json['text']

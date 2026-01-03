@@ -13,7 +13,12 @@ from routes import (
     example_routes,
     cache_routes,
     utility_routes,
-    misc_routes
+    misc_routes,
+    session_routes,
+    study_routes,
+    queue_routes,
+    game_routes,
+    dmapi_routes
 )
 
 
@@ -33,6 +38,11 @@ def create_app():
     app.register_blueprint(cache_routes.bp)
     app.register_blueprint(utility_routes.bp)
     app.register_blueprint(misc_routes.bp)
+    app.register_blueprint(session_routes.bp)
+    app.register_blueprint(study_routes.bp)
+    app.register_blueprint(queue_routes.bp)
+    app.register_blueprint(game_routes.bp)
+    app.register_blueprint(dmapi_routes.bp)
     
     return app
 
