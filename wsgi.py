@@ -4,8 +4,10 @@ import flask_graphql
 from flask_graphql import GraphQLView
 import graphene
 
-from webapi import app
+from app import create_app
 import database
+
+app = create_app()
 
 application = app
 
