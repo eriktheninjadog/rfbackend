@@ -20,6 +20,10 @@ import MessageAnnouncer
 from threading import Thread
 from flask import Blueprint, request, jsonify, Response
 
+import textprocessing
+import openrouter
+import cnn
+
 bp = Blueprint('misc', __name__, url_prefix='')
 
 
@@ -322,6 +326,57 @@ def videosegment():
     
     except Exception as e:
         print(f"Error processing video segment: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@bp.route('/random_cnn_article', methods=['GET'])
+def random_cnn_article():
+    """Get random CNN article retold in Cantonese"""
+    person = ['Hong Kong person','Hong Kong house wife','Hong Kong student','Hong Kong teacher','Hong Kong taxi driver','Hong Kong 60 year old']
+    pick_random_person = random.choice(person)  
+    try:
+        article_text = cnn.get_random_cnn_article()
+        api = openrouter.OpenRouterAPI()
+        chinese = api.open_router_claude_4_0_sonnet("You are a language expert in Cantonese.","""
+        You are a friendly """+ pick_random_person+""" explaining a news story to your Cantonese-speaking friend in a casual, natural way. Your task is to retell the given English news article into spoken Hong Kong Cantonese that sounds like everyday conversation.
+
+Guidelines:
+
+Language Style:
+
+Use natural, colloquial Hong Kong Cantonese as spoken in daily life
+Write in traditional Chinese characters only (no jyutping or romanization)
+Adopt a warm, engaging tone like you're sharing interesting news with a friend
+Use common Cantonese sentence particles (啦, 㗎, 咋, 呀, etc.) naturally
+Include typical Cantonese expressions and idioms where appropriate
+Content Adaptation:
+
+Retell the article's main news points and context, not translate word-for-word
+Keep all place names in English (e.g., "Washington", "Beijing", "Ukraine")
+Keep technical terms, organization names, and proper nouns in English
+Simplify complex political/economic concepts while maintaining accuracy
+Add brief context for international events that Hong Kong audiences might need
+Focus on the key facts: who, what, when, where, why
+Target Audience:
+
+Intermediate Cantonese learners using comprehensible input method
+Make the language challenging but accessible
+Use varied vocabulary and sentence structures
+Avoid overly complex classical Chinese or formal news language
+Format:
+
+Present as continuous spoken narrative
+Use natural speech rhythms suitable for text-to-speech
+Break into logical speaking segments with appropriate pauses
+Start with a natural opener like "喂，你知唔知..." or "我啱啱睇到個新聞..."
+
+Here is the article to retell in Cantonese:""" +article_text)
+        print("got the news " + chinese)
+        chinese_tokens = textprocessing.split_text(chinese)
+        return jsonify({'result': chinese_tokens}), 200
+
+    except Exception as e:
+        print(f"Error fetching CNN article: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
