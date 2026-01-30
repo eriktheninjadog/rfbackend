@@ -183,6 +183,66 @@ def write_audio_time(totaltime):
     f.close()
 
 
+@bp.route('/getspokenarticles', methods=['POST'])
+def getspokenarticles():
+    """Get list of all spoken articles"""
+    files = [file for file in os.listdir('/var/www/html/mp3') if file.endswith('mp3')]    
+    files = sorted(files, key=lambda f: os.path.getctime(os.path.join('/var/www/html/mp3', f)))
+    timefiles = []
+    for f in files:
+        timefiles.append('/var/www/html/mp3/'+f)
+    files.append(mp3helper.format_duration(mp3helper.get_total_mp3_duration(timefiles)))
+    return jsonify({'result': files})
+
+
+@bp.route('/getspokenarticle', methods=['POST'])
+def getspokenarticle():    
+    """Get a specific spoken article with its text/hints"""
+    # Path to the MP3 file
+    mp3_file = request.json['mp3file']
+    srt_file_path = None    
+    basename = os.path.basename(mp3_file)
+    if request.json['next'] == True:
+        mp3_file = get_next_spoken_article(mp3_file)
+                
+    hint_file = mp3_file + '.hint.json'
+    if os.path.exists('/var/www/html/mp3/'+hint_file):
+        f = open('/var/www/html/mp3/'+hint_file,'r',encoding='utf-8')
+        chitext = f.read()
+        f.close()
+        chiret = json.loads(chitext)
+    else:
+        srtfile = basename.replace(".mp3",".srt")
+        fullsrtfile = '/opt/watchit/' + srtfile
+        if os.path.exists(fullsrtfile):
+            f = open(fullsrtfile,'r',encoding='utf-8')
+            chitext = f.read()
+            chiret = textprocessing.split_text(chitext)
+            print("loaded srt file " + fullsrtfile)
+            srt_file_path = fullsrtfile
+        else:
+            fullsrtfile = '/var/www/html/mp3/' + basename + '.srt'
+            print("full srt file " + fullsrtfile)
+            if os.path.exists(fullsrtfile):
+                f = open(fullsrtfile,'r',encoding='utf-8')
+                chitext = f.read()
+                chiret = textprocessing.split_text(chitext)
+                print("loaded srt file " + fullsrtfile)
+                srt_file_path = fullsrtfile
+            else:
+                chiret = ['no','chinese','to','\n','be','found','!']    
+    allhint_file = mp3_file + '.allhint.json'        
+    if os.path.exists('/var/www/html/mp3/'+allhint_file):
+        f = open('/var/www/html/mp3/'+allhint_file,'r',encoding='utf-8')
+        allchitext = f.read()
+        f.close()
+        allchiret = json.loads(allchitext)
+    else:
+        allchiret = None
+    print(srt_file_path)
+    return jsonify({'result':{'filepath':mp3_file,'tokens':chiret,'extendedtokens':allchiret,'srtpath':srt_file_path}})
+
+
 def get_next_spoken_article(mp3_file):
     """Get the next spoken article file"""
     print(f"called next spoken article {mp3_file}")
