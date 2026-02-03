@@ -4,7 +4,7 @@ import json
 import time
 import uuid
 import openrouter
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 
 bp = Blueprint('message', __name__, url_prefix='')
 
@@ -124,3 +124,27 @@ def feed_back_prompt():
     except Exception as e:
         print(f"Error processing feedback: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/stream')
+def stream():
+    """Server-sent events stream for real-time message delivery"""
+    def event_stream():
+        empty_count = 0
+        while True:
+            # Wait for a message to be available in the global queue
+            message = global_message.dequeue()
+            
+            # If we got a message, yield it in SSE format
+            if message:
+                yield f"data: {message}\n\n"
+            else:
+                # No message available yet, wait a bit before checking again
+                time.sleep(0.5)
+                empty_count += 1
+                if empty_count > 60:  # If no messages for a while, ping
+                    empty_count = 0                    
+                    yield "data: {\"type\":\"ping\"}\n\n"
+
+    # Return a streaming response with the correct mimetype
+    return Response(event_stream(), mimetype='text/event-stream')
