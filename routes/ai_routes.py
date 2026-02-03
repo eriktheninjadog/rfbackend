@@ -222,3 +222,24 @@ def ai_anything():
     except Exception as e:
         return jsonify({'result': None, "reason": str(e)})
 
+
+@bp.route('/ask_claude', methods=['POST'])
+def ask_claude():
+    """Ask Claude AI a question"""
+    try:
+        data = request.json
+        question = data.get('question')
+        
+        if not question:
+            return jsonify({'error': 'Question parameter is required'}), 400
+        
+        import openrouter
+        api = openrouter.OpenRouterAPI()
+        result = api.open_router_claude_3_7_sonnet("You are a helpful assistant.", question)
+        
+        return jsonify({'result': result}), 200
+    
+    except Exception as e:
+        print(str(e))
+        return jsonify({'error': str(e)}), 500
+

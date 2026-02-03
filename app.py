@@ -18,7 +18,8 @@ from routes import (
     study_routes,
     queue_routes,
     game_routes,
-    dmapi_routes
+    dmapi_routes,
+    message_routes
 )
 
 
@@ -43,6 +44,7 @@ def create_app():
     app.register_blueprint(queue_routes.bp)
     app.register_blueprint(game_routes.bp)
     app.register_blueprint(dmapi_routes.bp)
+    app.register_blueprint(message_routes.bp)
     
     return app
 
