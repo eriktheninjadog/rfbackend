@@ -22,7 +22,7 @@ from flask import Blueprint, request, jsonify, Response
 
 import textprocessing
 import openrouter
-import cnn
+import cnn  
 
 bp = Blueprint('misc', __name__, url_prefix='')
 
