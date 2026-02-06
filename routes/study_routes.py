@@ -1,6 +1,9 @@
 """Study progress and goals routes blueprint"""
 import activity_time_tracker
 import database
+import openrouter
+import json
+import requests
 from flask import Blueprint, request, jsonify
 
 bp = Blueprint('study', __name__, url_prefix='')
@@ -80,3 +83,110 @@ def getwritingtime():
         return jsonify({'result': 'writing_time_data'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@bp.route('/llm_query', methods=['POST'])
+def llm_query():
+    """Generic LLM API call endpoint"""
+    try:
+        data = request.get_json()
+        
+        # Validate required parameters
+        if not data:
+            return jsonify({'error': 'No JSON data provided'}), 400
+            
+        model = data.get('model')
+        prompt = data.get('prompt')
+        
+        if not model or not prompt:
+            return jsonify({'error': 'model and prompt are required'}), 400
+        
+        # Extract optional parameters
+        system_message = data.get('system_message', '')
+        temperature = data.get('temperature', 0.7)
+        max_tokens = data.get('max_tokens', 1000)
+        session_id = data.get('session_id')
+        clear_history = data.get('clear_history', False)
+        response_format = data.get('response_format', 'text')
+        metadata = data.get('metadata', {})
+        
+        # Initialize OpenRouter API
+        api = openrouter.OpenRouterAPI()
+        
+        # Handle session management if session_id is provided
+        conversation_key = f"llm_session_{session_id}" if session_id else None
+        
+        if conversation_key and clear_history:
+            # Clear session history if requested
+            # Note: This is a placeholder - implement actual session clearing based on your storage
+            pass
+        
+        # Build messages array
+        messages = []
+        if system_message:
+            messages.append({"role": "system", "content": system_message})
+        
+        # If session handling is needed, load conversation history here
+        # For now, we'll just use the single prompt
+        messages.append({"role": "user", "content": prompt})
+        
+        # Make the API request with custom parameters
+        try:
+            import requests
+            
+            request_data = {
+                "model": model,
+                "messages": messages,
+                "temperature": float(temperature),
+                "max_tokens": int(max_tokens)
+            }
+            
+            # Handle response format
+            if response_format == "json":
+                request_data["response_format"] = {"type": "json_object"}
+            
+            # Make direct API call with custom parameters
+            response = requests.post(
+                url=api.BASE_URL,
+                headers=api.headers,
+                data=json.dumps(request_data)
+            )
+            response.raise_for_status()
+            response_json = response.json()
+            
+            # Log the request and response using existing infrastructure
+            api._log_request_response(model, messages, response_json)
+            
+            content = response_json['choices'][0]['message']['content']
+            
+            # Save to session if session_id is provided
+            if conversation_key:
+                # Placeholder for session storage implementation
+                # You could store this in database, redis, or file system
+                pass
+            
+            # Build response
+            response_data = {
+                'content': content,
+                'model': model,
+                'session_id': session_id,
+                'metadata': metadata,
+                'usage': response_json.get('usage', {}),
+                'parameters': {
+                    'temperature': temperature,
+                    'max_tokens': max_tokens,
+                    'response_format': response_format
+                }
+            }
+            
+            return jsonify(response_data), 200
+            
+        except requests.exceptions.RequestException as api_error:
+            return jsonify({
+                'error': f'LLM API request failed: {str(api_error)}',
+                'model': model,
+                'session_id': session_id
+            }), 500
+            
+    except Exception as e:
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
