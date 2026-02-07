@@ -190,3 +190,92 @@ def llm_query():
             
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
+
+
+@bp.route('/generate_image', methods=['POST'])
+def generate_image():
+    """Generate image using OpenRouter API"""
+    try:
+        data = request.get_json()
+        
+        # Validate required parameters
+        if not data:
+            return jsonify({'error': 'No JSON data provided'}), 400
+            
+        prompt = data.get('prompt')
+        if not prompt:
+            return jsonify({'error': 'prompt is required'}), 400
+        
+        # Extract parameters with defaults
+        model = data.get('model', 'black-forest-labs/flux-schnell')
+        width = data.get('width', 512)
+        height = data.get('height', 512)
+        steps = data.get('steps', 4)
+        
+        # Validate dimensions
+        if not isinstance(width, int) or not isinstance(height, int) or width <= 0 or height <= 0:
+            return jsonify({'error': 'width and height must be positive integers'}), 400
+        
+        if not isinstance(steps, int) or steps <= 0:
+            return jsonify({'error': 'steps must be a positive integer'}), 400
+        
+        # Initialize OpenRouter API
+        api = openrouter.OpenRouterAPI()
+        
+        # Build request data for image generation
+        request_data = {
+            "model": model,
+            "prompt": prompt,
+            "width": width,
+            "height": height,
+            "steps": steps
+        }
+        
+        # Make the API request
+        try:
+            response = requests.post(
+                url=api.BASE_URL,
+                headers=api.headers,
+                data=json.dumps(request_data)
+            )
+            response.raise_for_status()
+            response_json = response.json()
+            
+            # Extract image URL from response
+            # OpenRouter typically returns image URLs in different formats, check both common ones
+            image_url = None
+            if 'data' in response_json and len(response_json['data']) > 0:
+                if 'url' in response_json['data'][0]:
+                    image_url = response_json['data'][0]['url']
+                elif 'image_url' in response_json['data'][0]:
+                    image_url = response_json['data'][0]['image_url']
+            elif 'url' in response_json:
+                image_url = response_json['url']
+            elif 'image_url' in response_json:
+                image_url = response_json['image_url']
+            
+            if not image_url:
+                return jsonify({'error': 'No image URL received from API'}), 500
+            
+            # Log the request for debugging
+            print(f"Image generation request - Model: {model}, Prompt: {prompt[:50]}...")
+            
+            # Return the expected format
+            return jsonify({
+                'image_url': image_url,
+                'model': model,
+                'parameters': {
+                    'width': width,
+                    'height': height,
+                    'steps': steps
+                }
+            }), 200
+            
+        except requests.exceptions.RequestException as api_error:
+            return jsonify({
+                'error': f'Image generation API request failed: {str(api_error)}',
+                'model': model
+            }), 500
+            
+    except Exception as e:
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
