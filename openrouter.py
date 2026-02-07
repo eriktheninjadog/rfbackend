@@ -300,6 +300,42 @@ class OpenRouterAPI:
             self.logger.error(error_msg)
             print("error: " + error_msg)
             return "AI Error"
+    
+    def generate_image(self, model: str, prompt: str, width: int = 512, height: int = 512) -> Dict:
+        """
+        Generate image using OpenRouter API with proper modalities format
+        """
+        try:
+            request_data = {
+                "model": model,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                "modalities": ["image"]
+            }
+            
+            self.logger.info(f"Making image generation request to {model}")
+            self.logger.debug(f"Image request data: {json.dumps(request_data, ensure_ascii=False)}")
+            
+            response = requests.post(
+                url=self.BASE_URL,
+                headers=self.headers,
+                data=json.dumps(request_data)
+            )
+            response.raise_for_status()
+            response_json = response.json()
+            
+            # Log the request and response
+            self._log_request_response(model, request_data["messages"], response_json)
+            
+            return response_json
+        except requests.exceptions.RequestException as e:
+            error_msg = f"Image generation API request failed: {str(e)}"
+            self.logger.error(error_msg)
+            raise Exception(error_msg)
         
     def parse_router_json(self, response_dict: Dict) -> None:
         try:

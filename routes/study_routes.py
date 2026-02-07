@@ -207,7 +207,7 @@ def generate_image():
             return jsonify({'error': 'prompt is required'}), 400
         
         # Extract parameters with defaults
-        model = data.get('model', 'black-forest-labs/flux-schnell')
+        model = data.get('model', 'black-forest-labs/flux.2-klein-4b')
         width = data.get('width', 512)
         height = data.get('height', 512)
         steps = data.get('steps', 4)
@@ -222,29 +222,23 @@ def generate_image():
         # Initialize OpenRouter API
         api = openrouter.OpenRouterAPI()
         
-        # Build request data for image generation
-        request_data = {
-            "model": model,
-            "prompt": prompt,
-            "width": width,
-            "height": height,
-            "steps": steps
-        }
-        
-        # Make the API request
+        # Make the API request using the new image generation method
         try:
-            response = requests.post(
-                url=api.BASE_URL,
-                headers=api.headers,
-                data=json.dumps(request_data)
-            )
-            response.raise_for_status()
-            response_json = response.json()
+            response_json = api.generate_image(model, prompt, width, height)
             
             # Extract image URL from response
             # OpenRouter typically returns image URLs in different formats, check both common ones
             image_url = None
-            if 'data' in response_json and len(response_json['data']) > 0:
+            if 'choices' in response_json and len(response_json['choices']) > 0:
+                choice = response_json['choices'][0]
+                if 'message' in choice and 'content' in choice['message']:
+                    content = choice['message']['content']
+                    # Check if content contains image URL or is the URL itself
+                    if isinstance(content, str) and (content.startswith('http') or 'http' in content):
+                        image_url = content
+                    elif isinstance(content, dict) and 'image_url' in content:
+                        image_url = content['image_url']
+            elif 'data' in response_json and len(response_json['data']) > 0:
                 if 'url' in response_json['data'][0]:
                     image_url = response_json['data'][0]['url']
                 elif 'image_url' in response_json['data'][0]:
@@ -255,7 +249,10 @@ def generate_image():
                 image_url = response_json['image_url']
             
             if not image_url:
-                return jsonify({'error': 'No image URL received from API'}), 500
+                return jsonify({
+                    'error': 'No image URL received from API',
+                    'response_debug': response_json
+                }), 500
             
             # Log the request for debugging
             print(f"Image generation request - Model: {model}, Prompt: {prompt[:50]}...")
@@ -271,7 +268,7 @@ def generate_image():
                 }
             }), 200
             
-        except requests.exceptions.RequestException as api_error:
+        except Exception as api_error:
             return jsonify({
                 'error': f'Image generation API request failed: {str(api_error)}',
                 'model': model
