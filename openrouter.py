@@ -301,7 +301,7 @@ class OpenRouterAPI:
             print("error: " + error_msg)
             return "AI Error"
     
-    def generate_image(self, model: str, prompt: str, width: int = 512, height: int = 512) -> Dict:
+    def generate_image(self, model: str, prompt: str, width: int = 640, height: int = 640) -> Dict:
         """
         Generate image using OpenRouter API with proper modalities format
         """
