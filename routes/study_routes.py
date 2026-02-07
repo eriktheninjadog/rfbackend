@@ -227,17 +227,25 @@ def generate_image():
             response_json = api.generate_image(model, prompt, width, height)
             
             # Extract image URL from response
-            # OpenRouter typically returns image URLs in different formats, check both common ones
+            # OpenRouter returns images in choices[0].message.images[0].image_url.url format
             image_url = None
             if 'choices' in response_json and len(response_json['choices']) > 0:
                 choice = response_json['choices'][0]
-                if 'message' in choice and 'content' in choice['message']:
-                    content = choice['message']['content']
-                    # Check if content contains image URL or is the URL itself
-                    if isinstance(content, str) and (content.startswith('http') or 'http' in content):
-                        image_url = content
-                    elif isinstance(content, dict) and 'image_url' in content:
-                        image_url = content['image_url']
+                if 'message' in choice:
+                    message = choice['message']
+                    # Check for images array in the message
+                    if 'images' in message and len(message['images']) > 0:
+                        image_data = message['images'][0]
+                        if 'image_url' in image_data and 'url' in image_data['image_url']:
+                            image_url = image_data['image_url']['url']
+                    # Fallback to content field if images array not found
+                    elif 'content' in message:
+                        content = message['content']
+                        if isinstance(content, str) and (content.startswith('http') or 'http' in content):
+                            image_url = content
+                        elif isinstance(content, dict) and 'image_url' in content:
+                            image_url = content['image_url']
+            # Additional fallback formats for other API responses
             elif 'data' in response_json and len(response_json['data']) > 0:
                 if 'url' in response_json['data'][0]:
                     image_url = response_json['data'][0]['url']
