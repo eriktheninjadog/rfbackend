@@ -1,6 +1,19 @@
 import mysql.connector
 from datetime import datetime
 
+# Use centralized database connection
+from db_connection import get_db_connection
+
+# Lazy initialization of database manager
+_db = None
+
+def _get_db():
+    """Get the database manager singleton."""
+    global _db
+    if _db is None:
+        _db = get_db_connection()
+    return _db
+
 
 """CREATE TABLE stock_data (     stock_id INT AUTO_INCREMENT PRIMARY KEY,
    stock_code VARCHAR(20) NOT NULL,price DECIMAL(15, 2) NOT NULL,
@@ -41,17 +54,31 @@ def parse_stock_block(stock_block):
     return ret
 
 class StockManager:
-    def __init__(self, host, user, password, database):
+    def __init__(self, host=None, user=None, password=None, database=None, use_pool=True):
         """
         Initialize the StockManager with database connection details.
+        
+        Args:
+            host (str): Database host (optional if use_pool=True)
+            user (str): Database user (optional if use_pool=True)
+            password (str): Database password (optional if use_pool=True)
+            database (str): Database name (optional if use_pool=True)
+            use_pool (bool): Use centralized connection pool (default: True)
         """
-        self.connection = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password,
-            database=database
-        )
-        self.cursor = self.connection.cursor()
+        if use_pool:
+            # Use centralized connection pool
+            db_manager = _get_db()
+            self.connection = db_manager.get_connection()
+            self.cursor = self.connection.cursor()
+        else:
+            # Use provided connection details for backward compatibility
+            self.connection = mysql.connector.connect(
+                host=host,
+                user=user,
+                password=password,
+                database=database
+            )
+            self.cursor = self.connection.cursor()
 
     def get_latest_stock_prices(self):
         """
@@ -182,8 +209,8 @@ if __name__ == "__main__":
     password = os.getenv( "DBPASSWORD" )
     database = "language"
 
-    # Create an instance of StockManager
-    stock_manager = StockManager(host, user, password, database)
+    # Create an instance of StockManager using connection pool
+    stock_manager = StockManager()
     #stock_manager.parse_block(stockblock)
     # Example 1: Get the latest stock prices
     latest_prices = stock_manager.get_latest_stock_prices()

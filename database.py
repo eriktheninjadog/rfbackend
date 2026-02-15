@@ -11,44 +11,36 @@
 import json
 import log
 
-import mysql.connector
-
-import json
-
 from dataobject import CWS
 from dataobject import DictionaryWord
 from dataobject import Activity
 from dataobject import AIResponse
 from dataobject import Fragment
 
-from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy import Column, Integer, MetaData, String, Table, Text, Float, text
+from sqlalchemy import Column, Integer, String, Table, Text, Float, text
 from sqlalchemy import inspect
 
 import urllib.parse
 
+# Use centralized database connection
+from db_connection import get_db_connection
 
 cachedir = '/tmp/'
 
 from joblib import Memory
 memory = Memory(cachedir, verbose=0)
 
-
-
 from pymemcache.client import base
-# setup the classes
-# I personally find this pretty ugly, so 
 
-engine = create_engine('mysql://erik:ninjadogs@localhost/language',pool_recycle=60 * 5, pool_pre_ping=True)
+# Get database connection components from centralized manager
+_db = get_db_connection()
+engine = _db.get_engine()
 connection = engine.connect()
 session = Session(engine)
 
-Base = automap_base()
-Base.prepare(autoload_with=engine)
-metadata_obj = MetaData()
-metadata_obj.reflect(bind=engine)
+Base = _db.get_base()
+metadata_obj = _db.get_metadata()
 
 client = base.Client(('localhost', 11211))
 
@@ -136,13 +128,8 @@ def cws_row_to_dataobject_no_text(row):
     return CWS(row.id,row.created, None,None,row.signature,row.metadata,row.title,row.source,row.type,row.parent)
 
 def get_connection():
-    mydb = mysql.connector.connect(                                                  
-        host="localhost",                                                            
-        user="erik",                                                                 
-        password="ninjadogs",                                                        
-        database='language'                                                          
-    )
-    return mydb
+    """Get a database connection from the centralized connection pool."""
+    return _db.get_connection()
 
 
 def add_look_up(term,cwsid):

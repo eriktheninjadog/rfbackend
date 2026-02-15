@@ -1894,12 +1894,8 @@ def stockupdate():
     try:
         
         stockblock = request.json['stockblock']
-        stmgr = stockmanager.StockManager(
-            "localhost",
-            "erik",
-            dbconfig.get_db_password(),
-            "language"
-        )
+        # Use centralized connection pool
+        stmgr = stockmanager.StockManager()
         stmgr.parse_block(stockblock)
         bop = stmgr.get_latest_stock_prices()
         
