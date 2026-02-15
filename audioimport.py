@@ -6,7 +6,17 @@ import json
 import io
 
 # Use centralized database connection
-from db_connection import get_db_connection as get_db_manager
+from db_connection import get_db_connection
+
+# Get the singleton database manager (lazy initialization)
+_db = None
+
+def _get_db():
+    """Get the database manager singleton."""
+    global _db
+    if _db is None:
+        _db = get_db_connection()
+    return _db
 
 def get_mp3_title(file_path):
     try:
@@ -30,8 +40,8 @@ def get_mp3_title(file_path):
 
 def get_db_connection():
     """Get a database connection from the centralized connection pool."""
-    _db = get_db_manager()
-    db = _db.get_connection()
+    db_manager = _get_db()
+    db = db_manager.get_connection()
     cursor = db.cursor()
     return db, cursor
 

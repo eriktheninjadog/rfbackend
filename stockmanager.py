@@ -4,6 +4,16 @@ from datetime import datetime
 # Use centralized database connection
 from db_connection import get_db_connection
 
+# Lazy initialization of database manager
+_db = None
+
+def _get_db():
+    """Get the database manager singleton."""
+    global _db
+    if _db is None:
+        _db = get_db_connection()
+    return _db
+
 
 """CREATE TABLE stock_data (     stock_id INT AUTO_INCREMENT PRIMARY KEY,
    stock_code VARCHAR(20) NOT NULL,price DECIMAL(15, 2) NOT NULL,
@@ -56,9 +66,9 @@ class StockManager:
             use_pool (bool): Use centralized connection pool (default: True)
         """
         if use_pool:
-            # Use centralized connection pool (lazy initialization)
-            _db = get_db_connection()
-            self.connection = _db.get_connection()
+            # Use centralized connection pool
+            db_manager = _get_db()
+            self.connection = db_manager.get_connection()
             self.cursor = self.connection.cursor()
         else:
             # Use provided connection details for backward compatibility
