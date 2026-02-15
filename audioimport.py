@@ -5,6 +5,11 @@ from mutagen.id3 import ID3, TIT2
 import json
 import io
 
+# Use centralized database connection
+from db_connection import get_db_connection
+
+_db = get_db_connection()
+
 def get_mp3_title(file_path):
     try:
         # Try to load ID3 tags
@@ -26,14 +31,10 @@ def get_mp3_title(file_path):
 
 
 def get_db_connection():
-    db = mysql.connector.connect(
-        host="localhost",                                                            
-        user="erik",                                                                 
-        password="ninjadogs",                                                        
-        database='language'                                                          
-    )
+    """Get a database connection from the centralized connection pool."""
+    db = _db.get_connection()
     cursor = db.cursor()
-    return db,cursor
+    return db, cursor
 
 def close_db_connect(db,cursor):
     cursor.close()
