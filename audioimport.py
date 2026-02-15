@@ -6,9 +6,7 @@ import json
 import io
 
 # Use centralized database connection
-from db_connection import get_db_connection
-
-_db = get_db_connection()
+from db_connection import get_db_connection as get_db_manager
 
 def get_mp3_title(file_path):
     try:
@@ -32,6 +30,7 @@ def get_mp3_title(file_path):
 
 def get_db_connection():
     """Get a database connection from the centralized connection pool."""
+    _db = get_db_manager()
     db = _db.get_connection()
     cursor = db.cursor()
     return db, cursor

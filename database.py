@@ -11,8 +11,6 @@
 import json
 import log
 
-import json
-
 from dataobject import CWS
 from dataobject import DictionaryWord
 from dataobject import Activity

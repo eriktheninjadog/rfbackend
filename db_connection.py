@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 import threading
+import urllib.parse
 
 
 class DatabaseConnection:
@@ -38,7 +39,8 @@ class DatabaseConnection:
         if self._initialized:
             return
             
-        # Default configuration
+        # Default configuration (should be overridden via configure() or environment variables)
+        # TODO: Move to environment variables or secure configuration
         self.host = "localhost"
         self.user = "erik"
         self.password = "ninjadogs"
@@ -119,7 +121,10 @@ class DatabaseConnection:
             sqlalchemy.engine.Engine: SQLAlchemy engine
         """
         if self._engine is None:
-            connection_string = f'mysql://{self.user}:{self.password}@{self.host}/{self.database}'
+            # Properly encode credentials to handle special characters
+            encoded_user = urllib.parse.quote_plus(self.user)
+            encoded_password = urllib.parse.quote_plus(self.password)
+            connection_string = f'mysql://{encoded_user}:{encoded_password}@{self.host}/{self.database}'
             self._engine = create_engine(
                 connection_string,
                 pool_recycle=60 * 5,
